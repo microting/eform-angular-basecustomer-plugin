@@ -120,14 +120,23 @@
   <data name="CustomerCreated" xml:space="preserve">
     <value>Kunden er oprettet</value>
   </data>
+  <data name="CustomerDeletedSuccessfully" xml:space="preserve">
+    <value>Kunde slettet med succes</value>
+  </data>
   <data name="CustomerNotFound" xml:space="preserve">
     <value>Kunde ikke fundet</value>
+  </data>
+  <data name="CustomerUpdatedSuccessfully" xml:space="preserve">
+    <value>Kunden opdateres med succes</value>
   </data>
   <data name="ErrorObtainingCustomersInfo" xml:space="preserve">
     <value>Fejl under opnåelse af kundeoplysninger</value>
   </data>
   <data name="ErrorWhileCreatingCustomer" xml:space="preserve">
     <value>Fejl under oprettelse af kunde</value>
+  </data>
+  <data name="ErrorWhileDeletingCustomer" xml:space="preserve">
+    <value>Fejl under sletning af kunde</value>
   </data>
   <data name="ErrorWhileObtainingFieldsInfo" xml:space="preserve">
     <value>Fejl under opnåelse af felter info</value>
@@ -137,5 +146,8 @@
   </data>
   <data name="ErrorWhileUpdatingFields" xml:space="preserve">
     <value>Fejl under opdatering af felter</value>
+  </data>
+  <data name="FieldsUpdatedSuccessfully" xml:space="preserve">
+    <value>Felter opdateres med succes</value>
   </data>
 </root>

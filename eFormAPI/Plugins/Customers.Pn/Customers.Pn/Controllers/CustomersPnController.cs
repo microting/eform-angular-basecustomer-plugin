@@ -92,6 +92,7 @@ namespace Customers.Pn.Controllers
                             customerModel.Fields.Add(fieldModel);
                         }
                     }
+
                     if (customerModel.Fields.Any())
                     {
                         // Mode Id field to top
@@ -100,6 +101,7 @@ namespace Customers.Pn.Controllers
                         customerModel.Fields[index] = customerModel.Fields[0];
                         customerModel.Fields[0] = item;
                     }
+
                     customersPnModel.Customers.Add(customerModel);
                 }
 
@@ -175,13 +177,15 @@ namespace Customers.Pn.Controllers
                 };
                 _dbContext.Customers.Add(customer);
                 _dbContext.SaveChanges();
-                return new OperationResult(true, CustomersPnLocaleHelper.GetString("CustomerCreated"));
+                return new OperationResult(true,
+                    CustomersPnLocaleHelper.GetString("CustomerCreated"));
             }
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
                 _logger.Error(e);
-                return new OperationResult(false, CustomersPnLocaleHelper.GetString("ErrorWhileCreatingCustomer"));
+                return new OperationResult(false,
+                    CustomersPnLocaleHelper.GetString("ErrorWhileCreatingCustomer"));
             }
         }
 
@@ -194,7 +198,8 @@ namespace Customers.Pn.Controllers
                 var customer = _dbContext.Customers.FirstOrDefault(x => x.Id == customerUpdateModel.Id);
                 if (customer == null)
                 {
-                    return new OperationResult(false, CustomersPnLocaleHelper.GetString("CustomerNotFound"));
+                    return new OperationResult(false,
+                        CustomersPnLocaleHelper.GetString("CustomerNotFound"));
                 }
 
                 customer.Description = customerUpdateModel.Description;
@@ -208,13 +213,43 @@ namespace Customers.Pn.Controllers
                 customer.Phone = customerUpdateModel.Phone;
                 customer.ZipCode = customerUpdateModel.ZipCode;
                 _dbContext.SaveChanges();
-                return new OperationDataResult<CustomersPnModel>(true);
+                return new OperationDataResult<CustomersPnModel>(true,
+                    CustomersPnLocaleHelper.GetString("CustomerUpdatedSuccessfully"));
             }
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
                 _logger.Error(e);
-                return new OperationDataResult<CustomersPnModel>(false, "ErrorWhileUpdatingCustomerInfo");
+                return new OperationDataResult<CustomersPnModel>(false,
+                    CustomersPnLocaleHelper.GetString("ErrorWhileUpdatingCustomerInfo"));
+            }
+        }
+
+
+        [HttpDelete]
+        [Route("api/customers-pn/{id}")]
+        public OperationResult DeleteCustomer(int id)
+        {
+            try
+            {
+                var customer = _dbContext.Customers.FirstOrDefault(x => x.Id == id);
+                if (customer == null)
+                {
+                    return new OperationResult(false,
+                        CustomersPnLocaleHelper.GetString("CustomerNotFound"));
+                }
+
+                _dbContext.Customers.Remove(customer);
+                _dbContext.SaveChanges();
+                return new OperationResult(true,
+                    CustomersPnLocaleHelper.GetString("CustomerDeletedSuccessfully"));
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError(e.Message);
+                _logger.Error(e);
+                return new OperationDataResult<CustomerPnFullModel>(false,
+                    CustomersPnLocaleHelper.GetString("ErrorWhileDeletingCustomer"));
             }
         }
     }

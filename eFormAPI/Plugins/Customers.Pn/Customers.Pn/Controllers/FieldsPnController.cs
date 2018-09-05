@@ -75,14 +75,17 @@ namespace Customers.Pn.Controllers
                         field.FieldStatus = fieldModel.FieldStatus;
                     }
                 }
+
                 _dbContext.SaveChanges();
-                return new OperationResult(true);
+                return new OperationResult(true, 
+                    CustomersPnLocaleHelper.GetString("FieldsUpdatedSuccessfully"));
             }
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
                 _logger.Error(e);
-                return new OperationResult(false, "ErrorWhileUpdatingFields");
+                return new OperationResult(false,
+                    CustomersPnLocaleHelper.GetString("ErrorWhileUpdatingFields"));
             }
         }
     }

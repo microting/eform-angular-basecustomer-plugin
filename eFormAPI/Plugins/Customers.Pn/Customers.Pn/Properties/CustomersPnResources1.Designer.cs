@@ -70,11 +70,29 @@ namespace Customers.Pn.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Customer deleted successfully.
+        /// </summary>
+        internal static string CustomerDeletedSuccessfully {
+            get {
+                return ResourceManager.GetString("CustomerDeletedSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Customer not found.
         /// </summary>
         internal static string CustomerNotFound {
             get {
                 return ResourceManager.GetString("CustomerNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer updated successfully.
+        /// </summary>
+        internal static string CustomerUpdatedSuccessfully {
+            get {
+                return ResourceManager.GetString("CustomerUpdatedSuccessfully", resourceCulture);
             }
         }
         
@@ -93,6 +111,15 @@ namespace Customers.Pn.Properties {
         internal static string ErrorWhileCreatingCustomer {
             get {
                 return ResourceManager.GetString("ErrorWhileCreatingCustomer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error while deleting customer.
+        /// </summary>
+        internal static string ErrorWhileDeletingCustomer {
+            get {
+                return ResourceManager.GetString("ErrorWhileDeletingCustomer", resourceCulture);
             }
         }
         
@@ -120,6 +147,15 @@ namespace Customers.Pn.Properties {
         internal static string ErrorWhileUpdatingFields {
             get {
                 return ResourceManager.GetString("ErrorWhileUpdatingFields", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fields updated successfully.
+        /// </summary>
+        internal static string FieldsUpdatedSuccessfully {
+            get {
+                return ResourceManager.GetString("FieldsUpdatedSuccessfully", resourceCulture);
             }
         }
     }
