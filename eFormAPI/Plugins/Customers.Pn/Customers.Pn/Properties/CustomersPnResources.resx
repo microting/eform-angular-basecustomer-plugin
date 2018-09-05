@@ -117,16 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ErrorObtainingVehiclesInfo" xml:space="preserve">
-    <value>Error while obtaining vehicles info</value>
+  <data name="CustomerCreated" xml:space="preserve">
+    <value>Customer has been created</value>
   </data>
-  <data name="ErrorWhileCreatingVehicle" xml:space="preserve">
-    <value>Error while creating vehicle</value>
+  <data name="CustomerNotFound" xml:space="preserve">
+    <value>Customer not found</value>
   </data>
-  <data name="ErrorWhileUpdatingVehicleInfo" xml:space="preserve">
-    <value>Error while updating vehicles info</value>
+  <data name="ErrorObtainingCustomersInfo" xml:space="preserve">
+    <value>Error while obtaining customer info</value>
   </data>
-  <data name="VehicleCreated" xml:space="preserve">
-    <value>Vehicle {0} {1} created</value>
+  <data name="ErrorWhileCreatingCustomer" xml:space="preserve">
+    <value>Error while creating customer</value>
+  </data>
+  <data name="ErrorWhileObtainingFieldsInfo" xml:space="preserve">
+    <value>Error while obtaining fields info</value>
+  </data>
+  <data name="ErrorWhileUpdatingCustomerInfo" xml:space="preserve">
+    <value>Error while updating customer info</value>
+  </data>
+  <data name="ErrorWhileUpdatingFields" xml:space="preserve">
+    <value>Error while updating fields</value>
   </data>
 </root>

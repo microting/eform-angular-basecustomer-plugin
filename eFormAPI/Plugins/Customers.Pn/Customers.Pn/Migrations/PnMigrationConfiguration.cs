@@ -1,28 +1,48 @@
+using Customers.Pn.Enums;
+using Customers.Pn.Infrastructure.Data.Entities;
+using Customers.Pn.Infrastructure.Extensions;
+using System.Data.Entity.Migrations;
+using System.Linq;
 using Customers.Pn.Infrastructure.Data;
 
 namespace Customers.Pn.Migrations
 {
-    public sealed class PnMigrationConfiguration : DbMigrationsConfiguration<VehiclesPnDbContext>
+    public class PnMigrationConfiguration : DbMigrationsConfiguration<CustomersPnDbContext>
     {
         public PnMigrationConfiguration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(VehiclesPnDbContext context)
+        protected override void Seed(CustomersPnDbContext context)
         {
-            //  This method will be called after migrating to the latest version.
+            var customerFields = new CustomerPn().GetPropList();
+            foreach (var name in customerFields)
+            {
+                var field = new FieldPn()
+                {
+                    Name = name
+                };
+                context.Fields.AddOrUpdate(x => x.Name, field);
+            }
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            context.SaveChanges();
+
+            var fields = context.Fields.ToList();
+            foreach (var field in fields)
+            {
+                var customerField = new CustomerFieldPn
+                {
+                    FieldId = field.Id,
+                    FieldStatus = FieldPnStatus.Enabled
+                };
+                if (!context.CustomerFields.Any(x => x.FieldId == field.Id))
+                {
+                    context.CustomerFields.Add(customerField);
+                }
+            }
+
+            context.SaveChanges();
         }
     }
 }

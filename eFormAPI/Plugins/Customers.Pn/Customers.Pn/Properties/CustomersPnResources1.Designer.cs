@@ -9,6 +9,9 @@
 //------------------------------------------------------------------------------
 
 namespace Customers.Pn.Properties {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -36,7 +39,7 @@ namespace Customers.Pn.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Vehicles.Pn.Properties.VehiclePnResources", typeof(CustomersPnResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Customers.Pn.Properties.CustomersPnResources", typeof(CustomersPnResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -58,38 +61,65 @@ namespace Customers.Pn.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error while obtaining vehicles info.
+        ///   Looks up a localized string similar to Customer has been created.
         /// </summary>
-        internal static string ErrorObtainingVehiclesInfo {
+        internal static string CustomerCreated {
             get {
-                return ResourceManager.GetString("ErrorObtainingVehiclesInfo", resourceCulture);
+                return ResourceManager.GetString("CustomerCreated", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error while creating vehicle.
+        ///   Looks up a localized string similar to Customer not found.
         /// </summary>
-        internal static string ErrorWhileCreatingVehicle {
+        internal static string CustomerNotFound {
             get {
-                return ResourceManager.GetString("ErrorWhileCreatingVehicle", resourceCulture);
+                return ResourceManager.GetString("CustomerNotFound", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error while updating vehicles info.
+        ///   Looks up a localized string similar to Error while obtaining customer info.
         /// </summary>
-        internal static string ErrorWhileUpdatingVehicleInfo {
+        internal static string ErrorObtainingCustomersInfo {
             get {
-                return ResourceManager.GetString("ErrorWhileUpdatingVehicleInfo", resourceCulture);
+                return ResourceManager.GetString("ErrorObtainingCustomersInfo", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vehicle {0} {1} created.
+        ///   Looks up a localized string similar to Error while creating customer.
         /// </summary>
-        internal static string VehicleCreated {
+        internal static string ErrorWhileCreatingCustomer {
             get {
-                return ResourceManager.GetString("VehicleCreated", resourceCulture);
+                return ResourceManager.GetString("ErrorWhileCreatingCustomer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error while obtaining fields info.
+        /// </summary>
+        internal static string ErrorWhileObtainingFieldsInfo {
+            get {
+                return ResourceManager.GetString("ErrorWhileObtainingFieldsInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error while updating customer info.
+        /// </summary>
+        internal static string ErrorWhileUpdatingCustomerInfo {
+            get {
+                return ResourceManager.GetString("ErrorWhileUpdatingCustomerInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error while updating fields.
+        /// </summary>
+        internal static string ErrorWhileUpdatingFields {
+            get {
+                return ResourceManager.GetString("ErrorWhileUpdatingFields", resourceCulture);
             }
         }
     }

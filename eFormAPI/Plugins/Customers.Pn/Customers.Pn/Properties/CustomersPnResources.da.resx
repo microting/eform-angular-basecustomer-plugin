@@ -117,16 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ErrorObtainingVehiclesInfo" xml:space="preserve">
-    <value>Fejl ved indhentning af køretøjsoplysninger</value>
+  <data name="CustomerCreated" xml:space="preserve">
+    <value>Kunden er oprettet</value>
   </data>
-  <data name="ErrorWhileCreatingVehicle" xml:space="preserve">
-    <value>Fejl under oprettelse af køretøj</value>
+  <data name="CustomerNotFound" xml:space="preserve">
+    <value>Kunde ikke fundet</value>
   </data>
-  <data name="ErrorWhileUpdatingVehicleInfo" xml:space="preserve">
-    <value>Fejl under opdatering af køretøjsinfo</value>
+  <data name="ErrorObtainingCustomersInfo" xml:space="preserve">
+    <value>Fejl under opnåelse af kundeoplysninger</value>
   </data>
-  <data name="VehicleCreated" xml:space="preserve">
-    <value>Køretøj {0} {1} oprettet</value>
+  <data name="ErrorWhileCreatingCustomer" xml:space="preserve">
+    <value>Fejl under oprettelse af kunde</value>
+  </data>
+  <data name="ErrorWhileObtainingFieldsInfo" xml:space="preserve">
+    <value>Fejl under opnåelse af felter info</value>
+  </data>
+  <data name="ErrorWhileUpdatingCustomerInfo" xml:space="preserve">
+    <value>Fejl under opdatering af kundeoplysninger</value>
+  </data>
+  <data name="ErrorWhileUpdatingFields" xml:space="preserve">
+    <value>Fejl under opdatering af felter</value>
   </data>
 </root>
