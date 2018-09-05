@@ -62,7 +62,7 @@ namespace Customers.Pn.Controllers
                     .Take(pnRequestModel.PageSize);
 
                 var customers = customersQuery.ToList();
-                customersPnModel.Total = customersQuery.Count();
+                customersPnModel.Total = _dbContext.Customers.Count();
                 var fields = _dbContext.CustomerFields
                     .Include("Field")
                     .Select(x => new FieldPnUpdateModel()

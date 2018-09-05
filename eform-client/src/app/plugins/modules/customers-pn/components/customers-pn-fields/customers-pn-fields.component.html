@@ -1,0 +1,32 @@
+<subheader-pn [title]="'Customers plugin settings' | translate">
+  <div class="p-3">
+    <button
+      class="btn btn-success" (click)="updateFields()">{{ 'Save' | translate }}
+    </button>
+  </div>
+</subheader-pn>
+
+<div class="container-fluid">
+  <div class="row mt-4">
+    <div class="col-md-12 col-xs-12 control-block">
+      <subheader-pn [title]="'Fields' | translate" [heandingSizeRem]="1">
+      </subheader-pn>
+      <div class="container-fluid">
+        <div class="row mt-2">
+          <div class="col-md-2" *ngFor="let field of fieldsUpdateModel.fields">
+            <label class="md-checkbox">
+              <input (click)="checkBoxChanged($event, field)" [checked]="field.fieldStatus == fieldStatusEnum.Enabled"
+                     value="{{field.fieldStatus == 1}}"
+                     type="checkbox"/>
+              <span class="md-checkbox--fake"></span>
+              <div>{{field.name | translate}}</div>
+            </label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<spinner-pn [spinnerVisibility]="spinnerStatus"></spinner-pn>
