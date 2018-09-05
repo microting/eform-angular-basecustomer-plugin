@@ -36,7 +36,11 @@ namespace Customers.Pn.Controllers
                         Id = x.FieldId,
                         Name = x.Field.Name,
                     }).ToList();
-
+                // Mode Id field to top
+                var index = fields.FindIndex(x => x.Name == "Id");
+                var item = fields[index];
+                fields[index] = fields[0];
+                fields[0] = item;
                 var result = new FieldsPnUpdateModel()
                 {
                     Fields = fields,

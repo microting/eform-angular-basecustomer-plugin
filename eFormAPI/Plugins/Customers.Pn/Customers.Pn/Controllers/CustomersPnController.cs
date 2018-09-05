@@ -46,10 +46,6 @@ namespace Customers.Pn.Controllers
                         customersQuery = customersQuery
                             .OrderBy(pnRequestModel.SortColumnName);
                     }
-
-                    customersQuery = customersQuery
-                        .Skip(pnRequestModel.Offset)
-                        .Take(pnRequestModel.PageSize);
                 }
                 else
                 {
@@ -96,7 +92,14 @@ namespace Customers.Pn.Controllers
                             customerModel.Fields.Add(fieldModel);
                         }
                     }
-
+                    if (customerModel.Fields.Any())
+                    {
+                        // Mode Id field to top
+                        var index = customerModel.Fields.FindIndex(x => x.Name == "Id");
+                        var item = customerModel.Fields[index];
+                        customerModel.Fields[index] = customerModel.Fields[0];
+                        customerModel.Fields[0] = item;
+                    }
                     customersPnModel.Customers.Add(customerModel);
                 }
 
