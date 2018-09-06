@@ -45,9 +45,9 @@ export class CustomersPnPageComponent implements OnInit {
   }
 
   setTranslation() {
-    const lang = this.localeService.getCurrentUserLocale();
-    const i18n = require(`../../i18n/${lang}.json`);
-    this.translateService.setTranslation(lang, i18n, true);
+    // const lang = this.localeService.getCurrentUserLocale();
+    // const i18n = require(`../../i18n/${lang}.json`);
+   // this.translateService.setTranslation(lang, i18n, true);
   }
 
   showCreateCustomerModal() {

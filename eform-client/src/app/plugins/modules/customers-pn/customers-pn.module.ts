@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TranslateModule} from '@ngx-translate/core';
 import {MDBRootModule} from 'port/angular-bootstrap-md';
+
+import {CustomerPnLayoutComponent} from './layouts';
 import {CustomersPnFieldsService, CustomersPnService} from './services';
 import {CustomersPnRouting} from './customers-pn.routing';
 import {SharedPnModule} from '../shared/shared-pn.module';
@@ -26,6 +28,7 @@ import {
     MDBRootModule
   ],
   declarations: [
+    CustomerPnLayoutComponent,
     CustomersPnPageComponent,
     CustomerPnEditComponent,
     CustomerPnDeleteComponent,
