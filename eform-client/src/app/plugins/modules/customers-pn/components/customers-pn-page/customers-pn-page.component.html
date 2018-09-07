@@ -1,0 +1,97 @@
+<subheader-pn [title]="'Customers' | translate">
+  <div class="p-3">
+    <button *ngIf="currentRole == 'admin'"
+            class="btn btn-danger text-black-50 btn-icon"
+            routerLink="settings"
+            mdbTooltip="{{ 'Settings' | translate }}">
+      <i class="material-icons">
+        build
+      </i>
+    </button>
+    <button
+      class="btn btn-success"
+      mdbTooltip="{{ 'Create Customer' | translate }}"
+      (click)="showCreateCustomerModal()">{{ 'New Customer' | translate }}
+    </button>
+  </div>
+</subheader-pn>
+
+<div class="container-fluid mt-3">
+  <div class="row table-responsive no-gutters">
+    <table class="table table-sm table-striped text-center">
+      <thead>
+      <tr>
+        <ng-container *ngFor="let field of fieldsModel.fields">
+          <th scope="col" class="table-header-sortable" id="{{field.name}}TableHeader"
+              *ngIf="field.fieldStatus == fieldStatusEnum.Enabled"
+              (click)="sortByColumn(field.name, customersRequestModel.isSortDsc = !customersRequestModel.isSortDsc)">
+            <div class="d-flex align-items-center justify-content-center">
+              {{ field.name | translate }}
+              <i class="material-icons text-black-50" *ngIf="customersRequestModel.sortColumnName != field.name">unfold_more</i>
+              <i class="material-icons"
+                 *ngIf="customersRequestModel.sortColumnName == field.name && !customersRequestModel.isSortDsc">expand_less</i>
+              <i class="material-icons"
+                 *ngIf="customersRequestModel.sortColumnName == field.name && customersRequestModel.isSortDsc">expand_more</i>
+            </div>
+          </th>
+        </ng-container>
+
+        <th scope="col">
+          {{ 'Actions' | translate }}
+        </th>
+      </tr>
+      </thead>
+      <tbody id="tableBody">
+      <tr *ngFor="let customer of customersModel.customers">
+        <td *ngFor="let field of customer.fields">
+          <ng-container [ngSwitch]="field.name">
+            <ng-container *ngSwitchCase="fieldsEnum[fieldsEnum.Description]">
+              <div [innerHTML]="field.value"></div>
+            </ng-container>
+            <ng-container *ngSwitchCase="fieldsEnum[fieldsEnum.CreatedDate]">
+              {{field.value | date:'dd.MM.y HH:mm:ss'}}
+            </ng-container>
+            <ng-container *ngSwitchDefault>
+              {{field.value}}
+            </ng-container>
+          </ng-container>
+        </td>
+        <td>
+          <div class="d-flex flex-row justify-content-center">
+            <button class="btn btn-accent text-black-50 btn-icon mb-2"
+                    mdbTooltip="{{ 'Edit Customer' | translate }}"
+                    (click)="showEditCustomerModal(customer)">
+              <i class="material-icons">
+                edit
+              </i>
+            </button>
+            <button class="btn btn-danger btn-icon mb-2 "
+                    mdbTooltip="{{ 'Delete Customer' | translate }}"
+                    (click)="showDeleteCustomerModal(customer)">
+              <i class="material-icons" >
+                delete_forever
+              </i>
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <pagination-pn *ngIf="customersModel.total > customersRequestModel.pageSize"
+                 [limit]="customersRequestModel.pageSize"
+                 [size]="customersModel.total"
+                 [offset]="customersRequestModel.offset"
+                 (onPageChanged)="changePage($event)"></pagination-pn>
+</div>
+
+<spinner-pn [spinnerVisibility]="spinnerStatus"></spinner-pn>
+
+<app-customer-pn-add #createCustomerModal
+                     [fieldsModel]="fieldsModel"
+                     (onCustomerCreated)="getAllCustomers()">
+</app-customer-pn-add>
+<app-customer-pn-edit #editCustomerModal
+                      [fieldsModel]="fieldsModel"
+                      (onCustomerUpdated)="getAllCustomers()"></app-customer-pn-edit>
+<app-customer-pn-delete #deleteCustomerModal (onCustomerDeleted)="getAllCustomers()"></app-customer-pn-delete>

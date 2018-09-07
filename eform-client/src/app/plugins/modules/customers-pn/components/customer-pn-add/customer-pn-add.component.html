@@ -1,0 +1,111 @@
+<div mdbModal class="modal fade" #frame="mdbModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{ 'New Customer' | translate }}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <form #createForm="ngForm">
+            <div class="row">
+              <div class="col-md-12 col-xs-12" *ngIf="isFieldAvailable(fieldsEnum.CreatedBy)">
+                <div class="md-form">
+                  <input mdbInputDirective
+                         [mdbValidate]="false"
+                         [(ngModel)]="newCustomerModel.createdBy"
+                         type="text" id="createCreatedBy"
+                         name="createCreatedBy" class="form-control">
+                  <label for="createCreatedBy">{{'CreatedBy' | translate}}</label>
+                </div>
+              </div>
+              <div class="col-md-12 col-xs-12" *ngIf="isFieldAvailable(fieldsEnum.ContactPerson)">
+                <div class="md-form">
+                  <input mdbInputDirective
+                         [mdbValidate]="false" [(ngModel)]="newCustomerModel.contactPerson"
+                         class="form-control"
+                         type="text" id="createContactPerson"
+                         name="createContactPerson">
+                  <label for="createContactPerson">{{'ContactPerson' | translate}}</label>
+                </div>
+              </div>
+              <div class="col-md-12 col-xs-12" *ngIf="isFieldAvailable(fieldsEnum.CompanyName)">
+                <div class="md-form">
+                  <input mdbInputDirective
+                         [mdbValidate]="false" [(ngModel)]="newCustomerModel.companyName"
+                         class="form-control"
+                         type="text" id="createCompanyName"
+                         name="createCompanyName">
+                  <label for="createCompanyName">{{'CompanyName' | translate}}</label>
+                </div>
+              </div>
+              <div class="col-md-12 col-xs-12" *ngIf="isFieldAvailable(fieldsEnum.CompanyAddress)">
+                <div class="md-form">
+                  <input mdbInputDirective
+                         [mdbValidate]="false" [(ngModel)]="newCustomerModel.companyAddress"
+                         class="form-control"
+                         type="text" id="createCompanyAddress"
+                         name="createCompanyAddress">
+                  <label for="createCompanyAddress">{{'CompanyAddress' | translate}}</label>
+                </div>
+              </div>
+              <div class="col-md-12 col-xs-12" *ngIf="isFieldAvailable(fieldsEnum.ZipCode)">
+                <div class="md-form">
+                  <input mdbInputDirective
+                         [mdbValidate]="false" [(ngModel)]="newCustomerModel.zipCode"
+                         class="form-control"
+                         type="text" id="createZipCode"
+                         name="createZipCode">
+                  <label for="createZipCode">{{'Zip Code' | translate}}</label>
+                </div>
+              </div>
+              <div class="col-md-12 col-xs-12" *ngIf="isFieldAvailable(fieldsEnum.CityName)">
+                <div class="md-form">
+                  <input mdbInputDirective
+                         [mdbValidate]="false" [(ngModel)]="newCustomerModel.cityName"
+                         class="form-control"
+                         type="text" id="createCityName"
+                         name="createCityName">
+                  <label for="createCityName">{{'CityName' | translate}}</label>
+                </div>
+              </div>
+              <div class="col-md-12 col-xs-12" *ngIf="isFieldAvailable(fieldsEnum.Phone)">
+                <div class="md-form">
+                  <input mdbInputDirective
+                         [mdbValidate]="false" [(ngModel)]="newCustomerModel.phone"
+                         class="form-control"
+                         type="text" id="createPhone"
+                         name="createPhone">
+                  <label for="createPhone">{{'Phone' | translate}}</label>
+                </div>
+              </div>
+              <div class="col-md-12 col-xs-12" *ngIf="isFieldAvailable(fieldsEnum.Email)">
+                <div class="md-form">
+                  <input mdbInputDirective
+                         [mdbValidate]="false" [(ngModel)]="newCustomerModel.email"
+                         class="form-control"
+                         type="text" id="createEmail"
+                         name="createEmail">
+                  <label for="createEmail">{{'Email' | translate}}</label>
+                </div>
+              </div>
+              <div class="col col-xs-12" *ngIf="isFieldAvailable(fieldsEnum.Description)">
+                <label class="text-black-60">{{'Description' | translate}}</label>
+                <div class="md-form p-0 m-0">
+                  <pell-pn-editor [(value)]="newCustomerModel.description" name="createComment"></pell-pn-editor>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" (click)="createCustomer()">
+          {{ 'Create' | translate }}
+        </button>
+        <button class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Cancel' | translate}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<spinner-pn [spinnerVisibility]="spinnerStatus"></spinner-pn>
