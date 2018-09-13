@@ -9,6 +9,8 @@ import {CustomersPnFieldsService, CustomersPnService} from './services';
 import {CustomersPnRouting} from './customers-pn.routing';
 import {SharedPnModule} from '../shared/shared-pn.module';
 
+import { MatCheckboxModule } from '@angular/material';
+
 import {
   CustomerPnDeleteComponent,
   CustomerPnEditComponent,
@@ -25,7 +27,8 @@ import {
     SharedPnModule,
     CustomersPnRouting,
     TranslateModule,
-    MDBRootModule
+    MDBRootModule,
+    MatCheckboxModule
   ],
   declarations: [
     CustomerPnLayoutComponent,

@@ -15,10 +15,8 @@
         <div class="row mt-2">
           <div class="col-md-2" *ngFor="let field of fieldsUpdateModel.fields">
             <label class="md-checkbox">
-              <input (click)="checkBoxChanged($event, field)" [checked]="field.fieldStatus == fieldStatusEnum.Enabled"
-                     value="{{field.fieldStatus == 1}}"
-                     type="checkbox"/>
-              <span class="md-checkbox--fake"></span>
+              <mat-checkbox (click)="checkBoxChanged($event, field)" [checked]="field.fieldStatus == fieldStatusEnum.Enabled"
+                     value="{{field.fieldStatus == 1}}" color="primary"></mat-checkbox>
               <div>{{field.name | translate}}</div>
             </label>
           </div>
