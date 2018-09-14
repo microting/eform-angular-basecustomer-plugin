@@ -1,4 +1,6 @@
-﻿using System.Data.Entity;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure.Annotations;
 using Customers.Pn.Infrastructure.Data.Entities;
 
 namespace Customers.Pn.Infrastructure.Data
@@ -29,16 +31,17 @@ namespace Customers.Pn.Infrastructure.Data
         public DbSet<CustomerPn> Customers { get; set; }
         public DbSet<FieldPn> Fields { get; set; }
         public DbSet<CustomerFieldPn> CustomerFields { get; set; }
+        public DbSet<CustomerPnSettings> CustomerPnSettings { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            //modelBuilder.Entity<CustomerPn>()
-            //    .Property(e => e.VinNumber)
-            //    .HasColumnAnnotation(
-            //        IndexAnnotation.AnnotationName,
-            //        new IndexAnnotation(new IndexAttribute { IsUnique = true }));
+            modelBuilder.Entity<CustomerPn>()
+                .Property(e => e.RelatedEntityId)
+                .HasColumnAnnotation(
+                    IndexAnnotation.AnnotationName,
+                    new IndexAnnotation(new IndexAttribute { IsUnique = true }));
         }
     }
 }

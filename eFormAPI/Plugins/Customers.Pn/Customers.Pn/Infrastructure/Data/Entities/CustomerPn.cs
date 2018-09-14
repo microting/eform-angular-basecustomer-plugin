@@ -26,5 +26,6 @@ namespace Customers.Pn.Infrastructure.Data.Entities
         [StringLength(250)]
         public string ContactPerson { get; set; }
         public string Description { get; set; }
+        public int? RelatedEntityId { get; set; }
     }
 }
