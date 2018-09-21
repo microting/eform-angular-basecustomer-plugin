@@ -1,7 +1,7 @@
 <subheader-pn [title]="'Customers plugin settings' | translate">
   <div class="p-3">
     <button
-      class="btn btn-success" (click)="updateFields()">{{ 'Save' | translate }}
+      class="btn btn-success" (click)="updateSettings()">{{ 'Save' | translate }}
     </button>
   </div>
 </subheader-pn>
@@ -13,13 +13,35 @@
       </subheader-pn>
       <div class="container-fluid">
         <div class="row mt-2">
-          <div class="col-md-2" *ngFor="let field of fieldsUpdateModel.fields">
-            <label class="md-checkbox">
-              <mat-checkbox (click)="checkBoxChanged($event, field)" [checked]="field.fieldStatus == fieldStatusEnum.Enabled"
-                     value="{{field.fieldStatus == 1}}" color="primary"></mat-checkbox>
-              <div>{{field.name | translate}}</div>
-            </label>
+          <div class="col-md-2 mb-2" *ngFor="let field of fieldsUpdateModel.fields">
+            <div class="mat-checkbox">
+              <input id="checkbox{{field.id}}" (click)="checkBoxChanged($event, field)"
+                     [checked]="field.fieldStatus == fieldStatusEnum.Enabled"
+                     [value]="field.fieldStatus == fieldStatusEnum.Enabled" type="checkbox">
+              <label for="checkbox{{field.id}}">{{field.name | translate}}</label>
+            </div>
           </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-md-12 col-xs-12 control-block">
+      <subheader-pn [title]="'Settings' | translate" [heandingSizeRem]="1">
+      </subheader-pn>
+      <div class="container-fluid">
+        <div class="row mt-2">
+          <div class="col-md-6">
+            <ng-select [items]="advEntitySearchableGroupListModel.entityGroups"
+                       bindLabel="name"
+                       [placeholder]="('Selected list' | translate) || customersPnSettingsModel.relatedEntityName"
+                       bindValue="entityGroupMUId"
+                       [typeahead]="typeahead"
+                       [(ngModel)]="customersPnSettingsModel.relatedEntityId">
+            </ng-select>
+          </div>
+
         </div>
 
       </div>
