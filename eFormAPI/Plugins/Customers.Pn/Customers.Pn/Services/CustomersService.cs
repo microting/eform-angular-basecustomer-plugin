@@ -10,6 +10,7 @@ using Customers.Pn.Infrastructure.Models.Customer;
 using Customers.Pn.Infrastructure.Models.Fields;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Extensions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
@@ -17,14 +18,16 @@ namespace Customers.Pn.Services
 {
     public class CustomersService : ICustomersService
     {
+        private readonly IEFormCoreService _coreHelper;
         private readonly ILogger<CustomersService> _logger;
         private readonly CustomersPnDbContext _dbContext;
 
         public CustomersService(ILogger<CustomersService> logger, 
-            CustomersPnDbContext dbContext)
+            CustomersPnDbContext dbContext, IEFormCoreService coreHelper)
         {
             _logger = logger;
             _dbContext = dbContext;
+            _coreHelper = coreHelper;
         }
 
         public OperationDataResult<CustomersModel> GetCustomers(CustomersRequestModel pnRequestModel)
@@ -172,6 +175,27 @@ namespace Customers.Pn.Services
                 };
                 _dbContext.Customers.Add(customer);
                 _dbContext.SaveChanges();
+                // create item
+                var core = _coreHelper.GetCore();
+                var entityGroup = core.EntityGroupRead(customerUpdateModel.RelatedEntityId.ToString());
+                if (entityGroup == null)
+                {
+                    return new OperationResult(false, "Entity group not found");
+                }
+                var nextItemUid = entityGroup.EntityGroupItemLst.Count;
+                var customers = _dbContext.Customers.ToList();
+                foreach (var customer in customers)
+                {
+                    if (customer.RelatedEntityId != null)
+                    {
+                        //    core.EntityItemDelete(customer.RelatedEntityId.Id);
+                    }
+                    //     var item = core.EntitySearchItemCreate(entityGroup.Id, entityItem.Name, entityItem.Description, nextItemUid.ToString());
+                    //    customer.RelatedEntityId = item;
+                    nextItemUid++;
+                }
+                _dbContext.SaveChanges();
+
                 return new OperationResult(true,
                     CustomersPnLocaleHelper.GetString("CustomerCreated"));
             }
@@ -217,6 +241,57 @@ namespace Customers.Pn.Services
                     CustomersPnLocaleHelper.GetString("ErrorWhileUpdatingCustomerInfo"));
             }
         }
+        
+
+        public OperationResult UpdateSettings(CustomerSettingsModel customerUpdateModel)
+        {
+            try
+            {
+                var customerSettings = _dbContext.CustomerSettings.FirstOrDefault();
+                if (customerSettings == null)
+                {
+                    customerSettings = new CustomerSettings()
+                    {
+                        RelatedEntityGroupId = customerUpdateModel.RelatedEntityId
+                    };
+                    _dbContext.CustomerSettings.Add(customerSettings);
+                }
+                else
+                {
+                    customerSettings.RelatedEntityGroupId = customerUpdateModel.RelatedEntityId;
+                    _dbContext.CustomerSettings.Update(customerSettings);
+                }
+                _dbContext.SaveChanges();
+                var core = _coreHelper.GetCore();
+                var entityGroup = core.EntityGroupRead(customerUpdateModel.RelatedEntityId.ToString());
+                if (entityGroup == null)
+                {
+                    return new OperationResult(false, "Entity group not found");
+                }
+                var nextItemUid = entityGroup.EntityGroupItemLst.Count;
+                var customers = _dbContext.Customers.ToList();
+                foreach (var customer in customers)
+                {
+                    if (customer.RelatedEntityId != null)
+                    {
+                    //    core.EntityItemDelete(customer.RelatedEntityId.Id);
+                    }
+               //     var item = core.EntitySearchItemCreate(entityGroup.Id, entityItem.Name, entityItem.Description, nextItemUid.ToString());
+                //    customer.RelatedEntityId = item;
+                    nextItemUid++;
+                }
+                _dbContext.SaveChanges();
+                return new OperationDataResult<CustomersModel>(true,
+                    CustomersPnLocaleHelper.GetString("CustomerUpdatedSuccessfully"));
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError(e.Message);
+                _logger.LogError(e.Message);
+                return new OperationDataResult<CustomersModel>(false,
+                    CustomersPnLocaleHelper.GetString("ErrorWhileUpdatingCustomerInfo"));
+            }
+        }
 
         public OperationResult DeleteCustomer(int id)
         {
@@ -228,6 +303,11 @@ namespace Customers.Pn.Services
                     return new OperationResult(false,
                         CustomersPnLocaleHelper.GetString("CustomerNotFound"));
                 }
+
+
+
+                // core.EntityItemDelete(entityItem.Id);
+
 
                 _dbContext.Customers.Remove(customer);
                 _dbContext.SaveChanges();
