@@ -16,10 +16,10 @@ namespace Customers.Pn.Migrations
 
         protected override void Seed(CustomersPnDbContext context)
         {
-            var customerFields = new CustomerPn().GetPropList();
+            var customerFields = new Customer().GetPropList();
             foreach (var name in customerFields)
             {
-                var field = new FieldPn()
+                var field = new Field()
                 {
                     Name = name
                 };
@@ -31,7 +31,7 @@ namespace Customers.Pn.Migrations
             var fields = context.Fields.ToList();
             foreach (var field in fields)
             {
-                var customerField = new CustomerFieldPn
+                var customerField = new CustomerField
                 {
                     FieldId = field.Id,
                     FieldStatus = FieldPnStatus.Enabled

@@ -4,7 +4,7 @@ using eFormApi.BasePn.Infrastructure.Data.Base;
 
 namespace Customers.Pn.Infrastructure.Data.Entities
 {
-    public class CustomerPn : BaseEntity
+    public class Customer : BaseEntity
     {
         public DateTime CreatedDate { get; set; }
 
