@@ -17,6 +17,7 @@ namespace Customers.Pn.Migrations
         protected override void Seed(CustomersPnDbContext context)
         {
             var customerFields = new Customer().GetPropList();
+            customerFields.Remove(nameof(Customer.RelatedEntityId));
             foreach (var name in customerFields)
             {
                 var field = new Field()
@@ -27,7 +28,12 @@ namespace Customers.Pn.Migrations
             }
 
             context.SaveChanges();
-
+            var fieldForRemove = context.Fields.FirstOrDefault(x => x.Name == nameof(Customer.RelatedEntityId));
+            if (fieldForRemove != null)
+            {
+                context.Fields.Remove(fieldForRemove);
+                context.SaveChanges();
+            }
             var fields = context.Fields.ToList();
             foreach (var field in fields)
             {

@@ -343,11 +343,11 @@ namespace Customers.Pn.Controllers
                 var customerSettings = _dbContext.CustomerSettings.FirstOrDefault();
                 if (customerSettings == null)
                 {
-                    var customerSettingsNew = new CustomerSettings()
+                    customerSettings = new CustomerSettings()
                     {
                         RelatedEntityGroupId = customerUpdateModel.RelatedEntityId
                     };
-                    _dbContext.CustomerSettings.Add(customerSettingsNew);
+                    _dbContext.CustomerSettings.Add(customerSettings);
                 }
                 else
                 {
