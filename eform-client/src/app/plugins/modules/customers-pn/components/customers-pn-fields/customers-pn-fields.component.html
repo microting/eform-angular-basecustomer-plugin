@@ -36,7 +36,7 @@
             <ng-select [items]="advEntitySearchableGroupListModel.entityGroups"
                        bindLabel="name"
                        [placeholder]="('Selected list' | translate) || customersPnSettingsModel.relatedEntityName"
-                       bindValue="entityGroupMUId"
+                       bindValue="entityGroupUUID"
                        [typeahead]="typeahead"
                        [(ngModel)]="customersPnSettingsModel.relatedEntityId">
             </ng-select>
