@@ -46,7 +46,7 @@ After that add link to the menu. Go to `eform-client/src/app/components/navigati
 
 On the back-end part no need to do anything if you’re unpacking plugin binaries to `eFormApi/eFormAPI/Plugins`. 
 If building plugin from source code – you’re need to open solution of plugin and build it in **Visual Studio 2017**.
-If you’re need to implement any changes – go to `eFormAPI/Plugins/Customers.Pn`. Open solution, make changes and build it.
+If you’re need to implement any changes – go to `eFormAPI/Plugins/CaseManagement.Pn`. Open solution, make changes and build it.
 
 ## Configuration steps
 
