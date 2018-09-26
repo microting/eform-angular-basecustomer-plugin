@@ -8,9 +8,9 @@ On front-end part plugins will be included into `eform-client/src/app/plugins/mo
     ...
 },
 {
-    path: 'case-management-pn',
+    path: 'customers-pn',
     canActivate: [AuthGuard],
-    loadChildren: './modules/case-management-pn/case-management-pn.module#CaseManagementPnModule'
+    loadChildren: './modules/customers-pn/customers-pn.module#CustomersPnModule'
 }
 ```
 
@@ -21,37 +21,13 @@ After that add link to the menu. Go to `eform-client/src/app/components/navigati
     ...
 },
 {
-          name: this.translateService.instant('Case Management'),
-          e2eId: 'case-management-pn',
-          submenus: [
-            {
-              name: this.translateService.instant('Calendar'),
-              e2eId: 'case-management-pn-calendar',
-              link: '/plugins/case-management-pn/calendar'
-            },
-            {
-              name: this.translateService.instant('Cases'),
-              e2eId: 'case-management-pn-cases',
-              link: '/plugins/case-management-pn/cases'
-            },
-            {
-              name: this.translateService.instant('Settings'),
-              e2eId: 'case-management-pn-settings',
-              link: '/plugins/case-management-pn/settings',
-              guard: 'admin'
-            }
-          ]
+     name: 'Customers Pn',  // here goes plugin name
+     link: '/plugins/customers-pn', 	// here goes plugin link
+     e2eId: '', // here goes e2eid for testing
+     submenus: []
 }
 ```
 
 On the back-end part no need to do anything if you’re unpacking plugin binaries to `eFormApi/eFormAPI/Plugins`. 
 If building plugin from source code – you’re need to open solution of plugin and build it in **Visual Studio 2017**.
-If you’re need to implement any changes – go to `eFormAPI/Plugins/CaseManagement.Pn`. Open solution, make changes and build it.
-
-## Configuration steps
-
-1. Create searchable group
-2. Create template from XML with searchable group id
-3. Select date to as first case column and case name as second case column in templates
-4. Bind all customers to selected list in Customers plugin
-5. Bind Case management plugin to template from step 2
+If you’re need to implement any changes – go to `eFormAPI/Plugins/Customers.Pn`. Open solution, make changes and build it.
