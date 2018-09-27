@@ -253,6 +253,9 @@ namespace Customers.Pn.Controllers
                 customer.Phone = customerUpdateModel.Phone;
                 customer.ZipCode = customerUpdateModel.ZipCode;
                 _dbContext.SaveChanges();
+                var core = _coreHelper.GetCore();
+
+                core.EntityItemUpdate((int)customer.RelatedEntityId, customer.CompanyName, "", "", 0);
                 return new OperationDataResult<CustomersModel>(true,
                     CustomersPnLocaleHelper.GetString("CustomerUpdatedSuccessfully"));
             }
