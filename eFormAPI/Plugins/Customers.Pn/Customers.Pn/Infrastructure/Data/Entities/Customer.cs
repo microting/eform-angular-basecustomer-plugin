@@ -4,7 +4,7 @@ using eFormApi.BasePn.Infrastructure.Data.Base;
 
 namespace Customers.Pn.Infrastructure.Data.Entities
 {
-    public class CustomerPn : BaseEntity
+    public class Customer : BaseEntity
     {
         public DateTime CreatedDate { get; set; }
 
@@ -26,5 +26,6 @@ namespace Customers.Pn.Infrastructure.Data.Entities
         [StringLength(250)]
         public string ContactPerson { get; set; }
         public string Description { get; set; }
+        public int? RelatedEntityId { get; set; }
     }
 }

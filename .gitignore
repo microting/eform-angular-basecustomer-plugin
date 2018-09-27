@@ -328,3 +328,7 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+
+eFormAPI/Plugins/Customers\.Pn/Customers/
+
+eFormAPI/eFormAPI/Plugins/Customers/

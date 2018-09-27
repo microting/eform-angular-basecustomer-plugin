@@ -2,7 +2,7 @@
 
 namespace Customers.Pn.Infrastructure.Models.Customer
 {
-    public class CustomerPnFullModel
+    public class CustomerFullModel
     {
         public int Id { get; set; }
         public DateTime CreatedDate { get; set; }
