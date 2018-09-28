@@ -49,7 +49,7 @@
               <div [innerHTML]="field.value"></div>
             </ng-container>
             <ng-container *ngSwitchCase="fieldsEnum[fieldsEnum.CreatedDate]">
-              {{field.value | date:'dd.MM.y HH:mm:ss'}}
+              {{field.value}}
             </ng-container>
             <ng-container *ngSwitchDefault>
               {{field.value}}
