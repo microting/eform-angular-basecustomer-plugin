@@ -87,4 +87,8 @@ export class CustomersPnFieldsComponent implements OnInit {
       this.fieldsUpdateModel.fields.find(x => x.id === field.id).fieldStatus = CustomersPnFieldStatusEnum.Disabled;
     }
   }
+
+  onSelectedChanged(e: any) {
+    this.customersPnSettingsModel.relatedEntityId = e.microtingUUID;
+  }
 }
