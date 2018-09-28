@@ -198,7 +198,7 @@ namespace Customers.Pn.Controllers
                     {
                         companyName = $"Empty company {nextItemUid}";
                     }
-                    var item = core.EntitySearchItemCreate(entityGroup.Id, $"{companyName}", "",
+                    var item = core.EntitySearchItemCreate(entityGroup.Id, $"{companyName}", $"{customer.Description}",
                         nextItemUid.ToString());
                     if (item != null)
                     {
@@ -255,7 +255,7 @@ namespace Customers.Pn.Controllers
                 _dbContext.SaveChanges();
                 var core = _coreHelper.GetCore();
 
-                core.EntityItemUpdate((int)customer.RelatedEntityId, customer.CompanyName, "", "", 0);
+                core.EntityItemUpdate((int)customer.RelatedEntityId, customer.CompanyName, customer.Description, "", 0);
                 return new OperationDataResult<CustomersModel>(true,
                     CustomersPnLocaleHelper.GetString("CustomerUpdatedSuccessfully"));
             }
