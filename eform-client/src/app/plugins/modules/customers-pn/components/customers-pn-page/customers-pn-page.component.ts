@@ -104,5 +104,8 @@ export class CustomersPnPageComponent implements OnInit {
     this.getAllCustomers();
   }
 
-
+  onSearchInputChanged(value: any) {
+    this.customersRequestModel.name = value;
+    this.getAllCustomers();
+  }
 }

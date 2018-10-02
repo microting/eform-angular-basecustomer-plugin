@@ -18,6 +18,16 @@
                   <label for="editCreatedBy">{{'CreatedBy' | translate}}</label>
                 </div>
               </div>
+              <div class="col-md-12 col-xs-12" *ngIf="isFieldAvailable(fieldsEnum.CustomerNo)">
+                <div class="md-form">
+                  <input mdbInputDirective
+                         [mdbValidate]="false"
+                         [(ngModel)]="selectedCustomerModel.customerNo"
+                         type="text" id="editCustomerNo"
+                         name="editCustomerNo" class="form-control">
+                  <label for="editCustomerNo">{{'CustomerNo' | translate}}</label>
+                </div>
+              </div>
               <div class="col-md-12 col-xs-12" *ngIf="isFieldAvailable(fieldsEnum.ContactPerson)">
                 <div class="md-form">
                   <input mdbInputDirective
