@@ -57,6 +57,11 @@ namespace Customers.Pn.Controllers
                         .OrderBy(x => x.Id);
                 }
 
+                if (!string.IsNullOrEmpty(pnRequestModel.Name))
+                {
+                    customersQuery = customersQuery.Where(x => x.CompanyName.Contains(pnRequestModel.Name));
+                }
+
                 customersQuery = customersQuery
                     .Skip(pnRequestModel.Offset)
                     .Take(pnRequestModel.PageSize);

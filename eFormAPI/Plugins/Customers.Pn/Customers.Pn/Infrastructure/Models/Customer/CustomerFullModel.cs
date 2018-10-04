@@ -7,7 +7,7 @@ namespace Customers.Pn.Infrastructure.Models.Customer
         public int Id { get; set; }
         public DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }
-        public int? CustomerNo { get; set; }
+        public string CustomerNo { get; set; }
         public string CompanyName { get; set; }
         public string CompanyAddress { get; set; }
         public string ZipCode { get; set; }
