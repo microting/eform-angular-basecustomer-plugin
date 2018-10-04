@@ -193,12 +193,12 @@ namespace Customers.Pn.Controllers
                     }
 
                     var nextItemUid = entityGroup.EntityGroupItemLst.Count;
-                    var companyName = customer.CompanyName;
-                    if (string.IsNullOrEmpty(companyName))
+                    var label = customer.CompanyName + " - " + customer.CompanyAddress + " - " + customer.ZipCode + " - " + customer.CityName + " - " + customer.Phone + " - " + customer.ContactPerson ;
+                    if (string.IsNullOrEmpty(label))
                     {
-                        companyName = $"Empty company {nextItemUid}";
+                        label = $"Empty company {nextItemUid}";
                     }
-                    var item = core.EntitySearchItemCreate(entityGroup.Id, $"{companyName}", $"{customer.Description}",
+                    var item = core.EntitySearchItemCreate(entityGroup.Id, $"{label}", $"{customer.Description}",
                         nextItemUid.ToString());
                     if (item != null)
                     {
@@ -365,41 +365,41 @@ namespace Customers.Pn.Controllers
                     return new OperationResult(false, "Entity group not found");
                 }
 
-                var nextItemUid = newEntityGroup.EntityGroupItemLst.Count;
-                var customers = _dbContext.Customers.ToList();
-                foreach (var customer in customers)
-                {
-                    if (customer.RelatedEntityId != null && customer.RelatedEntityId > 0)
-                    {
-                        core.EntityItemDelete((int) customer.RelatedEntityId);
-                    }
+                //var nextItemUid = newEntityGroup.EntityGroupItemLst.Count;
+                //var customers = _dbContext.Customers.ToList();
+                //foreach (var customer in customers)
+                //{
+                //    //if (customer.RelatedEntityId != null && customer.RelatedEntityId > 0)
+                //    //{
+                //    //    core.EntityItemDelete((int) customer.RelatedEntityId);
+                //    //}
 
-                    var companyName = customer.CompanyName;
-                    if (string.IsNullOrEmpty(companyName))
-                    {
-                        companyName = $"Empty company {nextItemUid}";
-                    }
-                    var item = core.EntitySearchItemCreate(newEntityGroup.Id, $"{companyName}", "",
-                        nextItemUid.ToString());
+                //    var companyName = customer.CompanyName;
+                //    if (string.IsNullOrEmpty(companyName))
+                //    {
+                //        companyName = $"Empty company {nextItemUid}";
+                //    }
+                //    var item = core.EntitySearchItemCreate(newEntityGroup.Id, $"{companyName}", "",
+                //        nextItemUid.ToString());
 
-                    if (item != null)
-                    {
-                        var entityGroup = core.EntityGroupRead(customerUpdateModel.RelatedEntityId.ToString());
-                        if (entityGroup != null)
-                        {
-                            foreach (var entityItem in entityGroup.EntityGroupItemLst)
-                            {
-                                if (entityItem.MicrotingUUID == item.MicrotingUUID)
-                                {
-                                    customer.RelatedEntityId = entityItem.Id;
-                                }
-                            }
-                        }
-                    }
-                    nextItemUid++;
-                }
+                //    if (item != null)
+                //    {
+                //        var entityGroup = core.EntityGroupRead(customerUpdateModel.RelatedEntityId.ToString());
+                //        if (entityGroup != null)
+                //        {
+                //            foreach (var entityItem in entityGroup.EntityGroupItemLst)
+                //            {
+                //                if (entityItem.MicrotingUUID == item.MicrotingUUID)
+                //                {
+                //                    customer.RelatedEntityId = entityItem.Id;
+                //                }
+                //            }
+                //        }
+                //    }
+                //    nextItemUid++;
+                //}
 
-                _dbContext.SaveChanges();
+                //_dbContext.SaveChanges();
                 return new OperationDataResult<CustomersModel>(true,
                     CustomersPnLocaleHelper.GetString("CustomerUpdatedSuccessfully"));
             }
