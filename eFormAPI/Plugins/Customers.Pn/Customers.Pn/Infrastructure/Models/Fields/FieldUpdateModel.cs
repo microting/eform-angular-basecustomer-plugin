@@ -6,6 +6,6 @@ namespace Customers.Pn.Infrastructure.Models.Fields
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public FieldPnStatus FieldStatus { get; set; }
+        public FieldStatus FieldStatus { get; set; }
     }
 }

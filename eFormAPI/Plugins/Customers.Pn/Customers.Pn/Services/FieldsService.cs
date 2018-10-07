@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using Customers.Pn.Abstractions;
 using Customers.Pn.Infrastructure.Data;
-using Customers.Pn.Infrastructure.Helpers;
 using Customers.Pn.Infrastructure.Models.Fields;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -13,13 +13,16 @@ namespace Customers.Pn.Services
     public class FieldsService : IFieldsService
     {
         private readonly ILogger<FieldsService> _logger;
+        private readonly ICustomersLocalizationService _localizationService;
         private readonly CustomersPnDbContext _dbContext;
 
         public FieldsService(ILogger<FieldsService> logger, 
-            CustomersPnDbContext dbContext)
+            CustomersPnDbContext dbContext, 
+            ICustomersLocalizationService localizationService)
         {
             _logger = logger;
             _dbContext = dbContext;
+            _localizationService = localizationService;
         }
 
         public OperationDataResult<FieldsUpdateModel> GetFields()
@@ -50,7 +53,7 @@ namespace Customers.Pn.Services
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
                 return new OperationDataResult<FieldsUpdateModel>(false,
-                    CustomersPnLocaleHelper.GetString("ErrorWhileObtainingFieldsInfo"));
+                    _localizationService.GetString("ErrorWhileObtainingFieldsInfo"));
             }
         }
 
@@ -74,14 +77,14 @@ namespace Customers.Pn.Services
 
                 _dbContext.SaveChanges();
                 return new OperationResult(true,
-                    CustomersPnLocaleHelper.GetString("FieldsUpdatedSuccessfully"));
+                    _localizationService.GetString("FieldsUpdatedSuccessfully"));
             }
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
                 return new OperationResult(false,
-                    CustomersPnLocaleHelper.GetString("ErrorWhileUpdatingFields"));
+                    _localizationService.GetString("ErrorWhileUpdatingFields"));
             }
         }
     }

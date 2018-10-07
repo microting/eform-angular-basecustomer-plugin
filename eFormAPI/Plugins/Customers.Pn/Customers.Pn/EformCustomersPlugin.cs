@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Reflection;
+using Customers.Pn.Abstractions;
 using Customers.Pn.Infrastructure.Data;
 using Customers.Pn.Infrastructure.Data.Entities;
 using Customers.Pn.Infrastructure.Data.Factories;
@@ -26,6 +27,7 @@ namespace Customers.Pn
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<ICustomersLocalizationService, CustomersLocalizationService>();
             services.AddScoped<IFieldsService, FieldsService>();
             services.AddScoped<ICustomersService, CustomersService>();
         }
@@ -74,7 +76,7 @@ namespace Customers.Pn
                     var customerField = new CustomerField
                     {
                         FieldId = field.Id,
-                        FieldStatus = FieldPnStatus.Enabled
+                        FieldStatus = FieldStatus.Enabled
                     };
                     if (!context.CustomerFields.Any(x => x.FieldId == field.Id))
                     {

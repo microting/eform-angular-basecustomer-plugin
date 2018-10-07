@@ -1,7 +1,7 @@
 ﻿using Customers.Pn.Infrastructure.Models.Fields;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
-namespace Customers.Pn.Services
+namespace Customers.Pn.Abstractions
 {
     public interface IFieldsService
     {

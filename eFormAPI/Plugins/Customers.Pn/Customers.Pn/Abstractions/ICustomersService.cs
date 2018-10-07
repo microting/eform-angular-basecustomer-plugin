@@ -1,7 +1,7 @@
 ﻿using Customers.Pn.Infrastructure.Models.Customer;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
-namespace Customers.Pn.Services
+namespace Customers.Pn.Abstractions
 {
     public interface ICustomersService
     {
@@ -10,5 +10,7 @@ namespace Customers.Pn.Services
         OperationDataResult<CustomersModel> GetCustomers(CustomersRequestModel pnRequestModel);
         OperationDataResult<CustomerFullModel> GetSingleCustomer(int id);
         OperationResult UpdateCustomer(CustomerFullModel customerUpdateModel);
+        OperationDataResult<CustomerSettingsModel> GetSettings();
+        OperationResult UpdateSettings(CustomerSettingsModel customerUpdateModel);
     }
 }

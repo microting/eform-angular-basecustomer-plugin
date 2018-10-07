@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using Customers.Pn.Abstractions;
 using Customers.Pn.Infrastructure.Data;
 using Customers.Pn.Infrastructure.Data.Entities;
 using Customers.Pn.Infrastructure.Enums;
 using Customers.Pn.Infrastructure.Extensions;
-using Customers.Pn.Infrastructure.Helpers;
 using Customers.Pn.Infrastructure.Models.Customer;
 using Customers.Pn.Infrastructure.Models.Fields;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Abstractions;
-using Microting.eFormApi.BasePn.Infrastructure.Extensions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace Customers.Pn.Services
@@ -21,14 +21,19 @@ namespace Customers.Pn.Services
         private readonly IEFormCoreService _coreHelper;
         private readonly ILogger<CustomersService> _logger;
         private readonly CustomersPnDbContext _dbContext;
+        private readonly ICustomersLocalizationService _customersLocalizationService;
 
-        public CustomersService(ILogger<CustomersService> logger, 
-            CustomersPnDbContext dbContext, IEFormCoreService coreHelper)
+        public CustomersService(ILogger<CustomersService> logger,
+            CustomersPnDbContext dbContext,
+            IEFormCoreService coreHelper,
+            ICustomersLocalizationService customersLocalizationService)
         {
             _logger = logger;
             _dbContext = dbContext;
             _coreHelper = coreHelper;
+            _customersLocalizationService = customersLocalizationService;
         }
+
 
         public OperationDataResult<CustomersModel> GetCustomers(CustomersRequestModel pnRequestModel)
         {
@@ -41,18 +46,23 @@ namespace Customers.Pn.Services
                     if (pnRequestModel.IsSortDsc)
                     {
                         customersQuery = customersQuery
-                            .CustomOrderByDescending(pnRequestModel.SortColumnName);
+                            .OrderByDescending(pnRequestModel.SortColumnName);
                     }
                     else
                     {
                         customersQuery = customersQuery
-                            .CustomOrderBy(pnRequestModel.SortColumnName);
+                            .OrderBy(pnRequestModel.SortColumnName);
                     }
                 }
                 else
                 {
                     customersQuery = _dbContext.Customers
                         .OrderBy(x => x.Id);
+                }
+
+                if (!string.IsNullOrEmpty(pnRequestModel.Name))
+                {
+                    customersQuery = customersQuery.Where(x => x.CompanyName.Contains(pnRequestModel.Name));
                 }
 
                 customersQuery = customersQuery
@@ -62,7 +72,7 @@ namespace Customers.Pn.Services
                 var customers = customersQuery.ToList();
                 customersPnModel.Total = _dbContext.Customers.Count();
                 var fields = _dbContext.CustomerFields
-                    .Include(x=>x.Field)
+                    .Include("Field")
                     .Select(x => new FieldUpdateModel()
                     {
                         FieldStatus = x.FieldStatus,
@@ -78,7 +88,7 @@ namespace Customers.Pn.Services
                     };
                     foreach (var field in fields)
                     {
-                        if (field.FieldStatus == FieldPnStatus.Enabled)
+                        if (field.FieldStatus == FieldStatus.Enabled)
                         {
                             var fieldModel = new FieldModel
                             {
@@ -114,7 +124,7 @@ namespace Customers.Pn.Services
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
                 return new OperationDataResult<CustomersModel>(false,
-                    CustomersPnLocaleHelper.GetString("ErrorObtainingCustomersInfo"));
+                    _customersLocalizationService.GetString("ErrorObtainingCustomersInfo"));
             }
         }
 
@@ -141,7 +151,7 @@ namespace Customers.Pn.Services
                 if (customer == null)
                 {
                     return new OperationDataResult<CustomerFullModel>(false,
-                        CustomersPnLocaleHelper.GetString("CustomerNotFound"));
+                        _customersLocalizationService.GetString("CustomerNotFound"));
                 }
 
                 return new OperationDataResult<CustomerFullModel>(true, customer);
@@ -151,10 +161,12 @@ namespace Customers.Pn.Services
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
                 return new OperationDataResult<CustomerFullModel>(false,
-                    CustomersPnLocaleHelper.GetString("ErrorObtainingCustomersInfo"));
+                    _customersLocalizationService.GetString("ErrorObtainingCustomersInfo"));
             }
         }
-        
+
+        [HttpPost]
+        [Route("api/customers-pn")]
         public OperationResult CreateCustomer(CustomerFullModel customerPnCreateModel)
         {
             try
@@ -176,35 +188,53 @@ namespace Customers.Pn.Services
                 _dbContext.Customers.Add(customer);
                 _dbContext.SaveChanges();
                 // create item
-                var core = _coreHelper.GetCore();
-                var entityGroup = core.EntityGroupRead(customerUpdateModel.RelatedEntityId.ToString());
-                if (entityGroup == null)
+                var customerSettings = _dbContext.CustomerSettings.FirstOrDefault();
+                if (customerSettings?.RelatedEntityGroupId != null)
                 {
-                    return new OperationResult(false, "Entity group not found");
-                }
-                var nextItemUid = entityGroup.EntityGroupItemLst.Count;
-                var customers = _dbContext.Customers.ToList();
-                foreach (var customer in customers)
-                {
-                    if (customer.RelatedEntityId != null)
+                    var core = _coreHelper.GetCore();
+                    var entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
+                    if (entityGroup == null)
                     {
-                        //    core.EntityItemDelete(customer.RelatedEntityId.Id);
+                        return new OperationResult(false, "Entity group not found");
                     }
-                    //     var item = core.EntitySearchItemCreate(entityGroup.Id, entityItem.Name, entityItem.Description, nextItemUid.ToString());
-                    //    customer.RelatedEntityId = item;
-                    nextItemUid++;
+
+                    var nextItemUid = entityGroup.EntityGroupItemLst.Count;
+                    var label = customer.CompanyName + " - " + customer.CompanyAddress + " - " + customer.ZipCode +
+                                " - " + customer.CityName + " - " + customer.Phone + " - " + customer.ContactPerson;
+                    if (string.IsNullOrEmpty(label))
+                    {
+                        label = $"Empty company {nextItemUid}";
+                    }
+
+                    var item = core.EntitySearchItemCreate(entityGroup.Id, $"{label}", $"{customer.Description}",
+                        nextItemUid.ToString());
+                    if (item != null)
+                    {
+                        entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
+                        if (entityGroup != null)
+                        {
+                            foreach (var entityItem in entityGroup.EntityGroupItemLst)
+                            {
+                                if (entityItem.MicrotingUUID == item.MicrotingUUID)
+                                {
+                                    customer.RelatedEntityId = entityItem.Id;
+                                }
+                            }
+                        }
+                    }
+
+                    _dbContext.SaveChanges();
                 }
-                _dbContext.SaveChanges();
 
                 return new OperationResult(true,
-                    CustomersPnLocaleHelper.GetString("CustomerCreated"));
+                    _customersLocalizationService.GetString("CustomerCreated"));
             }
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
                 return new OperationResult(false,
-                    CustomersPnLocaleHelper.GetString("ErrorWhileCreatingCustomer"));
+                    _customersLocalizationService.GetString("ErrorWhileCreatingCustomer"));
             }
         }
 
@@ -216,7 +246,7 @@ namespace Customers.Pn.Services
                 if (customer == null)
                 {
                     return new OperationResult(false,
-                        CustomersPnLocaleHelper.GetString("CustomerNotFound"));
+                        _customersLocalizationService.GetString("CustomerNotFound"));
                 }
 
                 customer.Description = customerUpdateModel.Description;
@@ -230,18 +260,82 @@ namespace Customers.Pn.Services
                 customer.Phone = customerUpdateModel.Phone;
                 customer.ZipCode = customerUpdateModel.ZipCode;
                 _dbContext.SaveChanges();
+                var core = _coreHelper.GetCore();
+
+                core.EntityItemUpdate((int) customer.RelatedEntityId, customer.CompanyName, customer.Description, "",
+                    0);
                 return new OperationDataResult<CustomersModel>(true,
-                    CustomersPnLocaleHelper.GetString("CustomerUpdatedSuccessfully"));
+                    _customersLocalizationService.GetString("CustomerUpdatedSuccessfully"));
             }
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
                 return new OperationDataResult<CustomersModel>(false,
-                    CustomersPnLocaleHelper.GetString("ErrorWhileUpdatingCustomerInfo"));
+                    _customersLocalizationService.GetString("ErrorWhileUpdatingCustomerInfo"));
             }
         }
-        
+
+        public OperationResult DeleteCustomer(int id)
+        {
+            try
+            {
+                var customer = _dbContext.Customers.FirstOrDefault(x => x.Id == id);
+                if (customer == null)
+                {
+                    return new OperationResult(false,
+                        _customersLocalizationService.GetString("CustomerNotFound"));
+                }
+
+                var core = _coreHelper.GetCore();
+                if (customer.RelatedEntityId != null)
+                {
+                    core.EntityItemDelete((int) customer.RelatedEntityId);
+                }
+
+                _dbContext.Customers.Remove(customer);
+                _dbContext.SaveChanges();
+                return new OperationResult(true,
+                    _customersLocalizationService.GetString("CustomerDeletedSuccessfully"));
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError(e.Message);
+                _logger.LogError(e.Message);
+                return new OperationDataResult<CustomerFullModel>(false,
+                    _customersLocalizationService.GetString("ErrorWhileDeletingCustomer"));
+            }
+        }
+
+        public OperationDataResult<CustomerSettingsModel> GetSettings()
+        {
+            try
+            {
+                var result = new CustomerSettingsModel();
+                var customerSettings = _dbContext.CustomerSettings.FirstOrDefault();
+                if (customerSettings?.RelatedEntityGroupId != null)
+                {
+                    result.RelatedEntityId = (int) customerSettings.RelatedEntityGroupId;
+                    var core = _coreHelper.GetCore();
+                    var entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
+                    if (entityGroup == null)
+                    {
+                        return new OperationDataResult<CustomerSettingsModel>(false, "Entity group not found");
+                    }
+
+                    result.RelatedEntityName = entityGroup.Name;
+                }
+
+                return new OperationDataResult<CustomerSettingsModel>(true, result);
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError(e.Message);
+                _logger.LogError(e.Message);
+                return new OperationDataResult<CustomerSettingsModel>(false,
+                    _customersLocalizationService.GetString("ErrorObtainingCustomersInfo"));
+            }
+        }
 
         public OperationResult UpdateSettings(CustomerSettingsModel customerUpdateModel)
         {
@@ -259,67 +353,26 @@ namespace Customers.Pn.Services
                 else
                 {
                     customerSettings.RelatedEntityGroupId = customerUpdateModel.RelatedEntityId;
-                    _dbContext.CustomerSettings.Update(customerSettings);
+                    _dbContext.Entry(customerSettings).State = EntityState.Modified;
                 }
+
                 _dbContext.SaveChanges();
                 var core = _coreHelper.GetCore();
-                var entityGroup = core.EntityGroupRead(customerUpdateModel.RelatedEntityId.ToString());
-                if (entityGroup == null)
+                var newEntityGroup = core.EntityGroupRead(customerUpdateModel.RelatedEntityId.ToString());
+                if (newEntityGroup == null)
                 {
                     return new OperationResult(false, "Entity group not found");
                 }
-                var nextItemUid = entityGroup.EntityGroupItemLst.Count;
-                var customers = _dbContext.Customers.ToList();
-                foreach (var customer in customers)
-                {
-                    if (customer.RelatedEntityId != null)
-                    {
-                    //    core.EntityItemDelete(customer.RelatedEntityId.Id);
-                    }
-               //     var item = core.EntitySearchItemCreate(entityGroup.Id, entityItem.Name, entityItem.Description, nextItemUid.ToString());
-                //    customer.RelatedEntityId = item;
-                    nextItemUid++;
-                }
-                _dbContext.SaveChanges();
+
                 return new OperationDataResult<CustomersModel>(true,
-                    CustomersPnLocaleHelper.GetString("CustomerUpdatedSuccessfully"));
+                    _customersLocalizationService.GetString("CustomerUpdatedSuccessfully"));
             }
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
                 return new OperationDataResult<CustomersModel>(false,
-                    CustomersPnLocaleHelper.GetString("ErrorWhileUpdatingCustomerInfo"));
-            }
-        }
-
-        public OperationResult DeleteCustomer(int id)
-        {
-            try
-            {
-                var customer = _dbContext.Customers.FirstOrDefault(x => x.Id == id);
-                if (customer == null)
-                {
-                    return new OperationResult(false,
-                        CustomersPnLocaleHelper.GetString("CustomerNotFound"));
-                }
-
-
-
-                // core.EntityItemDelete(entityItem.Id);
-
-
-                _dbContext.Customers.Remove(customer);
-                _dbContext.SaveChanges();
-                return new OperationResult(true,
-                    CustomersPnLocaleHelper.GetString("CustomerDeletedSuccessfully"));
-            }
-            catch (Exception e)
-            {
-                Trace.TraceError(e.Message);
-                _logger.LogError(e.Message);
-                return new OperationDataResult<CustomerFullModel>(false,
-                    CustomersPnLocaleHelper.GetString("ErrorWhileDeletingCustomer"));
+                    _customersLocalizationService.GetString("ErrorWhileUpdatingCustomerInfo"));
             }
         }
     }

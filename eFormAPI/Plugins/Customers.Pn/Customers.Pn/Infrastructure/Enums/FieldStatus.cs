@@ -1,6 +1,6 @@
 ﻿namespace Customers.Pn.Infrastructure.Enums
 {
-    public enum FieldPnStatus
+    public enum FieldStatus
     {
         Enabled = 1,
         Disabled

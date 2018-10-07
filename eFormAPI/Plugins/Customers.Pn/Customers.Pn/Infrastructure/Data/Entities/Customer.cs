@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using Microting.eFormApi.BasePn.Database.Base;
+using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
 
 namespace Customers.Pn.Infrastructure.Data.Entities
 {
@@ -10,7 +10,7 @@ namespace Customers.Pn.Infrastructure.Data.Entities
 
         [StringLength(250)]
         public string CreatedBy { get; set; }
-        public int? CustomerNo { get; set; }
+        public string CustomerNo { get; set; }
         [StringLength(250)]
         public string CompanyName { get; set; }
         [StringLength(250)]

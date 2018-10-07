@@ -4,14 +4,16 @@ using Customers.Pn.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Customers.Pn.Migrations
 {
     [DbContext(typeof(CustomersPnDbContext))]
-    partial class CustomersPnDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181007163746_ChangeCustomerNoType")]
+    partial class ChangeCustomerNoType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

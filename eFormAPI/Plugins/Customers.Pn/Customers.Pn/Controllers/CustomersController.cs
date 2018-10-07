@@ -1,8 +1,8 @@
-﻿using Customers.Pn.Infrastructure.Models.Customer;
-using Customers.Pn.Services;
+﻿using Customers.Pn.Abstractions;
+using Customers.Pn.Infrastructure.Models.Customer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microting.eFormApi.BasePn.Database.Entities;
+using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace Customers.Pn.Controllers
@@ -14,7 +14,7 @@ namespace Customers.Pn.Controllers
 
         public CustomersController(ICustomersService customersService)
         {
-            if(System.Diagnostics.Debugger.IsAttached)
+            if (System.Diagnostics.Debugger.IsAttached)
                 System.Diagnostics.Debugger.Break();
             _customersService = customersService;
         }
@@ -54,12 +54,21 @@ namespace Customers.Pn.Controllers
             return _customersService.DeleteCustomer(id);
         }
 
-        [HttpPut]
+        [HttpGet]
         [Authorize(Roles = EformRole.Admin)]
         [Route("api/customers-pn/settings")]
-        public OperationResult DeleteCustomer(int id)
+        public OperationDataResult<CustomerSettingsModel> GetSettings()
         {
-            return _customersService.DeleteCustomer(id);
+            return _customersService.GetSettings();
+        }
+
+
+        [HttpPost]
+        [Authorize(Roles = EformRole.Admin)]
+        [Route("api/customers-pn/settings")]
+        public OperationResult UpdateSettings(CustomerSettingsModel customerUpdateModel)
+        {
+            return _customersService.UpdateSettings(customerUpdateModel);
         }
     }
 }
