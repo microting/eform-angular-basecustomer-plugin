@@ -260,7 +260,8 @@ namespace Customers.Pn.Controllers
                 _dbContext.SaveChanges();
                 var core = _coreHelper.GetCore();
 
-                core.EntityItemUpdate((int)customer.RelatedEntityId, customer.CompanyName, customer.Description, "", 0);
+                var label = customer.CompanyName + " - " + customer.CompanyAddress + " - " + customer.ZipCode + " - " + customer.CityName + " - " + customer.Phone + " - " + customer.ContactPerson;
+                core.EntityItemUpdate((int)customer.RelatedEntityId, label, customer.Description, "", 0);
                 return new OperationDataResult<CustomersModel>(true,
                     CustomersPnLocaleHelper.GetString("CustomerUpdatedSuccessfully"));
             }
