@@ -23,6 +23,6 @@ export class CustomersPnSettingsService extends BaseService {
   }
 
   updateSettings(model: CustomersPnSettingsModel): Observable<OperationResult> {
-    return this.put(CustomerPnSettingsMethods.CustomersPnSettings, model);
+    return this.post(CustomerPnSettingsMethods.CustomersPnSettings, model);
   }
 }

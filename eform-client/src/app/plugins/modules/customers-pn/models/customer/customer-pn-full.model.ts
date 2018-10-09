@@ -3,7 +3,7 @@ export class CustomerPnFullModel {
   createdBy: string;
   companyName: string;
   companyAddress: string;
-  customerNo: number;
+  customerNo: string;
   zipCode: string;
   cityName: string;
   phone: string;
