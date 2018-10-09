@@ -341,6 +341,10 @@ namespace Customers.Pn.Services
         {
             try
             {
+                if (customerUpdateModel.RelatedEntityId == 0)
+                {
+                    return new OperationDataResult<CustomersModel>(true);
+                }
                 var customerSettings = _dbContext.CustomerSettings.FirstOrDefault();
                 if (customerSettings == null)
                 {
