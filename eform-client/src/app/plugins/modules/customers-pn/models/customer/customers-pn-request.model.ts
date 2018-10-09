@@ -1,4 +1,5 @@
 export class CustomersPnRequestModel {
+  name: string;
   sortColumnName: string;
   pageIndex: number;
   offset: number;

@@ -16,9 +16,19 @@
   </div>
 </subheader-pn>
 
-<div class="container-fluid mt-3">
+<div class="container-fluid">
+  <div class="row pl-1">
+    <div class="col-md-2">
+      <div class="md-form">
+        <input mdbInputDirective [mdbValidate]="false"
+               type="text" (input)="onSearchInputChanged($event.target.value)"
+               class="form-control input-sm" id="searchInput">
+        <label for="searchInput">{{'Search' | translate}}</label>
+      </div>
+    </div>
+  </div>
   <div class="row p-1 table-responsive no-gutters">
-    <table class="table table-sm table-striped text-center mat-elevation-z8">
+    <table class="table table-sm table-striped text-center z-depth-1">
       <thead>
       <tr>
         <ng-container *ngFor="let field of fieldsModel.fields">
@@ -49,7 +59,7 @@
               <div [innerHTML]="field.value"></div>
             </ng-container>
             <ng-container *ngSwitchCase="fieldsEnum[fieldsEnum.CreatedDate]">
-              {{field.value | date:'dd.MM.y HH:mm:ss'}}
+              {{field.value}}
             </ng-container>
             <ng-container *ngSwitchDefault>
               {{field.value}}
