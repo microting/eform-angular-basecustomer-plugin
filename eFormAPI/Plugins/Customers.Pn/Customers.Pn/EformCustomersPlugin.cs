@@ -28,8 +28,8 @@ namespace Customers.Pn
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<ICustomersLocalizationService, CustomersLocalizationService>();
-            services.AddScoped<IFieldsService, FieldsService>();
-            services.AddScoped<ICustomersService, CustomersService>();
+            services.AddTransient<IFieldsService, FieldsService>();
+            services.AddTransient<ICustomersService, CustomersService>();
         }
 
         public void ConfigureDbContext(IServiceCollection services, string connectionString)

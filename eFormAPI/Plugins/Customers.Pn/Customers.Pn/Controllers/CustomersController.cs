@@ -11,11 +11,9 @@ namespace Customers.Pn.Controllers
     public class CustomersController : Controller
     {
         private readonly ICustomersService _customersService;
-
+ 
         public CustomersController(ICustomersService customersService)
         {
-            if (System.Diagnostics.Debugger.IsAttached)
-                System.Diagnostics.Debugger.Break();
             _customersService = customersService;
         }
 
