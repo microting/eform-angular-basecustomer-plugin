@@ -1,31 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure.Annotations;
-using Customers.Pn.Infrastructure.Data.Entities;
+﻿using Customers.Pn.Infrastructure.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Customers.Pn.Infrastructure.Data
 {
     public class CustomersPnDbContext : DbContext
     {
-        public CustomersPnDbContext()
-            : base("eFormCustomersPnConnection")
+        public CustomersPnDbContext(DbContextOptions<CustomersPnDbContext> options) : base(options)
         {
-            Configuration.ProxyCreationEnabled = false;
-            Configuration.LazyLoadingEnabled = false;
-            Database.SetInitializer<CustomersPnDbContext>(null);
-        }
-
-        public CustomersPnDbContext(string connectionString)
-            : base(connectionString)
-        {
-            Configuration.ProxyCreationEnabled = false;
-            Configuration.LazyLoadingEnabled = false;
-            Database.SetInitializer<CustomersPnDbContext>(null);
-        }
-
-        public static CustomersPnDbContext Create()
-        {
-            return new CustomersPnDbContext();
         }
 
         public DbSet<Customer> Customers { get; set; }
@@ -33,15 +14,15 @@ namespace Customers.Pn.Infrastructure.Data
         public DbSet<CustomerField> CustomerFields { get; set; }
         public DbSet<CustomerSettings> CustomerSettings { get; set; }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Customer>()
-                .Property(e => e.RelatedEntityId)
-                .HasColumnAnnotation(
-                    IndexAnnotation.AnnotationName,
-                    new IndexAnnotation(new IndexAttribute { IsUnique = false }));
+                .HasIndex(x => x.RelatedEntityId)
+                .IsUnique();
+            modelBuilder.Entity<Field>()
+                .HasIndex(x => x.Name);
         }
     }
 }

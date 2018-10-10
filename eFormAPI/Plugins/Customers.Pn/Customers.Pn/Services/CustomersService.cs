@@ -1,37 +1,40 @@
 ﻿using System;
-using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
-using System.Web.Http;
-using Customers.Pn.Enums;
-using Customers.Pn.Helpers;
+using Customers.Pn.Abstractions;
 using Customers.Pn.Infrastructure.Data;
 using Customers.Pn.Infrastructure.Data.Entities;
+using Customers.Pn.Infrastructure.Enums;
 using Customers.Pn.Infrastructure.Extensions;
 using Customers.Pn.Infrastructure.Models.Customer;
 using Customers.Pn.Infrastructure.Models.Fields;
-using eFormApi.BasePn.Consts;
-using eFormApi.BasePn.Infrastructure;
-using eFormApi.BasePn.Infrastructure.Models.API;
-using NLog;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microting.eFormApi.BasePn.Abstractions;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
-namespace Customers.Pn.Controllers
+namespace Customers.Pn.Services
 {
-    [Authorize]
-    public class CustomersPnController : ApiController
+    public class CustomersService : ICustomersService
     {
-        private readonly Logger _logger;
+        private readonly IEFormCoreService _coreHelper;
+        private readonly ILogger<CustomersService> _logger;
         private readonly CustomersPnDbContext _dbContext;
-        private readonly EFormCoreHelper _coreHelper = new EFormCoreHelper();
+        private readonly ICustomersLocalizationService _customersLocalizationService;
 
-        public CustomersPnController()
+        public CustomersService(ILogger<CustomersService> logger,
+            CustomersPnDbContext dbContext,
+            IEFormCoreService coreHelper,
+            ICustomersLocalizationService customersLocalizationService)
         {
-            _dbContext = CustomersPnDbContext.Create();
-            _logger = LogManager.GetCurrentClassLogger();
+            _logger = logger;
+            _dbContext = dbContext;
+            _coreHelper = coreHelper;
+            _customersLocalizationService = customersLocalizationService;
         }
 
-        [HttpPost]
-        [Route("api/customers-pn/get-all")]
+
         public OperationDataResult<CustomersModel> GetCustomers(CustomersRequestModel pnRequestModel)
         {
             try
@@ -70,7 +73,7 @@ namespace Customers.Pn.Controllers
                 customersPnModel.Total = _dbContext.Customers.Count();
                 var fields = _dbContext.CustomerFields
                     .Include("Field")
-                    .Select(x => new FieldPnUpdateModel()
+                    .Select(x => new FieldUpdateModel()
                     {
                         FieldStatus = x.FieldStatus,
                         Id = x.FieldId,
@@ -85,9 +88,9 @@ namespace Customers.Pn.Controllers
                     };
                     foreach (var field in fields)
                     {
-                        if (field.FieldStatus == FieldPnStatus.Enabled)
+                        if (field.FieldStatus == FieldStatus.Enabled)
                         {
-                            var fieldModel = new FieldPnModel
+                            var fieldModel = new FieldModel
                             {
                                 Id = field.Id,
                                 Name = field.Name,
@@ -119,14 +122,12 @@ namespace Customers.Pn.Controllers
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
-                _logger.Error(e);
+                _logger.LogError(e.Message);
                 return new OperationDataResult<CustomersModel>(false,
-                    CustomersPnLocaleHelper.GetString("ErrorObtainingCustomersInfo"));
+                    _customersLocalizationService.GetString("ErrorObtainingCustomersInfo"));
             }
         }
 
-        [HttpGet]
-        [Route("api/customers-pn/{id}")]
         public OperationDataResult<CustomerFullModel> GetSingleCustomer(int id)
         {
             try
@@ -150,7 +151,7 @@ namespace Customers.Pn.Controllers
                 if (customer == null)
                 {
                     return new OperationDataResult<CustomerFullModel>(false,
-                        CustomersPnLocaleHelper.GetString("CustomerNotFound"));
+                        _customersLocalizationService.GetString("CustomerNotFound"));
                 }
 
                 return new OperationDataResult<CustomerFullModel>(true, customer);
@@ -158,9 +159,9 @@ namespace Customers.Pn.Controllers
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
-                _logger.Error(e);
+                _logger.LogError(e.Message);
                 return new OperationDataResult<CustomerFullModel>(false,
-                    CustomersPnLocaleHelper.GetString("ErrorObtainingCustomersInfo"));
+                    _customersLocalizationService.GetString("ErrorObtainingCustomersInfo"));
             }
         }
 
@@ -198,11 +199,13 @@ namespace Customers.Pn.Controllers
                     }
 
                     var nextItemUid = entityGroup.EntityGroupItemLst.Count;
-                    var label = customer.CompanyName + " - " + customer.CompanyAddress + " - " + customer.ZipCode + " - " + customer.CityName + " - " + customer.Phone + " - " + customer.ContactPerson ;
+                    var label = customer.CompanyName + " - " + customer.CompanyAddress + " - " + customer.ZipCode +
+                                " - " + customer.CityName + " - " + customer.Phone + " - " + customer.ContactPerson;
                     if (string.IsNullOrEmpty(label))
                     {
                         label = $"Empty company {nextItemUid}";
                     }
+
                     var item = core.EntitySearchItemCreate(entityGroup.Id, $"{label}", $"{customer.Description}",
                         nextItemUid.ToString());
                     if (item != null)
@@ -219,23 +222,22 @@ namespace Customers.Pn.Controllers
                             }
                         }
                     }
+
                     _dbContext.SaveChanges();
                 }
 
                 return new OperationResult(true,
-                    CustomersPnLocaleHelper.GetString("CustomerCreated"));
+                    _customersLocalizationService.GetString("CustomerCreated"));
             }
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
-                _logger.Error(e);
+                _logger.LogError(e.Message);
                 return new OperationResult(false,
-                    CustomersPnLocaleHelper.GetString("ErrorWhileCreatingCustomer"));
+                    _customersLocalizationService.GetString("ErrorWhileCreatingCustomer"));
             }
         }
 
-        [HttpPut]
-        [Route("api/customers-pn")]
         public OperationResult UpdateCustomer(CustomerFullModel customerUpdateModel)
         {
             try
@@ -244,7 +246,7 @@ namespace Customers.Pn.Controllers
                 if (customer == null)
                 {
                     return new OperationResult(false,
-                        CustomersPnLocaleHelper.GetString("CustomerNotFound"));
+                        _customersLocalizationService.GetString("CustomerNotFound"));
                 }
 
                 customer.Description = customerUpdateModel.Description;
@@ -260,23 +262,20 @@ namespace Customers.Pn.Controllers
                 _dbContext.SaveChanges();
                 var core = _coreHelper.GetCore();
 
-                var label = customer.CompanyName + " - " + customer.CompanyAddress + " - " + customer.ZipCode + " - " + customer.CityName + " - " + customer.Phone + " - " + customer.ContactPerson;
-                core.EntityItemUpdate((int)customer.RelatedEntityId, label, customer.Description, "", 0);
+                core.EntityItemUpdate((int) customer.RelatedEntityId, customer.CompanyName, customer.Description, "",
+                    0);
                 return new OperationDataResult<CustomersModel>(true,
-                    CustomersPnLocaleHelper.GetString("CustomerUpdatedSuccessfully"));
+                    _customersLocalizationService.GetString("CustomerUpdatedSuccessfully"));
             }
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
-                _logger.Error(e);
+                _logger.LogError(e.Message);
                 return new OperationDataResult<CustomersModel>(false,
-                    CustomersPnLocaleHelper.GetString("ErrorWhileUpdatingCustomerInfo"));
+                    _customersLocalizationService.GetString("ErrorWhileUpdatingCustomerInfo"));
             }
         }
 
-
-        [HttpDelete]
-        [Route("api/customers-pn/{id}")]
         public OperationResult DeleteCustomer(int id)
         {
             try
@@ -285,7 +284,7 @@ namespace Customers.Pn.Controllers
                 if (customer == null)
                 {
                     return new OperationResult(false,
-                        CustomersPnLocaleHelper.GetString("CustomerNotFound"));
+                        _customersLocalizationService.GetString("CustomerNotFound"));
                 }
 
                 var core = _coreHelper.GetCore();
@@ -297,20 +296,17 @@ namespace Customers.Pn.Controllers
                 _dbContext.Customers.Remove(customer);
                 _dbContext.SaveChanges();
                 return new OperationResult(true,
-                    CustomersPnLocaleHelper.GetString("CustomerDeletedSuccessfully"));
+                    _customersLocalizationService.GetString("CustomerDeletedSuccessfully"));
             }
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
-                _logger.Error(e);
+                _logger.LogError(e.Message);
                 return new OperationDataResult<CustomerFullModel>(false,
-                    CustomersPnLocaleHelper.GetString("ErrorWhileDeletingCustomer"));
+                    _customersLocalizationService.GetString("ErrorWhileDeletingCustomer"));
             }
         }
 
-        [HttpGet]
-        [Authorize(Roles = EformRoles.Admin)]
-        [Route("api/customers-pn/settings")]
         public OperationDataResult<CustomerSettingsModel> GetSettings()
         {
             try
@@ -335,20 +331,20 @@ namespace Customers.Pn.Controllers
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
-                _logger.Error(e);
+                _logger.LogError(e.Message);
                 return new OperationDataResult<CustomerSettingsModel>(false,
-                    CustomersPnLocaleHelper.GetString("ErrorObtainingCustomersInfo"));
+                    _customersLocalizationService.GetString("ErrorObtainingCustomersInfo"));
             }
         }
 
-
-        [HttpPost]
-        [Authorize(Roles = EformRoles.Admin)]
-        [Route("api/customers-pn/settings")]
         public OperationResult UpdateSettings(CustomerSettingsModel customerUpdateModel)
         {
             try
             {
+                if (customerUpdateModel.RelatedEntityId == 0)
+                {
+                    return new OperationDataResult<CustomersModel>(true);
+                }
                 var customerSettings = _dbContext.CustomerSettings.FirstOrDefault();
                 if (customerSettings == null)
                 {
@@ -363,6 +359,7 @@ namespace Customers.Pn.Controllers
                     customerSettings.RelatedEntityGroupId = customerUpdateModel.RelatedEntityId;
                     _dbContext.Entry(customerSettings).State = EntityState.Modified;
                 }
+
                 _dbContext.SaveChanges();
                 var core = _coreHelper.GetCore();
                 var newEntityGroup = core.EntityGroupRead(customerUpdateModel.RelatedEntityId.ToString());
@@ -371,50 +368,15 @@ namespace Customers.Pn.Controllers
                     return new OperationResult(false, "Entity group not found");
                 }
 
-                //var nextItemUid = newEntityGroup.EntityGroupItemLst.Count;
-                //var customers = _dbContext.Customers.ToList();
-                //foreach (var customer in customers)
-                //{
-                //    //if (customer.RelatedEntityId != null && customer.RelatedEntityId > 0)
-                //    //{
-                //    //    core.EntityItemDelete((int) customer.RelatedEntityId);
-                //    //}
-
-                //    var companyName = customer.CompanyName;
-                //    if (string.IsNullOrEmpty(companyName))
-                //    {
-                //        companyName = $"Empty company {nextItemUid}";
-                //    }
-                //    var item = core.EntitySearchItemCreate(newEntityGroup.Id, $"{companyName}", "",
-                //        nextItemUid.ToString());
-
-                //    if (item != null)
-                //    {
-                //        var entityGroup = core.EntityGroupRead(customerUpdateModel.RelatedEntityId.ToString());
-                //        if (entityGroup != null)
-                //        {
-                //            foreach (var entityItem in entityGroup.EntityGroupItemLst)
-                //            {
-                //                if (entityItem.MicrotingUUID == item.MicrotingUUID)
-                //                {
-                //                    customer.RelatedEntityId = entityItem.Id;
-                //                }
-                //            }
-                //        }
-                //    }
-                //    nextItemUid++;
-                //}
-
-                //_dbContext.SaveChanges();
                 return new OperationDataResult<CustomersModel>(true,
-                    CustomersPnLocaleHelper.GetString("CustomerUpdatedSuccessfully"));
+                    _customersLocalizationService.GetString("CustomerUpdatedSuccessfully"));
             }
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
-                _logger.Error(e);
+                _logger.LogError(e.Message);
                 return new OperationDataResult<CustomersModel>(false,
-                    CustomersPnLocaleHelper.GetString("ErrorWhileUpdatingCustomerInfo"));
+                    _customersLocalizationService.GetString("ErrorWhileUpdatingCustomerInfo"));
             }
         }
     }
