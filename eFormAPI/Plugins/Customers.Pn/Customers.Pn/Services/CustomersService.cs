@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using Customers.Pn.Abstractions;
 using Customers.Pn.Infrastructure.Data;
@@ -98,9 +99,17 @@ namespace Customers.Pn.Services
                             var val = customer.GetPropValue(field.Name);
                             if (val != null)
                             {
-                                fieldModel.Value = val.ToString();
+                                if (val is DateTime date)
+                                {
+                                    var text = date.ToString("yyy/MM/dd HH:mm:ss",
+                                        CultureInfo.InvariantCulture);
+                                    fieldModel.Value = text;
+                                }
+                                else
+                                {
+                                    fieldModel.Value = val.ToString();
+                                }
                             }
-
                             customerModel.Fields.Add(fieldModel);
                         }
                     }
@@ -260,10 +269,13 @@ namespace Customers.Pn.Services
                 customer.Phone = customerUpdateModel.Phone;
                 customer.ZipCode = customerUpdateModel.ZipCode;
                 _dbContext.SaveChanges();
-                var core = _coreHelper.GetCore();
+                if (customer.RelatedEntityId != null)
+                {
+                    var core = _coreHelper.GetCore();
+                    var label = customer.CompanyName + " - " + customer.CompanyAddress + " - " + customer.ZipCode + " - " + customer.CityName + " - " + customer.Phone + " - " + customer.ContactPerson;
+                    core.EntityItemUpdate((int)customer.RelatedEntityId, label, customer.Description, "", 0);
 
-                core.EntityItemUpdate((int) customer.RelatedEntityId, customer.CompanyName, customer.Description, "",
-                    0);
+                }
                 return new OperationDataResult<CustomersModel>(true,
                     _customersLocalizationService.GetString("CustomerUpdatedSuccessfully"));
             }
