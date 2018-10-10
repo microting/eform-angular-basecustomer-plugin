@@ -1,36 +1,37 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Web.Http;
-using Customers.Pn.Helpers;
+using Customers.Pn.Abstractions;
 using Customers.Pn.Infrastructure.Data;
 using Customers.Pn.Infrastructure.Models.Fields;
-using eFormApi.BasePn.Infrastructure.Models.API;
-using NLog;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
-namespace Customers.Pn.Controllers
+namespace Customers.Pn.Services
 {
-    [Authorize]
-    public class FieldsPnController : ApiController
+    public class FieldsService : IFieldsService
     {
-        private readonly Logger _logger;
+        private readonly ILogger<FieldsService> _logger;
+        private readonly ICustomersLocalizationService _localizationService;
         private readonly CustomersPnDbContext _dbContext;
 
-        public FieldsPnController()
+        public FieldsService(ILogger<FieldsService> logger, 
+            CustomersPnDbContext dbContext, 
+            ICustomersLocalizationService localizationService)
         {
-            _dbContext = CustomersPnDbContext.Create();
-            _logger = LogManager.GetCurrentClassLogger();
+            _logger = logger;
+            _dbContext = dbContext;
+            _localizationService = localizationService;
         }
 
-        [HttpGet]
-        [Route("api/fields-pn")]
-        public OperationDataResult<FieldsPnUpdateModel> GetFields()
+        public OperationDataResult<FieldsUpdateModel> GetFields()
         {
             try
             {
                 var fields = _dbContext.CustomerFields
                     .Include("Field")
-                    .Select(x => new FieldPnUpdateModel()
+                    .Select(x => new FieldUpdateModel()
                     {
                         FieldStatus = x.FieldStatus,
                         Id = x.FieldId,
@@ -41,24 +42,22 @@ namespace Customers.Pn.Controllers
                 var item = fields[index];
                 fields[index] = fields[0];
                 fields[0] = item;
-                var result = new FieldsPnUpdateModel()
+                var result = new FieldsUpdateModel()
                 {
                     Fields = fields,
                 };
-                return new OperationDataResult<FieldsPnUpdateModel>(true, result);
+                return new OperationDataResult<FieldsUpdateModel>(true, result);
             }
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
-                _logger.Error(e);
-                return new OperationDataResult<FieldsPnUpdateModel>(false,
-                    CustomersPnLocaleHelper.GetString("ErrorWhileObtainingFieldsInfo"));
+                _logger.LogError(e.Message);
+                return new OperationDataResult<FieldsUpdateModel>(false,
+                    _localizationService.GetString("ErrorWhileObtainingFieldsInfo"));
             }
         }
 
-        [HttpPut]
-        [Route("api/fields-pn")]
-        public OperationResult UpdateFields(FieldsPnUpdateModel fieldsModel)
+        public OperationResult UpdateFields(FieldsUpdateModel fieldsModel)
         {
             try
             {
@@ -77,15 +76,15 @@ namespace Customers.Pn.Controllers
                 }
 
                 _dbContext.SaveChanges();
-                return new OperationResult(true, 
-                    CustomersPnLocaleHelper.GetString("FieldsUpdatedSuccessfully"));
+                return new OperationResult(true,
+                    _localizationService.GetString("FieldsUpdatedSuccessfully"));
             }
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
-                _logger.Error(e);
+                _logger.LogError(e.Message);
                 return new OperationResult(false,
-                    CustomersPnLocaleHelper.GetString("ErrorWhileUpdatingFields"));
+                    _localizationService.GetString("ErrorWhileUpdatingFields"));
             }
         }
     }

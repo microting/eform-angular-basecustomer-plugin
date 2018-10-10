@@ -6,6 +6,6 @@ namespace Customers.Pn.Infrastructure.Models.Customer
     public class CustomerModel
     {
         public int Id { get; set; }
-        public List<FieldPnModel> Fields { get; set; } = new List<FieldPnModel>();
+        public List<FieldModel> Fields { get; set; } = new List<FieldModel>();
     }
 }
