@@ -58,9 +58,6 @@
             <ng-container *ngSwitchCase="fieldsEnum[fieldsEnum.Description]">
               <div [innerHTML]="field.value"></div>
             </ng-container>
-            <ng-container *ngSwitchCase="fieldsEnum[fieldsEnum.CreatedDate]">
-              {{field.value}}
-            </ng-container>
             <ng-container *ngSwitchDefault>
               {{field.value}}
             </ng-container>
