@@ -13,6 +13,7 @@ using Customers.Pn.Infrastructure.Models.Fields;
 using eFormApi.BasePn.Consts;
 using eFormApi.BasePn.Infrastructure;
 using eFormApi.BasePn.Infrastructure.Models.API;
+using Newtonsoft.Json.Linq;
 using NLog;
 
 namespace Customers.Pn.Controllers
@@ -161,6 +162,50 @@ namespace Customers.Pn.Controllers
                 _logger.Error(e);
                 return new OperationDataResult<CustomerFullModel>(false,
                     CustomersPnLocaleHelper.GetString("ErrorObtainingCustomersInfo"));
+            }
+        }
+
+        [HttpPost]
+        [Route("api/customers-pn/import-customers")]
+        public OperationResult ImportCustomers(CustomerImportModel customersAsJson)
+        {
+            {
+                JToken rawJson = JRaw.Parse(customersAsJson.ImportList);
+                JToken rawHeadersJson = JRaw.Parse(customersAsJson.Headers);
+
+                var headers = rawHeadersJson;
+                var customerObjects = rawJson.Skip(1);
+
+                foreach (var customerObj in customerObjects)
+                {
+                    string customerNo = customerObj[int.Parse(headers[4]["headerValue"].ToString())].ToString();
+                    Customer existingCustomer = _dbContext.Customers.SingleOrDefault(x => x.CustomerNo == customerNo);
+                    if (existingCustomer == null)
+                    {
+                        Customer customer = new Customer();
+                        
+                        customer.CityName = customerObj[int.Parse(headers[0]["headerValue"].ToString())].ToString(); // Cityname
+                        customer.CompanyAddress = customerObj[int.Parse(headers[1]["headerValue"].ToString())].ToString(); //CompanyAddress
+                        customer.CompanyName = customerObj[int.Parse(headers[2]["headerValue"].ToString())].ToString(); //Companyname
+                        customer.ContactPerson = customerObj[int.Parse(headers[3]["headerValue"].ToString())].ToString(); //Contactperson
+                        customer.CustomerNo = customerObj[int.Parse(headers[4]["headerValue"].ToString())].ToString(); //CustomerNumber
+                        customer.CreatedDate = DateTime.UtcNow; // Createddate
+                        customer.Description = customerObj[int.Parse(headers[5]["headerValue"].ToString())].ToString(); //Description
+                        customer.Email = customerObj[int.Parse(headers[6]["headerValue"].ToString())].ToString(); //Email
+                        customer.Phone = customerObj[int.Parse(headers[7]["headerValue"].ToString())].ToString(); //Phonenumber
+                        customer.ZipCode = customerObj[int.Parse(headers[8]["headerValue"].ToString())].ToString(); //Zipcode
+
+                        _dbContext.Customers.Add(customer);
+                        _dbContext.SaveChanges();
+                    }                    
+                    
+                }
+                return new OperationResult(true,
+                    CustomersPnLocaleHelper.GetString("CustomerCreated"));
+
+                //return new OperationResult(false,
+                //                    CustomersPnLocaleHelper.GetString("ErrorWhileCreatingCustomer"));
+                /*            throw new NotImplementedException()*/
             }
         }
 
