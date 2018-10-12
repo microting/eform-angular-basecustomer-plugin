@@ -260,6 +260,7 @@
     <Compile Include="Infrastructure\Extensions\ObjectExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\OrderedQueryableExtensions.cs" />
     <Compile Include="Infrastructure\Models\Customer\CustomerFullModel.cs" />
+    <Compile Include="Infrastructure\Models\Customer\CustomerImportModel.cs" />
     <Compile Include="Infrastructure\Models\Customer\CustomerModel.cs" />
     <Compile Include="Infrastructure\Models\Customer\CustomerSettingsModel.cs" />
     <Compile Include="Infrastructure\Models\Customer\CustomersModel.cs" />

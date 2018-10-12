@@ -4,6 +4,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {TranslateModule} from '@ngx-translate/core';
 import {MDBRootModule} from 'port/angular-bootstrap-md';
+import {PapaParseModule} from 'ngx-papaparse';
 
 import {CustomerPnLayoutComponent} from './layouts';
 import {CustomersPnFieldsService, CustomersPnService, CustomersPnSettingsService} from './services';
@@ -15,7 +16,8 @@ import {
   CustomerPnEditComponent,
   CustomersPnPageComponent,
   CustomersPnFieldsComponent,
-  CustomerPnAddComponent
+  CustomerPnAddComponent,
+  CustomerPnImportComponent
 } from './components';
 
 @NgModule({
@@ -27,7 +29,8 @@ import {
     CustomersPnRouting,
     TranslateModule,
     MDBRootModule,
-    NgSelectModule
+    NgSelectModule,
+    PapaParseModule
   ],
   declarations: [
     CustomerPnLayoutComponent,
@@ -35,7 +38,8 @@ import {
     CustomerPnEditComponent,
     CustomerPnDeleteComponent,
     CustomersPnFieldsComponent,
-    CustomerPnAddComponent
+    CustomerPnAddComponent,
+    CustomerPnImportComponent
   ],
   providers: [
     CustomersPnService,

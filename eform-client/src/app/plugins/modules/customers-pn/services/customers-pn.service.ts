@@ -7,13 +7,14 @@ import {Router} from '@angular/router';
 import {OperationDataResult, OperationResult} from 'src/app/common/models/operation.models';
 import {BaseService} from 'src/app/common/services/base.service';
 import {CustomersPnModel, CustomersPnRequestModel, CustomerPnFullModel} from '../models';
+import {CustomersPnImportModel} from '../models/customer/customer-pn-import.model';
 
 export let CustomerPnMethods = {
   CustomerPn: 'api/customers-pn',
 };
 
 @Injectable()
-export class CustomersPnService extends BaseService{
+export class CustomersPnService extends BaseService {
   constructor(private _http: HttpClient, router: Router, toastrService: ToastrService) {
     super(_http, router, toastrService);
   }
@@ -36,5 +37,8 @@ export class CustomersPnService extends BaseService{
 
   deleteCustomer(customerId: number): Observable<OperationResult> {
     return this.delete(CustomerPnMethods.CustomerPn + '/' + customerId);
+  }
+  importCustomer(model: CustomersPnImportModel): Observable<OperationResult> {
+    return this.post(CustomerPnMethods.CustomerPn + '/import-customers', model);
   }
 }
