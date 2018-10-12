@@ -170,7 +170,7 @@ namespace Customers.Pn.Controllers
         {
             try
             {
-                var customer = new Customer()
+                Customer customer = new Customer()
                 {
                     CityName = customerPnCreateModel.CityName,
                     CompanyAddress = customerPnCreateModel.CompanyAddress,
@@ -187,23 +187,29 @@ namespace Customers.Pn.Controllers
                 _dbContext.Customers.Add(customer);
                 _dbContext.SaveChanges();
                 // create item
-                var customerSettings = _dbContext.CustomerSettings.FirstOrDefault();
+                CustomerSettings customerSettings = _dbContext.CustomerSettings.FirstOrDefault();
                 if (customerSettings?.RelatedEntityGroupId != null)
                 {
-                    var core = _coreHelper.GetCore();
-                    var entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
+                    eFormCore.Core core = _coreHelper.GetCore();
+                    eFormData.EntityGroup entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
                     if (entityGroup == null)
                     {
                         return new OperationResult(false, "Entity group not found");
                     }
 
-                    var nextItemUid = entityGroup.EntityGroupItemLst.Count;
-                    var label = customer.CompanyName + " - " + customer.CompanyAddress + " - " + customer.ZipCode + " - " + customer.CityName + " - " + customer.Phone + " - " + customer.ContactPerson ;
+                    int nextItemUid = entityGroup.EntityGroupItemLst.Count;
+                    string label = customer.CompanyName;
+                    label += string.IsNullOrEmpty(customer.CompanyAddress) ? "" : " - " + customer.CompanyAddress ;
+                    label += string.IsNullOrEmpty(customer.ZipCode) ? "" : " - " + customer.ZipCode;
+                    label += string.IsNullOrEmpty(customer.CityName) ? "" : " - " + customer.CityName;
+                    label += string.IsNullOrEmpty(customer.Phone) ? "" : " - " + customer.Phone;
+                    label += string.IsNullOrEmpty(customer.ContactPerson) ? "" : " - " + customer.ContactPerson;
+
                     if (string.IsNullOrEmpty(label))
                     {
                         label = $"Empty company {nextItemUid}";
                     }
-                    var item = core.EntitySearchItemCreate(entityGroup.Id, $"{label}", $"{customer.Description}",
+                    eFormData.EntityItem item = core.EntitySearchItemCreate(entityGroup.Id, $"{label}", $"{customer.Description}",
                         nextItemUid.ToString());
                     if (item != null)
                     {
@@ -240,7 +246,7 @@ namespace Customers.Pn.Controllers
         {
             try
             {
-                var customer = _dbContext.Customers.FirstOrDefault(x => x.Id == customerUpdateModel.Id);
+                Customer customer = _dbContext.Customers.FirstOrDefault(x => x.Id == customerUpdateModel.Id);
                 if (customer == null)
                 {
                     return new OperationResult(false,
@@ -258,9 +264,16 @@ namespace Customers.Pn.Controllers
                 customer.Phone = customerUpdateModel.Phone;
                 customer.ZipCode = customerUpdateModel.ZipCode;
                 _dbContext.SaveChanges();
-                var core = _coreHelper.GetCore();
+                eFormCore.Core core = _coreHelper.GetCore();
 
-                var label = customer.CompanyName + " - " + customer.CompanyAddress + " - " + customer.ZipCode + " - " + customer.CityName + " - " + customer.Phone + " - " + customer.ContactPerson;
+
+                string label = customer.CompanyName;
+                label += string.IsNullOrEmpty(customer.CompanyAddress) ? "" : " - " + customer.CompanyAddress;
+                label += string.IsNullOrEmpty(customer.ZipCode) ? "" : " - " + customer.ZipCode;
+                label += string.IsNullOrEmpty(customer.CityName) ? "" : " - " + customer.CityName;
+                label += string.IsNullOrEmpty(customer.Phone) ? "" : " - " + customer.Phone;
+                label += string.IsNullOrEmpty(customer.ContactPerson) ? "" : " - " + customer.ContactPerson;
+
                 core.EntityItemUpdate((int)customer.RelatedEntityId, label, customer.Description, "", 0);
                 return new OperationDataResult<CustomersModel>(true,
                     CustomersPnLocaleHelper.GetString("CustomerUpdatedSuccessfully"));
