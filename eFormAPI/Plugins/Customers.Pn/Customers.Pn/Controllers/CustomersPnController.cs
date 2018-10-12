@@ -247,8 +247,12 @@ namespace Customers.Pn.Controllers
                     label += string.IsNullOrEmpty(customer.CompanyAddress) ? "" : " - " + customer.CompanyAddress ;
                     label += string.IsNullOrEmpty(customer.ZipCode) ? "" : " - " + customer.ZipCode;
                     label += string.IsNullOrEmpty(customer.CityName) ? "" : " - " + customer.CityName;
-                    label += string.IsNullOrEmpty(customer.Phone) ? "" : " - " + customer.Phone;
+                    label += string.IsNullOrEmpty(customer.Phone) ? "" : " - " + customer.Phone;                    
                     label += string.IsNullOrEmpty(customer.ContactPerson) ? "" : " - " + customer.ContactPerson;
+                    if (label.Count(f => f == '-') == 1 && label.Contains("..."))
+                    {
+                        label.Replace(" - ", "");
+                    }
 
                     if (string.IsNullOrEmpty(label))
                     {
@@ -318,7 +322,10 @@ namespace Customers.Pn.Controllers
                 label += string.IsNullOrEmpty(customer.CityName) ? "" : " - " + customer.CityName;
                 label += string.IsNullOrEmpty(customer.Phone) ? "" : " - " + customer.Phone;
                 label += string.IsNullOrEmpty(customer.ContactPerson) ? "" : " - " + customer.ContactPerson;
-
+                if (label.Count(f => f == '-') == 1 && label.Contains("..."))
+                {
+                    label.Replace(" - ", "");
+                }
                 core.EntityItemUpdate((int)customer.RelatedEntityId, label, customer.Description, "", 0);
                 return new OperationDataResult<CustomersModel>(true,
                     CustomersPnLocaleHelper.GetString("CustomerUpdatedSuccessfully"));
