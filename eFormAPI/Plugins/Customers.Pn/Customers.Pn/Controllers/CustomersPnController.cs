@@ -251,7 +251,7 @@ namespace Customers.Pn.Controllers
                     label += string.IsNullOrEmpty(customer.ContactPerson) ? "" : " - " + customer.ContactPerson;
                     if (label.Count(f => f == '-') == 1 && label.Contains("..."))
                     {
-                        label.Replace(" - ", "");
+                        label = label.Replace(" - ", "");
                     }
 
                     if (string.IsNullOrEmpty(label))
@@ -324,7 +324,7 @@ namespace Customers.Pn.Controllers
                 label += string.IsNullOrEmpty(customer.ContactPerson) ? "" : " - " + customer.ContactPerson;
                 if (label.Count(f => f == '-') == 1 && label.Contains("..."))
                 {
-                    label.Replace(" - ", "");
+                    label = label.Replace(" - ", "");
                 }
                 core.EntityItemUpdate((int)customer.RelatedEntityId, label, customer.Description, "", 0);
                 return new OperationDataResult<CustomersModel>(true,
