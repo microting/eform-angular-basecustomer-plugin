@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Customers.Pn.Migrations
 {
-    public partial class Init : Migration
+    public partial class InitilMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,7 +16,7 @@ namespace Customers.Pn.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     CreatedBy = table.Column<string>(maxLength: 250, nullable: true),
-                    CustomerNo = table.Column<int>(nullable: true),
+                    CustomerNo = table.Column<string>(nullable: true),
                     CompanyName = table.Column<string>(maxLength: 250, nullable: true),
                     CompanyAddress = table.Column<string>(maxLength: 250, nullable: true),
                     ZipCode = table.Column<string>(maxLength: 50, nullable: true),

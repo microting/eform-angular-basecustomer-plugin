@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Customers.Pn.Migrations
 {
     [DbContext(typeof(CustomersPnDbContext))]
-    [Migration("20181007163746_ChangeCustomerNoType")]
-    partial class ChangeCustomerNoType
+    [Migration("20181019115944_InitilMigration")]
+    partial class InitilMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
