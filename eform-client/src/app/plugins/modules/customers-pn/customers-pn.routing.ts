@@ -3,7 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 
 import {AdminGuard, AuthGuard} from 'src/app/common/guards';
 import {CustomerPnLayoutComponent} from './layouts';
-import {CustomersPnPageComponent, CustomersPnFieldsComponent} from './components';
+import {CustomersPnPageComponent, CustomersPnFieldsComponent, CustomerPnImportComponent} from './components';
 
 export const routes: Routes = [
   {
@@ -19,6 +19,11 @@ export const routes: Routes = [
         path: 'settings',
         canActivate: [AdminGuard],
         component: CustomersPnFieldsComponent
+      },
+      {
+        path: 'import',
+        canActivate: [AdminGuard],
+        component: CustomerPnImportComponent
       }
     ]
   }

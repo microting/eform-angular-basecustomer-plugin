@@ -38,6 +38,13 @@ namespace Customers.Pn.Controllers
         {
             return _customersService.CreateCustomer(customerPnCreateModel);
         }
+        
+        [HttpPost]
+        [Route("api/customers-pn/import")]
+        public OperationResult ImportCustomer([FromBody] CustomerImportModel customerImportModel)
+        {
+            return _customersService.ImportCustomers(customerImportModel);
+        }
 
         [HttpPut]
         [Route("api/customers-pn")]

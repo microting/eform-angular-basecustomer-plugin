@@ -6,7 +6,7 @@ import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
 import {OperationDataResult, OperationResult} from 'src/app/common/models/operation.models';
 import {BaseService} from 'src/app/common/services/base.service';
-import {CustomersPnModel, CustomersPnRequestModel, CustomerPnFullModel} from '../models';
+import {CustomersPnModel, CustomersPnRequestModel, CustomerPnFullModel, CustomersPnImportModel} from '../models';
 
 export let CustomerPnMethods = {
   CustomerPn: 'api/customers-pn',
@@ -37,4 +37,7 @@ export class CustomersPnService extends BaseService{
   deleteCustomer(customerId: number): Observable<OperationResult> {
     return this.delete(CustomerPnMethods.CustomerPn + '/' + customerId);
   }
-}
+
+  importCustomer(model: CustomersPnImportModel): Observable<OperationResult> {
+    return this.post(CustomerPnMethods.CustomerPn + '/import', model);
+  }}
