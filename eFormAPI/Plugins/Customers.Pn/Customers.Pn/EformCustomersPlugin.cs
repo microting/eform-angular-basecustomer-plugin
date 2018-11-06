@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microting.eFormApi.BasePn;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 
 namespace Customers.Pn
 {
@@ -42,12 +43,25 @@ namespace Customers.Pn
             {
                 context.Database.Migrate();
             }
+
             // Seed database
             SeedDatabase(connectionString);
         }
 
         public void Configure(IApplicationBuilder appBuilder)
         {
+        }
+
+        public MenuModel HeaderMenu()
+        {
+            var result = new MenuModel();
+            result.LeftMenu.Add(new MenuItemModel()
+            {
+                Name = "Customers",
+                E2EId = "",
+                Link = "/plugins/customers-pn"
+            });
+            return result;
         }
 
         public void SeedDatabase(string connectionString)
