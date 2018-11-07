@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Customers.Pn.Abstractions;
 using Customers.Pn.Infrastructure.Data;
@@ -37,8 +38,8 @@ namespace Customers.Pn
             services.AddDbContext<CustomersPnDbContext>(o => o.UseSqlServer(connectionString,
                 b => b.MigrationsAssembly(PluginAssembly().FullName)));
 
-            var contextFactory = new CustomersPnContextFactory();
-            using (var context = contextFactory.CreateDbContext(new[] {connectionString}))
+            CustomersPnContextFactory contextFactory = new CustomersPnContextFactory();
+            using (CustomersPnDbContext context = contextFactory.CreateDbContext(new[] {connectionString}))
             {
                 context.Database.Migrate();
             }
@@ -53,15 +54,15 @@ namespace Customers.Pn
         public void SeedDatabase(string connectionString)
         {
             // Get DbContext
-            var contextFactory = new CustomersPnContextFactory();
-            using (var context = contextFactory.CreateDbContext(new[] {connectionString}))
+            CustomersPnContextFactory contextFactory = new CustomersPnContextFactory();
+            using (CustomersPnDbContext context = contextFactory.CreateDbContext(new[] {connectionString}))
             {
                 // Add data
-                var customerFields = new Customer().GetPropList();
+                List<string> customerFields = new Customer().GetPropList();
                 customerFields.Remove(nameof(Customer.RelatedEntityId));
-                foreach (var name in customerFields)
+                foreach (string name in customerFields)
                 {
-                    var field = new Field()
+                    Field field = new Field()
                     {
                         Name = name
                     };
@@ -72,17 +73,17 @@ namespace Customers.Pn
                 }
 
                 context.SaveChanges();
-                var fieldForRemove = context.Fields.FirstOrDefault(x => x.Name == nameof(Customer.RelatedEntityId));
+                Field fieldForRemove = context.Fields.FirstOrDefault(x => x.Name == nameof(Customer.RelatedEntityId));
                 if (fieldForRemove != null)
                 {
                     context.Fields.Remove(fieldForRemove);
                     context.SaveChanges();
                 }
 
-                var fields = context.Fields.ToList();
-                foreach (var field in fields)
+                List<Field> fields = context.Fields.ToList();
+                foreach (Field field in fields)
                 {
-                    var customerField = new CustomerField
+                    CustomerField customerField = new CustomerField
                     {
                         FieldId = field.Id,
                         FieldStatus = FieldStatus.Enabled

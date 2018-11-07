@@ -8,7 +8,7 @@ namespace Customers.Pn.Infrastructure.Data.Factories
     {
         public CustomersPnDbContext CreateDbContext(string[] args)
         {
-            var optionsBuilder = new DbContextOptionsBuilder<CustomersPnDbContext>();
+            DbContextOptionsBuilder<CustomersPnDbContext> optionsBuilder = new DbContextOptionsBuilder<CustomersPnDbContext>();
             if (args.Any())
             {
                 optionsBuilder.UseSqlServer(args.FirstOrDefault());
