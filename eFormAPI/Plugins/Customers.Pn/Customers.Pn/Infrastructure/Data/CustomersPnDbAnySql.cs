@@ -1,8 +1,8 @@
-﻿using Customers.Pn.Infrastructure.Data.Entities;
-using Microsoft.EntityFrameworkCore;
-
-namespace Customers.Pn.Infrastructure.Data
+﻿namespace Customers.Pn.Infrastructure.Data
 {
+    using Customers.Pn.Infrastructure.Data.Entities;
+    using Microsoft.EntityFrameworkCore;
+
     public class CustomersPnDbAnySql : DbContext
     {
 
