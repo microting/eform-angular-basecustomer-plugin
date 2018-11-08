@@ -8,12 +8,23 @@ namespace Customers.Pn.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            string autoIDGenStrategy = "SqlServer:ValueGenerationStrategy";
+            object autoIDGenStrategyValue = SqlServerValueGenerationStrategy.IdentityColumn;
+
+            // Setup for MySQL Provider
+            if (migrationBuilder.ActiveProvider == "Pomelo.EntityFrameworkCore.MySql")
+            {
+                DbConfig.IsMySQL = true;
+                autoIDGenStrategy = "MySQL:ValueGeneratedOnAdd";
+                autoIDGenStrategyValue = true;
+            }
+
             migrationBuilder.CreateTable(
                 name: "Customers",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation(autoIDGenStrategy, autoIDGenStrategyValue),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     CreatedBy = table.Column<string>(maxLength: 250, nullable: true),
                     CustomerNo = table.Column<string>(nullable: true),
@@ -37,7 +48,7 @@ namespace Customers.Pn.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation(autoIDGenStrategy, autoIDGenStrategyValue),
                     RelatedEntityGroupId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -50,7 +61,7 @@ namespace Customers.Pn.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation(autoIDGenStrategy, autoIDGenStrategyValue),
                     Name = table.Column<string>(maxLength: 50, nullable: true)
                 },
                 constraints: table =>
@@ -63,7 +74,7 @@ namespace Customers.Pn.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation(autoIDGenStrategy, autoIDGenStrategyValue),
                     FieldId = table.Column<int>(nullable: false),
                     FieldStatus = table.Column<int>(nullable: false)
                 },
