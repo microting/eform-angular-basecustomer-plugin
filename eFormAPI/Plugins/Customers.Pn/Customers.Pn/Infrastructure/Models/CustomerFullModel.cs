@@ -28,13 +28,13 @@ namespace Customers.Pn.Infrastructure.Models
             customer.CompanyName = CompanyName;
             customer.ContactPerson = ContactPerson;
             customer.CreatedBy = CreatedBy;
-            customer.Created_at = DateTime.Now;
+            //customer.Created_at = DateTime.Now;
             customer.CreatedDate = DateTime.Now;
             customer.CustomerNo = CustomerNo;
             customer.Description = Description;
             customer.Email = Email;
             customer.Phone = Phone;
-            customer.Updated_at = DateTime.Now;
+            //customer.Updated_at = DateTime.Now;
             customer.ZipCode = ZipCode;
             customer.RelatedEntityId = RelatedEntityId;
 
@@ -68,8 +68,8 @@ namespace Customers.Pn.Infrastructure.Models
 
             if (_dbContext.ChangeTracker.HasChanges())
             {
-                customer.Updated_at = DateTime.Now;
-                customer.Version += 1;
+                //customer.Updated_at = DateTime.Now;
+                //customer.Version += 1;
 
                 //_dbContext.CustomerVersions.Add(MapCustomerVersions(_dbContext, customer));
                 //_dbContext.SaveChanges();
@@ -85,12 +85,12 @@ namespace Customers.Pn.Infrastructure.Models
                 throw new NullReferenceException($"Culd not find Customer with {Id}");
             }
 
-            customer.Workflow_state = eFormShared.Constants.WorkflowStates.Removed;
+            //customer.Workflow_state = eFormShared.Constants.WorkflowStates.Removed;
 
             if (_dbContext.ChangeTracker.HasChanges())
             {
-                customer.Updated_at = DateTime.Now;
-                customer.Version += 1;
+                //customer.Updated_at = DateTime.Now;
+                //customer.Version += 1;
 
                 //_dbContext.CustomerVersions.Add(MapCustomerVersions(_dbContext, customer));
                 //_dbContext.SaveChanges();

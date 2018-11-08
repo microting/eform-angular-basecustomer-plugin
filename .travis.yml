@@ -3,6 +3,6 @@ solution: Customers.Pn.sln
 mono: none
 dotnet: 2.1
 script:
-  - dotnet restore eFormAPI/Plugins/Customers.Pn/Customers.Pn.Tests/Customers.Pn.Tests.csproj
-  - dotnet build eFormAPI/Plugins/Customers.Pn/Customers.Pn.Tests/Customers.Pn.Tests.csproj
-  - dotnet test eFormAPI/Plugins/Customers.Pn/Customers.Pn.Tests/Customers.Pn.Tests.csproj
+  - dotnet restore eFormAPI/Plugins/Customers.Pn/Customers.Pn.Test/Customers.Pn.Test.csproj
+  - dotnet build eFormAPI/Plugins/Customers.Pn/Customers.Pn.Test/Customers.Pn.Test.csproj
+  - dotnet test eFormAPI/Plugins/Customers.Pn/Customers.Pn.Test/Customers.Pn.Test.csproj

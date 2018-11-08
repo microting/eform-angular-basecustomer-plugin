@@ -8,7 +8,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 
 
-namespace Customers.Pn.Tests
+namespace Customers.Pn.Test
 {
     [TestFixture]
     public abstract class DbTestFixture
@@ -93,16 +93,11 @@ namespace Customers.Pn.Tests
         public void ClearDb()
         {
             List<string> modelNames = new List<string>();
-            modelNames.Add("CustomerFullModel");
-            modelNames.Add("CustomerImportModel");
-            modelNames.Add("CustomerModel");
-            modelNames.Add("CustomerSettingsModel");
-            modelNames.Add("CustomersModel");
-            modelNames.Add("CustomersRequestModel");
-            modelNames.Add("FieldModel");
-            modelNames.Add("FieldsModel");
-            modelNames.Add("FieldsUpdateModel");
-            modelNames.Add("FieldUpdateModel");
+            modelNames.Add("Customers");
+            modelNames.Add("CustomerField");
+            modelNames.Add("CustomerSettings");
+            modelNames.Add("Fields");
+           
 
 
             foreach (var modelName in modelNames)
