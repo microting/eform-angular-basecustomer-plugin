@@ -16,10 +16,10 @@ namespace Customers.Pn.Services
     {
         private readonly ILogger<FieldsService> _logger;
         private readonly ICustomersLocalizationService _localizationService;
-        private readonly CustomersPnDbContext _dbContext;
+        private readonly CustomersPnDbAnySql _dbContext;
 
-        public FieldsService(ILogger<FieldsService> logger, 
-            CustomersPnDbContext dbContext, 
+        public FieldsService(ILogger<FieldsService> logger,
+            CustomersPnDbAnySql dbContext, 
             ICustomersLocalizationService localizationService)
         {
             _logger = logger;
@@ -63,21 +63,22 @@ namespace Customers.Pn.Services
         {
             try
             {
-                List<int> list = fieldsModel.Fields.Select(s => s.Id).ToList();
-                List<CustomerField> fields = _dbContext.CustomerFields
-                    .Where(x => list.Contains(x.FieldId))
-                    .ToList();
+                fieldsModel.Update(_dbContext);
+                //List<int> list = fieldsModel.Fields.Select(s => s.Id).ToList(); // list of field ids.
+                //List<CustomerField> fields = _dbContext.CustomerFields
+                //    .Where(x => list.Contains(x.FieldId))
+                //    .ToList(); // lists the fields for the specific customer.
 
-                foreach (CustomerField field in fields)
-                {
-                    FieldUpdateModel fieldModel = fieldsModel.Fields.FirstOrDefault(x => x.Id == field.FieldId);
-                    if (fieldModel != null)
-                    {
-                        field.FieldStatus = fieldModel.FieldStatus;
-                    }
-                }
+                //foreach (CustomerField field in fields)// Itterating through a list of customerFields.
+                //{
+                //    FieldUpdateModel fieldModel = fieldsModel.Fields.FirstOrDefault(x => x.Id == field.FieldId); // takes field from list of fields
+                //    if (fieldModel != null) 
+                //    {
+                //        field.FieldStatus = fieldModel.FieldStatus;// sets new status for field, based on the updatemodels status.
+                //    }
+                //}
 
-                _dbContext.SaveChanges();
+                //_dbContext.SaveChanges();
                 return new OperationResult(true,
                     _localizationService.GetString("FieldsUpdatedSuccessfully"));
             }

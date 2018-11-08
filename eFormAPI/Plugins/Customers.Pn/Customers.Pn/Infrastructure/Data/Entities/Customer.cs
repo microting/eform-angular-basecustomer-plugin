@@ -6,8 +6,21 @@ namespace Customers.Pn.Infrastructure.Data.Entities
 {
     public class Customer : BaseEntity
     {
-        public DateTime CreatedDate { get; set; }
+        public DateTime? Created_at { get; set; }
 
+        public DateTime? Updated_at { get; set; }
+
+        [StringLength(255)]
+        public string Workflow_state { get; set; }
+
+        public int Version { get; set; }
+
+        public int Created_By_User_Id { get; set; }
+
+        public int Updated_By_User_Id { get; set; }
+
+        public DateTime CreatedDate { get; set; }
+       
         [StringLength(250)]
         public string CreatedBy { get; set; }
         public string CustomerNo { get; set; }

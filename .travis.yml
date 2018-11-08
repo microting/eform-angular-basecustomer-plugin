@@ -1,0 +1,8 @@
+language: csharp
+solution: Customers.Pn.sln
+mono: none
+dotnet: 2.1
+script:
+  - dotnet restore eFormAPI/Plugins/Customers.Pn/Customers.Pn.Tests/Customers.Pn.Tests.csproj
+  - dotnet build eFormAPI/Plugins/Customers.Pn/Customers.Pn.Tests/Customers.Pn.Tests.csproj
+  - dotnet test eFormAPI/Plugins/Customers.Pn/Customers.Pn.Tests/Customers.Pn.Tests.csproj

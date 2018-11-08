@@ -7,6 +7,7 @@ using Customers.Pn.Infrastructure.Data.Entities;
 using Customers.Pn.Infrastructure.Data.Factories;
 using Customers.Pn.Infrastructure.Enums;
 using Customers.Pn.Infrastructure.Extensions;
+using Customers.Pn.Infrastructure.Models.Fields;
 using Customers.Pn.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -36,11 +37,11 @@ namespace Customers.Pn
 
         public void ConfigureDbContext(IServiceCollection services, string connectionString)
         {
-            services.AddDbContext<CustomersPnDbContext>(o => o.UseSqlServer(connectionString,
+            services.AddDbContext<CustomersPnDbAnySql>(o => o.UseSqlServer(connectionString,
                 b => b.MigrationsAssembly(PluginAssembly().FullName)));
 
             CustomersPnContextFactory contextFactory = new CustomersPnContextFactory();
-            using (CustomersPnDbContext context = contextFactory.CreateDbContext(new[] {connectionString}))
+            using (CustomersPnDbAnySql context = contextFactory.CreateDbContext(new[] {connectionString}))
             {
                 context.Database.Migrate();
             }
@@ -69,20 +70,21 @@ namespace Customers.Pn
         {
             // Get DbContext
             CustomersPnContextFactory contextFactory = new CustomersPnContextFactory();
-            using (CustomersPnDbContext context = contextFactory.CreateDbContext(new[] {connectionString}))
+            using (CustomersPnDbAnySql context = contextFactory.CreateDbContext(new[] {connectionString}))
             {
                 // Add data
-                List<string> customerFields = new Customer().GetPropList();
-                customerFields.Remove(nameof(Customer.RelatedEntityId));
+                List<string> customerFields = new Customer().GetPropList(); //Find all attributes for cusomers and puts them in a list
+                customerFields.Remove(nameof(Customer.RelatedEntityId)); // removes the related entity, because it's not relevant for fields
                 foreach (string name in customerFields)
                 {
-                    Field field = new Field()
-                    {
-                        Name = name
-                    };
+                    //Field field = new Field()
+                    //{
+                    //    Name = name
+                    //};
                     if (!context.Fields.Any(x => x.Name == name))
                     {
-                        context.Fields.Add(field);
+                        FieldModel fieldModel = new FieldModel();
+                        fieldModel.Save(context);
                     }
                 }
 

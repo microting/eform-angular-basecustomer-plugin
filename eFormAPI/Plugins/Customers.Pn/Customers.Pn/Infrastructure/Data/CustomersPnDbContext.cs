@@ -3,10 +3,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Customers.Pn.Infrastructure.Data
 {
-    public class CustomersPnDbContext : DbContext
+    public class CustomersPnDbAnySql : DbContext
     {
-        public CustomersPnDbContext(DbContextOptions<CustomersPnDbContext> options) : base(options)
+
+        public CustomersPnDbAnySql() { }
+
+        public CustomersPnDbAnySql(DbContextOptions options) : base(options)
         {
+
         }
 
         public DbSet<Customer> Customers { get; set; }

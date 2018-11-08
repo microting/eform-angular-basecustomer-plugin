@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Customers.Pn.Migrations
 {
-    [DbContext(typeof(CustomersPnDbContext))]
+    [DbContext(typeof(CustomersPnDbAnySql))]
     [Migration("20181019115944_InitilMigration")]
     partial class InitilMigration
     {

@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using Customers.Pn.Abstractions;
-using Customers.Pn.Infrastructure.Models.Customer;
+using Customers.Pn.Infrastructure.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
