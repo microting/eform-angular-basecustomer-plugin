@@ -37,6 +37,33 @@ namespace Customers.Pn.Test
         [Test]
         public void FieldUpdateModel_Udate_DoesUpdate()
         {
+            // Arrange
+            Field field = new Field();
+            field.Name = Guid.NewGuid().ToString();
+
+            DbContext.Fields.Add(field);
+            DbContext.SaveChanges();
+
+            // Act
+            FieldUpdateModel fieldUpdateModel = new FieldUpdateModel();
+            fieldUpdateModel.Name = field.Name;
+
+            List<FieldUpdateModel> list = new List<FieldUpdateModel>();
+            list.Add(fieldUpdateModel);
+
+            FieldsUpdateModel fieldsUpdate = new FieldsUpdateModel();
+            fieldsUpdate.Fields = list;
+
+            fieldsUpdate.Update(DbContext);
+
+            Field dbField = DbContext.Fields.AsNoTracking().First();
+            List<Field> fieldList = DbContext.Fields.AsNoTracking().ToList();
+            // Assert
+            Assert.NotNull(dbField);
+
+            Assert.AreEqual(1, fieldList.Count());
+
+            Assert.AreEqual(fieldUpdateModel.Name, dbField.Name);
 
         }
     }
