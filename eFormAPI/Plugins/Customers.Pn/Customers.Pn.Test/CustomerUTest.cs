@@ -78,6 +78,7 @@ namespace Customers.Pn.Test
             customerFullModel.Email = customer.Email;
             customerFullModel.Phone = customer.Phone;
             customerFullModel.ZipCode = customer.ZipCode;
+            customerFullModel.Id = customer.Id;
 
             customerFullModel.Update(DbContext);
 
@@ -132,6 +133,7 @@ namespace Customers.Pn.Test
             customerFullModel.Email = customer.Email;
             customerFullModel.Phone = customer.Phone;
             customerFullModel.ZipCode = customer.ZipCode;
+            customerFullModel.Id = customer.Id;
 
             customerFullModel.Update(DbContext);
 

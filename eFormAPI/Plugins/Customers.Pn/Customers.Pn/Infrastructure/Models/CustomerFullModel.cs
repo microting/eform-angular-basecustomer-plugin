@@ -65,6 +65,7 @@ namespace Customers.Pn.Infrastructure.Models
             customer.Phone = Phone;
             customer.ZipCode = ZipCode;
             customer.RelatedEntityId = RelatedEntityId;
+            customer.Id = Id;
 
             if (_dbContext.ChangeTracker.HasChanges())
             {
