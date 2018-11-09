@@ -5,7 +5,6 @@ using Customers.Pn.Abstractions;
 using Customers.Pn.Infrastructure.Data;
 using Customers.Pn.Infrastructure.Data.Entities;
 using Customers.Pn.Infrastructure.Data.Factories;
-using Customers.Pn.Infrastructure.Enums;
 using Customers.Pn.Infrastructure.Extensions;
 using Customers.Pn.Infrastructure.Models.Fields;
 using Customers.Pn.Services;
@@ -102,7 +101,7 @@ namespace Customers.Pn
                     CustomerField customerField = new CustomerField
                     {
                         FieldId = field.Id,
-                        FieldStatus = FieldStatus.Enabled
+                        FieldStatus = 1
                     };
                     if (!context.CustomerFields.Any(x => x.FieldId == field.Id))
                     {

@@ -4,14 +4,16 @@ using Customers.Pn.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Customers.Pn.Migrations
 {
     [DbContext(typeof(CustomersPnDbAnySql))]
-    partial class CustomersPnDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181109115156_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             string autoIDGenStrategy = "SqlServer:ValueGenerationStrategy";
@@ -49,6 +51,10 @@ namespace Customers.Pn.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
+                    b.Property<int>("Created_By_User_Id");
+
+                    b.Property<DateTime?>("Created_at");
+
                     b.Property<string>("CustomerNo");
 
                     b.Property<string>("Description");
@@ -60,6 +66,15 @@ namespace Customers.Pn.Migrations
                         .HasMaxLength(250);
 
                     b.Property<int?>("RelatedEntityId");
+
+                    b.Property<int>("Updated_By_User_Id");
+
+                    b.Property<DateTime?>("Updated_at");
+
+                    b.Property<int>("Version");
+
+                    b.Property<string>("Workflow_state")
+                        .HasMaxLength(255);
 
                     b.Property<string>("ZipCode")
                         .HasMaxLength(50);
@@ -81,7 +96,7 @@ namespace Customers.Pn.Migrations
 
                     b.Property<int>("FieldId");
 
-                    b.Property<int>("FieldStatus");
+                    b.Property<short?>("FieldStatus");
 
                     b.HasKey("Id");
 
@@ -101,6 +116,64 @@ namespace Customers.Pn.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CustomerSettings");
+                });
+
+            modelBuilder.Entity("Customers.Pn.Infrastructure.Data.Entities.CustomerVersion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
+
+                    b.Property<string>("CityName")
+                        .HasMaxLength(250);
+
+                    b.Property<string>("CompanyAddress")
+                        .HasMaxLength(250);
+
+                    b.Property<string>("CompanyName")
+                        .HasMaxLength(250);
+
+                    b.Property<string>("ContactPerson")
+                        .HasMaxLength(250);
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(250);
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<int>("Created_By_User_Id");
+
+                    b.Property<DateTime?>("Created_at");
+
+                    b.Property<int>("CustomerId");
+
+                    b.Property<string>("CustomerNo");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(250);
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(250);
+
+                    b.Property<int?>("RelatedEntityId");
+
+                    b.Property<int>("Updated_By_User_Id");
+
+                    b.Property<DateTime?>("Updated_at");
+
+                    b.Property<int>("Version");
+
+                    b.Property<string>("Workflow_state")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("ZipCode")
+                        .HasMaxLength(50);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CustomerVersions");
                 });
 
             modelBuilder.Entity("Customers.Pn.Infrastructure.Data.Entities.Field", b =>

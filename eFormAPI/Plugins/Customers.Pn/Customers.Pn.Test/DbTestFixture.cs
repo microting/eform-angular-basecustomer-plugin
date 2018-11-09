@@ -34,7 +34,7 @@ namespace Customers.Pn.Test
 
             if (ConnectionString.ToLower().Contains("convert zero datetime"))
             {
-                dbContextOptionsBuilder.UseMySQL(connectionStr);
+                dbContextOptionsBuilder.UseMySql(connectionStr);
             }
             else
             {
@@ -93,11 +93,13 @@ namespace Customers.Pn.Test
         public void ClearDb()
         {
             List<string> modelNames = new List<string>();
+            modelNames.Add("CustomerVersions");
             modelNames.Add("Customers");
-            modelNames.Add("CustomerField");
+            modelNames.Add("CustomerFields");
             modelNames.Add("CustomerSettings");
             modelNames.Add("Fields");
-           
+
+
 
 
             foreach (var modelName in modelNames)
@@ -107,7 +109,7 @@ namespace Customers.Pn.Test
                     string sqlCmd = string.Empty;
                     if (DbContext.Database.IsMySql())
                     {
-                        sqlCmd = string.Format("DELETE FROM `{0}`.`{1}`", "customers-pn-tests", modelName);
+                        sqlCmd = string.Format("SET FOREIGN_KEY_CHECKS = 0;TRUNCATE `{0}`.`{1}`", "customers-pn-tests", modelName);
                     }
                     else
                     {

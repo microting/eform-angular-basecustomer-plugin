@@ -1,5 +1,4 @@
-﻿using Customers.Pn.Infrastructure.Enums;
-using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
+﻿using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
 
 namespace Customers.Pn.Infrastructure.Data.Entities
 {
@@ -8,6 +7,6 @@ namespace Customers.Pn.Infrastructure.Data.Entities
         public int FieldId { get; set; }
         public virtual Field Field { get; set; }
 
-        public FieldStatus FieldStatus { get; set; }
+        public short? FieldStatus { get; set; }
     }
 }
