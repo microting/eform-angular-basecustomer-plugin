@@ -104,4 +104,6 @@
 <app-customer-pn-edit #editCustomerModal
                       [fieldsModel]="fieldsModel"
                       (onCustomerUpdated)="getAllCustomers()"></app-customer-pn-edit>
-<app-customer-pn-delete #deleteCustomerModal (onCustomerDeleted)="getAllCustomers()"></app-customer-pn-delete>
+<app-customer-pn-delete #deleteCustomerModal
+                        [fields]="fieldsModel"
+                        (onCustomerDeleted)="getAllCustomers()"></app-customer-pn-delete>
