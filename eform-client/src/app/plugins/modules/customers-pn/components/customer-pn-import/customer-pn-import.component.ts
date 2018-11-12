@@ -48,7 +48,7 @@ export class CustomerPnImportComponent implements OnInit {
    this.options.forEach((option) => {
      this.customerHeaderModel = new CustomerPnHeadersModel();
       this.customerHeaderModel.headerLabel = option.label;
-      this.customerHeaderModel.headerValue = option.value;
+      this.customerHeaderModel.headerValue = null;
       this.customerImportModel.headerlist.push(this.customerHeaderModel);
       // console.log(label);
    }
@@ -75,6 +75,7 @@ export class CustomerPnImportComponent implements OnInit {
     this.totalRows = 100;
   }
   csv2Array(fileInput) {
+    const file = fileInput;
     this.papa.parse(fileInput.target.files[0], {
       skipEmptyLines: true,
       header: false,
