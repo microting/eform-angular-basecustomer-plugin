@@ -6,7 +6,6 @@ using System.Linq;
 using Customers.Pn.Abstractions;
 using Customers.Pn.Infrastructure.Data;
 using Customers.Pn.Infrastructure.Data.Entities;
-using Customers.Pn.Infrastructure.Enums;
 using Customers.Pn.Infrastructure.Extensions;
 using Customers.Pn.Infrastructure.Models;
 using Customers.Pn.Infrastructure.Models.Fields;
@@ -93,7 +92,7 @@ namespace Customers.Pn.Services
                     };
                     foreach (FieldUpdateModel field in fields)
                     {
-                        if (field.FieldStatus == FieldStatus.Enabled)
+                        if (field.FieldStatus == 1)
                         {
                             FieldModel fieldModel = new FieldModel
                             {

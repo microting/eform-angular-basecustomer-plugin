@@ -14,6 +14,7 @@
         }
 
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<CustomerVersion> CustomerVersions { get; set; }
         public DbSet<Field> Fields { get; set; }
         public DbSet<CustomerField> CustomerFields { get; set; }
         public DbSet<CustomerSettings> CustomerSettings { get; set; }
