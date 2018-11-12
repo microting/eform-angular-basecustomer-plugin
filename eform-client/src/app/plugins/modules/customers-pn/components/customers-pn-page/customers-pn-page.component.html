@@ -56,7 +56,7 @@
         <td *ngFor="let field of customer.fields">
           <ng-container [ngSwitch]="field.name">
             <ng-container *ngSwitchCase="fieldsEnum[fieldsEnum.Description]">
-              <div [innerHTML]="field.value"></div>
+              <div class="max-lines" [innerHTML]="field.value"></div>
             </ng-container>
             <ng-container *ngSwitchCase="fieldsEnum[fieldsEnum.CreatedDate]">
               {{field.value}}
