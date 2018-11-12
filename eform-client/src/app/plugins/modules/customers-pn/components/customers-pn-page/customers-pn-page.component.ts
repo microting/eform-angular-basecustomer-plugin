@@ -59,7 +59,7 @@ export class CustomersPnPageComponent implements OnInit {
   }
 
   showDeleteCustomerModal(model: CustomerPnModel) {
-    this.deleteCustomerModal.show(model.id);
+    this.deleteCustomerModal.show(model);
   }
 
   getAllInitialData() {
