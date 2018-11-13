@@ -1,21 +1,22 @@
 <subheader-pn [title]="'Import Customer' | translate">
 </subheader-pn>
 <subheader-pn
-  [title]="'File name: '+this.fileName +' '+'Total Columns: '+this.totalColumns+' '+'Total Rows: '+this.totalRows"
   [heandingSizeRem]="1">
+  <!--[title]="'File name: '+this.fileName +' '+'Total Columns: '+this.totalColumns+' '+'Total Rows: '+this.totalRows"-->
+
 </subheader-pn>
 <input type="file" class="form-control" id="files" accept="text/csv" (change)="csv2Array($event)">
-<div class="container-fluid">
-  <div class="row mt-4">
-    <div class="col-md-2" *ngFor="let name of chboxNames">
-      <div class="mat-checkbox">
-        <label>
-          <input type="checkbox" (click)="logThings(name)" color="primary">{{name | translate}}
-        </label>
-      </div>
-    </div>
-  </div>
-</div>
+<!--<div class="container-fluid">-->
+  <!--<div class="row mt-4">-->
+    <!--<div class="col-md-2" *ngFor="let name of chboxNames">-->
+      <!--<div class="mat-checkbox">-->
+        <!--<label>-->
+          <!--<input type="checkbox" (click)="logThings(name)" color="primary">{{name | translate}}-->
+        <!--</label>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
 
 <div class="p-3">
   <div class="row p-1 table-responsive no-gutters">

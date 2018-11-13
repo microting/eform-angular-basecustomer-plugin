@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
@@ -173,28 +175,66 @@ namespace Customers.Pn.Controllers
                 JToken rawJson = JRaw.Parse(customersAsJson.ImportList);
                 JToken rawHeadersJson = JRaw.Parse(customersAsJson.Headers);
 
-                var headers = rawHeadersJson;
-                var customerObjects = rawJson.Skip(1);
+                JToken headers = rawHeadersJson;
+                IEnumerable<JToken> customerObjects = rawJson.Skip(1);
 
-                foreach (var customerObj in customerObjects)
+                foreach (JToken customerObj in customerObjects)
                 {
+                    int locationId;
+                    if (!int.TryParse(headers[4]["headerValue"].ToString(), out locationId)
+                        || !int.TryParse(headers[2]["headerValue"].ToString(), out locationId)
+                        || !int.TryParse(headers[3]["headerValue"].ToString(), out locationId)
+                        )
+                    {
+                        return new OperationResult(false,
+                                            CustomersPnLocaleHelper.GetString("ErrorWhileCreatingCustomer"));
+                        /*            throw new NotImplementedException()*/
+                    }
                     string customerNo = customerObj[int.Parse(headers[4]["headerValue"].ToString())].ToString();
                     Customer existingCustomer = _dbContext.Customers.SingleOrDefault(x => x.CustomerNo == customerNo);
                     if (existingCustomer == null)
                     {
                         Customer customer = new Customer();
-                        
-                        customer.CityName = customerObj[int.Parse(headers[0]["headerValue"].ToString())].ToString(); // Cityname
-                        customer.CompanyAddress = customerObj[int.Parse(headers[1]["headerValue"].ToString())].ToString(); //CompanyAddress
-                        customer.CompanyName = customerObj[int.Parse(headers[2]["headerValue"].ToString())].ToString(); //Companyname
-                        customer.ContactPerson = customerObj[int.Parse(headers[3]["headerValue"].ToString())].ToString(); //Contactperson
-                        customer.CustomerNo = customerObj[int.Parse(headers[4]["headerValue"].ToString())].ToString(); //CustomerNumber
-                        customer.CreatedDate = DateTime.UtcNow; // Createddate
-                        customer.Description = customerObj[int.Parse(headers[5]["headerValue"].ToString())].ToString(); //Description
-                        customer.Email = customerObj[int.Parse(headers[6]["headerValue"].ToString())].ToString(); //Email
-                        customer.Phone = customerObj[int.Parse(headers[7]["headerValue"].ToString())].ToString(); //Phonenumber
-                        customer.ZipCode = customerObj[int.Parse(headers[8]["headerValue"].ToString())].ToString(); //Zipcode
 
+                        if (int.TryParse(headers[0]["headerValue"].ToString(), out locationId))
+                        {
+                            customer.CityName = customerObj[int.Parse(headers[0]["headerValue"].ToString())].ToString(); // Cityname
+                        }
+                        if (int.TryParse(headers[1]["headerValue"].ToString(), out locationId))
+                        {
+                            customer.CompanyAddress = customerObj[int.Parse(headers[1]["headerValue"].ToString())].ToString(); //CompanyAddress
+                        }
+                        if (int.TryParse(headers[2]["headerValue"].ToString(), out locationId))
+                        {
+                            customer.CompanyName = customerObj[int.Parse(headers[2]["headerValue"].ToString())].ToString(); //Companyname
+                        }
+                        if (int.TryParse(headers[3]["headerValue"].ToString(), out locationId))
+                        {
+                            customer.ContactPerson = customerObj[int.Parse(headers[3]["headerValue"].ToString())].ToString(); //Contactperson
+                        }
+                        if (int.TryParse(headers[4]["headerValue"].ToString(), out locationId))
+                        {
+                            customer.CustomerNo = customerObj[int.Parse(headers[4]["headerValue"].ToString())].ToString(); //CustomerNumber
+                        }
+
+                        customer.CreatedDate = DateTime.UtcNow; // Createddate
+
+                        if (int.TryParse(headers[5]["headerValue"].ToString(), out locationId))
+                        {
+                            customer.Description = customerObj[int.Parse(headers[5]["headerValue"].ToString())].ToString(); //Description
+                        }
+                        if (int.TryParse(headers[6]["headerValue"].ToString(), out locationId))
+                        {
+                            customer.Email = customerObj[int.Parse(headers[6]["headerValue"].ToString())].ToString(); //Email
+                        }
+                        if (int.TryParse(headers[7]["headerValue"].ToString(), out locationId))
+                        {
+                            customer.Phone = customerObj[int.Parse(headers[7]["headerValue"].ToString())].ToString(); //Phonenumber
+                        }
+                        if (int.TryParse(headers[8]["headerValue"].ToString(), out locationId))
+                        {
+                            customer.ZipCode = customerObj[int.Parse(headers[8]["headerValue"].ToString())].ToString(); //Zipcode
+                        }
                         _dbContext.Customers.Add(customer);
                         _dbContext.SaveChanges();
                     }                    
