@@ -48,7 +48,7 @@ export class CustomerPnImportComponent implements OnInit {
    this.options.forEach((option) => {
      this.customerHeaderModel = new CustomerPnHeadersModel();
       this.customerHeaderModel.headerLabel = option.label;
-      this.customerHeaderModel.headerValue = option.value;
+      this.customerHeaderModel.headerValue = null;
       this.customerImportModel.headerlist.push(this.customerHeaderModel);
       // console.log(label);
    }

@@ -19,13 +19,13 @@
 <!--</div>-->
 
 <div class="p-3">
-  <div class="row p-1 table-responsive no-gutters">
-    <table class="table table-sm table-striped text-center z-depth-1" *ngIf="tableData">
+  <div class="row p-1 table-responsive-lg no-gutters">
+    <table class="table mh-100 table-striped text-center z-depth-1" *ngIf="tableData">
       <thead>
       <tr>
         <th scope="row" style="width: 11.5%" class="table-header-sortable th-lg" *ngFor="let cols of tableData[0]; let i = index" [attr.data-index]="i">
           <ng-select
-            class="custom"
+            class=""
             [items]="options"
             (change)="onSelectedChanged($event, i)"
           >
