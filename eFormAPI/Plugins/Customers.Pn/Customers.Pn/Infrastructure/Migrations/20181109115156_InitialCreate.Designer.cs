@@ -20,8 +20,8 @@ namespace Customers.Pn.Migrations
             object autoIDGenStrategyValue = SqlServerValueGenerationStrategy.IdentityColumn;
             if (DbConfig.IsMySQL)
             {
-                autoIDGenStrategyValue = true;
-                autoIDGenStrategy = "MySQL:ValueGeneratedOnAdd";
+                autoIDGenStrategy = "MySql:ValueGenerationStrategy";
+                autoIDGenStrategyValue = MySqlValueGenerationStrategy.IdentityColumn;
             }
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
