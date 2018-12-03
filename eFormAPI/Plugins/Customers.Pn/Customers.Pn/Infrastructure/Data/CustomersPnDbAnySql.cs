@@ -1,15 +1,20 @@
-﻿using Customers.Pn.Infrastructure.Data.Entities;
-using Microsoft.EntityFrameworkCore;
-
-namespace Customers.Pn.Infrastructure.Data
+﻿namespace Customers.Pn.Infrastructure.Data
 {
-    public class CustomersPnDbContext : DbContext
+    using Customers.Pn.Infrastructure.Data.Entities;
+    using Microsoft.EntityFrameworkCore;
+
+    public class CustomersPnDbAnySql : DbContext
     {
-        public CustomersPnDbContext(DbContextOptions<CustomersPnDbContext> options) : base(options)
+
+        public CustomersPnDbAnySql() { }
+
+        public CustomersPnDbAnySql(DbContextOptions options) : base(options)
         {
+
         }
 
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<CustomerVersion> CustomerVersions { get; set; }
         public DbSet<Field> Fields { get; set; }
         public DbSet<CustomerField> CustomerFields { get; set; }
         public DbSet<CustomerSettings> CustomerSettings { get; set; }

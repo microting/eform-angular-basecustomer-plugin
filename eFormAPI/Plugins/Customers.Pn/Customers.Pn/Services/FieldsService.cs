@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Customers.Pn.Abstractions;
 using Customers.Pn.Infrastructure.Data;
+using Customers.Pn.Infrastructure.Data.Entities;
 using Customers.Pn.Infrastructure.Models.Fields;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -14,10 +16,10 @@ namespace Customers.Pn.Services
     {
         private readonly ILogger<FieldsService> _logger;
         private readonly ICustomersLocalizationService _localizationService;
-        private readonly CustomersPnDbContext _dbContext;
+        private readonly CustomersPnDbAnySql _dbContext;
 
-        public FieldsService(ILogger<FieldsService> logger, 
-            CustomersPnDbContext dbContext, 
+        public FieldsService(ILogger<FieldsService> logger,
+            CustomersPnDbAnySql dbContext, 
             ICustomersLocalizationService localizationService)
         {
             _logger = logger;
@@ -29,7 +31,7 @@ namespace Customers.Pn.Services
         {
             try
             {
-                var fields = _dbContext.CustomerFields
+                List<FieldUpdateModel> fields = _dbContext.CustomerFields
                     .Include("Field")
                     .Select(x => new FieldUpdateModel()
                     {
@@ -38,11 +40,11 @@ namespace Customers.Pn.Services
                         Name = x.Field.Name,
                     }).ToList();
                 // Mode Id field to top
-                var index = fields.FindIndex(x => x.Name == "Id");
-                var item = fields[index];
+                int index = fields.FindIndex(x => x.Name == "Id");
+                FieldUpdateModel item = fields[index];
                 fields[index] = fields[0];
                 fields[0] = item;
-                var result = new FieldsUpdateModel()
+                FieldsUpdateModel result = new FieldsUpdateModel()
                 {
                     Fields = fields,
                 };
@@ -61,21 +63,22 @@ namespace Customers.Pn.Services
         {
             try
             {
-                var list = fieldsModel.Fields.Select(s => s.Id).ToList();
-                var fields = _dbContext.CustomerFields
-                    .Where(x => list.Contains(x.FieldId))
-                    .ToList();
+                fieldsModel.Update(_dbContext);
+                //List<int> list = fieldsModel.Fields.Select(s => s.Id).ToList(); // list of field ids.
+                //List<CustomerField> fields = _dbContext.CustomerFields
+                //    .Where(x => list.Contains(x.FieldId))
+                //    .ToList(); // lists the fields for the specific customer.
 
-                foreach (var field in fields)
-                {
-                    var fieldModel = fieldsModel.Fields.FirstOrDefault(x => x.Id == field.FieldId);
-                    if (fieldModel != null)
-                    {
-                        field.FieldStatus = fieldModel.FieldStatus;
-                    }
-                }
+                //foreach (CustomerField field in fields)// Itterating through a list of customerFields.
+                //{
+                //    FieldUpdateModel fieldModel = fieldsModel.Fields.FirstOrDefault(x => x.Id == field.FieldId); // takes field from list of fields
+                //    if (fieldModel != null) 
+                //    {
+                //        field.FieldStatus = fieldModel.FieldStatus;// sets new status for field, based on the updatemodels status.
+                //    }
+                //}
 
-                _dbContext.SaveChanges();
+                //_dbContext.SaveChanges();
                 return new OperationResult(true,
                     _localizationService.GetString("FieldsUpdatedSuccessfully"));
             }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Customers.Pn.Infrastructure.Models.Fields;
 
-namespace Customers.Pn.Infrastructure.Models.Customer
+namespace Customers.Pn.Infrastructure.Models
 {
     public class CustomerModel
     {

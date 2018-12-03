@@ -3,6 +3,11 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\..\..\eFormAPI.Web\Plugins\Customers\</OutputPath>
+    <NoWarn>1701;1702</NoWarn>
+  </PropertyGroup>
   
   <ItemGroup>
     <PackageReference Include="Automapper" Version="6.1.0" />
@@ -14,6 +19,11 @@
     <PackageReference Include="Microting.eForm" Version="3.0.31" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.3" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.2" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Infrastructure\Models\Customer\" />
   </ItemGroup>
   
 </Project>
