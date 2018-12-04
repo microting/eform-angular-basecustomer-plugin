@@ -38,14 +38,14 @@
         <ng-container *ngFor="let field of fieldsModel.fields">
           <th scope="col" class="table-header-sortable" id="{{field.name}}TableHeader"
               *ngIf="field.fieldStatus == fieldStatusEnum.Enabled"
-              (click)="sortByColumn(field.name, customersRequestModel.isSortDsc = !customersRequestModel.isSortDsc)">
+              (click)="sortTable(field.name)">
             <div class="d-flex align-items-center justify-content-center">
               {{ field.name | translate }}
-              <i class="material-icons text-black-50" *ngIf="customersRequestModel.sortColumnName != field.name">unfold_more</i>
+              <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != field.name">unfold_more</i>
               <i class="material-icons"
-                 *ngIf="customersRequestModel.sortColumnName == field.name && !customersRequestModel.isSortDsc">expand_less</i>
+                 *ngIf="localPageSettings.sort == field.name && !customersRequestModel.isSortDsc">expand_less</i>
               <i class="material-icons"
-                 *ngIf="customersRequestModel.sortColumnName == field.name && customersRequestModel.isSortDsc">expand_more</i>
+                 *ngIf="localPageSettings.sort == field.name && customersRequestModel.isSortDsc">expand_more</i>
             </div>
           </th>
         </ng-container>
@@ -92,11 +92,22 @@
       </tbody>
     </table>
   </div>
-  <pagination-pn *ngIf="customersModel.total > customersRequestModel.pageSize"
-                 [limit]="customersRequestModel.pageSize"
-                 [size]="customersModel.total"
-                 [offset]="customersRequestModel.offset"
-                 (onPageChanged)="changePage($event)"></pagination-pn>
+  <div class="row justify-content-between mr-2 ml-2">
+    <div class="col-md-1">
+      <page-size-pn
+        [pageSize]="localPageSettings.pageSize"
+        (onPageSizeChanged)="localPageSettings.pageSize = $event; customersRequestModel.pageIndex = 1;
+        updateLocalPageSettings()">
+      </page-size-pn>
+    </div>
+    <div class="col-md-4 ml-auto d-flex justify-content-end p-2">
+      <pagination-pn *ngIf="customersModel.total > customersRequestModel.pageSize"
+                     [limit]="customersRequestModel.pageSize"
+                     [size]="customersModel.total"
+                     [offset]="customersRequestModel.offset"
+                     (onPageChanged)="changePage($event)"></pagination-pn>
+    </div>
+  </div>
 </div>
 
 <spinner-pn [spinnerVisibility]="spinnerStatus"></spinner-pn>
