@@ -1,7 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {UserInfoModel} from 'src/app/common/models';
+import {PageSettingsModel, UserInfoModel} from 'src/app/common/models';
 import {AuthService, LocaleService} from 'src/app/common/services/auth';
+import {SharedPnService} from 'src/app/plugins/modules/shared/services';
 import {CustomersPnFieldStatusEnum, CustomerPnFieldsEnum} from '../../enums';
 import {CustomerPnModel, CustomersPnModel, CustomersPnRequestModel, FieldsPnUpdateModel} from '../../models';
 import {CustomersPnFieldsService, CustomersPnService} from '../../services';
@@ -21,17 +22,18 @@ export class CustomersPnPageComponent implements OnInit {
   get fieldStatusEnumString() { return CustomersPnFieldStatusEnum; }
   get fieldsEnum() { return CustomerPnFieldsEnum; }
 
-
   customersRequestModel: CustomersPnRequestModel = new CustomersPnRequestModel();
   customersModel: CustomersPnModel = new CustomersPnModel();
   fieldsModel: FieldsPnUpdateModel = new FieldsPnUpdateModel();
+  localPageSettings: PageSettingsModel = new PageSettingsModel();
 
   spinnerStatus = false;
   constructor(private customersService: CustomersPnService,
               private customersFieldsService: CustomersPnFieldsService,
               private translateService: TranslateService,
               private localeService: LocaleService,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private sharedPnService: SharedPnService) {
 
   }
 
@@ -40,26 +42,19 @@ export class CustomersPnPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.setTranslation();
+    this.getLocalPageSettings();
+  }
+
+  getLocalPageSettings() {
+    this.localPageSettings = this.sharedPnService.getLocalPageSettings
+    ('customersPnSettings').settings;
     this.getAllInitialData();
   }
 
-  setTranslation() {
-    // const lang = this.localeService.getCurrentUserLocale();
-    // const i18n = require(`../../i18n/${lang}.json`);
-   // this.translateService.setTranslation(lang, i18n, true);
-  }
-
-  showCreateCustomerModal() {
-    this.createCustomerModal.show();
-  }
-
-  showEditCustomerModal(model: CustomerPnModel) {
-    this.editCustomerModal.show(model.id);
-  }
-
-  showDeleteCustomerModal(model: CustomerPnModel) {
-    this.deleteCustomerModal.show(model.id);
+  updateLocalPageSettings() {
+    this.sharedPnService.updateLocalPageSettings
+    ('customersPnSettings', this.localPageSettings);
+    this.getAllCustomers();
   }
 
   getAllInitialData() {
@@ -67,17 +62,15 @@ export class CustomersPnPageComponent implements OnInit {
     this.customersFieldsService.getAllFields().subscribe((data) => {
       if (data && data.success) {
         this.fieldsModel = data.model;
-        this.customersService.getAllCustomers(this.customersRequestModel).subscribe((result => {
-          if (result && result.success) {
-            this.customersModel = result.model;
-          }
-          this.spinnerStatus = false;
-        }));
+        this.getAllCustomers();
       } this.spinnerStatus = false;
     });
   }
 
   getAllCustomers() {
+    this.customersRequestModel.isSortDsc = this.localPageSettings.isSortDsc;
+    this.customersRequestModel.sortColumnName = this.localPageSettings.sort;
+    this.customersRequestModel.pageSize = this.localPageSettings.pageSize;
     this.customersService.getAllCustomers(this.customersRequestModel).subscribe((result => {
       if (result && result.success) {
         this.customersModel = result.model;
@@ -98,10 +91,26 @@ export class CustomersPnPageComponent implements OnInit {
     }
   }
 
-  sortByColumn(columnName: string, sortedByDsc: boolean) {
-    this.customersRequestModel.sortColumnName = columnName;
-    this.customersRequestModel.isSortDsc = sortedByDsc;
-    this.getAllCustomers();
+  sortTable(sort: string) {
+    if (this.localPageSettings.sort === sort) {
+      this.localPageSettings.isSortDsc = !this.localPageSettings.isSortDsc;
+    } else {
+      this.localPageSettings.isSortDsc = false;
+      this.localPageSettings.sort = sort;
+    }
+    this.updateLocalPageSettings();
+  }
+
+  showCreateCustomerModal() {
+    this.createCustomerModal.show();
+  }
+
+  showEditCustomerModal(model: CustomerPnModel) {
+    this.editCustomerModal.show(model.id);
+  }
+
+  showDeleteCustomerModal(model: CustomerPnModel) {
+    this.deleteCustomerModal.show(model);
   }
 
   onSearchInputChanged(value: any) {

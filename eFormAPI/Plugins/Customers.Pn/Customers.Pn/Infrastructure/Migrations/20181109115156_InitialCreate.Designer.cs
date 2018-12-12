@@ -9,23 +9,30 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Customers.Pn.Migrations
 {
-    [DbContext(typeof(CustomersPnDbContext))]
-    [Migration("20181007163746_ChangeCustomerNoType")]
-    partial class ChangeCustomerNoType
+    [DbContext(typeof(CustomersPnDbAnySql))]
+    [Migration("20181109115156_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
+            string autoIDGenStrategy = "SqlServer:ValueGenerationStrategy";
+            object autoIDGenStrategyValue = SqlServerValueGenerationStrategy.IdentityColumn;
+            if (DbConfig.IsMySQL)
+            {
+                autoIDGenStrategy = "MySql:ValueGenerationStrategy";
+                autoIDGenStrategyValue = MySqlValueGenerationStrategy.IdentityColumn;
+            }
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
 
             modelBuilder.Entity("Customers.Pn.Infrastructure.Data.Entities.Customer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
 
                     b.Property<string>("CityName")
                         .HasMaxLength(250);
@@ -44,6 +51,10 @@ namespace Customers.Pn.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
+                    b.Property<int>("Created_By_User_Id");
+
+                    b.Property<DateTime?>("Created_at");
+
                     b.Property<string>("CustomerNo");
 
                     b.Property<string>("Description");
@@ -55,6 +66,15 @@ namespace Customers.Pn.Migrations
                         .HasMaxLength(250);
 
                     b.Property<int?>("RelatedEntityId");
+
+                    b.Property<int>("Updated_By_User_Id");
+
+                    b.Property<DateTime?>("Updated_at");
+
+                    b.Property<int>("Version");
+
+                    b.Property<string>("Workflow_state")
+                        .HasMaxLength(255);
 
                     b.Property<string>("ZipCode")
                         .HasMaxLength(50);
@@ -72,11 +92,11 @@ namespace Customers.Pn.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
 
                     b.Property<int>("FieldId");
 
-                    b.Property<int>("FieldStatus");
+                    b.Property<short?>("FieldStatus");
 
                     b.HasKey("Id");
 
@@ -89,7 +109,7 @@ namespace Customers.Pn.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
 
                     b.Property<int?>("RelatedEntityGroupId");
 
@@ -98,11 +118,69 @@ namespace Customers.Pn.Migrations
                     b.ToTable("CustomerSettings");
                 });
 
+            modelBuilder.Entity("Customers.Pn.Infrastructure.Data.Entities.CustomerVersion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
+
+                    b.Property<string>("CityName")
+                        .HasMaxLength(250);
+
+                    b.Property<string>("CompanyAddress")
+                        .HasMaxLength(250);
+
+                    b.Property<string>("CompanyName")
+                        .HasMaxLength(250);
+
+                    b.Property<string>("ContactPerson")
+                        .HasMaxLength(250);
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(250);
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<int>("Created_By_User_Id");
+
+                    b.Property<DateTime?>("Created_at");
+
+                    b.Property<int>("CustomerId");
+
+                    b.Property<string>("CustomerNo");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(250);
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(250);
+
+                    b.Property<int?>("RelatedEntityId");
+
+                    b.Property<int>("Updated_By_User_Id");
+
+                    b.Property<DateTime?>("Updated_at");
+
+                    b.Property<int>("Version");
+
+                    b.Property<string>("Workflow_state")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("ZipCode")
+                        .HasMaxLength(50);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CustomerVersions");
+                });
+
             modelBuilder.Entity("Customers.Pn.Infrastructure.Data.Entities.Field", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasAnnotation(autoIDGenStrategy, autoIDGenStrategyValue);
 
                     b.Property<string>("Name")
                         .HasMaxLength(50);

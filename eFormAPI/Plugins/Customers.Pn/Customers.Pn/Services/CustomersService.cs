@@ -1,19 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using Customers.Pn.Abstractions;
 using Customers.Pn.Infrastructure.Data;
 using Customers.Pn.Infrastructure.Data.Entities;
-using Customers.Pn.Infrastructure.Enums;
 using Customers.Pn.Infrastructure.Extensions;
-using Customers.Pn.Infrastructure.Models.Customer;
+using Customers.Pn.Infrastructure.Models;
 using Customers.Pn.Infrastructure.Models.Fields;
+using eFormCore;
+using eFormData;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Newtonsoft.Json.Linq;
 
 namespace Customers.Pn.Services
 {
@@ -21,11 +24,11 @@ namespace Customers.Pn.Services
     {
         private readonly IEFormCoreService _coreHelper;
         private readonly ILogger<CustomersService> _logger;
-        private readonly CustomersPnDbContext _dbContext;
+        private readonly CustomersPnDbAnySql _dbContext;
         private readonly ICustomersLocalizationService _customersLocalizationService;
 
         public CustomersService(ILogger<CustomersService> logger,
-            CustomersPnDbContext dbContext,
+            CustomersPnDbAnySql dbContext,
             IEFormCoreService coreHelper,
             ICustomersLocalizationService customersLocalizationService)
         {
@@ -40,8 +43,8 @@ namespace Customers.Pn.Services
         {
             try
             {
-                var customersPnModel = new CustomersModel();
-                var customersQuery = _dbContext.Customers.AsQueryable();
+                CustomersModel customersPnModel = new CustomersModel();
+                IQueryable<Customer> customersQuery = _dbContext.Customers.AsQueryable();
                 if (!string.IsNullOrEmpty(pnRequestModel.SortColumnName))
                 {
                     if (pnRequestModel.IsSortDsc)
@@ -70,9 +73,9 @@ namespace Customers.Pn.Services
                     .Skip(pnRequestModel.Offset)
                     .Take(pnRequestModel.PageSize);
 
-                var customers = customersQuery.ToList();
+                List<Customer> customers = customersQuery.ToList();
                 customersPnModel.Total = _dbContext.Customers.Count();
-                var fields = _dbContext.CustomerFields
+                List<FieldUpdateModel> fields = _dbContext.CustomerFields
                     .Include("Field")
                     .Select(x => new FieldUpdateModel()
                     {
@@ -81,27 +84,27 @@ namespace Customers.Pn.Services
                         Name = x.Field.Name,
                     }).ToList();
 
-                foreach (var customer in customers)
+                foreach (Customer customer in customers)
                 {
-                    var customerModel = new CustomerModel()
+                    CustomerModel customerModel = new CustomerModel()
                     {
                         Id = customer.Id,
                     };
-                    foreach (var field in fields)
+                    foreach (FieldUpdateModel field in fields)
                     {
-                        if (field.FieldStatus == FieldStatus.Enabled)
+                        if (field.FieldStatus == 1)
                         {
-                            var fieldModel = new FieldModel
+                            FieldModel fieldModel = new FieldModel
                             {
                                 Id = field.Id,
                                 Name = field.Name,
                             };
-                            var val = customer.GetPropValue(field.Name);
+                            object val = customer.GetPropValue(field.Name);
                             if (val != null)
                             {
                                 if (val is DateTime date)
                                 {
-                                    var text = date.ToString("yyy/MM/dd HH:mm:ss",
+                                    string text = date.ToString("yyy/MM/dd HH:mm:ss",
                                         CultureInfo.InvariantCulture);
                                     fieldModel.Value = text;
                                 }
@@ -117,8 +120,8 @@ namespace Customers.Pn.Services
                     if (customerModel.Fields.Any())
                     {
                         // Mode Id field to top
-                        var index = customerModel.Fields.FindIndex(x => x.Name == "Id");
-                        var item = customerModel.Fields[index];
+                        int index = customerModel.Fields.FindIndex(x => x.Name == "Id");
+                        FieldModel item = customerModel.Fields[index];
                         customerModel.Fields[index] = customerModel.Fields[0];
                         customerModel.Fields[0] = item;
                     }
@@ -137,11 +140,88 @@ namespace Customers.Pn.Services
             }
         }
 
+        public OperationResult ImportCustomers(CustomerImportModel customersAsJson)
+        {
+            {
+                JToken rawJson = JRaw.Parse(customersAsJson.ImportList);
+                JToken rawHeadersJson = JRaw.Parse(customersAsJson.Headers);
+
+                JToken headers = rawHeadersJson;
+                IEnumerable<JToken> customerObjects = rawJson.Skip(1);
+
+                foreach (JToken customerObj in customerObjects)
+                {
+                    int locationId;
+                    if (!int.TryParse(headers[4]["headerValue"].ToString(), out locationId) 
+                        || !int.TryParse(headers[2]["headerValue"].ToString(), out locationId)
+                        || !int.TryParse(headers[3]["headerValue"].ToString(), out locationId)
+                        )
+                    {
+                        return new OperationResult(false,
+                                            _customersLocalizationService.GetString("ErrorWhileCreatingCustomer"));
+                        /*            throw new NotImplementedException()*/
+                    }
+
+                    string customerNo = customerObj[int.Parse(headers[4]["headerValue"].ToString())].ToString();
+                    Customer existingCustomer = _dbContext.Customers.SingleOrDefault(x => x.CustomerNo == customerNo);
+                    if (existingCustomer == null)
+                    {
+                        CustomerFullModel customer = new CustomerFullModel();
+                        if (int.TryParse(headers[0]["headerValue"].ToString(), out locationId)) {
+                            customer.CityName = customerObj[int.Parse(headers[0]["headerValue"].ToString())].ToString(); // Cityname
+                        }
+                        if (int.TryParse(headers[1]["headerValue"].ToString(), out locationId))
+                        {
+                            customer.CompanyAddress = customerObj[int.Parse(headers[1]["headerValue"].ToString())].ToString(); //CompanyAddress
+                        }
+                        if (int.TryParse(headers[2]["headerValue"].ToString(), out locationId))
+                        {
+                            customer.CompanyName = customerObj[int.Parse(headers[2]["headerValue"].ToString())].ToString(); //Companyname
+                        }
+                        if (int.TryParse(headers[3]["headerValue"].ToString(), out locationId))
+                        {
+                            customer.ContactPerson = customerObj[int.Parse(headers[3]["headerValue"].ToString())].ToString(); //Contactperson
+                        }
+                        if (int.TryParse(headers[4]["headerValue"].ToString(), out locationId))
+                        {
+                            customer.CustomerNo = customerObj[int.Parse(headers[4]["headerValue"].ToString())].ToString(); //CustomerNumber
+                        }
+
+                        customer.CreatedDate = DateTime.UtcNow; // Createddate
+
+                        if (int.TryParse(headers[5]["headerValue"].ToString(), out locationId))
+                        {
+                            customer.Description = customerObj[int.Parse(headers[5]["headerValue"].ToString())].ToString(); //Description
+                        }
+                        if (int.TryParse(headers[6]["headerValue"].ToString(), out locationId))
+                        {
+                            customer.Email = customerObj[int.Parse(headers[6]["headerValue"].ToString())].ToString(); //Email
+                        }
+                        if (int.TryParse(headers[7]["headerValue"].ToString(), out locationId))
+                        {
+                            customer.Phone = customerObj[int.Parse(headers[7]["headerValue"].ToString())].ToString(); //Phonenumber
+                        }
+                        if (int.TryParse(headers[8]["headerValue"].ToString(), out locationId))
+                        {
+                            customer.ZipCode = customerObj[int.Parse(headers[8]["headerValue"].ToString())].ToString(); //Zipcode
+                        }
+                        customer.Save(_dbContext);
+                    }
+                }
+                return new OperationResult(true
+                    //CustomersPnLocaleHelper.GetString("CustomerCreated")
+                    );
+                //return new OperationResult(false,
+                //                    CustomersPnLocaleHelper.GetString("ErrorWhileCreatingCustomer"));
+                /*            throw new NotImplementedException()*/
+            }
+        }
+
         public OperationDataResult<CustomerFullModel> GetSingleCustomer(int id)
         {
             try
             {
-                var customer = _dbContext.Customers.Select(x => new CustomerFullModel()
+                CustomerFullModel customer = _dbContext.Customers.Select(x => new CustomerFullModel()
                     {
                         Id = x.Id,
                         Description = x.Description,
@@ -180,53 +260,56 @@ namespace Customers.Pn.Services
         {
             try
             {
-                var customer = new Customer()
-                {
-                    CityName = customerPnCreateModel.CityName,
-                    CompanyAddress = customerPnCreateModel.CompanyAddress,
-                    CompanyName = customerPnCreateModel.CompanyName,
-                    ContactPerson = customerPnCreateModel.ContactPerson,
-                    CreatedBy = customerPnCreateModel.CreatedBy,
-                    CustomerNo = customerPnCreateModel.CustomerNo,
-                    CreatedDate = DateTime.UtcNow,
-                    Description = customerPnCreateModel.Description,
-                    Email = customerPnCreateModel.Email,
-                    Phone = customerPnCreateModel.Phone,
-                    ZipCode = customerPnCreateModel.ZipCode
-                };
-                _dbContext.Customers.Add(customer);
-                _dbContext.SaveChanges();
+                //Customer customer = new Customer()
+                //{
+                //    CityName = customerPnCreateModel.CityName,
+                //    CompanyAddress = customerPnCreateModel.CompanyAddress,
+                //    CompanyName = customerPnCreateModel.CompanyName,
+                //    ContactPerson = customerPnCreateModel.ContactPerson,
+                //    CreatedBy = customerPnCreateModel.CreatedBy,
+                //    CustomerNo = customerPnCreateModel.CustomerNo,
+                //    CreatedDate = DateTime.UtcNow,
+                //    Description = customerPnCreateModel.Description,
+                //    Email = customerPnCreateModel.Email,
+                //    Phone = customerPnCreateModel.Phone,
+                //    ZipCode = customerPnCreateModel.ZipCode
+                //};
+                //_dbContext.Customers.Add(customer);
+                //_dbContext.SaveChanges();
+                customerPnCreateModel.Save(_dbContext);
                 // create item
-                var customerSettings = _dbContext.CustomerSettings.FirstOrDefault();
+                CustomerSettings customerSettings = _dbContext.CustomerSettings.FirstOrDefault();
                 if (customerSettings?.RelatedEntityGroupId != null)
                 {
-                    var core = _coreHelper.GetCore();
-                    var entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
+                    Core core = _coreHelper.GetCore();
+                    EntityGroup entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
                     if (entityGroup == null)
                     {
                         return new OperationResult(false, "Entity group not found");
                     }
 
-                    var nextItemUid = entityGroup.EntityGroupItemLst.Count;
-                    var label = customer.CompanyName + " - " + customer.CompanyAddress + " - " + customer.ZipCode +
-                                " - " + customer.CityName + " - " + customer.Phone + " - " + customer.ContactPerson;
+                    int nextItemUid = entityGroup.EntityGroupItemLst.Count;
+                    string label = customerPnCreateModel.CompanyName + " - " + customerPnCreateModel.CompanyAddress + " - "
+                        + customerPnCreateModel.ZipCode +
+                                " - " + customerPnCreateModel.CityName + " - " + customerPnCreateModel.Phone + " - " +
+                                customerPnCreateModel.ContactPerson;
                     if (string.IsNullOrEmpty(label))
                     {
                         label = $"Empty company {nextItemUid}";
                     }
 
-                    var item = core.EntitySearchItemCreate(entityGroup.Id, $"{label}", $"{customer.Description}",
+                    EntityItem item = core.EntitySearchItemCreate(entityGroup.Id, $"{label}", $"{customerPnCreateModel.Description}",
                         nextItemUid.ToString());
                     if (item != null)
                     {
                         entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
                         if (entityGroup != null)
                         {
-                            foreach (var entityItem in entityGroup.EntityGroupItemLst)
+                            foreach (EntityItem entityItem in entityGroup.EntityGroupItemLst)
                             {
                                 if (entityItem.MicrotingUUID == item.MicrotingUUID)
                                 {
-                                    customer.RelatedEntityId = entityItem.Id;
+                                    customerPnCreateModel.RelatedEntityId = entityItem.Id;
                                 }
                             }
                         }
@@ -251,31 +334,32 @@ namespace Customers.Pn.Services
         {
             try
             {
-                var customer = _dbContext.Customers.FirstOrDefault(x => x.Id == customerUpdateModel.Id);
-                if (customer == null)
-                {
-                    return new OperationResult(false,
-                        _customersLocalizationService.GetString("CustomerNotFound"));
-                }
+                //Customer customer = _dbContext.Customers.FirstOrDefault(x => x.Id == customerUpdateModel.Id);
+                //if (customer == null)
+                //{
+                //    return new OperationResult(false,
+                //        _customersLocalizationService.GetString("CustomerNotFound"));
+                //}
 
-                customer.Description = customerUpdateModel.Description;
-                customer.CityName = customerUpdateModel.CityName;
-                customer.CompanyAddress = customerUpdateModel.CompanyAddress;
-                customer.ContactPerson = customerUpdateModel.ContactPerson;
-                customer.CreatedBy = customerUpdateModel.CreatedBy;
-                customer.CustomerNo = customerUpdateModel.CustomerNo;
-                customer.CompanyName = customerUpdateModel.CompanyName;
-                customer.Email = customerUpdateModel.Email;
-                customer.Phone = customerUpdateModel.Phone;
-                customer.ZipCode = customerUpdateModel.ZipCode;
-                _dbContext.SaveChanges();
-                if (customer.RelatedEntityId != null)
-                {
-                    var core = _coreHelper.GetCore();
-                    var label = customer.CompanyName + " - " + customer.CompanyAddress + " - " + customer.ZipCode + " - " + customer.CityName + " - " + customer.Phone + " - " + customer.ContactPerson;
-                    core.EntityItemUpdate((int)customer.RelatedEntityId, label, customer.Description, "", 0);
+                //customer.Description = customerUpdateModel.Description;
+                //customer.CityName = customerUpdateModel.CityName;
+                //customer.CompanyAddress = customerUpdateModel.CompanyAddress;
+                //customer.ContactPerson = customerUpdateModel.ContactPerson;
+                //customer.CreatedBy = customerUpdateModel.CreatedBy;
+                //customer.CustomerNo = customerUpdateModel.CustomerNo;
+                //customer.CompanyName = customerUpdateModel.CompanyName;
+                //customer.Email = customerUpdateModel.Email;
+                //customer.Phone = customerUpdateModel.Phone;
+                //customer.ZipCode = customerUpdateModel.ZipCode;
+                //_dbContext.SaveChanges();
+                //if (customer.RelatedEntityId != null)
+                //{
+                //    Core core = _coreHelper.GetCore();
+                //    string label = customer.CompanyName + " - " + customer.CompanyAddress + " - " + customer.ZipCode + " - " + customer.CityName + " - " + customer.Phone + " - " + customer.ContactPerson;
+                //    core.EntityItemUpdate((int)customer.RelatedEntityId, label, customer.Description, "", 0);
 
-                }
+                //}
+                customerUpdateModel.Update(_dbContext);
                 return new OperationDataResult<CustomersModel>(true,
                     _customersLocalizationService.GetString("CustomerUpdatedSuccessfully"));
             }
@@ -292,21 +376,23 @@ namespace Customers.Pn.Services
         {
             try
             {
-                var customer = _dbContext.Customers.FirstOrDefault(x => x.Id == id);
-                if (customer == null)
-                {
-                    return new OperationResult(false,
-                        _customersLocalizationService.GetString("CustomerNotFound"));
-                }
+                //Customer customer = _dbContext.Customers.FirstOrDefault(x => x.Id == id);
+                //if (customer == null)
+                //{
+                //    return new OperationResult(false,
+                //        _customersLocalizationService.GetString("CustomerNotFound"));
+                //}
 
-                var core = _coreHelper.GetCore();
-                if (customer.RelatedEntityId != null)
-                {
-                    core.EntityItemDelete((int) customer.RelatedEntityId);
-                }
+                //Core core = _coreHelper.GetCore();
+                //if (customer.RelatedEntityId != null)
+                //{
+                //    core.EntityItemDelete((int) customer.RelatedEntityId);
+                //}
 
-                _dbContext.Customers.Remove(customer);
-                _dbContext.SaveChanges();
+                //_dbContext.Customers.Remove(customer);
+                //_dbContext.SaveChanges();
+                CustomerFullModel customer = new CustomerFullModel();
+                customer.Delete(_dbContext);
                 return new OperationResult(true,
                     _customersLocalizationService.GetString("CustomerDeletedSuccessfully"));
             }
@@ -323,13 +409,13 @@ namespace Customers.Pn.Services
         {
             try
             {
-                var result = new CustomerSettingsModel();
-                var customerSettings = _dbContext.CustomerSettings.FirstOrDefault();
+                CustomerSettingsModel result = new CustomerSettingsModel();
+                CustomerSettings customerSettings = _dbContext.CustomerSettings.FirstOrDefault();
                 if (customerSettings?.RelatedEntityGroupId != null)
                 {
                     result.RelatedEntityId = (int) customerSettings.RelatedEntityGroupId;
-                    var core = _coreHelper.GetCore();
-                    var entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
+                    Core core = _coreHelper.GetCore();
+                    EntityGroup entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
                     if (entityGroup == null)
                     {
                         return new OperationDataResult<CustomerSettingsModel>(false, "Entity group not found");
@@ -357,24 +443,26 @@ namespace Customers.Pn.Services
                 {
                     return new OperationDataResult<CustomersModel>(true);
                 }
-                var customerSettings = _dbContext.CustomerSettings.FirstOrDefault();
+                CustomerSettings customerSettings = _dbContext.CustomerSettings.FirstOrDefault();
                 if (customerSettings == null)
                 {
-                    customerSettings = new CustomerSettings()
-                    {
-                        RelatedEntityGroupId = customerUpdateModel.RelatedEntityId
-                    };
-                    _dbContext.CustomerSettings.Add(customerSettings);
+                    customerUpdateModel.Save(_dbContext);
+                    //customerSettings = new CustomerSettings()
+                    //{
+                    //    RelatedEntityGroupId = customerUpdateModel.RelatedEntityId
+                    //};
+                    //_dbContext.CustomerSettings.Add(customerSettings);
                 }
                 else
                 {
-                    customerSettings.RelatedEntityGroupId = customerUpdateModel.RelatedEntityId;
-                    _dbContext.Entry(customerSettings).State = EntityState.Modified;
+                    customerUpdateModel.Update(_dbContext);
+                    //customerSettings.RelatedEntityGroupId = customerUpdateModel.RelatedEntityId;
+                    //_dbContext.Entry(customerSettings).State = EntityState.Modified;
                 }
 
-                _dbContext.SaveChanges();
-                var core = _coreHelper.GetCore();
-                var newEntityGroup = core.EntityGroupRead(customerUpdateModel.RelatedEntityId.ToString());
+                //_dbContext.SaveChanges();
+                Core core = _coreHelper.GetCore();
+                EntityGroup newEntityGroup = core.EntityGroupRead(customerUpdateModel.RelatedEntityId.ToString());
                 if (newEntityGroup == null)
                 {
                     return new OperationResult(false, "Entity group not found");

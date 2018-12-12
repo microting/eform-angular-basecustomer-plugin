@@ -1,11 +1,12 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Customers.Pn.Abstractions;
 using Customers.Pn.Infrastructure.Data;
 using Customers.Pn.Infrastructure.Data.Entities;
 using Customers.Pn.Infrastructure.Data.Factories;
-using Customers.Pn.Infrastructure.Enums;
 using Customers.Pn.Infrastructure.Extensions;
+using Customers.Pn.Infrastructure.Models.Fields;
 using Customers.Pn.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -35,11 +36,11 @@ namespace Customers.Pn
 
         public void ConfigureDbContext(IServiceCollection services, string connectionString)
         {
-            services.AddDbContext<CustomersPnDbContext>(o => o.UseSqlServer(connectionString,
+            services.AddDbContext<CustomersPnDbAnySql>(o => o.UseSqlServer(connectionString,
                 b => b.MigrationsAssembly(PluginAssembly().FullName)));
 
-            var contextFactory = new CustomersPnContextFactory();
-            using (var context = contextFactory.CreateDbContext(new[] {connectionString}))
+            CustomersPnContextFactory contextFactory = new CustomersPnContextFactory();
+            using (CustomersPnDbAnySql context = contextFactory.CreateDbContext(new[] {connectionString}))
             {
                 context.Database.Migrate();
             }
@@ -67,39 +68,40 @@ namespace Customers.Pn
         public void SeedDatabase(string connectionString)
         {
             // Get DbContext
-            var contextFactory = new CustomersPnContextFactory();
-            using (var context = contextFactory.CreateDbContext(new[] {connectionString}))
+            CustomersPnContextFactory contextFactory = new CustomersPnContextFactory();
+            using (CustomersPnDbAnySql context = contextFactory.CreateDbContext(new[] {connectionString}))
             {
                 // Add data
-                var customerFields = new Customer().GetPropList();
-                customerFields.Remove(nameof(Customer.RelatedEntityId));
-                foreach (var name in customerFields)
+                List<string> customerFields = new Customer().GetPropList(); //Find all attributes for cusomers and puts them in a list
+                customerFields.Remove(nameof(Customer.RelatedEntityId)); // removes the related entity, because it's not relevant for fields
+                foreach (string name in customerFields)
                 {
-                    var field = new Field()
-                    {
-                        Name = name
-                    };
+                    //Field field = new Field()
+                    //{
+                    //    Name = name
+                    //};
                     if (!context.Fields.Any(x => x.Name == name))
                     {
-                        context.Fields.Add(field);
+                        FieldModel fieldModel = new FieldModel();
+                        fieldModel.Save(context);
                     }
                 }
 
                 context.SaveChanges();
-                var fieldForRemove = context.Fields.FirstOrDefault(x => x.Name == nameof(Customer.RelatedEntityId));
+                Field fieldForRemove = context.Fields.FirstOrDefault(x => x.Name == nameof(Customer.RelatedEntityId));
                 if (fieldForRemove != null)
                 {
                     context.Fields.Remove(fieldForRemove);
                     context.SaveChanges();
                 }
 
-                var fields = context.Fields.ToList();
-                foreach (var field in fields)
+                List<Field> fields = context.Fields.ToList();
+                foreach (Field field in fields)
                 {
-                    var customerField = new CustomerField
+                    CustomerField customerField = new CustomerField
                     {
                         FieldId = field.Id,
-                        FieldStatus = FieldStatus.Enabled
+                        FieldStatus = 1
                     };
                     if (!context.CustomerFields.Any(x => x.FieldId == field.Id))
                     {

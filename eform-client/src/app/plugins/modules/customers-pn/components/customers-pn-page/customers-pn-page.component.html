@@ -13,6 +13,10 @@
       mdbTooltip="{{ 'Create Customer' | translate }}"
       (click)="showCreateCustomerModal()">{{ 'New Customer' | translate }}
     </button>
+    <button
+      class="btn btn-success"
+      mdbTooltip="{{'Import Costumer' | translate}}"
+      routerLink="import">{{'Import Costumer' | translate}}</button>
   </div>
 </subheader-pn>
 
@@ -34,14 +38,14 @@
         <ng-container *ngFor="let field of fieldsModel.fields">
           <th scope="col" class="table-header-sortable" id="{{field.name}}TableHeader"
               *ngIf="field.fieldStatus == fieldStatusEnum.Enabled"
-              (click)="sortByColumn(field.name, customersRequestModel.isSortDsc = !customersRequestModel.isSortDsc)">
+              (click)="sortTable(field.name)">
             <div class="d-flex align-items-center justify-content-center">
               {{ field.name | translate }}
-              <i class="material-icons text-black-50" *ngIf="customersRequestModel.sortColumnName != field.name">unfold_more</i>
+              <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != field.name">unfold_more</i>
               <i class="material-icons"
-                 *ngIf="customersRequestModel.sortColumnName == field.name && !customersRequestModel.isSortDsc">expand_less</i>
+                 *ngIf="localPageSettings.sort == field.name && !customersRequestModel.isSortDsc">expand_less</i>
               <i class="material-icons"
-                 *ngIf="customersRequestModel.sortColumnName == field.name && customersRequestModel.isSortDsc">expand_more</i>
+                 *ngIf="localPageSettings.sort == field.name && customersRequestModel.isSortDsc">expand_more</i>
             </div>
           </th>
         </ng-container>
@@ -56,7 +60,10 @@
         <td *ngFor="let field of customer.fields">
           <ng-container [ngSwitch]="field.name">
             <ng-container *ngSwitchCase="fieldsEnum[fieldsEnum.Description]">
-              <div [innerHTML]="field.value"></div>
+              <div class="max-lines" [innerHTML]="field.value"></div>
+            </ng-container>
+            <ng-container *ngSwitchCase="fieldsEnum[fieldsEnum.CreatedDate]">
+              {{field.value}}
             </ng-container>
             <ng-container *ngSwitchDefault>
               {{field.value}}
@@ -85,11 +92,22 @@
       </tbody>
     </table>
   </div>
-  <pagination-pn *ngIf="customersModel.total > customersRequestModel.pageSize"
-                 [limit]="customersRequestModel.pageSize"
-                 [size]="customersModel.total"
-                 [offset]="customersRequestModel.offset"
-                 (onPageChanged)="changePage($event)"></pagination-pn>
+  <div class="row justify-content-between mr-2 ml-2">
+    <div class="col-md-1">
+      <page-size-pn
+        [pageSize]="localPageSettings.pageSize"
+        (onPageSizeChanged)="localPageSettings.pageSize = $event; customersRequestModel.pageIndex = 1;
+        updateLocalPageSettings()">
+      </page-size-pn>
+    </div>
+    <div class="col-md-4 ml-auto d-flex justify-content-end p-2">
+      <pagination-pn *ngIf="customersModel.total > customersRequestModel.pageSize"
+                     [limit]="customersRequestModel.pageSize"
+                     [size]="customersModel.total"
+                     [offset]="customersRequestModel.offset"
+                     (onPageChanged)="changePage($event)"></pagination-pn>
+    </div>
+  </div>
 </div>
 
 <spinner-pn [spinnerVisibility]="spinnerStatus"></spinner-pn>
@@ -101,4 +119,6 @@
 <app-customer-pn-edit #editCustomerModal
                       [fieldsModel]="fieldsModel"
                       (onCustomerUpdated)="getAllCustomers()"></app-customer-pn-edit>
-<app-customer-pn-delete #deleteCustomerModal (onCustomerDeleted)="getAllCustomers()"></app-customer-pn-delete>
+<app-customer-pn-delete #deleteCustomerModal
+                        [fields]="fieldsModel"
+                        (onCustomerDeleted)="getAllCustomers()"></app-customer-pn-delete>

@@ -4,7 +4,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
 
 namespace Customers.Pn.Infrastructure.Data.Entities
 {
-    public class Customer : BaseEntity
+    public class CustomerVersion : BaseEntity
     {
         public DateTime? Created_at { get; set; }
 
@@ -40,5 +40,7 @@ namespace Customers.Pn.Infrastructure.Data.Entities
         public string ContactPerson { get; set; }
         public string Description { get; set; }
         public int? RelatedEntityId { get; set; }
+
+        public int CustomerId { get; set; }
     }
 }

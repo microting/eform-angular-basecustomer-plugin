@@ -1,4 +1,7 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {CustomerPnFieldsEnum} from 'src/app/plugins/modules/customers-pn/enums';
+import {CustomerPnModel} from 'src/app/plugins/modules/customers-pn/models/customer';
+import {FieldsPnUpdateModel} from 'src/app/plugins/modules/customers-pn/models/field';
 import {CustomersPnService} from '../../services';
 
 @Component({
@@ -9,21 +12,25 @@ import {CustomersPnService} from '../../services';
 export class CustomerPnDeleteComponent implements OnInit {
   @ViewChild('frame') frame;
   @Output() onCustomerDeleted: EventEmitter<void> = new EventEmitter<void>();
-  selectedCustomerId: number;
+  selectedCustomer: CustomerPnModel = new CustomerPnModel();
+  @Input() fields: FieldsPnUpdateModel = new FieldsPnUpdateModel();
   spinnerStatus = false;
+  get fieldsEnum() { return CustomerPnFieldsEnum; }
+
+
   constructor(private customersService: CustomersPnService) { }
 
   ngOnInit() {
   }
 
-  show(customerId: number) {
-    this.selectedCustomerId = customerId;
+  show(customer: CustomerPnModel) {
+    this.selectedCustomer = customer;
     this.frame.show();
   }
 
   deleteCustomer() {
     this.spinnerStatus = true;
-    this.customersService.deleteCustomer(this.selectedCustomerId).subscribe(((data) => {
+    this.customersService.deleteCustomer(this.selectedCustomer.id).subscribe(((data) => {
       if (data && data.success) {
         this.onCustomerDeleted.emit();
         this.frame.hide();
