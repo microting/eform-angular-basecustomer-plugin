@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Customers.Pn.Abstractions;
+﻿using Customers.Pn.Abstractions;
 using Customers.Pn.Infrastructure.Models.Customer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

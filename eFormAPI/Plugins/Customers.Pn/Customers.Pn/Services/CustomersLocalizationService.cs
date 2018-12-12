@@ -1,22 +1,22 @@
-﻿using System.Reflection;
-using Customers.Pn.Abstractions;
+﻿using Customers.Pn.Abstractions;
 using Microsoft.Extensions.Localization;
+using Microting.eFormApi.BasePn.Localization.Abstractions;
 
 namespace Customers.Pn.Services
 {
     public class CustomersLocalizationService : ICustomersLocalizationService
     {
         private readonly IStringLocalizer _localizer;
- 
-        public CustomersLocalizationService(IStringLocalizerFactory factory)
+
+        // ReSharper disable once SuggestBaseTypeForParameter
+        public CustomersLocalizationService(IEformLocalizerFactory factory)
         {
-            _localizer = factory.Create("CustomersResources",
-                Assembly.GetEntryAssembly().FullName);
+            _localizer = factory.Create(typeof(EformCustomersPlugin));
         }
- 
+
         public string GetString(string key)
         {
-            var str = _localizer[key];
+            var str = _localizer.GetString(key);
             return str.Value;
         }
 
