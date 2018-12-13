@@ -1,4 +1,4 @@
-﻿using eFormApi.BasePn.Infrastructure.Data.Base;
+﻿using Microting.eFormApi.BasePn.Infrastructure.Data.Base;
 
 namespace Customers.Pn.Infrastructure.Data.Entities
 {
