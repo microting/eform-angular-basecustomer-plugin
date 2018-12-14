@@ -1,4 +1,3 @@
-﻿using System.Diagnostics;
 using Customers.Pn.Abstractions;
 using Customers.Pn.Infrastructure.Models;
 using Microsoft.AspNetCore.Authorization;

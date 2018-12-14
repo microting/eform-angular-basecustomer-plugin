@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using Customers.Pn.Abstractions;
 using Customers.Pn.Infrastructure.Data;
-using Customers.Pn.Infrastructure.Data.Entities;
 using Customers.Pn.Infrastructure.Models.Fields;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
