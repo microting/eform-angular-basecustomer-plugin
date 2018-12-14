@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Customers.Pn.Infrastructure.Models
+﻿namespace Customers.Pn.Infrastructure.Models
 {
     public class CustomerImportModel
     {

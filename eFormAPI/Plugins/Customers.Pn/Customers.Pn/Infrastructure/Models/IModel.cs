@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Customers.Pn.Infrastructure.Data;
+﻿using Customers.Pn.Infrastructure.Data;
 
 namespace Customers.Pn.Infrastructure.Models
 {

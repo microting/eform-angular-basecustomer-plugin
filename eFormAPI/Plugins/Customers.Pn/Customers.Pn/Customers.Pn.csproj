@@ -8,6 +8,14 @@
     <OutputPath>..\..\..\eFormAPI.Web\Plugins\Customers\</OutputPath>
     <NoWarn>1701;1702</NoWarn>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\localization.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\localization.json" />
+  </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="Automapper" Version="6.1.0" />
