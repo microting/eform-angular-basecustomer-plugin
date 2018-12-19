@@ -38,7 +38,6 @@ namespace Customers.Pn
 
         public void ConfigureDbContext(IServiceCollection services, string connectionString)
         {
-            Debugger.Break();
             services.AddDbContext<CustomersPnDbAnySql>(o => o.UseSqlServer(connectionString,
                 b => b.MigrationsAssembly(PluginAssembly().FullName)));
 
@@ -58,8 +57,8 @@ namespace Customers.Pn
 
         public MenuModel HeaderMenu(IServiceProvider serviceProvider)
         {
-            var localizationService = (ICustomersLocalizationService) serviceProvider
-                .GetService(typeof(CustomersLocalizationService));
+            var localizationService = serviceProvider
+                .GetService<ICustomersLocalizationService>();
 
             var result = new MenuModel();
             result.LeftMenu.Add(new MenuItemModel()
