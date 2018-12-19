@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using Customers.Pn.Abstractions;
@@ -36,6 +38,7 @@ namespace Customers.Pn
 
         public void ConfigureDbContext(IServiceCollection services, string connectionString)
         {
+            Debugger.Break();
             services.AddDbContext<CustomersPnDbAnySql>(o => o.UseSqlServer(connectionString,
                 b => b.MigrationsAssembly(PluginAssembly().FullName)));
 
@@ -53,12 +56,15 @@ namespace Customers.Pn
         {
         }
 
-        public MenuModel HeaderMenu()
+        public MenuModel HeaderMenu(IServiceProvider serviceProvider)
         {
+            var localizationService = (ICustomersLocalizationService) serviceProvider
+                .GetService(typeof(CustomersLocalizationService));
+
             var result = new MenuModel();
             result.LeftMenu.Add(new MenuItemModel()
             {
-                Name = "Customers",
+                Name = localizationService.GetString("Customers"),
                 E2EId = "",
                 Link = "/plugins/customers-pn"
             });
@@ -72,8 +78,11 @@ namespace Customers.Pn
             using (CustomersPnDbAnySql context = contextFactory.CreateDbContext(new[] {connectionString}))
             {
                 // Add data
-                List<string> customerFields = new Customer().GetPropList(); //Find all attributes for cusomers and puts them in a list
-                customerFields.Remove(nameof(Customer.RelatedEntityId)); // removes the related entity, because it's not relevant for fields
+                List<string>
+                    customerFields =
+                        new Customer().GetPropList(); //Find all attributes for cusomers and puts them in a list
+                customerFields.Remove(nameof(Customer
+                    .RelatedEntityId)); // removes the related entity, because it's not relevant for fields
                 foreach (string name in customerFields)
                 {
                     //Field field = new Field()
