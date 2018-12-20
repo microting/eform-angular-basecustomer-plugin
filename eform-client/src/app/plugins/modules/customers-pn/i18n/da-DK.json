@@ -11,9 +11,15 @@
   "CompanyAddress": "Virksomhedsadresse",
   "Description": "Beskrivelse",
   "ZipCode": "Postnummer",
+  "Zip Code": "Postnummer",
   "CreatedDate": "Oprettet Dato",
   "Edit Customer": "Rediger Kunde",
   "Delete Customer": "Slet Kunde",
   "New Customer":  "Ny Kunde",
-  "Create Customer": "Opret Kunde"
+  "Create Customer": "Opret Kunde",
+  "Import Customer": "Importer Kunde",
+  "Import Customers": "Importer Kunder",
+  "Continue Import" : "Fortsæt Importering",
+  "Import The Customers": "Importer Kunderne",
+  "Selected list": "Valgt liste"
 }

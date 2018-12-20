@@ -11,9 +11,15 @@
   "CompanyAddress": "Company Address",
   "Description": "Description",
   "ZipCode": "Zip Code",
+  "Zip Code": "Zip Code",
   "CreatedDate": "Created Date",
   "Edit Customer": "Edit Customer",
   "Delete Customer": "Delete Customer",
   "New Customer":  "New Customer",
-  "Create Customer": "Create Customer"
+  "Create Customer": "Create Customer",
+  "Import Customer": "Import Customer",
+  "Import Customers": "Import Customers",
+  "Continue Import" : "Continue Import",
+  "Import The Customers": "Import The Customers",
+  "Selected list": "Selected List"
 }

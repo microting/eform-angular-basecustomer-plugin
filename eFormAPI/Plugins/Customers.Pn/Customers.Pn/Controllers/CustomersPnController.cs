@@ -192,47 +192,7 @@ namespace Customers.Pn.Controllers
                         if (existingCustomer == null)
                         {
                             Customer customer = new Customer();
-                            int locationId;
-
-                            if (int.TryParse(headers[0]["headerValue"].ToString(), out locationId))
-                            {
-                                customer.CityName = customerObj[locationId].ToString(); // Cityname
-                            }
-                            if (int.TryParse(headers[1]["headerValue"].ToString(), out locationId))
-                            {
-                                customer.CompanyAddress = customerObj[locationId].ToString(); //CompanyAddress
-                            }
-                            if (int.TryParse(headers[2]["headerValue"].ToString(), out locationId))
-                            {
-                                customer.CompanyName = customerObj[locationId].ToString(); //Companyname
-                            }
-                            if (int.TryParse(headers[3]["headerValue"].ToString(), out locationId))
-                            {
-                                customer.ContactPerson = customerObj[locationId].ToString(); //Contactperson
-                            }
-                            if (int.TryParse(headers[4]["headerValue"].ToString(), out locationId))
-                            {
-                                customer.CustomerNo = customerObj[locationId].ToString(); //CustomerNumber
-                            }
-
-                            customer.CreatedDate = DateTime.UtcNow; // Createddate
-
-                            if (int.TryParse(headers[5]["headerValue"].ToString(), out locationId))
-                            {
-                                customer.Description = customerObj[locationId].ToString(); //Description
-                            }
-                            if (int.TryParse(headers[6]["headerValue"].ToString(), out locationId))
-                            {
-                                customer.Email = customerObj[locationId].ToString(); //Email
-                            }
-                            if (int.TryParse(headers[7]["headerValue"].ToString(), out locationId))
-                            {
-                                customer.Phone = customerObj[locationId].ToString(); //Phonenumber
-                            }
-                            if (int.TryParse(headers[8]["headerValue"].ToString(), out locationId))
-                            {
-                                customer.ZipCode = customerObj[locationId].ToString(); //Zipcode
-                            }
+                            customer = AddValues(customer, headers, customerObj);
                             _dbContext.Customers.Add(customer);
                             _dbContext.SaveChanges();
                         }
@@ -487,41 +447,6 @@ namespace Customers.Pn.Controllers
                     return new OperationResult(false, "Entity group not found");
                 }
 
-                //var nextItemUid = newEntityGroup.EntityGroupItemLst.Count;
-                //var customers = _dbContext.Customers.ToList();
-                //foreach (var customer in customers)
-                //{
-                //    //if (customer.RelatedEntityId != null && customer.RelatedEntityId > 0)
-                //    //{
-                //    //    core.EntityItemDelete((int) customer.RelatedEntityId);
-                //    //}
-
-                //    var companyName = customer.CompanyName;
-                //    if (string.IsNullOrEmpty(companyName))
-                //    {
-                //        companyName = $"Empty company {nextItemUid}";
-                //    }
-                //    var item = core.EntitySearchItemCreate(newEntityGroup.Id, $"{companyName}", "",
-                //        nextItemUid.ToString());
-
-                //    if (item != null)
-                //    {
-                //        var entityGroup = core.EntityGroupRead(customerUpdateModel.RelatedEntityId.ToString());
-                //        if (entityGroup != null)
-                //        {
-                //            foreach (var entityItem in entityGroup.EntityGroupItemLst)
-                //            {
-                //                if (entityItem.MicrotingUUID == item.MicrotingUUID)
-                //                {
-                //                    customer.RelatedEntityId = entityItem.Id;
-                //                }
-                //            }
-                //        }
-                //    }
-                //    nextItemUid++;
-                //}
-
-                //_dbContext.SaveChanges();
                 return new OperationDataResult<CustomersModel>(true,
                     CustomersPnLocaleHelper.GetString("CustomerUpdatedSuccessfully"));
             }
@@ -552,6 +477,52 @@ namespace Customers.Pn.Controllers
             {
                 string contactPerson = customerObj[contactPersonColumn].ToString();
                 customer = _dbContext.Customers.SingleOrDefault(x => x.ContactPerson == contactPerson);
+            }
+
+            return customer;
+        }
+        private Customer AddValues(Customer customer, JToken headers, JToken customerObj)
+        {
+            int locationId;
+
+            if (int.TryParse(headers[0]["headerValue"].ToString(), out locationId))
+            {
+                customer.CityName = customerObj[locationId].ToString(); // Cityname
+            }
+            if (int.TryParse(headers[1]["headerValue"].ToString(), out locationId))
+            {
+                customer.CompanyAddress = customerObj[locationId].ToString(); //CompanyAddress
+            }
+            if (int.TryParse(headers[2]["headerValue"].ToString(), out locationId))
+            {
+                customer.CompanyName = customerObj[locationId].ToString(); //Companyname
+            }
+            if (int.TryParse(headers[3]["headerValue"].ToString(), out locationId))
+            {
+                customer.ContactPerson = customerObj[locationId].ToString(); //Contactperson
+            }
+            if (int.TryParse(headers[4]["headerValue"].ToString(), out locationId))
+            {
+                customer.CustomerNo = customerObj[locationId].ToString(); //CustomerNumber
+            }
+
+            customer.CreatedDate = DateTime.UtcNow; // Createddate
+
+            if (int.TryParse(headers[5]["headerValue"].ToString(), out locationId))
+            {
+                customer.Description = customerObj[locationId].ToString(); //Description
+            }
+            if (int.TryParse(headers[6]["headerValue"].ToString(), out locationId))
+            {
+                customer.Email = customerObj[locationId].ToString(); //Email
+            }
+            if (int.TryParse(headers[7]["headerValue"].ToString(), out locationId))
+            {
+                customer.Phone = customerObj[locationId].ToString(); //Phonenumber
+            }
+            if (int.TryParse(headers[8]["headerValue"].ToString(), out locationId))
+            {
+                customer.ZipCode = customerObj[locationId].ToString(); //Zipcode
             }
 
             return customer;
