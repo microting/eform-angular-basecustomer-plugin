@@ -1,4 +1,6 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Subject} from 'rxjs';
+import {debounceTime} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
 import {PageSettingsModel, UserInfoModel} from 'src/app/common/models';
 import {AuthService, LocaleService} from 'src/app/common/services/auth';
@@ -14,13 +16,15 @@ declare var require: any;
   templateUrl: './customers-pn-page.component.html',
   styleUrls: ['./customers-pn-page.component.scss']
 })
-export class CustomersPnPageComponent implements OnInit {
+export class CustomersPnPageComponent implements OnInit, OnDestroy {
   @ViewChild('createCustomerModal') createCustomerModal;
   @ViewChild('editCustomerModal') editCustomerModal;
   @ViewChild('deleteCustomerModal') deleteCustomerModal;
   get fieldStatusEnum() { return CustomersPnFieldStatusEnum; }
   get fieldStatusEnumString() { return CustomersPnFieldStatusEnum; }
   get fieldsEnum() { return CustomerPnFieldsEnum; }
+
+  searchSubject = new Subject();
 
   customersRequestModel: CustomersPnRequestModel = new CustomersPnRequestModel();
   customersModel: CustomersPnModel = new CustomersPnModel();
@@ -34,6 +38,12 @@ export class CustomersPnPageComponent implements OnInit {
               private localeService: LocaleService,
               private authService: AuthService,
               private sharedPnService: SharedPnService) {
+    this.searchSubject.pipe(
+      debounceTime(500)
+    ). subscribe(val => {
+      this.customersRequestModel.name = val.toString();
+      this.getAllCustomers();
+    });
 
   }
 
@@ -43,6 +53,10 @@ export class CustomersPnPageComponent implements OnInit {
 
   ngOnInit() {
     this.getLocalPageSettings();
+  }
+
+  ngOnDestroy() {
+    this.searchSubject.unsubscribe();
   }
 
   getLocalPageSettings() {
@@ -114,7 +128,6 @@ export class CustomersPnPageComponent implements OnInit {
   }
 
   onSearchInputChanged(value: any) {
-    this.customersRequestModel.name = value;
-    this.getAllCustomers();
+  this.searchSubject.next(value);
   }
 }

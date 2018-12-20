@@ -42,7 +42,7 @@ export class CustomerPnImportComponent implements OnInit {
     // forEach(Option in this.options) {
     //   this.customerHeaderModel = new CustomerPnHeadersModel();
     //   this.customerHeaderModel.header = str.label;
-    //   this.customerImportModel.headers.add this.customerHeaderModel;
+    //   this.customerImportModel.Headers.add this.customerHeaderModel;
     // }
     // this.customerHeaderModel = new CustomerPnHeadersModel();
    this.options.forEach((option) => {
@@ -50,7 +50,7 @@ export class CustomerPnImportComponent implements OnInit {
       this.customerHeaderModel.headerLabel = option.label;
       this.customerHeaderModel.headerValue = null;
       this.customerImportModel.headerlist.push(this.customerHeaderModel);
-      // console.log(label);
+      // console.log(this.customerImportModel);
    }
   );
     this.uploader = new FileUploader(
@@ -66,9 +66,6 @@ export class CustomerPnImportComponent implements OnInit {
       this.myFile = fileItem.file.rawFile;
     });
   }
-
-
-
   ngOnInit() {
     this.fileName = 'DummyCustomerData.csv';
     this.totalColumns = 4;
@@ -89,16 +86,14 @@ export class CustomerPnImportComponent implements OnInit {
     importCustomer() {
     this.spinnerStatus = true;
     // this.customerImportModel.importList = this.tableData;
-    // debugger;
-    this.customerImportModel.headers = JSON.stringify(this.customerImportModel.headerlist);
+    debugger;
+    this.customerImportModel.Headers = JSON.stringify(this.customerImportModel.headerlist);
     return this.customerService.importCustomer(this.customerImportModel).subscribe(((data) => {
       if (data && data.success) {
         this.customerImportModel = new CustomersPnImportModel();
       } this.spinnerStatus = false;
+      console.log(this.customerImportModel.Headers);
     }));
-  }
-  logThings(value) {
-    console.log(value);
   }
   onSelectedChanged(e: any, columnIndex: any) {
     this.customerImportModel.headerlist[e.value].headerValue = columnIndex;
