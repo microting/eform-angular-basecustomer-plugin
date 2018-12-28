@@ -1,77 +1,84 @@
 [
   {
+    "Key": "Customers",
+    "LocalizedValue": {
+      "da": "Kunder",
+      "en-US": "Customers"
+    }
+  },
+  {
     "Key": "CustomerCreated",
-    "LocalizedValue" : {
+    "LocalizedValue": {
       "da": "Kunden er oprettet",
       "en-US": "Customer has been created"
     }
   },
   {
     "Key": "CustomerDeletedSuccessfully",
-    "LocalizedValue" : {
+    "LocalizedValue": {
       "da": "Kunde slettet med succes",
       "en-US": "Customer deleted successfully"
     }
   },
   {
     "Key": "CustomerNotFound",
-    "LocalizedValue" : {
+    "LocalizedValue": {
       "da": "Kunde ikke fundet",
       "en-US": "Customer not found"
     }
   },
   {
     "Key": "CustomerUpdatedSuccessfully",
-    "LocalizedValue" : {
+    "LocalizedValue": {
       "da": "Kunden opdateres med succes",
       "en-US": "Customer updated successfully"
     }
   },
   {
     "Key": "ErrorObtainingCustomersInfo",
-    "LocalizedValue" : {
+    "LocalizedValue": {
       "da": "Fejl under opnåelse af kundeoplysninger",
       "en-US": "Error while obtaining customer info"
     }
   },
   {
     "Key": "ErrorWhileCreatingCustomer",
-    "LocalizedValue" : {
+    "LocalizedValue": {
       "da": "Fejl under oprettelse af kunde",
       "en-US": "Error while creating customer"
     }
   },
   {
     "Key": "ErrorWhileDeletingCustomer",
-    "LocalizedValue" : {
+    "LocalizedValue": {
       "da": "Fejl under sletning af kunde",
       "en-US": "Error while deleting customer"
     }
   },
   {
     "Key": "ErrorWhileObtainingFieldsInfo",
-    "LocalizedValue" : {
+    "LocalizedValue": {
       "da": "Fejl under opnåelse af felter info",
       "en-US": "Error while obtaining fields info"
     }
   },
   {
     "Key": "ErrorWhileUpdatingCustomerInfo",
-    "LocalizedValue" : {
+    "LocalizedValue": {
       "da": "Fejl under opdatering af kundeoplysninger",
       "en-US": "Error while updating customer info"
     }
   },
   {
     "Key": "ErrorWhileUpdatingFields",
-    "LocalizedValue" : {
+    "LocalizedValue": {
       "da": "Fejl under opdatering af felter",
       "en-US": "Error while updating fields"
     }
   },
   {
     "Key": "FieldsUpdatedSuccessfully",
-    "LocalizedValue" : {
+    "LocalizedValue": {
       "da": "Felter opdateres med succes",
       "en-US": "Fields updated successfully"
     }
