@@ -20,9 +20,9 @@ namespace Customers.Pn
 {
     public class EformCustomersPlugin : IEformPlugin
     {
-        public string GetName() => "Microting Customers plugin";
-        public string ConnectionStringName() => "EFormCustomersPnConnection";
-        public string PluginPath() => PluginAssembly().Location;
+        public string Name => "Microting Customers plugin";
+        public string PluginId => "EFormCustomersPnConnection";
+        public string PluginPath => PluginAssembly().Location;
 
         public Assembly PluginAssembly()
         {

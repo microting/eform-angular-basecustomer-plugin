@@ -20,7 +20,7 @@
   <ItemGroup>
     <PackageReference Include="Automapper" Version="6.1.0" />
     <PackageReference Include="McMaster.NETCore.Plugins" Version="0.2.1" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="1.1.70" />
+    <!--<PackageReference Include="Microting.eFormApi.BasePn" Version="1.1.70" />-->
     <PackageReference Include="OtpSharp.Core" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.0" />
@@ -31,6 +31,12 @@
   
   <ItemGroup>
     <Folder Include="Infrastructure\Models\Customer\" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Reference Include="Microting.eFormApi.BasePn">
+      <HintPath>..\..\..\..\..\eFormApi.BasePn\eFormApi.BasePn\bin\Debug\netcoreapp2.2\Microting.eFormApi.BasePn.dll</HintPath>
+    </Reference>
   </ItemGroup>
   
 </Project>
