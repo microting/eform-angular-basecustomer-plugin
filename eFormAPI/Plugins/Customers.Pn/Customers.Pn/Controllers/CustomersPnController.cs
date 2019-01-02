@@ -195,6 +195,51 @@ namespace Customers.Pn.Controllers
                             customer = AddValues(customer, headers, customerObj);
                             _dbContext.Customers.Add(customer);
                             _dbContext.SaveChanges();
+                            // create item
+                            CustomerSettings customerSettings = _dbContext.CustomerSettings.FirstOrDefault();
+                            if (customerSettings.RelatedEntityGroupId != null)
+                            {
+                                eFormCore.Core core = _coreHelper.GetCore();
+                                eFormData.EntityGroup entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
+                                if (entityGroup == null)
+                                {
+                                    return new OperationResult(false, "Entity group not found");
+                                }
+
+                                int nextItemUid = entityGroup.EntityGroupItemLst.Count;
+                                string label = customer.CompanyName;
+                                label += string.IsNullOrEmpty(customer.CompanyAddress) ? "" : " - " + customer.CompanyAddress;
+                                label += string.IsNullOrEmpty(customer.ZipCode) ? "" : " - " + customer.ZipCode;
+                                label += string.IsNullOrEmpty(customer.CityName) ? "" : " - " + customer.CityName;
+                                label += string.IsNullOrEmpty(customer.Phone) ? "" : " - " + customer.Phone;
+                                label += string.IsNullOrEmpty(customer.ContactPerson) ? "" : " - " + customer.ContactPerson;
+                                if (label.Count(f => f == '-') == 1 && label.Contains("..."))
+                                {
+                                    label = label.Replace(" - ", "");
+                                }
+
+                                if (string.IsNullOrEmpty(label))
+                                {
+                                    label = $"Empty company {nextItemUid}";
+                                }
+                                eFormData.EntityItem item = core.EntitySearchItemCreate(entityGroup.Id, $"{label}", $"{customer.Description}",
+                                    nextItemUid.ToString());
+                                if (item != null)
+                                {
+                                    entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
+                                    if (entityGroup != null)
+                                    {
+                                        foreach (var entityItem in entityGroup.EntityGroupItemLst)
+                                        {
+                                            if (entityItem.MicrotingUUID == item.MicrotingUUID)
+                                            {
+                                                customer.RelatedEntityId = entityItem.Id;
+                                            }
+                                        }
+                                    }
+                                }
+                                _dbContext.SaveChanges();
+                            }
                         }
                         else
                         {
@@ -244,7 +289,7 @@ namespace Customers.Pn.Controllers
                 _dbContext.SaveChanges();
                 // create item
                 CustomerSettings customerSettings = _dbContext.CustomerSettings.FirstOrDefault();
-                if (customerSettings?.RelatedEntityGroupId != null)
+                if (customerSettings.RelatedEntityGroupId != null)
                 {
                     eFormCore.Core core = _coreHelper.GetCore();
                     eFormData.EntityGroup entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
