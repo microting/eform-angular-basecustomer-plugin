@@ -382,7 +382,8 @@ namespace Customers.Pn.Controllers
                 {
                     label = label.Replace(" - ", "");
                 }
-                core.EntityItemUpdate((int)customer.RelatedEntityId, label, customer.Description.Replace("</p>", "<br>").Replace("<p>", ""), "", 0);
+                string descrption = string.IsNullOrEmpty(customer.Description) ? "" : customer.Description.Replace("</p>", "<br>").Replace("<p>", "");
+                core.EntityItemUpdate((int)customer.RelatedEntityId, label, descrption, "", 0);
                 return new OperationDataResult<CustomersModel>(true,
                     CustomersPnLocaleHelper.GetString("CustomerUpdatedSuccessfully"));
             }
