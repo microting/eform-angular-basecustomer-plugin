@@ -3,6 +3,8 @@ language: csharp
 solution: Customers.Pn.sln
 mono: none
 dotnet: 2.2
+services:
+  - mysql
 script:
   - dotnet restore eFormAPI/Plugins/Customers.Pn/Customers.Pn.Test/Customers.Pn.Test.csproj
   - dotnet build eFormAPI/Plugins/Customers.Pn/Customers.Pn.Test/Customers.Pn.Test.csproj
