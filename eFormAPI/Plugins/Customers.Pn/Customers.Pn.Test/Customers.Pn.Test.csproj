@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +13,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Customers.Pn\Customers.Pn.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microting.eFormApi.BasePn">
+      <HintPath>..\..\..\..\..\eFormApi.BasePn\eFormApi.BasePn\bin\Debug\netcoreapp2.2\Microting.eFormApi.BasePn.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

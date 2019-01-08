@@ -41,8 +41,8 @@ namespace Customers.Pn.Test
                 dbContextOptionsBuilder.UseSqlServer(connectionStr);
             }
             dbContextOptionsBuilder.UseLazyLoadingProxies(true);
-            DbContext = new CustomersPnDbAnySql(dbContextOptionsBuilder.Options);
-
+            // DbContext = new CustomersPnDbAnySql(dbContextOptionsBuilder.Options);
+            // TODO Fix this and use Factory
             DbContext.Database.Migrate();
             DbContext.Database.EnsureCreated();
             //return db;

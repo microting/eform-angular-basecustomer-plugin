@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using Customers.Pn.Abstractions;
@@ -18,9 +20,9 @@ namespace Customers.Pn
 {
     public class EformCustomersPlugin : IEformPlugin
     {
-        public string GetName() => "Microting Customers plugin";
-        public string ConnectionStringName() => "EFormCustomersPnConnection";
-        public string PluginPath() => PluginAssembly().Location;
+        public string Name => "Microting Customers plugin";
+        public string PluginId => "EFormCustomersPn";
+        public string PluginPath => PluginAssembly().Location;
 
         public Assembly PluginAssembly()
         {
@@ -53,12 +55,15 @@ namespace Customers.Pn
         {
         }
 
-        public MenuModel HeaderMenu()
+        public MenuModel HeaderMenu(IServiceProvider serviceProvider)
         {
+            var localizationService = serviceProvider
+                .GetService<ICustomersLocalizationService>();
+
             var result = new MenuModel();
             result.LeftMenu.Add(new MenuItemModel()
             {
-                Name = "Customers",
+                Name = localizationService.GetString("Customers"),
                 E2EId = "",
                 Link = "/plugins/customers-pn"
             });
@@ -72,8 +77,11 @@ namespace Customers.Pn
             using (CustomersPnDbAnySql context = contextFactory.CreateDbContext(new[] {connectionString}))
             {
                 // Add data
-                List<string> customerFields = new Customer().GetPropList(); //Find all attributes for cusomers and puts them in a list
-                customerFields.Remove(nameof(Customer.RelatedEntityId)); // removes the related entity, because it's not relevant for fields
+                List<string>
+                    customerFields =
+                        new Customer().GetPropList(); //Find all attributes for cusomers and puts them in a list
+                customerFields.Remove(nameof(Customer
+                    .RelatedEntityId)); // removes the related entity, because it's not relevant for fields
                 foreach (string name in customerFields)
                 {
                     //Field field = new Field()

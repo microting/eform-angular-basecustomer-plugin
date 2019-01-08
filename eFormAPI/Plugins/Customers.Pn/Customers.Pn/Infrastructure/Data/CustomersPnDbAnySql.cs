@@ -8,7 +8,7 @@
 
         public CustomersPnDbAnySql() { }
 
-        public CustomersPnDbAnySql(DbContextOptions options) : base(options)
+        public CustomersPnDbAnySql(DbContextOptions<CustomersPnDbAnySql> options) : base(options)
         {
 
         }

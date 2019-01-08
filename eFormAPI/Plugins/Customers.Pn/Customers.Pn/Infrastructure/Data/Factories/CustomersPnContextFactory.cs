@@ -9,7 +9,7 @@ namespace Customers.Pn.Infrastructure.Data.Factories
     {
         public CustomersPnDbAnySql CreateDbContext(string[] args)
         {
-            DbContextOptionsBuilder optionsBuilder = new DbContextOptionsBuilder<CustomersPnDbAnySql>();
+            var optionsBuilder = new DbContextOptionsBuilder<CustomersPnDbAnySql>();
             if (args.Any())
             {
                 if (args.FirstOrDefault().ToLower().Contains("convert zero datetime"))
