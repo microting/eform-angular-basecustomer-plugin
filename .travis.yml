@@ -22,4 +22,6 @@ script:
   - ls -lah
   - pwd
   - ls -lah microting/eform-angular-basecustomer-plugin/eFormAPI/eFormAPI.Web/Plugins/Customers
+  - ls -lah microting/eform-angular-frontend/eFormAPI/eFormAPI.Web
+  - ls -lah microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/Plugins
   - cp -av microting/eform-angular-basecustomer-plugin/eFormAPI/eFormAPI.Web/Plugins/Customers microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/Plugins/Customers
