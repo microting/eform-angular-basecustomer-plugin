@@ -38,17 +38,21 @@ namespace Customers.Pn
 
         public void ConfigureDbContext(IServiceCollection services, string connectionString)
         {
-            services.AddDbContext<CustomersPnDbAnySql>(o => o.UseSqlServer(connectionString,
-                b => b.MigrationsAssembly(PluginAssembly().FullName)));
-
-            CustomersPnContextFactory contextFactory = new CustomersPnContextFactory();
-            using (CustomersPnDbAnySql context = contextFactory.CreateDbContext(new[] {connectionString}))
+            try
             {
-                context.Database.Migrate();
-            }
+                services.AddDbContext<CustomersPnDbAnySql>(o => o.UseSqlServer(connectionString,
+                   b => b.MigrationsAssembly(PluginAssembly().FullName)));
 
-            // Seed database
-            SeedDatabase(connectionString);
+                CustomersPnContextFactory contextFactory = new CustomersPnContextFactory();
+                using (CustomersPnDbAnySql context = contextFactory.CreateDbContext(new[] { connectionString }))
+                {
+                    context.Database.Migrate();
+                }
+
+                // Seed database
+                SeedDatabase(connectionString);
+            } catch (Exception ex) { }
+            
         }
 
         public void Configure(IApplicationBuilder appBuilder)
@@ -84,13 +88,10 @@ namespace Customers.Pn
                     .RelatedEntityId)); // removes the related entity, because it's not relevant for fields
                 foreach (string name in customerFields)
                 {
-                    //Field field = new Field()
-                    //{
-                    //    Name = name
-                    //};
                     if (!context.Fields.Any(x => x.Name == name))
                     {
                         FieldModel fieldModel = new FieldModel();
+                        fieldModel.Name = name;
                         fieldModel.Save(context);
                     }
                 }
