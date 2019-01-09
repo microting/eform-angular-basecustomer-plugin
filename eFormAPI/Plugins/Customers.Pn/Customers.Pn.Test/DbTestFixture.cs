@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Customers.Pn.Infrastructure.Data;
 using System.IO;
 using System.Runtime.InteropServices;
+using Customers.Pn.Infrastructure.Data.Factories;
 
 
 namespace Customers.Pn.Test
@@ -28,25 +29,13 @@ namespace Customers.Pn.Test
         //public RentableItemsPnDbAnySql db;
 
         public void GetContext(string connectionStr)
-        {
-
-            DbContextOptionsBuilder dbContextOptionsBuilder = new DbContextOptionsBuilder();
-
-            if (ConnectionString.ToLower().Contains("convert zero datetime"))
+        {          
+            CustomersPnContextFactory contextFactory = new CustomersPnContextFactory();
+            using (CustomersPnDbAnySql context = contextFactory.CreateDbContext(new[] {connectionStr}))
             {
-                dbContextOptionsBuilder.UseMySql(connectionStr);
+                context.Database.Migrate();
+                context.Database.EnsureCreated();
             }
-            else
-            {
-                dbContextOptionsBuilder.UseSqlServer(connectionStr);
-            }
-            dbContextOptionsBuilder.UseLazyLoadingProxies(true);
-            // DbContext = new CustomersPnDbAnySql(dbContextOptionsBuilder.Options);
-            // TODO Fix this and use Factory
-            DbContext.Database.Migrate();
-            DbContext.Database.EnsureCreated();
-            //return db;
-
         }
 
         [SetUp]
