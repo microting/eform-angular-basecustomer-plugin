@@ -18,4 +18,6 @@ script:
   - cd microting/eform-angular-frontend
   - dotnet restore -v q eFormAPI/eFormAPI.sln
   - dotnet build eFormAPI/eFormAPI.sln
-  - cp -av microting/eform-angular-basecustomer-plugin/eFormAPI/eFormAPI.Web/Plugins/Customers microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/Plugins/Customers
+  - cd microting/eform-angular-basecustomer-plugin/eFormAPI/eFormAPI.Web/Plugins/
+  - ls -lah
+  
