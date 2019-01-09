@@ -12,6 +12,8 @@ script:
   - cd ../..
   - git clone --depth=50 --branch=master https://github.com/microting/eform-angular-frontend.git microting/eform-angular-frontend
   - cp -av microting/eform-angular-basecustomer-plugin/eform-client/src/app/plugins/modules/customers-pn microting/eform-angular-frontend/eform-client/src/app/plugins/modules/customers-pn
+  - cp -av microting/eform-angular-basecustomer-plugin/eform-client/e2e microting/eform-angular-frontend/eform-client/e2e
+  - cp -av microting/eform-angular-basecustomer-plugin/eform-client/wdio-headless-plugin-step2.conf.js microting/eform-angular-frontend/eform-client/wdio-headless-plugin-step2.conf.js
   - cd microting/eform-angular-frontend
   - dotnet restore -v q eFormAPI/eFormAPI.sln > dotnet_log 2>&1 &
   - dotnet build eFormAPI/eFormAPI.sln > dotnet_log 2>&1 &
@@ -24,5 +26,8 @@ script:
   - sleep 40
   - dotnet run --project ../eFormAPI/eFormAPI.Web/eFormAPI.Web.csproj > dotnet_log 2>&1 &
   - sleep 40
-  - echo "Trying to run tests..."
   - npm run testheadless
+  - sleep 40
+  - dotnet run --project ../eFormAPI/eFormAPI.Web/eFormAPI.Web.csproj > dotnet_log 2>&1 &
+  - sleep 40
+  - npm run testheadlessplugin
