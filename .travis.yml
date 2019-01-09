@@ -6,9 +6,9 @@ dotnet: 2.2
 services:
   - mysql
 script:
-  - dotnet restore eFormAPI/Plugins/Customers.Pn/Customers.Pn.sln > dotnet_log 2>&1 &
-  - dotnet build eFormAPI/Plugins/Customers.Pn/Customers.Pn.sln > dotnet_log 2>&1 &
-  - dotnet test -v n eFormAPI/Plugins/Customers.Pn/Customers.Pn.Test/Customers.Pn.Test.csproj > dotnet_log 2>&1 &
+  - dotnet restore eFormAPI/Plugins/Customers.Pn/Customers.Pn.sln
+  - dotnet build eFormAPI/Plugins/Customers.Pn/Customers.Pn.sln
+  - dotnet test -v n eFormAPI/Plugins/Customers.Pn/Customers.Pn.Test/Customers.Pn.Test.csproj
   - cd ../..
   - git clone --depth=50 --branch=master https://github.com/microting/eform-angular-frontend.git microting/eform-angular-frontend
   - cp -av microting/eform-angular-basecustomer-plugin/eform-client/src/app/plugins/modules/customers-pn microting/eform-angular-frontend/eform-client/src/app/plugins/modules/customers-pn
