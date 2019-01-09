@@ -9,3 +9,8 @@ script:
   - dotnet restore eFormAPI/Plugins/Customers.Pn/Customers.Pn.Test/Customers.Pn.Test.csproj
   - dotnet build eFormAPI/Plugins/Customers.Pn/Customers.Pn.Test/Customers.Pn.Test.csproj
   - dotnet test -v n eFormAPI/Plugins/Customers.Pn/Customers.Pn.Test/Customers.Pn.Test.csproj
+  - cd ..
+  - ls -lah
+  - cd ..
+  - ls -lah
+  - git clone --depth=50 --branch=master https://github.com/microting/eform-angular-frontend.git microting/eform-angular-frontend
