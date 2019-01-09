@@ -31,11 +31,10 @@ namespace Customers.Pn.Test
         public void GetContext(string connectionStr)
         {          
             CustomersPnContextFactory contextFactory = new CustomersPnContextFactory();
-            using (CustomersPnDbAnySql context = contextFactory.CreateDbContext(new[] {connectionStr}))
-            {
-                context.Database.Migrate();
-                context.Database.EnsureCreated();
-            }
+            DbContext = contextFactory.CreateDbContext(new[] {connectionStr});
+            
+            DbContext.Database.Migrate();
+            DbContext.Database.EnsureCreated();
         }
 
         [SetUp]
