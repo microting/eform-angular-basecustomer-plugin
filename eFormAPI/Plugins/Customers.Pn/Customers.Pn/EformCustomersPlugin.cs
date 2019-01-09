@@ -92,13 +92,10 @@ namespace Customers.Pn
                     .RelatedEntityId)); // removes the related entity, because it's not relevant for fields
                 foreach (string name in customerFields)
                 {
-                    //Field field = new Field()
-                    //{
-                    //    Name = name
-                    //};
                     if (!context.Fields.Any(x => x.Name == name))
                     {
                         FieldModel fieldModel = new FieldModel();
+                        fieldModel.Name = name;
                         fieldModel.Save(context);
                     }
                 }
