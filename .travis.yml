@@ -32,4 +32,5 @@ script:
   - sleep 40
   - dotnet run --project ../eFormAPI/eFormAPI.Web/eFormAPI.Web.csproj
   - sleep 40
+  - echo "Trying to run tests..."
   - npm run testheadless
