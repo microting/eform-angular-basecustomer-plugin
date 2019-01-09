@@ -6,25 +6,17 @@ dotnet: 2.2
 services:
   - mysql
 script:
-  - dotnet restore eFormAPI/Plugins/Customers.Pn/Customers.Pn.Test/Customers.Pn.Test.csproj
-  - dotnet build eFormAPI/Plugins/Customers.Pn/Customers.Pn.Test/Customers.Pn.Test.csproj
-  - dotnet test -v n eFormAPI/Plugins/Customers.Pn/Customers.Pn.Test/Customers.Pn.Test.csproj
-  - cd ..
-  - ls -lah
-  - cd ..
-  - ls -lah
+  - dotnet restore eFormAPI/Plugins/Customers.Pn/Customers.Pn.Test/Customers.Pn.Test.csproj > dotnet_log 2>&1 &
+  - dotnet build eFormAPI/Plugins/Customers.Pn/Customers.Pn.Test/Customers.Pn.Test.csproj > dotnet_log 2>&1 &
+  - dotnet test -v n eFormAPI/Plugins/Customers.Pn/Customers.Pn.Test/Customers.Pn.Test.csproj > dotnet_log 2>&1 &
+  - cd ../..
   - git clone --depth=50 --branch=master https://github.com/microting/eform-angular-frontend.git microting/eform-angular-frontend
   - cp -av microting/eform-angular-basecustomer-plugin/eform-client/src/app/plugins/modules/customers-pn microting/eform-angular-frontend/eform-client/src/app/plugins/modules/customers-pn
   - cd microting/eform-angular-frontend
-  - dotnet restore -v q eFormAPI/eFormAPI.sln
-  - dotnet build eFormAPI/eFormAPI.sln
+  - dotnet restore -v q eFormAPI/eFormAPI.sln > dotnet_log 2>&1 &
+  - dotnet build eFormAPI/eFormAPI.sln > dotnet_log 2>&1 &
   - cd ../..
-  - ls -lah
-  - pwd
-  - ls -lah microting/eform-angular-basecustomer-plugin/eFormAPI/eFormAPI.Web/Plugins/Customers
-  - ls -lah microting/eform-angular-frontend/eFormAPI/eFormAPI.Web
   - mkdir -p microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/Plugins
-  - ls -lah microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/Plugins
   - cp -av microting/eform-angular-basecustomer-plugin/eFormAPI/eFormAPI.Web/Plugins/Customers microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/Plugins/Customers
   - cd microting/eform-angular-frontend
   - cd eform-client && npm install
