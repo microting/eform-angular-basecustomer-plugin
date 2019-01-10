@@ -142,50 +142,90 @@ namespace Customers.Pn.Services
 
         public OperationResult ImportCustomers(CustomerImportModel customersAsJson)
         {
+            try
             {
-                JToken rawJson = JRaw.Parse(customersAsJson.ImportList);
-                JToken rawHeadersJson = JRaw.Parse(customersAsJson.Headers);
-
-                JToken headers = rawHeadersJson;
-                IEnumerable<JToken> customerObjects = rawJson.Skip(1);
-
-                foreach (JToken customerObj in customerObjects)
                 {
-                    bool customerNoExists = int.TryParse(headers[4]["headerValue"].ToString(), out int customerNoColumn);
-                    bool companyNameExists = int.TryParse(headers[2]["headerValue"].ToString(), out int companyNameColumn);
-                    bool contactPersonExists = int.TryParse(headers[3]["headerValue"].ToString(), out int contactPersonColumn);
-                    if (customerNoExists
-                        || companyNameExists
-                        || contactPersonExists
-                        )
+                    JToken rawJson = JRaw.Parse(customersAsJson.ImportList);
+                    JToken rawHeadersJson = JRaw.Parse(customersAsJson.Headers);
+
+                    JToken headers = rawHeadersJson;
+                    IEnumerable<JToken> customerObjects = rawJson.Skip(1);
+
+                    foreach (JToken customerObj in customerObjects)
                     {
-                        Customer existingCustomer = FindCustomer(customerNoExists, customerNoColumn, companyNameExists, companyNameColumn, contactPersonExists, contactPersonColumn, headers, customerObj);
-                        if (existingCustomer == null)
+                        bool customerNoExists = int.TryParse(headers[4]["headerValue"].ToString(), out int customerNoColumn);
+                        bool companyNameExists = int.TryParse(headers[2]["headerValue"].ToString(), out int companyNameColumn);
+                        bool contactPersonExists = int.TryParse(headers[3]["headerValue"].ToString(), out int contactPersonColumn);
+                        if (customerNoExists
+                            || companyNameExists
+                            || contactPersonExists
+                            )
                         {
-                            CustomerFullModel customerModel = new CustomerFullModel();
-                            Customer customer = new Customer();
-                            customer = AddValues(customer, headers, customerObj);
-                            customerModel.Save(_dbContext);
+                            Customer existingCustomer = FindCustomer(customerNoExists, customerNoColumn, companyNameExists, companyNameColumn, contactPersonExists, contactPersonColumn, headers, customerObj);
+                            if (existingCustomer == null)
+                            {
+                                CustomerFullModel customerModel = new CustomerFullModel();
+                                //Customer customer = new Customer();
+                                customerModel = AddValues(customerModel, headers, customerObj);
+                                customerModel.Save(_dbContext);
+
+                                CustomerSettings customerSettings = _dbContext.CustomerSettings.FirstOrDefault();
+                                if (customerSettings?.RelatedEntityGroupId != null)
+                                {
+                                    Core core = _coreHelper.GetCore();
+                                    EntityGroup entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
+                                    if (entityGroup == null)
+                                    {
+                                        return new OperationResult(false, "Entity group not found");
+                                    }
+
+                                    int nextItemUid = entityGroup.EntityGroupItemLst.Count;
+                                    string label = customerModel.CompanyName + " - " + customerModel.CompanyAddress + " - "
+                                        + customerModel.ZipCode +
+                                                " - " + customerModel.CityName + " - " + customerModel.Phone + " - " +
+                                                customerModel.ContactPerson;
+                                    if (string.IsNullOrEmpty(label))
+                                    {
+                                        label = $"Empty company {nextItemUid}";
+                                    }
+
+                                    EntityItem item = core.EntitySearchItemCreate(entityGroup.Id, $"{label}", $"{customerModel.Description}",
+                                        nextItemUid.ToString());
+                                    if (item != null)
+                                    {
+                                        entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
+                                        if (entityGroup != null)
+                                        {
+                                            foreach (EntityItem entityItem in entityGroup.EntityGroupItemLst)
+                                            {
+                                                if (entityItem.MicrotingUUID == item.MicrotingUUID)
+                                                {
+                                                    customerModel.RelatedEntityId = entityItem.Id;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    _dbContext.SaveChanges();
+                                }
+
+                                return new OperationResult(true,
+                                    _customersLocalizationService.GetString("CustomerCreated"));
+                            }
                         }
-                        
+                        return new OperationResult(false, _customersLocalizationService.GetString("CustomerAlreadyExists"));
                     }
-                    else
-                    {
-                        return new OperationResult(false,
-                                            _customersLocalizationService.GetString("ErrorWhileCreatingCustomer"));
-                        /*            throw new NotImplementedException()*/
-                    }
-
-
                 }
-                return new OperationResult(true
-                    //CustomersPnLocaleHelper.GetString("CustomerCreated")
-                    );
-                //return new OperationResult(false,
-                //                    CustomersPnLocaleHelper.GetString("ErrorWhileCreatingCustomer"));
-                /*            throw new NotImplementedException()*/
+                return new OperationResult(true);
             }
-        }
+            catch (Exception e)
+            {
+                Trace.TraceError(e.Message);
+                _logger.LogError(e.Message);
+                return new OperationResult(false,
+                    _customersLocalizationService.GetString("ErrorWhileCreatingCustomer"));
+            }
+                    }
 
         public OperationDataResult<CustomerFullModel> GetSingleCustomer(int id)
         {
@@ -362,6 +402,7 @@ namespace Customers.Pn.Services
                 //_dbContext.Customers.Remove(customer);
                 //_dbContext.SaveChanges();
                 CustomerFullModel customer = new CustomerFullModel();
+                customer.Id = id;
                 customer.Delete(_dbContext);
                 return new OperationResult(true,
                     _customersLocalizationService.GetString("CustomerDeletedSuccessfully"));
@@ -471,7 +512,7 @@ namespace Customers.Pn.Services
 
             return customer;
         }
-        private Customer AddValues(Customer customer, JToken headers, JToken customerObj)
+        private CustomerFullModel AddValues(CustomerFullModel customer, JToken headers, JToken customerObj)
         {
             int locationId;
 

@@ -73,7 +73,7 @@ namespace Customers.Pn.Infrastructure.Models
                 //customer.Version += 1;
 
                 //_dbContext.CustomerVersions.Add(MapCustomerVersions(_dbContext, customer));
-                //_dbContext.SaveChanges();
+                _dbContext.SaveChanges();
             }
         }
 
@@ -86,15 +86,15 @@ namespace Customers.Pn.Infrastructure.Models
                 throw new NullReferenceException($"Culd not find Customer with {Id}");
             }
 
-            //customer.Workflow_state = eFormShared.Constants.WorkflowStates.Removed;
+            customer.Workflow_state = eFormShared.Constants.WorkflowStates.Removed;
 
             if (_dbContext.ChangeTracker.HasChanges())
             {
                 //customer.Updated_at = DateTime.Now;
                 //customer.Version += 1;
-
+                _dbContext.Customers.Remove(customer);
                 //_dbContext.CustomerVersions.Add(MapCustomerVersions(_dbContext, customer));
-                //_dbContext.SaveChanges();
+                _dbContext.SaveChanges();
             }
         }
 
