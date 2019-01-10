@@ -22,6 +22,13 @@ script:
   - cp -av microting/eform-angular-basecustomer-plugin/eFormAPI/eFormAPI.Web/Plugins/Customers microting/eform-angular-frontend/eFormAPI/eFormAPI.Web/Plugins/Customers
   - cd microting/eform-angular-frontend
   - cd eform-client && npm install
+  - cd src/app/plugins
+  - sed '/\/\/ INSERT ROUTES HERE/i {' plugins.routing.ts -i
+  - sed '/\/\/ INSERT ROUTES HERE/i path: "customers-pn",' plugins.routing.ts -i
+  - sed '/\/\/ INSERT ROUTES HERE/i canActivate: [AuthGuard],' plugins.routing.ts -i
+  - sed '/\/\/ INSERT ROUTES HERE/i loadChildren: "./modules/customers-pn/customers-pn.module#CustomersPnModule"' plugins.routing.ts -i
+  - sed '/\/\/ INSERT ROUTES HERE/i }' plugins.routing.ts -i
+  - cd ../../..
   - npm start &
   - sleep 40
   - dotnet run --project ../eFormAPI/eFormAPI.Web/eFormAPI.Web.csproj > dotnet_log 2>&1 &
@@ -30,6 +37,4 @@ script:
   - sleep 40
   - dotnet run --project ../eFormAPI/eFormAPI.Web/eFormAPI.Web.csproj > dotnet_log 2>&1 &
   - sleep 40
-  - ls -lah e2e/Tests
-  - pwd
   - npm run testheadlessplugin
