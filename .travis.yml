@@ -24,9 +24,9 @@ script:
   - cd eform-client && npm install
   - cd src/app/plugins
   - sed '/\/\/ INSERT ROUTES HERE/i {' plugins.routing.ts -i
-  - sed '/\/\/ INSERT ROUTES HERE/i path: "customers-pn",' plugins.routing.ts -i
-  - sed '/\/\/ INSERT ROUTES HERE/i canActivate: [AuthGuard],' plugins.routing.ts -i
-  - sed '/\/\/ INSERT ROUTES HERE/i loadChildren: "./modules/customers-pn/customers-pn.module#CustomersPnModule"' plugins.routing.ts -i
+  - sed '/\/\/ INSERT ROUTES HERE/i \tpath: \"customers-pn\",' plugins.routing.ts -i
+  - sed '/\/\/ INSERT ROUTES HERE/i canActivate: \[AuthGuard\],' plugins.routing.ts -i
+  - sed '/\/\/ INSERT ROUTES HERE/i loadChildren: \"./modules/customers-pn/customers-pn.module#CustomersPnModule\"' plugins.routing.ts -i
   - sed '/\/\/ INSERT ROUTES HERE/i }' plugins.routing.ts -i
   - cd ../../..
   - npm start &
