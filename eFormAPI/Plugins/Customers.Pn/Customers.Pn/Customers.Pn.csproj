@@ -9,6 +9,10 @@
     <NoWarn>1701;1702</NoWarn>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>../../../eFormAPI.Web/Plugins/Customers/netcoreapp2.2/</OutputPath>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="Resources\localization.json" />
   </ItemGroup>
