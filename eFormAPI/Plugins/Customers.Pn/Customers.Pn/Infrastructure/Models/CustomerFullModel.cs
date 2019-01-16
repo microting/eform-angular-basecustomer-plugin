@@ -92,7 +92,7 @@ namespace Customers.Pn.Infrastructure.Models
             {
                 //customer.Updated_at = DateTime.Now;
                 //customer.Version += 1;
-                _dbContext.Customers.Remove(customer);
+                //_dbContext.Customers.Remove(customer);
                 //_dbContext.CustomerVersions.Add(MapCustomerVersions(_dbContext, customer));
                 _dbContext.SaveChanges();
             }
