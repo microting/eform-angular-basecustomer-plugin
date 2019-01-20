@@ -172,41 +172,46 @@ namespace Customers.Pn.Services
                                 CustomerSettings customerSettings = _dbContext.CustomerSettings.FirstOrDefault();
                                 if (customerSettings?.RelatedEntityGroupId != null)
                                 {
-                                    Core core = _coreHelper.GetCore();
-                                    EntityGroup entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
-                                    if (entityGroup == null)
-                                    {
-                                        return new OperationResult(false, "Entity group not found");
-                                    }
+                                    eFormCore.Core core = _coreHelper.GetCore();
+                                eFormData.EntityGroup entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
+                                if (entityGroup == null)
+                                {
+                                    return new OperationResult(false, "Entity group not found");
+                                }
 
-                                    int nextItemUid = entityGroup.EntityGroupItemLst.Count;
-                                    string label = customerModel.CompanyName + " - " + customerModel.CompanyAddress + " - "
-                                        + customerModel.ZipCode +
-                                                " - " + customerModel.CityName + " - " + customerModel.Phone + " - " +
-                                                customerModel.ContactPerson;
-                                    if (string.IsNullOrEmpty(label))
-                                    {
-                                        label = $"Empty company {nextItemUid}";
-                                    }
+                                int nextItemUid = entityGroup.EntityGroupItemLst.Count;
+                                string label = customerModel.CompanyName;
+                                label += string.IsNullOrEmpty(customerModel.CompanyAddress) ? "" : " - " + customerModel.CompanyAddress;
+                                label += string.IsNullOrEmpty(customerModel.ZipCode) ? "" : " - " + customerModel.ZipCode;
+                                label += string.IsNullOrEmpty(customerModel.CityName) ? "" : " - " + customerModel.CityName;
+                                label += string.IsNullOrEmpty(customerModel.Phone) ? "" : " - " + customerModel.Phone;
+                                label += string.IsNullOrEmpty(customerModel.ContactPerson) ? "" : " - " + customerModel.ContactPerson;
+                                if (label.Count(f => f == '-') == 1 && label.Contains("..."))
+                                {
+                                    label = label.Replace(" - ", "");
+                                }
 
-                                    EntityItem item = core.EntitySearchItemCreate(entityGroup.Id, $"{label}", $"{customerModel.Description}",
-                                        nextItemUid.ToString());
-                                    if (item != null)
+                                if (string.IsNullOrEmpty(label))
+                                {
+                                    label = $"Empty company {nextItemUid}";
+                                }
+                                eFormData.EntityItem item = core.EntitySearchItemCreate(entityGroup.Id, $"{label}", $"{customerModel.Description}",
+                                    nextItemUid.ToString());
+                                if (item != null)
+                                {
+                                    entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
+                                    if (entityGroup != null)
                                     {
-                                        entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
-                                        if (entityGroup != null)
+                                        foreach (var entityItem in entityGroup.EntityGroupItemLst)
                                         {
-                                            foreach (EntityItem entityItem in entityGroup.EntityGroupItemLst)
+                                            if (entityItem.MicrotingUUID == item.MicrotingUUID)
                                             {
-                                                if (entityItem.MicrotingUUID == item.MicrotingUUID)
-                                                {
-                                                    customerModel.RelatedEntityId = entityItem.Id;
-                                                }
+                                                customerModel.RelatedEntityId = entityItem.Id;
+                                                customerModel.Update(_dbContext);
                                             }
                                         }
                                     }
-
-                                    _dbContext.SaveChanges();
+                                }
                                 }
 
                                 return new OperationResult(true,
@@ -341,6 +346,21 @@ namespace Customers.Pn.Services
             try
             {
                 customerUpdateModel.Update(_dbContext);
+                eFormCore.Core core = _coreHelper.GetCore();
+
+
+                string label = customerUpdateModel.CompanyName;
+                label += string.IsNullOrEmpty(customerUpdateModel.CompanyAddress) ? "" : " - " + customerUpdateModel.CompanyAddress;
+                label += string.IsNullOrEmpty(customerUpdateModel.ZipCode) ? "" : " - " + customerUpdateModel.ZipCode;
+                label += string.IsNullOrEmpty(customerUpdateModel.CityName) ? "" : " - " + customerUpdateModel.CityName;
+                label += string.IsNullOrEmpty(customerUpdateModel.Phone) ? "" : " - " + customerUpdateModel.Phone;
+                label += string.IsNullOrEmpty(customerUpdateModel.ContactPerson) ? "" : " - " + customerUpdateModel.ContactPerson;
+                if (label.Count(f => f == '-') == 1 && label.Contains("..."))
+                {
+                    label = label.Replace(" - ", "");
+                }
+                string descrption = string.IsNullOrEmpty(customerUpdateModel.Description) ? "" : customerUpdateModel.Description.Replace("</p>", "<br>").Replace("<p>", "");
+                core.EntityItemUpdate((int)customerUpdateModel.RelatedEntityId, label, descrption, "", 0);
                 return new OperationDataResult<CustomersModel>(true,
                     _customersLocalizationService.GetString("CustomerUpdatedSuccessfully"));
             }
