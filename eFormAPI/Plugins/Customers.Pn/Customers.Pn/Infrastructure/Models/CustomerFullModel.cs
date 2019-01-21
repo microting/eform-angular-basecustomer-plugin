@@ -20,7 +20,25 @@ namespace Customers.Pn.Infrastructure.Models
         public string Description { get; set; }
         public int? RelatedEntityId { get; set; }
 
-        public void Save(CustomersPnDbAnySql _dbContext)
+		public void Read(CustomersPnDbAnySql _dbContext, int id)
+		{
+			Customer customer = _dbContext.Customers.FirstOrDefault(x => x.Id == id);
+
+			Id = customer.Id;
+			Description = customer.Description;
+			Phone = customer.Phone;
+			CityName = customer.CityName;
+			CustomerNo = customer.CustomerNo;
+			ZipCode = customer.ZipCode;
+			Email = customer.Email;
+			ContactPerson = customer.ContactPerson;
+			CreatedBy = customer.CreatedBy;
+			CompanyAddress = customer.CompanyAddress;
+			CompanyName = customer.CompanyName;
+			RelatedEntityId = customer.RelatedEntityId;
+		}
+
+		public void Save(CustomersPnDbAnySql _dbContext)
         {
             Customer customer = new Customer();
             customer.CityName = CityName;
@@ -28,6 +46,7 @@ namespace Customers.Pn.Infrastructure.Models
             customer.CompanyName = CompanyName;
             customer.ContactPerson = ContactPerson;
             customer.CreatedBy = CreatedBy;
+			customer.Workflow_state = eFormShared.Constants.WorkflowStates.Created;
             //customer.Created_at = DateTime.Now;
             customer.CreatedDate = DateTime.Now;
             customer.CustomerNo = CustomerNo;
@@ -40,6 +59,7 @@ namespace Customers.Pn.Infrastructure.Models
 
             _dbContext.Customers.Add(customer);
             _dbContext.SaveChanges();
+			Id = customer.Id;
 
             //_dbContext.CustomersVersion.add(MapCustomerVersions(_dbContext, customer));
             //_dbContext.SaveChanges();

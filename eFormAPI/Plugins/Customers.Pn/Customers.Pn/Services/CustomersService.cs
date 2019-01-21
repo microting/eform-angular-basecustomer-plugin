@@ -69,9 +69,12 @@ namespace Customers.Pn.Services
                     customersQuery = customersQuery.Where(x => x.CompanyName.Contains(pnRequestModel.Name));
                 }
 
-                customersQuery = customersQuery
+				customersQuery = customersQuery.Where(x => x.Workflow_state != eFormShared.Constants.WorkflowStates.Removed);
+
+				customersQuery = customersQuery
                     .Skip(pnRequestModel.Offset)
                     .Take(pnRequestModel.PageSize);
+
 
                 List<Customer> customers = customersQuery.ToList();
                 customersPnModel.Total = _dbContext.Customers.Count();
@@ -236,19 +239,20 @@ namespace Customers.Pn.Services
         {
             try
             {
-                CustomerFullModel customer = _dbContext.Customers.Select(x => new CustomerFullModel()
-                    {
-                        Id = x.Id,
-                        Description = x.Description,
-                        Phone = x.Phone,
-                        CityName = x.CityName,
-                        CustomerNo = x.CustomerNo,
-                        ZipCode = x.ZipCode,
-                        Email = x.Email,
-                        ContactPerson = x.ContactPerson,
-                        CreatedBy = x.CreatedBy,
-                        CompanyAddress = x.CompanyAddress,
-                        CompanyName = x.CompanyName,
+				CustomerFullModel customer = _dbContext.Customers.Select(x => new CustomerFullModel()
+				{
+					Id = x.Id,
+					Description = x.Description,
+					Phone = x.Phone,
+					CityName = x.CityName,
+					CustomerNo = x.CustomerNo,
+					ZipCode = x.ZipCode,
+					Email = x.Email,
+					ContactPerson = x.ContactPerson,
+					CreatedBy = x.CreatedBy,
+					CompanyAddress = x.CompanyAddress,
+					CompanyName = x.CompanyName,
+					RelatedEntityId = x.RelatedEntityId
                     })
                     .FirstOrDefault(x => x.Id == id);
 
@@ -360,7 +364,8 @@ namespace Customers.Pn.Services
                     label = label.Replace(" - ", "");
                 }
                 string descrption = string.IsNullOrEmpty(customerUpdateModel.Description) ? "" : customerUpdateModel.Description.Replace("</p>", "<br>").Replace("<p>", "");
-                core.EntityItemUpdate((int)customerUpdateModel.RelatedEntityId, label, descrption, "", 0);
+
+				core.EntityItemUpdate((int)customerUpdateModel.RelatedEntityId, label, descrption, "", 0);
                 return new OperationDataResult<CustomersModel>(true,
                     _customersLocalizationService.GetString("CustomerUpdatedSuccessfully"));
             }
@@ -378,9 +383,12 @@ namespace Customers.Pn.Services
             try
             {
                 CustomerFullModel customer = new CustomerFullModel();
-                customer.Id = id;
+				customer.Read(_dbContext, id);
                 customer.Delete(_dbContext);
-                return new OperationResult(true,
+
+				eFormCore.Core core = _coreHelper.GetCore();
+				core.EntityItemDelete((int)customer.RelatedEntityId);
+				return new OperationResult(true,
                     _customersLocalizationService.GetString("CustomerDeletedSuccessfully"));
             }
             catch (Exception e)
