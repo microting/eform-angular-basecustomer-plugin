@@ -71,7 +71,7 @@ namespace Customers.Pn.Controllers
         [HttpPost]
         [Authorize(Roles = EformRole.Admin)]
         [Route("api/customers-pn/settings")]
-        public OperationResult UpdateSettings([FromBody] CustomerSettingsModel customerUpdateModel)
+        public OperationResult UpdateSettings(CustomerSettingsModel customerUpdateModel)
         {
             return _customersService.UpdateSettings(customerUpdateModel);
         }
