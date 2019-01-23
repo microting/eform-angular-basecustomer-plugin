@@ -210,15 +210,15 @@ namespace Customers.Pn.Services
 
                                     _dbContext.SaveChanges();
                                 }
-
-                                return new OperationResult(true,
-                                    _customersLocalizationService.GetString("CustomerCreated"));
                             }
                         }
-                        return new OperationResult(false, _customersLocalizationService.GetString("CustomerAlreadyExists"));
+//                        return new OperationResult(false, _customersLocalizationService.GetString("CustomerAlreadyExists"));
                     }
-                }
-                return new OperationResult(true);
+                }                
+
+                return new OperationResult(true,
+                    _customersLocalizationService.GetString("CustomerCreated"));
+//                return new OperationResult(true);
             }
             catch (Exception e)
             {
