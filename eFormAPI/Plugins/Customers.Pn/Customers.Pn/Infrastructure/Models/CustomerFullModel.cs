@@ -23,7 +23,8 @@ namespace Customers.Pn.Infrastructure.Models
         public void Save(CustomersPnDbAnySql _dbContext)
         {
             Customer customer = new Customer();
-            customer.CityName = CityName;
+			customer.Workflow_state = eFormShared.Constants.WorkflowStates.Created;
+			customer.CityName = CityName;
             customer.CompanyAddress = CompanyAddress;
             customer.CompanyName = CompanyName;
             customer.ContactPerson = ContactPerson;
@@ -40,6 +41,7 @@ namespace Customers.Pn.Infrastructure.Models
 
             _dbContext.Customers.Add(customer);
             _dbContext.SaveChanges();
+			Id = customer.Id;
 
             //_dbContext.CustomersVersion.add(MapCustomerVersions(_dbContext, customer));
             //_dbContext.SaveChanges();
@@ -87,6 +89,7 @@ namespace Customers.Pn.Infrastructure.Models
             }
 
             customer.Workflow_state = eFormShared.Constants.WorkflowStates.Removed;
+			customer.RelatedEntityId = null;
 
             if (_dbContext.ChangeTracker.HasChanges())
             {

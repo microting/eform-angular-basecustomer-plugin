@@ -67,12 +67,12 @@ namespace Customers.Pn.Services
                 if (!string.IsNullOrEmpty(pnRequestModel.Name))
                 {
                     customersQuery = customersQuery.Where(x => x.CompanyName.Contains(pnRequestModel.Name));
-                }
+				}
 
-                customersQuery =
-                    customersQuery.Where(x => x.Workflow_state != eFormShared.Constants.WorkflowStates.Removed);
+				customersQuery =
+					customersQuery.Where(x => x.Workflow_state != eFormShared.Constants.WorkflowStates.Removed);
 
-                customersQuery = customersQuery
+				customersQuery = customersQuery
                     .Skip(pnRequestModel.Offset)
                     .Take(pnRequestModel.PageSize);
 
@@ -348,7 +348,7 @@ namespace Customers.Pn.Services
             try
             {
                 customerUpdateModel.Update(_dbContext);
-                eFormCore.Core core = _coreHelper.GetCore();
+                Core core = _coreHelper.GetCore();
 
 
                 string label = customerUpdateModel.CompanyName;
@@ -382,7 +382,15 @@ namespace Customers.Pn.Services
                 CustomerFullModel customer = new CustomerFullModel();
                 customer.Id = id;
                 customer.Delete(_dbContext);
-                return new OperationResult(true,
+
+				if (_dbContext.Customers.SingleOrDefault(x => x.Id == id).RelatedEntityId != null)
+				{
+					int RelatedEntityId = (int)_dbContext.Customers.SingleOrDefault(x => x.Id == id).RelatedEntityId;
+					Core core = _coreHelper.GetCore();
+					core.EntityItemDelete(RelatedEntityId);
+				}
+
+				return new OperationResult(true,
                     _customersLocalizationService.GetString("CustomerDeletedSuccessfully"));
             }
             catch (Exception e)
