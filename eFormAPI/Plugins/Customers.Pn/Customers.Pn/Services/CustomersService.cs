@@ -69,6 +69,9 @@ namespace Customers.Pn.Services
                     customersQuery = customersQuery.Where(x => x.CompanyName.Contains(pnRequestModel.Name));
                 }
 
+                customersQuery =
+                    customersQuery.Where(x => x.Workflow_state != eFormShared.Constants.WorkflowStates.Removed);
+
                 customersQuery = customersQuery
                     .Skip(pnRequestModel.Offset)
                     .Take(pnRequestModel.PageSize);
