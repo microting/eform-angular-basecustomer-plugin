@@ -22,4 +22,14 @@ describe('Application settings page - site header section', function () {
        // expect()
 
     });
+
+    it('should activate the plugin', function () {
+        // click on plugin settings
+        // enter connectionstring for customers plugin
+        // select activate
+        // save changes
+        // see that the plugin is marked active
+        // validate that the customers menu entry is now visible
+        // validate that the customers index page is shown with all fields active in the header
+    })
 });
