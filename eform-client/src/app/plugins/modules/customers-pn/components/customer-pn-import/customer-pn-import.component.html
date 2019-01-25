@@ -22,8 +22,9 @@
     <table class="table mh-100 table-striped text-center z-depth-1" *ngIf="tableData">
       <thead>
       <tr>
-        <th scope="row" style="width: 11.5%" class="table-header-sortable th-lg" *ngFor="let cols of tableData[0]; let i = index" [attr.data-index]="i">
+        <th scope="row"  class="table-header-sortable th-lg" *ngFor="let cols of tableData[0]; let i = index" [attr.data-index]="i">
           <ng-select
+            style="width: 180px"
             class=""
             [items]="options"
             (change)="onSelectedChanged($event, i)"
