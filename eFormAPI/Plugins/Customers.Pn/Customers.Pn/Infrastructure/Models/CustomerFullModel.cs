@@ -23,7 +23,8 @@ namespace Customers.Pn.Infrastructure.Models
         public void Save(CustomersPnDbAnySql _dbContext)
         {
             Customer customer = new Customer();
-            customer.CityName = CityName;
+			customer.Workflow_state = eFormShared.Constants.WorkflowStates.Created;
+			customer.CityName = CityName;
             customer.CompanyAddress = CompanyAddress;
             customer.CompanyName = CompanyName;
             customer.ContactPerson = ContactPerson;
@@ -40,6 +41,7 @@ namespace Customers.Pn.Infrastructure.Models
 
             _dbContext.Customers.Add(customer);
             _dbContext.SaveChanges();
+			Id = customer.Id;
 
             //_dbContext.CustomersVersion.add(MapCustomerVersions(_dbContext, customer));
             //_dbContext.SaveChanges();
@@ -73,7 +75,7 @@ namespace Customers.Pn.Infrastructure.Models
                 //customer.Version += 1;
 
                 //_dbContext.CustomerVersions.Add(MapCustomerVersions(_dbContext, customer));
-                //_dbContext.SaveChanges();
+                _dbContext.SaveChanges();
             }
         }
 
@@ -86,15 +88,16 @@ namespace Customers.Pn.Infrastructure.Models
                 throw new NullReferenceException($"Culd not find Customer with {Id}");
             }
 
-            //customer.Workflow_state = eFormShared.Constants.WorkflowStates.Removed;
+            customer.Workflow_state = eFormShared.Constants.WorkflowStates.Removed;
+			customer.RelatedEntityId = null;
 
             if (_dbContext.ChangeTracker.HasChanges())
             {
                 //customer.Updated_at = DateTime.Now;
                 //customer.Version += 1;
-
+                //_dbContext.Customers.Remove(customer);
                 //_dbContext.CustomerVersions.Add(MapCustomerVersions(_dbContext, customer));
-                //_dbContext.SaveChanges();
+                _dbContext.SaveChanges();
             }
         }
 

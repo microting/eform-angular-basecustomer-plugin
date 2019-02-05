@@ -46,6 +46,7 @@ export class CustomersPnPageComponent implements OnInit {
   }
 
   getLocalPageSettings() {
+    // debugger;
     this.localPageSettings = this.sharedPnService.getLocalPageSettings
     ('customersPnSettings').settings;
     this.getAllInitialData();

@@ -15,15 +15,14 @@ namespace Customers.Pn.Infrastructure.Models.Fields
         }
         public void Update(CustomersPnDbAnySql _dbContext)
         {
-            FieldsUpdateModel fieldsModel = new FieldsUpdateModel();
-            List<int> list = fieldsModel.Fields.Select(s => s.Id).ToList(); // list of field ids.
+            List<int> list = this.Fields.Select(s => s.Id).ToList(); // list of field ids.
             List<CustomerField> fields = _dbContext.CustomerFields
                 .Where(x => list.Contains(x.FieldId))
                 .ToList(); // lists the fields for the specific customer.
 
             foreach (CustomerField field in fields)// Itterating through a list of customerFields.
             {
-                FieldUpdateModel fieldModel = fieldsModel.Fields.FirstOrDefault(x => x.Id == field.FieldId); // takes field from list of fields
+                FieldUpdateModel fieldModel = this.Fields.FirstOrDefault(x => x.Id == field.FieldId); // takes field from list of fields
                 if (fieldModel != null)
                 {
                     field.FieldStatus = fieldModel.FieldStatus;// sets new status for field, based on the updatemodels status.

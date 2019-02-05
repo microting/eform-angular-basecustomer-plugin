@@ -5,7 +5,7 @@ import {
 
 export const CustomersPnLocalSettings =
   new ApplicationPageModel({
-      name: 'CaseManagementPn',
+      name: 'CustomersPn',
       settings: new PageSettingsModel({
         pageSize: 10,
         sort: '',

@@ -38,9 +38,17 @@ namespace Customers.Pn
 
         public void ConfigureDbContext(IServiceCollection services, string connectionString)
         {
-            services.AddDbContext<CustomersPnDbAnySql>(o => o.UseSqlServer(connectionString,
-                b => b.MigrationsAssembly(PluginAssembly().FullName)));
-
+            if (connectionString.ToLower().Contains("convert zero datetime"))
+            {
+                services.AddDbContext<CustomersPnDbAnySql>(o => o.UseMySql(connectionString,
+                    b => b.MigrationsAssembly(PluginAssembly().FullName)));                
+            }
+            else
+            {
+                services.AddDbContext<CustomersPnDbAnySql>(o => o.UseSqlServer(connectionString,
+                    b => b.MigrationsAssembly(PluginAssembly().FullName)));    
+            }
+            
             CustomersPnContextFactory contextFactory = new CustomersPnContextFactory();
             using (CustomersPnDbAnySql context = contextFactory.CreateDbContext(new[] {connectionString}))
             {
@@ -84,13 +92,10 @@ namespace Customers.Pn
                     .RelatedEntityId)); // removes the related entity, because it's not relevant for fields
                 foreach (string name in customerFields)
                 {
-                    //Field field = new Field()
-                    //{
-                    //    Name = name
-                    //};
                     if (!context.Fields.Any(x => x.Name == name))
                     {
                         FieldModel fieldModel = new FieldModel();
+                        fieldModel.Name = name;
                         fieldModel.Save(context);
                     }
                 }

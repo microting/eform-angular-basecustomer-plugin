@@ -57,7 +57,7 @@ export class CustomersPnFieldsComponent implements OnInit {
       } this.spinnerStatus = false;
     });
   }
-  
+
   getSettings() {
     this.customersSettingsService.getAllSettings().subscribe((data => {
       if (data && data.success) {
@@ -67,6 +67,7 @@ export class CustomersPnFieldsComponent implements OnInit {
   }
 
   updateSettings() {
+    // debugger;
     this.spinnerStatus = true;
     this.customersSettingsService.updateSettings(this.customersPnSettingsModel).subscribe((data) => {
       if (data && data.success) {
