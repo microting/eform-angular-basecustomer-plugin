@@ -1,0 +1,90 @@
+import Page from '../../Page objects/Page';
+
+export class CustomersPage extends Page {
+  constructor() {
+    super();
+  }
+
+  public get rowNum(): number {
+    return $$('#tableBody > tr').length;
+  }
+
+  getCustomer(num): CustomersRowObject {
+    return new CustomersRowObject(num);
+  }
+
+  public get newCustomerBtn() {
+    return browser.element('#newCustomerBtn');
+  }
+
+  public get customersSettingsBtn() {
+    return browser.element('#firstName');
+  }
+
+  public get importCustomersSettingsBtn() {
+    return browser.element('#lastName');
+  }
+
+  public get saveImportCustomersBtn() {
+    return browser.element('#saveCreateBtn');
+  }
+
+  public get cancelImportCustomersBtn() {
+    return browser.element('#saveCreateBtn');
+  }
+
+  public get deleteCustomerBtn() {
+    return browser.element('#cancelCreateBtn');
+  }
+
+  public get editCustomerBtn() {
+    return browser.element('#editCustomerBtn');
+  }
+
+  public get customersButton() {
+    return this.clickOnHeaderMenuItem(' Customers ');
+  }
+
+  public clickOnHeaderMenuItem(headerMenuItem) {
+    return browser.element(`//*[@id="header"]//*[text()="${headerMenuItem}"]`).element('..');
+  }
+
+  public goToCustomersPage() {
+    this.customersButton.click();
+    browser.pause(20000);
+  }
+}
+
+const customersPage = new CustomersPage();
+export default customersPage;
+
+export class CustomersRowObject {
+  constructor(rowNumber) {
+    this.createdBy = +$$('#CreatedBy')[rowNumber - 1].getText();
+    this.customerNo = $$('#CustomerNo')[rowNumber - 1].getText();
+    this.contactPerson = $$('#ContactPerson')[rowNumber - 1].getText();
+    this.companyName = $$('#CompanyName')[rowNumber - 1].getText();
+    this.companyAddress = $$('#CompanyAddress')[rowNumber - 1].getText();
+    this.zipCode = $$('#ZipCode')[rowNumber - 1].getText();
+    this.cityName = $$('#CityName')[rowNumber - 1].getText();
+    this.email = $$('#Email')[rowNumber - 1].getText();
+    this.phone = $$('#Phone')[rowNumber - 1].getText();
+    this.editBtn = $$('#editCustomerBtn')[rowNumber - 1];
+    this.deleteBtn = $$('#deleteCustomerBtn')[rowNumber - 1];
+  }
+
+  id;
+  version;
+  updatedByUserId;
+  createdBy;
+  customerNo;
+  contactPerson;
+  companyName;
+  companyAddress;
+  zipCode;
+  cityName;
+  email;
+  phone;
+  editBtn;
+  deleteBtn;
+}

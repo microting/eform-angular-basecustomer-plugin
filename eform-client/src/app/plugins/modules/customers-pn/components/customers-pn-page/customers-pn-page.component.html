@@ -11,6 +11,7 @@
     <button
       class="btn btn-success"
       mdbTooltip="{{ 'Create Customer' | translate }}"
+      id="newCustomerBtn"
       (click)="showCreateCustomerModal()">{{ 'New Customer' | translate }}
     </button>
     <button
@@ -57,7 +58,7 @@
       </thead>
       <tbody id="tableBody">
       <tr *ngFor="let customer of customersModel.customers">
-        <td *ngFor="let field of customer.fields">
+        <td *ngFor="let field of customer.fields" [id]="field.name">
           <ng-container [ngSwitch]="field.name">
             <ng-container *ngSwitchCase="fieldsEnum[fieldsEnum.Description]">
               <div class="max-lines" [innerHTML]="field.value"></div>
@@ -73,14 +74,14 @@
         <td>
           <div class="d-flex flex-row justify-content-center">
             <button class="btn btn-accent text-black-50 btn-icon mb-2"
-                    mdbTooltip="{{ 'Edit Customer' | translate }}"
+                    mdbTooltip="{{ 'Edit Customer' | translate }}" id="editCustomerBtn"
                     (click)="showEditCustomerModal(customer)">
               <i class="material-icons">
                 edit
               </i>
             </button>
             <button class="btn btn-danger btn-icon mb-2 "
-                    mdbTooltip="{{ 'Delete Customer' | translate }}"
+                    mdbTooltip="{{ 'Delete Customer' | translate }}" id="deleteCustomerBtn"
                     (click)="showDeleteCustomerModal(customer)">
               <i class="material-icons" >
                 delete_forever

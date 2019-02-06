@@ -1,69 +1,72 @@
 import loginPage from '../../Page objects/Login.page';
 import myEformsPage from '../../Page objects/MyEforms.page';
+import deviceUsersPage, {DeviceUsersRowObject} from '../../Page objects/DeviceUsers.page';
+import {generateRandmString} from '../../Helpers/helper-functions';
 
-import {expect} from 'chai';
-import pluginsPage from './application-settings.plugins.page';
+const expect = require('chai').expect;
 
-describe('Application settings page - site header section', function () {
-    before(function () {
-        loginPage.open('/auth');
-    });
-    it('should create searchable list', function () {
-        loginPage.login();
-        // myEformsPage.Navbar.advancedDropdown();
-        // myEformsPage.Navbar.clickonSubMenuItem('Plugin Settings');
-        // browser.pause(8000);
-        //
-        // const plugin = pluginsPage.getFirstPluginRowObj();
-        // expect(plugin.id).equal(1);
-        // expect(plugin.name).equal('Microting Customers plugin');
-        // expect(plugin.version).equal('1.0.0.0');
-        // expect(plugin.status).equal('Deaktiveret');
-        // // expect()
-
-    });
-
-    it('should configure customers pn to use searchable list', function () {
-
-    });
-
-    it('should create a single customer', function () {
-        // create customer
-        // validate it's created
-        // go to searchable list and validate that the list contains the newly created customer
-    });
-
-    it('should edit a customer', function () {
-        // edit the customer
-        // validate that the customer is updated
-        // go to searchable list and validate that the entity is updated
-    });
-
-    it('should delete a customer', function () {
-        // delete a customer
-        // validate that the warning dialog is shown
-        // validate that if pressing cancel, the customer is still in the list
-        // delete the customer and click ok
-        // validate that the list is now empty
-        // go to searchable list and validate that the list no longer contains any customers
-    });
-
-    it('should import a list of 2 customers', function () {
-        // click import
-        // mark correct collumns for import
-        // click on import
-        // refresh page
-        // validate that the list contains 2 customers
-        // go to searchable list and validate that both customers are in the list
-        // delete both customers
-        // go to searchable list and validate that the list is now empty
-    });
-
-    it('should select only companyname and customer no for show', function () {
-        // go to customer settings
-        // unselect all checkboxes except companyname and customner no
-        // save changes
-        // validate that there is only shown companyname and customer no in the headers section
-    });
-
+describe('Customers plugin page should add new customer', function () {
+  before(function () {
+    loginPage.open('/');
+    loginPage.login();
+    this.deviceUsersBtn.click();
+    browser.pause(20000);
+  });
+  it('with first name and last name', function () {
+    const name = 'John Noname';
+    const surname = 'Doe';
+    const rowCountBeforeCreation = deviceUsersPage.rowNum;
+    deviceUsersPage.createNewDeviceUser(name, surname);
+    const rowCountAfterCreation = deviceUsersPage.rowNum;
+    expect(rowCountAfterCreation, 'Number of rows hasn\'t changed after creating new user').equal(rowCountBeforeCreation + 1);
+    const lastDeviceUser: DeviceUsersRowObject = deviceUsersPage.getDeviceUser(deviceUsersPage.rowNum);
+    expect(lastDeviceUser.firstName, 'Name of created user is incorrect').equal(name);
+    expect(lastDeviceUser.lastName, 'Last name of created user is incorrect').equal(surname);
+    lastDeviceUser.deleteBtn.click();
+  });
+});
+describe('Device users page should not add new device user', function () {
+  afterEach(function () {
+    browser.refresh();
+    myEformsPage.Navbar.goToDeviceUsersPage();
+  });
+  // TODO fix SDK to be able to tests this!
+  // it('with only first name', function () {
+  //   const name = generateRandmString();
+  //   deviceUsersPage.newDeviceUserBtn.click();
+  //   browser.pause(4000);
+  //   deviceUsersPage.createFirstNameInput.setValue(name);
+  //   expect(deviceUsersPage.saveCreateBtn.isEnabled(),
+  //     'Create button in modal window while creating new device user is active when only name is provided').equal(false);
+  // });
+  it('with only last name', function () {
+    const lastName = generateRandmString();
+    browser.refresh();
+    browser.pause(8000);
+    deviceUsersPage.newDeviceUserBtn.click();
+    browser.pause(4000);
+    deviceUsersPage.createLastNameInput.setValue(lastName);
+    expect(deviceUsersPage.saveCreateBtn.isEnabled(),
+      'Create button in modal window while creating new device user is active when only last name is provided').equal(false);
+  });
+  it('without first and last names', function () {
+    browser.refresh();
+    browser.pause(8000);
+    deviceUsersPage.newDeviceUserBtn.click();
+    browser.pause(4000);
+    expect(deviceUsersPage.saveCreateBtn.isEnabled(),
+      'Create button in modal window while creating new device user is active when both first name and last name are not provided').equal(
+      false);
+  });
+  it('if cancel was clicked', function () {
+    const rowCountBeforeCreation = deviceUsersPage.rowNum;
+    browser.refresh();
+    browser.pause(8000);
+    deviceUsersPage.newDeviceUserBtn.click();
+    browser.pause(4000);
+    deviceUsersPage.cancelCreateBtn.click();
+    browser.pause(4000);
+    const rowCountAfterCreation = deviceUsersPage.rowNum;
+    expect(rowCountAfterCreation, 'Number of rows has changed after cancel').equal(rowCountBeforeCreation);
+  });
 });
