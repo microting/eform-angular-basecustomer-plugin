@@ -12,7 +12,7 @@ describe('Customers plugin page should update customer', function () {
     loginPage.login();
     customersPage.goToCustomersPage();
   });
-  it('with all empty fields', function () {
+  it('with all fields', function () {
     const lastCustomerBeforeEdit = customersPage.getCustomer(customersPage.rowNum);
     lastCustomerBeforeEdit.editBtn.waitForVisible(3000);
     lastCustomerBeforeEdit.editBtn.click();
@@ -30,23 +30,23 @@ describe('Customers plugin page should update customer', function () {
     };
     customersModalPage.updateCustomer(customerObject);
     const lastCustomerAfterEdit = customersPage.getCustomer(customersPage.rowNum);
-    expect(lastCustomerAfterEdit.createdBy, '').equal(customerObject.createdBy);
-    expect(lastCustomerAfterEdit.customerNo, '').equal(customerObject.customerNo);
-    expect(lastCustomerAfterEdit.contactPerson, '').equal(customerObject.contactPerson);
-    expect(lastCustomerAfterEdit.companyName, '').equal(customerObject.companyName);
-    expect(lastCustomerAfterEdit.companyAddress, '').equal(customerObject.companyAddress);
-    expect(lastCustomerAfterEdit.zipCode, '').equal(customerObject.zipCode);
-    expect(lastCustomerAfterEdit.cityName, '').equal(customerObject.cityName);
-    expect(lastCustomerAfterEdit.phone, '').equal(customerObject.phone);
-    expect(lastCustomerAfterEdit.email, '').equal(customerObject.email);
-
-  });
-  it('with all fields', function () {
-    const lastCustomer: CustomersRowObject = customersPage.getCustomer(customersPage.rowNum);
+    expect(lastCustomerAfterEdit.createdBy, 'Created by of updated customer is incorrect').equal(customerObject.createdBy);
+    expect(lastCustomerAfterEdit.customerNo, 'Customer number of updated customer is incorrect').equal(customerObject.customerNo);
+    expect(lastCustomerAfterEdit.contactPerson, 'Contact person of updated customer is incorrect').equal(customerObject.contactPerson);
+    expect(lastCustomerAfterEdit.companyName, 'Company name of updated customer is incorrect').equal(customerObject.companyName);
+    expect(lastCustomerAfterEdit.companyAddress, 'Company address of updated customer is incorrect').equal(customerObject.companyAddress);
+    expect(lastCustomerAfterEdit.zipCode, 'Zip code of updated customer is incorrect').equal(customerObject.zipCode);
+    expect(lastCustomerAfterEdit.cityName, 'City name of updated customer is incorrect').equal(customerObject.cityName);
+    expect(lastCustomerAfterEdit.phone, 'Phone of updated customer is incorrect').equal(customerObject.phone);
+    expect(lastCustomerAfterEdit.email, 'Email of updated customer is incorrect').equal(customerObject.email);
   });
 });
 describe('Customers plugin page should not update customer', function () {
   it('if cancel is clicked', function () {
-
+    const lastCustomerBeforeEdit = customersPage.getCustomer(customersPage.rowNum);
+    lastCustomerBeforeEdit.editBtn.waitForVisible(3000);
+    lastCustomerBeforeEdit.editBtn.click();
+    browser.pause(3000);
+    customersModalPage.cancelEditBtn.click();
   });
 });

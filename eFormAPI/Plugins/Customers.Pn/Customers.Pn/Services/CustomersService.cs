@@ -347,6 +347,7 @@ namespace Customers.Pn.Services
         {
             try
             {
+                Debugger.Break();
                 customerUpdateModel.Update(_dbContext);
                 Core core = _coreHelper.GetCore();
 
