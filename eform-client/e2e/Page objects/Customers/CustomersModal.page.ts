@@ -1,4 +1,5 @@
-import Page from '../../Page objects/Page';
+import Page from '../Page';
+import customersPage from "./Customers.page";
 
 export class CustomersModalPage extends Page {
   constructor() {
@@ -11,10 +12,6 @@ export class CustomersModalPage extends Page {
 
   public get cancelCreateBtn() {
     return browser.element('#cancelCreateCustomerBtn');
-  }
-
-  public get deleteCustomerBtn() {
-    return browser.element('#cancelCreateBtn');
   }
 
   public get saveEditBtn() {
@@ -107,20 +104,39 @@ export class CustomersModalPage extends Page {
 
   public createCustomer(data: any) {
     this.createCreatedByInput.setValue(data.createdBy);
-    this.createCustomerNo.setValue(data.createCustomerNo);
-    this.createContactPerson.setValue(data.createContactPerson);
-    this.createCompanyName.setValue(data.createCompanyName);
-    this.createCompanyAddress.setValue(data.createCompanyAddress);
-    this.createZipCode.setValue(data.createZipCode);
-    this.createCityName.setValue(data.createCityName);
+    this.createCustomerNo.setValue(data.customerNo);
+    this.createContactPerson.setValue(data.contactPerson);
+    this.createCompanyName.setValue(data.companyName);
+    this.createCompanyAddress.setValue(data.companyAddress);
+    this.createZipCode.setValue(data.zipCode);
+    this.createCityName.setValue(data.cityName);
     this.createPhone.setValue(data.createPhone);
     this.createEmail.setValue(data.createEmail);
     this.createBtn.click();
     browser.pause(16000);
   }
 
+  public updateCustomer(data: any) {
+    this.editCreatedByInput.setValue(data.createdBy);
+    this.editCustomerNo.setValue(data.customerNo);
+    this.editContactPerson.setValue(data.contactPerson);
+    this.editCompanyName.setValue(data.companyName);
+    this.editCompanyAddress.setValue(data.companyAddress);
+    this.editZipCode.setValue(data.zipCode);
+    this.editCityName.setValue(data.cityName);
+    this.editPhone.setValue(data.phone);
+    this.editEmail.setValue(data.email);
+    this.saveEditBtn.click();
+    browser.pause(16000);
+  }
+
   public createEmptyCustomer() {
     this.createBtn.click();
+    browser.pause(16000);
+  }
+
+  public deleteCustomer() {
+    this.saveDeleteBtn.click();
     browser.pause(16000);
   }
 

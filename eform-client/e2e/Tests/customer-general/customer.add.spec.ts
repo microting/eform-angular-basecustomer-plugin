@@ -1,7 +1,7 @@
 import loginPage from '../../Page objects/Login.page';
 import {generateRandmString} from '../../Helpers/helper-functions';
-import customersPage, {CustomersRowObject} from './Customers.page';
-import customersModalPage from './CustomersModal.page';
+import customersPage, {CustomersRowObject} from '../../Page objects/Customers/Customers.page';
+import customersModalPage from '../../Page objects/Customers/CustomersModal.page';
 
 const expect = require('chai').expect;
 
@@ -24,14 +24,14 @@ describe('Customers plugin page should add new customer', function () {
     browser.pause(6000);
     const customerObject = {
       createdBy: 'John Smith',
-      createCustomerNo: '1',
-      createContactPerson: 'Samantha Black',
-      createCompanyName: 'BMW',
-      createCompanyAddress: 'ABC Street 22',
-      createZipCode: '021551',
-      createCityName: 'Odense',
-      createPhone: '123124',
-      createEmail: 'user@user.com'
+      customerNo: '1',
+      contactPerson: 'Samantha Black',
+      companyName: 'BMW',
+      companyAddress: 'ABC Street 22',
+      zipCode: '021551',
+      cityName: 'Odense',
+      phone: '123124',
+      email: 'user@user.com'
     };
     const rowCountBeforeCreation = customersPage.rowNum;
     customersModalPage.createCustomer(customerObject);
@@ -40,14 +40,14 @@ describe('Customers plugin page should add new customer', function () {
     expect(rowCountAfterCreation, 'Number of rows hasn\'t changed after creating new user').equal(rowCountBeforeCreation + 1);
     const lastCustomer: CustomersRowObject = customersPage.getCustomer(customersPage.rowNum);
     expect(lastCustomer.createdBy, 'Created by of created customer is incorrect').equal(customerObject.createdBy);
-    expect(lastCustomer.customerNo, 'Customer number of created customer is incorrect').equal(customerObject.createCustomerNo);
-    expect(lastCustomer.contactPerson, 'Contact person of created customer is incorrect').equal(customerObject.createContactPerson);
-    expect(lastCustomer.companyName, 'Company name of created customer is incorrect').equal(customerObject.createCompanyName);
-    expect(lastCustomer.companyAddress, 'Company address of created customer is incorrect').equal(customerObject.createCompanyAddress);
-    expect(lastCustomer.zipCode, 'Zip code of created customer is incorrect').equal(customerObject.createZipCode);
-    expect(lastCustomer.cityName, 'City name of created customer is incorrect').equal(customerObject.createCityName);
-    expect(lastCustomer.phone, 'Phone of created customer is incorrect').equal(customerObject.createPhone);
-    expect(lastCustomer.email, 'Email of created customer is incorrect').equal(customerObject.createEmail);
+    expect(lastCustomer.customerNo, 'Customer number of created customer is incorrect').equal(customerObject.customerNo);
+    expect(lastCustomer.contactPerson, 'Contact person of created customer is incorrect').equal(customerObject.contactPerson);
+    expect(lastCustomer.companyName, 'Company name of created customer is incorrect').equal(customerObject.companyName);
+    expect(lastCustomer.companyAddress, 'Company address of created customer is incorrect').equal(customerObject.companyAddress);
+    expect(lastCustomer.zipCode, 'Zip code of created customer is incorrect').equal(customerObject.zipCode);
+    expect(lastCustomer.cityName, 'City name of created customer is incorrect').equal(customerObject.cityName);
+    expect(lastCustomer.phone, 'Phone of created customer is incorrect').equal(customerObject.phone);
+    expect(lastCustomer.email, 'Email of created customer is incorrect').equal(customerObject.email);
     browser.pause(6000);
   });
 });

@@ -1,4 +1,4 @@
-import Page from '../../Page objects/Page';
+import Page from '../Page';
 
 export class CustomersPage extends Page {
   constructor() {
@@ -53,6 +53,10 @@ export class CustomersPage extends Page {
     this.customersButton.click();
     browser.pause(20000);
   }
+
+  public get saveDeleteBtn() {
+    return browser.element('#customerSaveDeleteBtn');
+  }
 }
 
 const customersPage = new CustomersPage();
@@ -60,7 +64,7 @@ export default customersPage;
 
 export class CustomersRowObject {
   constructor(rowNumber) {
-    this.createdBy = +$$('#CreatedBy')[rowNumber - 1].getText();
+    this.createdBy = $$('#CreatedBy')[rowNumber - 1].getText();
     this.customerNo = $$('#CustomerNo')[rowNumber - 1].getText();
     this.contactPerson = $$('#ContactPerson')[rowNumber - 1].getText();
     this.companyName = $$('#CompanyName')[rowNumber - 1].getText();
@@ -73,18 +77,18 @@ export class CustomersRowObject {
     this.deleteBtn = $$('#deleteCustomerBtn')[rowNumber - 1];
   }
 
-  id;
-  version;
-  updatedByUserId;
-  createdBy;
-  customerNo;
-  contactPerson;
-  companyName;
-  companyAddress;
-  zipCode;
-  cityName;
-  email;
-  phone;
-  editBtn;
-  deleteBtn;
+  public id;
+  public version;
+  public updatedByUserId;
+  public createdBy;
+  public customerNo;
+  public contactPerson;
+  public companyName;
+  public companyAddress;
+  public zipCode;
+  public cityName;
+  public email;
+  public phone;
+  public editBtn;
+  public deleteBtn;
 }

@@ -1,4 +1,4 @@
-import Page from '../../Page objects/Page';
+import Page from '../Page';
 
 export class CustomersSettingsPage extends Page {
   constructor() {
