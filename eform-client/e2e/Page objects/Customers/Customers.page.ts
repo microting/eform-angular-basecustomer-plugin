@@ -42,7 +42,7 @@ export class CustomersPage extends Page {
   }
 
   public get customersButton() {
-    return browser.element(`//*[@id="header"]//*[@id="customers-pn"]`);
+    return browser.element('#customers-pn');
   }
 
   public goToCustomersPage() {
