@@ -72,7 +72,7 @@ namespace Customers.Pn
             result.LeftMenu.Add(new MenuItemModel()
             {
                 Name = localizationService.GetString("Customers"),
-                E2EId = "",
+                E2EId = "customers-pn",
                 Link = "/plugins/customers-pn"
             });
             return result;
