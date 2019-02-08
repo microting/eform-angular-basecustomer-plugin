@@ -42,7 +42,7 @@ export class CustomersPage extends Page {
   }
 
   public get customersButton() {
-    return this.clickOnHeaderMenuItem(' Customers ');
+    return this.clickOnHeaderMenuItem(' Kunder ');
   }
 
   public clickOnHeaderMenuItem(headerMenuItem) {
