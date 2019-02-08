@@ -110,8 +110,8 @@ export class CustomersModalPage extends Page {
     this.createCompanyAddress.setValue(data.companyAddress);
     this.createZipCode.setValue(data.zipCode);
     this.createCityName.setValue(data.cityName);
-    this.createPhone.setValue(data.createPhone);
-    this.createEmail.setValue(data.createEmail);
+    this.createPhone.setValue(data.phone);
+    this.createEmail.setValue(data.email);
     this.createBtn.click();
     browser.pause(16000);
   }
