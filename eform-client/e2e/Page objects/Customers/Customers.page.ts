@@ -42,11 +42,7 @@ export class CustomersPage extends Page {
   }
 
   public get customersButton() {
-    return this.clickOnHeaderMenuItem(' Kunder ');
-  }
-
-  public clickOnHeaderMenuItem(headerMenuItem) {
-    return browser.element(`//*[@id="header"]//*[text()="${headerMenuItem}"]`).element('..');
+    return browser.element('#customers-pn');
   }
 
   public goToCustomersPage() {
