@@ -101,7 +101,7 @@
               <div class="col col-xs-12" *ngIf="isFieldAvailable(fieldsEnum.Description)">
                 <label class="text-black-60">{{'Description' | translate}}</label>
                 <div class="md-form p-0 m-0">
-                  <pell-pn-editor [(value)]="newCustomerModel.description" name="createComment"></pell-pn-editor>
+                  <pell-pn-editor [(value)]="newCustomerModel.description" name="createComment" id="createComment"></pell-pn-editor>
                 </div>
               </div>
             </div>
@@ -109,10 +109,10 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-success" (click)="createCustomer()">
+        <button class="btn btn-success" id="createCustomerBtn" (click)="createCustomer()">
           {{ 'Create' | translate }}
         </button>
-        <button class="btn btn-accent text-black-50" (click)="frame.hide()">{{'Cancel' | translate}}</button>
+        <button class="btn btn-accent text-black-50" (click)="frame.hide()" id="cancelCreateCustomerBtn">{{'Cancel' | translate}}</button>
       </div>
     </div>
   </div>
