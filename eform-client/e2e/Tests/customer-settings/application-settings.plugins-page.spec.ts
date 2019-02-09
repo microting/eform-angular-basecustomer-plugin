@@ -1,8 +1,10 @@
 import loginPage from '../../Page objects/Login.page';
 import myEformsPage from '../../Page objects/MyEforms.page';
+import pluginPage from '../../Page objects/Plugin.page';
 
 import {expect} from 'chai';
 import pluginsPage from './application-settings.plugins.page';
+
 
 describe('Application settings page - site header section', function () {
     before(function () {
@@ -24,6 +26,12 @@ describe('Application settings page - site header section', function () {
     });
 
     it('should activate the plugin', function () {
+      const plugin = pluginsPage.getFirstPluginRowObj();
+      pluginPage.pluginSettingsBtn.click();
+      browser.pause(8000);
+      pluginPage.selectValue('PluginDropDown', 'PluginDropDown', 'Aktiveret');
+      browser.pause(8000);
+      pluginPage.saveBtn.click();
         // click on plugin settings
         // enter connectionstring for customers plugin
         // select activate
@@ -31,5 +39,5 @@ describe('Application settings page - site header section', function () {
         // see that the plugin is marked active
         // validate that the customers menu entry is now visible
         // validate that the customers index page is shown with all fields active in the header
-    })
+    });
 });
