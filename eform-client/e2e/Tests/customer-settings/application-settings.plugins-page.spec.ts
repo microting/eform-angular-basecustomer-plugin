@@ -32,7 +32,7 @@ describe('Application settings page - site header section', function () {
       pluginPage.selectValue('PluginDropDown', 'PluginDropDown', 'Aktiveret');
       browser.pause(8000);
       pluginPage.saveBtn.click();
-      browser.pause(20000);
+      browser.pause(40000);
       browser.refresh()
         // click on plugin settings
         // enter connectionstring for customers plugin
