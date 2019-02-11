@@ -5,13 +5,13 @@ import customersModalPage from '../../Page objects/Customers/CustomersModal.page
 
 const expect = require('chai').expect;
 
-describe('Customers plugin page should add new customer', function () {
+describe('Customers plugin page', function () {
   before(function () {
     loginPage.open('/');
     loginPage.login();
     customersPage.goToCustomersPage();
   });
-  it('with all empty fields', function () {
+  it('should add new customer with all empty fields', function () {
     customersPage.newCustomerBtn.click();
     browser.pause(6000);
     const rowCountBeforeCreation = customersPage.rowNum;
@@ -19,7 +19,7 @@ describe('Customers plugin page should add new customer', function () {
     const rowCountAfterCreation = customersPage.rowNum;
     expect(rowCountAfterCreation, 'Number of rows hasn\'t changed after creating new customer').equal(rowCountBeforeCreation + 1);
   });
-  it('with all fields', function () {
+  it('should add new customer with all fields', function () {
     customersPage.newCustomerBtn.click();
     browser.pause(6000);
     const customerObject = {
@@ -50,9 +50,7 @@ describe('Customers plugin page should add new customer', function () {
     expect(lastCustomer.email, 'Email of created customer is incorrect').equal(customerObject.email);
     browser.pause(6000);
   });
-});
-describe('Customers plugin page should not add new customer', function () {
-  it('if cancel is clicked', function () {
+  it('should not add new customer if cancel is clicked', function () {
     customersPage.newCustomerBtn.click();
     browser.pause(6000);
     customersModalPage.cancelCreateBtn.click();
