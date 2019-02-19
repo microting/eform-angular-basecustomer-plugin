@@ -1,6 +1,7 @@
 import Page from '../Page';
+import {PageWithNavbarPage} from '../PageWithNavbar.page';
 
-export class CustomersPage extends Page {
+export class CustomersPage extends PageWithNavbarPage {
   constructor() {
     super();
   }

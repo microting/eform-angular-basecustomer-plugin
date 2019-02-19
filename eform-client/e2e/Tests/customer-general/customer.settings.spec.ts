@@ -12,13 +12,12 @@ describe('Customers plugin settings page', function () {
     customersPage.goToCustomersPage();
   });
   it('should create searchable list', function () {
-    myEformsPage.Navbar.advancedDropdown();
-    browser.pause(1000);
-    myEformsPage.Navbar.clickonSubMenuItem('Søgbar Lister');
+    customersPage.Navbar.advancedDropdown();
+    customersPage.Navbar.clickonSubMenuItem('Searchable List');
     browser.pause(4000);
     // user see Searchable lists page and new list button (#createEntitySearchBtn) within it
     const newSearchListBtn = $('#createEntitySearchBtn');
-    const numberOfListsBefore = browser.$$('tr > .ng-star-inserted').length;
+    const numberOfListsBefore = browser.$$('#tableBody > tr').length;
     newSearchListBtn.click();
     browser.pause(4000);
     const listName = 'My testing list';
@@ -27,16 +26,15 @@ describe('Customers plugin settings page', function () {
     const confirmBtn = $('#entitySearchCreateSaveBtn');
     confirmBtn.click();
     browser.pause(4000);
-    const numberOfListsAfter = browser.$$('tr > .ng-star-inserted').length;
+    const numberOfListsAfter = browser.$$('#tableBody > tr').length;
     // new list should appear on the page. check by name? <td>name-of-list</td
     const result = numberOfListsBefore < numberOfListsAfter;
-    expect(result, 'Where\'s new searchable list?').equals(true);
+    expect(result, 'Where\'s new searchable list?').equal(true);
   });
   it('should configure customers pn to use searchable list', function () {
     // open customers page
     const nameOfList = 'My testing list';
     customersPage.goToCustomersPage();
-    browser.pause(2000);
     // click on red settings button
     const settingsBtn = $('#settingsCustomerBtn');
     settingsBtn.click();
