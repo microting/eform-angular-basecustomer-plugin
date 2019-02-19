@@ -3,7 +3,8 @@
     <button *ngIf="currentRole == 'admin'"
             class="btn btn-danger text-black-50 btn-icon"
             routerLink="settings"
-            mdbTooltip="{{ 'Settings' | translate }}">
+            mdbTooltip="{{ 'Settings' | translate }}"
+            id="settingsCustomerBtn">
       <i class="material-icons">
         build
       </i>
@@ -15,9 +16,10 @@
       (click)="showCreateCustomerModal()">{{ 'New Customer' | translate }}
     </button>
     <button
+      id="importCustomer"
       class="btn btn-success"
-      mdbTooltip="{{'Import Costumer' | translate}}"
-      routerLink="import">{{'Import Costumer' | translate}}</button>
+      mdbTooltip="{{'Import Customer' | translate}}"
+      routerLink="import">{{'Import Customer' | translate}}</button>
   </div>
 </subheader-pn>
 
