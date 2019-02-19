@@ -13,7 +13,7 @@ describe('Customers plugin settings page', function () {
   });
   it('should create searchable list', function () {
     myEformsPage.Navbar.advancedDropdown();
-    myEformsPage.Navbar.clickonSubMenuItem('Søgbar liste');
+    myEformsPage.Navbar.clickonSubMenuItem('Søgbar lister');
     browser.pause(4000);
     // user see Searchable lists page and new list button (#createEntitySearchBtn) within it
     const newSearchListBtn = $('#createEntitySearchBtn');
