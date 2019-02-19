@@ -1,6 +1,6 @@
 import loginPage from '../../Page objects/Login.page';
 import customersPage, {CustomersRowObject} from '../../Page objects/Customers/Customers.page';
-import customersSettingsPage, {CustomersSettingsPage} from '../../Page objects/Customers/CustomersSettings.page';
+import customersSettingsPage from '../../Page objects/Customers/CustomersSettings.page';
 
 const expect = require('chai').expect;
 
@@ -46,22 +46,17 @@ describe('Customers plugin settings page', function () {
     browser.pause(4000);
   });
   it('should select only company name, id and customer № for show', function () {
-    // get list of all checkboxes
-    const checkboxesList = browser.$$('.mat-checkbox');
-    // click on id
-    // click on contact person
-    // click on company name
     const customerCheckbox =  customersSettingsPage.getCheckboxById('9');
     const companyNameCheckbox =  customersSettingsPage.getCheckboxById('10');
     const idCheckbox =  customersSettingsPage.getCheckboxById('18');
 
-    if (customerCheckbox.getValue() === 'false') {
+    if (customerCheckbox.isSelected()) {
       customersSettingsPage.clickCheckboxById('9');
     }
-    if (companyNameCheckbox.getValue() === 'false') {
+    if (companyNameCheckbox.isSelected()) {
       customersSettingsPage.clickCheckboxById('10');
     }
-    if (idCheckbox.getValue() === 'false') {
+    if (idCheckbox.isSelected()) {
       customersSettingsPage.clickCheckboxById('18');
     }
     expect(customerCheckbox.getValue(), 'Customer number checkbox is\'t set').equal('true');
