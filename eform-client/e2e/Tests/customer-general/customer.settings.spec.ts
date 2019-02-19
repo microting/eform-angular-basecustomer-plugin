@@ -12,26 +12,26 @@ describe('Customers plugin settings page', function () {
   });
   it('should create searchable list', function () {
     customersPage.Navbar.advancedDropdown();
-    browser.pause(4000);
+    browser.pause(8000);
     customersPage.Navbar.clickonSubMenuItem('Søgbar Lister');
-    browser.pause(4000);
+    browser.pause(8000);
     const newSearchListBtn = $('#createEntitySearchBtn');
     const numberOfListsBefore = browser.$$('#tableBody > tr').length;
     newSearchListBtn.click();
-    browser.pause(4000);
+    browser.pause(8000);
     const listName = 'My testing list';
     const fieldElement = $('#createName');
     fieldElement.addValue(listName);
     const confirmBtn = $('#entitySearchCreateSaveBtn');
     confirmBtn.click();
-    browser.pause(4000);
+    browser.pause(8000);
     const numberOfListsAfter = browser.$$('#tableBody > tr').length;
     expect(numberOfListsAfter, 'Number of rows is less than expected').equal(numberOfListsBefore + 1);
   });
   it('should configure customers pn to use searchable list', function () {
     const nameOfList = 'My testing list';
     customersPage.goToCustomersPage();
-    browser.pause(3000);
+    browser.pause(8000);
     const settingsBtn = $('#settingsCustomerBtn');
     settingsBtn.click();
     const searchField = $('.ng-input > input');
