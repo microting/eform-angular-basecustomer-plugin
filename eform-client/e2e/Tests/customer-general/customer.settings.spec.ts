@@ -13,7 +13,8 @@ describe('Customers plugin settings page', function () {
   });
   it('should create searchable list', function () {
     myEformsPage.Navbar.advancedDropdown();
-    myEformsPage.Navbar.clickonSubMenuItem('Searchable List');
+    browser.pause(1000);
+    myEformsPage.Navbar.clickonSubMenuItem('Søgbar Lister');
     browser.pause(4000);
     // user see Searchable lists page and new list button (#createEntitySearchBtn) within it
     const newSearchListBtn = $('#createEntitySearchBtn');
@@ -29,12 +30,13 @@ describe('Customers plugin settings page', function () {
     const numberOfListsAfter = browser.$$('tr > .ng-star-inserted').length;
     // new list should appear on the page. check by name? <td>name-of-list</td
     const result = numberOfListsBefore < numberOfListsAfter;
-    expect(result, 'Where\'s new searchable list?').true;
+    expect(result, 'Where\'s new searchable list?').equals(true);
   });
   it('should configure customers pn to use searchable list', function () {
     // open customers page
     const nameOfList = 'My testing list';
     customersPage.goToCustomersPage();
+    browser.pause(2000);
     // click on red settings button
     const settingsBtn = $('#settingsCustomerBtn');
     settingsBtn.click();
