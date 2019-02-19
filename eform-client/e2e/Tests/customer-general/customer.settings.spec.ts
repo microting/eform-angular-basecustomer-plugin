@@ -26,8 +26,7 @@ describe('Customers plugin settings page', function () {
     confirmBtn.click();
     browser.pause(4000);
     const numberOfListsAfter = browser.$$('#tableBody > tr').length;
-    const result = numberOfListsBefore < numberOfListsAfter;
-    expect(result, 'Number of rows is less than expected').equal(true);
+    expect(numberOfListsAfter, 'Number of rows is less than expected').equal(numberOfListsBefore + 1);
   });
   it('should configure customers pn to use searchable list', function () {
     const nameOfList = 'My testing list';
