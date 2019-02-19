@@ -1,7 +1,6 @@
 import loginPage from '../../Page objects/Login.page';
 import customersPage, {CustomersRowObject} from '../../Page objects/Customers/Customers.page';
 import customersSettingsPage from '../../Page objects/Customers/CustomersSettings.page';
-import myEformsPage from '../../Page objects/MyEforms.page';
 
 const expect = require('chai').expect;
 
@@ -13,9 +12,9 @@ describe('Customers plugin settings page', function () {
   });
   it('should create searchable list', function () {
     customersPage.Navbar.advancedDropdown();
-    customersPage.Navbar.clickonSubMenuItem('Searchable List');
     browser.pause(4000);
-    // user see Searchable lists page and new list button (#createEntitySearchBtn) within it
+    customersPage.Navbar.clickonSubMenuItem('Søgbar Lister');
+    browser.pause(4000);
     const newSearchListBtn = $('#createEntitySearchBtn');
     const numberOfListsBefore = browser.$$('#tableBody > tr').length;
     newSearchListBtn.click();
@@ -27,27 +26,21 @@ describe('Customers plugin settings page', function () {
     confirmBtn.click();
     browser.pause(4000);
     const numberOfListsAfter = browser.$$('#tableBody > tr').length;
-    // new list should appear on the page. check by name? <td>name-of-list</td
     const result = numberOfListsBefore < numberOfListsAfter;
-    expect(result, 'Where\'s new searchable list?').equal(true);
+    expect(result, 'Number of rows is less than expected').equal(true);
   });
   it('should configure customers pn to use searchable list', function () {
-    // open customers page
     const nameOfList = 'My testing list';
     customersPage.goToCustomersPage();
-    // click on red settings button
+    browser.pause(3000);
     const settingsBtn = $('#settingsCustomerBtn');
     settingsBtn.click();
-    // Enter name in search field
     const searchField = $('.ng-input > input');
     searchField.addValue(nameOfList);
-    // select item from dropdown panel
     const listChoices = $$('.ng-option');
-    // get first item in list
     const choice = listChoices[0];
     browser.pause(8000);
     choice.click();
-    // test
     const fieldToCheck = $('.ng-value .ng-value-label');
     expect(fieldToCheck.getText(), 'Searchable list is selected').equal('My testing list');
   });
