@@ -8,7 +8,19 @@ export class CustomersPage extends Page {
   public get rowNum(): number {
     return $$('#tableBody > tr').length;
   }
+  public clickIdSort() {
+    browser.$('#IdTableHeader').click();
+    browser.pause(4000);
+  }
+  public clickContactSort() {
+    browser.$('#ContactPersonTableHeader').click();
+    browser.pause(4000);
+  }
 
+  public clickCompanySort() {
+    browser.$('#CompanyNameTableHeader').click();
+    browser.pause(4000);
+  }
   getCustomer(num): CustomersRowObject {
     return new CustomersRowObject(num);
   }
@@ -23,6 +35,11 @@ export class CustomersPage extends Page {
 
   public get importCustomersSettingsBtn() {
     return browser.element('#lastName');
+  }
+
+  // same purpose as previous method?
+  public  importCustomerBtn() {
+    return browser.element('#importCustomer');
   }
 
   public get saveImportCustomersBtn() {
