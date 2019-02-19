@@ -25,7 +25,7 @@ export class CustomersSettingsPage extends Page {
     return browser.element('#cancelDeleteBtn');
   }
   public getCheckboxById(id: string) {
-    return browser.element('#checkbox' + id);
+    return browser.element('.mat-checkbox > #checkbox' + id);
   }
 
   public clickCheckboxById(id: string) {
