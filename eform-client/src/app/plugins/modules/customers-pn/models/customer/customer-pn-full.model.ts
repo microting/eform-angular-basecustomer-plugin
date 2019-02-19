@@ -10,4 +10,5 @@ export class CustomerPnFullModel {
   email: string;
   contactPerson: string;
   description: string = null;
+  relatedEntityId: string;
 }
