@@ -63,6 +63,10 @@ export class CustomersPage extends PageWithNavbarPage {
     return browser.element('#customers-pn');
   }
 
+  public get settingsCustomerBtn() {
+    return browser.element('#settingsCustomerBtn');
+  }
+
   public goToCustomersPage() {
     this.customersButton.click();
     browser.pause(20000);

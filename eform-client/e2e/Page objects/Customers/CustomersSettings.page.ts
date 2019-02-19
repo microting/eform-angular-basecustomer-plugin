@@ -24,6 +24,19 @@ export class CustomersSettingsPage extends Page {
   public get cancelDeleteBtn() {
     return browser.element('#cancelDeleteBtn');
   }
+  public getCheckboxById(id: string) {
+    return browser.element('#checkbox' + id);
+  }
+
+  public clickCheckboxById(id: string) {
+    browser.element('checkbox' + id).click();
+  }
+  public  getSearchField() {
+    return browser.element('.ng-input > input');
+  }
+  public getListOfChoices() {
+    return browser.$$('.ng-option');
+  }
 }
 
 const customersSettingsPage = new CustomersSettingsPage();
