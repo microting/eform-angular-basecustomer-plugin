@@ -11,9 +11,25 @@ describe('Customers plugin import page', function () {
     customersPage.goToCustomersPage();
   });
   it('should import customers list', function () {
-
+    const customersBefore = customersImportPage.numberOfCustomers;
+    const importButton = customersPage.importCustomerBtn();
+    importButton.click();
+    browser.pause(8000);
+    browser.chooseFile('#files', 'C:\\Import-test.csv');
+    // press 'continue import' button
+    customersImportPage.continueImport();
+    const customersAfter = customersImportPage.numberOfCustomers;
+    expect(customersAfter, 'Number of customers is not bigger than before').greaterThan(customersBefore)
   });
   it('should not import customers', function () {
+    const customersBefore = customersImportPage.numberOfCustomers;
+    const importButton = customersPage.importCustomerBtn();
+    importButton.click();
+    browser.pause(8000);
+    browser.chooseFile('#files', 'C:\\Import-test.csv');
+    customersImportPage.cancelImport();
 
+    const customersAfter = customersImportPage.numberOfCustomers;
+    expect(customersAfter, 'Number of customers is\'t same as before').equal(customersBefore);
   });
 });
