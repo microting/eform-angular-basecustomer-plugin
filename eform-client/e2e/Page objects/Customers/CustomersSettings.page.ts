@@ -25,11 +25,13 @@ export class CustomersSettingsPage extends Page {
     return browser.element('#cancelDeleteBtn');
   }
   public getCheckboxById(id: string) {
-    return browser.element('.mat-checkbox > #checkbox' + id);
+    return browser.element('#checkbox' + id);
   }
 
   public clickCheckboxById(id: string) {
-    browser.element('checkbox' + id).click();
+    const el = browser.element('#mat-checkbox' + id);
+    el.click();
+    browser.pause(5000);
   }
   public  getSearchField() {
     return browser.element('.ng-input > input');

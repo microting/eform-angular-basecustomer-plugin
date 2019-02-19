@@ -64,7 +64,12 @@ export class CustomersPage extends PageWithNavbarPage {
   }
 
   public get settingsCustomerBtn() {
-    return browser.element('#settingsCustomerBtn');
+    return browser.$('#settingsCustomerBtn');
+  }
+
+  public goToCustomerSettings() {
+    browser.element('#settingsCustomerBtn').click();
+    browser.pause(4000);
   }
 
   public goToCustomersPage() {

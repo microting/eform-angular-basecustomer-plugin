@@ -32,8 +32,9 @@ describe('Customers plugin settings page', function () {
     const nameOfList = 'My testing list';
     customersPage.goToCustomersPage();
     browser.pause(8000);
-    const settingsBtn = customersPage.settingsCustomerBtn;
-    settingsBtn.click();
+    customersPage.goToCustomerSettings();
+    // const settingsBtn = customersPage.settingsCustomerBtn;
+    // settingsBtn.click();
     browser.pause(3000);
     const searchField = customersSettingsPage.getSearchField();
     searchField.addValue(nameOfList);
@@ -50,15 +51,16 @@ describe('Customers plugin settings page', function () {
     const companyNameCheckbox =  customersSettingsPage.getCheckboxById('10');
     const idCheckbox =  customersSettingsPage.getCheckboxById('18');
 
-    if (customerCheckbox.isSelected()) {
+    if (customerCheckbox.getValue() === 'false') {
       customersSettingsPage.clickCheckboxById('9');
     }
-    if (companyNameCheckbox.isSelected()) {
+    if (companyNameCheckbox.getValue() === 'false') {
       customersSettingsPage.clickCheckboxById('10');
     }
-    if (idCheckbox.isSelected()) {
+    if (idCheckbox.getValue() === 'false') {
       customersSettingsPage.clickCheckboxById('18');
     }
+
     expect(customerCheckbox.getValue(), 'Customer number checkbox is\'t set').equal('true');
     expect(companyNameCheckbox.getValue(), 'Company name checkbox is\'t set').equal('true');
     expect(idCheckbox.getValue(), 'Id checkbox is\'t set').equals('true');
