@@ -35,8 +35,8 @@ describe('Customers plugin settings page', function () {
   it('should configure customers pn to use searchable list', function () {
     // open customers page
     const nameOfList = 'My testing list';
-    myEformsPage.Navbar.clickonSubMenuItem(' Kunder ');
-    browser.pause(4000);
+    customersPage.goToCustomersPage();
+    browser.pause(2000);
     // click on red settings button
     const settingsBtn = $('#settingsCustomerBtn');
     settingsBtn.click();
