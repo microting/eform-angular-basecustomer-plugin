@@ -32,9 +32,7 @@ describe('Customers plugin settings page', function () {
     const nameOfList = 'My testing list';
     customersPage.goToCustomersPage();
     browser.pause(9000);
-    // customersPage.goToCustomerSettings();
-    const btn = $('#settingsCustomerBtn').whaitForExist(8000, false, '!!!');
-    btn.click();
+    customersPage.goToCustomerSettings();
     browser.pause(3000);
     const searchField = customersSettingsPage.getSearchField();
     searchField.addValue(nameOfList);
@@ -42,7 +40,7 @@ describe('Customers plugin settings page', function () {
     const choice = listChoices[0];
     browser.pause(8000);
     choice.click();
-    const fieldToCheck = browser.$('.ng-value .ng-value-label');
+    const fieldToCheck = customersSettingsPage.selectedListField();
     expect(fieldToCheck.getText(), 'Searchable list is not selected').equal('My testing list');
     browser.pause(4000);
   });
