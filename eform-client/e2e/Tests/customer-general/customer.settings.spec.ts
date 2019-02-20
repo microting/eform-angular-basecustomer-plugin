@@ -31,8 +31,9 @@ describe('Customers plugin settings page', function () {
   it('should configure customers pn to use searchable list', function () {
     const nameOfList = 'My testing list';
     customersPage.goToCustomersPage();
-    browser.pause(8000);
-    customersPage.goToCustomerSettings();
+    browser.pause(9000);
+    browser.$('#settingsCustomerBtn').click();
+    // customersPage.goToCustomerSettings();
     // const settingsBtn = customersPage.settingsCustomerBtn;
     // settingsBtn.click();
     browser.pause(3000);
