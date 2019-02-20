@@ -33,7 +33,8 @@ describe('Customers plugin settings page', function () {
     customersPage.goToCustomersPage();
     browser.pause(9000);
     // customersPage.goToCustomerSettings();
-    $('#settingsCustomerBtn').click();
+    const btn = $('#settingsCustomerBtn').whaitForExist(8000, false, '!!!');
+    btn.click();
     browser.pause(3000);
     const searchField = customersSettingsPage.getSearchField();
     searchField.addValue(nameOfList);
