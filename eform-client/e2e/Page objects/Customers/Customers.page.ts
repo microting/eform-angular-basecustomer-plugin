@@ -6,8 +6,8 @@ export class CustomersPage extends PageWithNavbarPage {
     super();
   }
 
-  public get rowNum(): number {
-    return browser.$$('#tableBody > tr').length;
+  public rowNum(): number {
+    return browser.$$('#mainTableBody > tr').length;
   }
   public clickIdSort() {
     browser.$('#IdTableHeader').click();

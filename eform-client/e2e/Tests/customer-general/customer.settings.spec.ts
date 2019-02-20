@@ -12,11 +12,11 @@ describe('Customers plugin settings page', function () {
   });
   it('should create searchable list', function () {
     customersPage.Navbar.advancedDropdown();
-    browser.pause(8000);
+    browser.pause(10000);
     customersPage.Navbar.clickonSubMenuItem('Søgbar Lister');
-    browser.pause(8000);
+    browser.pause(10000);
     const newSearchListBtn = browser.$('#createEntitySearchBtn');
-    const numberOfListsBefore = customersPage.rowNum;
+    const numberOfListsBefore = customersPage.rowNum();
     newSearchListBtn.click();
     browser.pause(8000);
     const listName = 'My testing list';
@@ -25,7 +25,7 @@ describe('Customers plugin settings page', function () {
     const confirmBtn = browser.$('#entitySearchCreateSaveBtn');
     confirmBtn.click();
     browser.pause(8000);
-    const numberOfListsAfter = customersPage.rowNum;
+    const numberOfListsAfter = customersPage.rowNum();
     expect(numberOfListsAfter, 'Number of rows is less than expected').greaterThan(numberOfListsBefore);
   });
   it('should configure customers pn to use searchable list', function () {

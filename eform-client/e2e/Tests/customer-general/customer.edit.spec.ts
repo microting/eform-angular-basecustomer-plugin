@@ -13,7 +13,7 @@ describe('Customers plugin page', function () {
     customersPage.goToCustomersPage();
   });
   it('should update customer with all fields', function () {
-    const lastCustomerBeforeEdit = customersPage.getCustomer(customersPage.rowNum);
+    const lastCustomerBeforeEdit = customersPage.getCustomer(customersPage.rowNum());
     lastCustomerBeforeEdit.editBtn.waitForVisible(3000);
     lastCustomerBeforeEdit.editBtn.click();
     browser.pause(3000);
@@ -29,7 +29,7 @@ describe('Customers plugin page', function () {
       email: Guid.create().toString()
     };
     customersModalPage.updateCustomer(customerObject);
-    const lastCustomerAfterEdit = customersPage.getCustomer(customersPage.rowNum);
+    const lastCustomerAfterEdit = customersPage.getCustomer(customersPage.rowNum());
     expect(lastCustomerAfterEdit.createdBy, 'Created by of updated customer is incorrect').equal(customerObject.createdBy);
     expect(lastCustomerAfterEdit.customerNo, 'Customer number of updated customer is incorrect').equal(customerObject.customerNo);
     expect(lastCustomerAfterEdit.contactPerson, 'Contact person of updated customer is incorrect').equal(customerObject.contactPerson);
@@ -41,7 +41,7 @@ describe('Customers plugin page', function () {
     expect(lastCustomerAfterEdit.email, 'Email of updated customer is incorrect').equal(customerObject.email);
   });
   it('should not update customer if cancel is clicked', function () {
-    const lastCustomerBeforeEdit = customersPage.getCustomer(customersPage.rowNum);
+    const lastCustomerBeforeEdit = customersPage.getCustomer(customersPage.rowNum());
     lastCustomerBeforeEdit.editBtn.waitForVisible(3000);
     lastCustomerBeforeEdit.editBtn.click();
     browser.pause(3000);

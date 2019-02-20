@@ -12,20 +12,21 @@ describe('Customer modal', function () {
     customersPage.goToCustomersPage();
   });
   it('should delete customer', function () {
-    const rowBeforeDeletion = customersPage.rowNum;
+    const rowBeforeDeletion: Number = customersPage.rowNum();
     const lastCustomer: CustomersRowObject = customersPage.getCustomer(rowBeforeDeletion);
     lastCustomer.deleteBtn.waitForVisible(3000);
     lastCustomer.deleteBtn.click();
     browser.pause(3000);
     customersModalPage.deleteCustomer();
-    const rowAfterDeletion = customersPage.rowNum;
+    browser.$('#tableBody').waitForValue(9000);
+    const rowAfterDeletion: Number = customersPage.rowNum();
     expect(rowBeforeDeletion, 'Number of rows hasn\'t changed after deleting customer').equal(rowAfterDeletion + 1);
   });
   it('should not delete customer if cancel was clicked', function () {
-    const lastCustomer: CustomersRowObject = customersPage.getCustomer(customersPage.rowNum);
-    lastCustomer.deleteBtn.waitForVisible(3000);
-    lastCustomer.deleteBtn.leftClick();
+    const lastCustomer: CustomersRowObject = customersPage.getCustomer(customersPage.rowNum());
+    browser.pause(9000);
+    lastCustomer.deleteBtn.click();
     browser.pause(3000);
-    customersModalPage.cancelDeleteBtn.leftClick();
+    customersModalPage.cancelDeleteBtn.click();
   });
 });

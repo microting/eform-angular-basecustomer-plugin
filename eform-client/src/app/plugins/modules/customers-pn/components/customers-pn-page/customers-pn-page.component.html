@@ -58,7 +58,7 @@
         </th>
       </tr>
       </thead>
-      <tbody id="tableBody">
+      <tbody id="mainTableBody">
       <tr *ngFor="let customer of customersModel.customers">
         <td *ngFor="let field of customer.fields" [id]="field.name">
           <ng-container [ngSwitch]="field.name">
