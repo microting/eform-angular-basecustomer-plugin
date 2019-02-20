@@ -32,11 +32,7 @@ describe('Customers plugin settings page', function () {
     const nameOfList = 'My testing list';
     customersPage.goToCustomersPage();
     browser.pause(9000);
-    const btn = browser.$('#settingsCustomerBtn');
-    btn.click();
-    // customersPage.goToCustomerSettings();
-    // const settingsBtn = customersPage.settingsCustomerBtn;
-    // settingsBtn.click();
+    customersPage.goToCustomerSettings();
     browser.pause(3000);
     const searchField = customersSettingsPage.getSearchField();
     searchField.addValue(nameOfList);

@@ -68,7 +68,8 @@ export class CustomersPage extends PageWithNavbarPage {
   }
 
   public goToCustomerSettings() {
-    browser.$('#settingsCustomerBtn').click();
+    const elem = browser.$('.btn #settingsCustomerBtn');
+    elem.click();
     browser.pause(4000);
   }
 
