@@ -12,12 +12,12 @@ describe('Customers plugin page', function () {
     customersPage.goToCustomersPage();
   });
   it('should add new customer with all empty fields', function () {
-    const rowCountBeforeCreation = customersPage.rowNum();
+    const rowCountBeforeCreation = browser.$$('#mainTableBody > tr');
     customersPage.newCustomerBtn.click();
-    browser.pause(12000);
+    browser.pause(15000);
     customersModalPage.createEmptyCustomer();
-    browser.pause(12000);
-    const rowCountAfterCreation = customersPage.rowNum();
+    browser.pause(15000);
+    const rowCountAfterCreation = browser.$$('#mainTableBody > tr');
     expect(rowCountAfterCreation, 'Number of rows hasn\'t changed after creating new customer').equal(rowCountBeforeCreation + 1);
   });
   it('should add new customer with all fields', function () {
