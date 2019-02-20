@@ -39,6 +39,9 @@ export class CustomersSettingsPage extends Page {
   public getListOfChoices() {
     return browser.$$('.ng-option');
   }
+  public  selectedListField() {
+    return browser.$('.ng-value .ng-value-label');
+  }
 }
 
 const customersSettingsPage = new CustomersSettingsPage();
