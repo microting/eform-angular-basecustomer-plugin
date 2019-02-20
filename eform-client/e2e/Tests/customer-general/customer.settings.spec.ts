@@ -16,7 +16,7 @@ describe('Customers plugin settings page', function () {
     customersPage.Navbar.clickonSubMenuItem('Søgbar Lister');
     browser.pause(10000);
     const newSearchListBtn = browser.$('#createEntitySearchBtn');
-    const numberOfListsBefore = customersPage.rowNum();
+    const numberOfListsBefore = browser.$$('#tableBody > tr').length;
     newSearchListBtn.click();
     browser.pause(8000);
     const listName = 'My testing list';
@@ -25,8 +25,8 @@ describe('Customers plugin settings page', function () {
     const confirmBtn = browser.$('#entitySearchCreateSaveBtn');
     confirmBtn.click();
     browser.pause(8000);
-    const numberOfListsAfter = customersPage.rowNum();
-    expect(numberOfListsAfter, 'Number of rows is less than expected').greaterThan(numberOfListsBefore);
+    const numberOfListsAfter = browser.$$('#tableBody > tr').length;
+    expect(numberOfListsAfter, 'Number of rows is less than expected').equal(numberOfListsBefore + 1);
   });
   it('should configure customers pn to use searchable list', function () {
     const nameOfList = 'My testing list';
