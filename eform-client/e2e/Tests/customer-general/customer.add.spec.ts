@@ -12,9 +12,10 @@ describe('Customers plugin page', function () {
     customersPage.goToCustomersPage();
   });
   it('should add new customer with all empty fields', function () {
+    const rowCountBeforeCreation = customersPage.rowNum();
     customersPage.newCustomerBtn.click();
     browser.pause(8000);
-    const rowCountBeforeCreation = customersPage.rowNum();
+    // browser.debug();
     customersModalPage.createEmptyCustomer();
     const rowCountAfterCreation = customersPage.rowNum();
     expect(rowCountAfterCreation, 'Number of rows hasn\'t changed after creating new customer').equal(rowCountBeforeCreation + 1);
