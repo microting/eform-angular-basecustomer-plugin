@@ -14,9 +14,9 @@ describe('Customers plugin page', function () {
   it('should add new customer with all empty fields', function () {
     const rowCountBeforeCreation = customersPage.rowNum();
     customersPage.newCustomerBtn.click();
-    browser.pause(8000);
-    // browser.debug();
+    browser.pause(12000);
     customersModalPage.createEmptyCustomer();
+    browser.pause(12000);
     const rowCountAfterCreation = customersPage.rowNum();
     expect(rowCountAfterCreation, 'Number of rows hasn\'t changed after creating new customer').equal(rowCountBeforeCreation + 1);
   });
