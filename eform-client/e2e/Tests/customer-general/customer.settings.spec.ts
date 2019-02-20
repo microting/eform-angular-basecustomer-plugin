@@ -32,7 +32,8 @@ describe('Customers plugin settings page', function () {
     const nameOfList = 'My testing list';
     customersPage.goToCustomersPage();
     browser.pause(9000);
-    browser.$('#settingsCustomerBtn').click();
+    const btn = browser.$('#settingsCustomerBtn');
+    btn.click();
     // customersPage.goToCustomerSettings();
     // const settingsBtn = customersPage.settingsCustomerBtn;
     // settingsBtn.click();
