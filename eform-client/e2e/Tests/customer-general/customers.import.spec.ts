@@ -16,7 +16,7 @@ describe('Customers plugin import page', function () {
     const importButton = customersPage.importCustomerBtn();
     importButton.click();
     browser.pause(8000);
-    browser.chooseFile('#files', localPath + '/e2e/Assets/Import-test.csv');
+    browser.chooseFile('#files', localPath + '\\e2e\\Assets\\Import-test.csv');
     browser.pause(8000);
     // press 'continue import' button
     customersImportPage.continueImport();
@@ -29,7 +29,7 @@ describe('Customers plugin import page', function () {
     const importButton = customersPage.importCustomerBtn();
     importButton.click();
     browser.pause(8000);
-    browser.chooseFile('#files', localPath + '/e2e/Assets/Import-test.csv');
+    browser.chooseFile('#files', localPath + '\\e2e\\Assets\\Import-test.csv');
     browser.pause(8000);
     customersImportPage.cancelImport();
 

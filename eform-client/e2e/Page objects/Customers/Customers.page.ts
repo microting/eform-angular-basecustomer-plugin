@@ -22,6 +22,16 @@ export class CustomersPage extends PageWithNavbarPage {
     browser.$('#CompanyNameTableHeader').click();
     browser.pause(4000);
   }
+
+  public getFirstRowId(): Number {
+    return parseInt( $('#mainTableBody').$('tr:nth-child(1)').$('#Id').getText(), 10);
+  }
+  public getSecondRowId(): Number {
+    return  parseInt( $('#mainTableBody').$('tr:nth-child(2)').$('#Id').getText(), 10);
+  }
+
+
+
   getCustomer(num): CustomersRowObject {
     return new CustomersRowObject(num);
   }

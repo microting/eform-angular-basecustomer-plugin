@@ -14,7 +14,7 @@ exports.config = {
     'e2e/Tests/customer-general/customer.settings.spec.ts',
     'e2e/Tests/customer-general/customers.import.spec.ts',
     'e2e/Tests/customer-general/customer.add.spec.ts',
-    //'e2e/Tests/customer-general/customer.edit.spec.ts',
+    'e2e/Tests/customer-general/customer.edit.spec.ts',
     'e2e/Tests/customer-general/customer.delete.spec.ts'
   ],
   suites: {
