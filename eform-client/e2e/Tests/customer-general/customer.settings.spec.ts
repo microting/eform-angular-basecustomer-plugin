@@ -41,8 +41,9 @@ describe('Customers plugin settings page', function () {
     browser.pause(8000);
     choice.click();
     customersSettingsPage.saveSettings();
+    customersPage.settingsCustomerBtn.click();
     const fieldToCheck = customersSettingsPage.selectedListField();
-    // expect(fieldToCheck.getText(), 'Searchable list is not selected').equal('My testing list');
+    expect(fieldToCheck.getText(), 'Searchable list is not selected').equal('My testing list');
     browser.pause(4000);
   });
   it('should select only company name, id and customer № for show', function () {
@@ -60,6 +61,9 @@ describe('Customers plugin settings page', function () {
       customersSettingsPage.clickCheckboxById('18');
     }
 
+    customersSettingsPage.saveSettings();
+    customersPage.settingsCustomerBtn.click();
+
     expect(customerCheckbox.getValue(), 'Customer number checkbox is\'t set').equal('true');
     expect(companyNameCheckbox.getValue(), 'Company name checkbox is\'t set').equal('true');
     expect(idCheckbox.getValue(), 'Id checkbox is\'t set').equals('true');
@@ -71,5 +75,7 @@ describe('Customers plugin settings page', function () {
       }
       customersSettingsPage.clickCheckboxById(i);
     }
+
+    customersSettingsPage.saveSettings();
   });
 });
