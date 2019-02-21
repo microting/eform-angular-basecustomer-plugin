@@ -40,6 +40,7 @@ describe('Customers plugin settings page', function () {
     const choice = listChoices[0];
     browser.pause(8000);
     choice.click();
+    customersSettingsPage.saveSettings();
     const fieldToCheck = customersSettingsPage.selectedListField();
     expect(fieldToCheck.getText(), 'Searchable list is not selected').equal('My testing list');
     browser.pause(4000);

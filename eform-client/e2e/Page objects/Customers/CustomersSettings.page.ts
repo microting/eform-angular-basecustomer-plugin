@@ -42,6 +42,12 @@ export class CustomersSettingsPage extends Page {
   public  selectedListField() {
     return browser.$('.ng-value .ng-value-label');
   }
+
+  public saveSettings() {
+    const saveSettingsBtn = browser.$('#saveSettingsBtn');
+    saveSettingsBtn.click();
+    browser.pause(6000)
+  }
 }
 
 const customersSettingsPage = new CustomersSettingsPage();
