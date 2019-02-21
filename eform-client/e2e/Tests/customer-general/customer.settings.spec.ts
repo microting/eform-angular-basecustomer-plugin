@@ -57,7 +57,11 @@ describe('Customers plugin settings page', function () {
     if (idCheckbox.getValue() === 'false') {
       customersSettingsPage.clickCheckboxById('18');
     }
-
+    customersSettingsPage.saveSettings();
+    browser.pause(4000);
+    customersPage.goToCustomersPage();
+    browser.pause(4000);
+    customersPage.settingsCustomerBtn.click();
     expect(customerCheckbox.getValue(), 'Customer number checkbox is\'t set').equal('true');
     expect(companyNameCheckbox.getValue(), 'Company name checkbox is\'t set').equal('true');
     expect(idCheckbox.getValue(), 'Id checkbox is\'t set').equals('true');
