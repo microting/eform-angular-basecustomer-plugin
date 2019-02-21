@@ -16,12 +16,12 @@ describe('Customers plugin import page', function () {
     const importButton = customersPage.importCustomerBtn();
     importButton.click();
     browser.pause(8000);
-    browser.chooseFile('#files', localPath + '\\e2e\\Assets\\Import-test.csv');
+    browser.chooseFile('#files', localPath + ' ../../Assets/Import-test.csv');
     browser.pause(8000);
     // press 'continue import' button
     customersImportPage.continueImport();
     const customersAfter = customersImportPage.numberOfCustomers;
-    expect(customersAfter, 'Number of customers is not bigger than before').greaterThan(customersBefore)
+    expect(customersAfter, 'Number of customers is not bigger than before').greaterThan(customersBefore);
   });
   it('should not import customers', function () {
     const localPath = process.cwd();
@@ -29,7 +29,7 @@ describe('Customers plugin import page', function () {
     const importButton = customersPage.importCustomerBtn();
     importButton.click();
     browser.pause(8000);
-    browser.chooseFile('#files', localPath + '\\e2e\\Assets\\Import-test.csv');
+    browser.chooseFile('#files', localPath + ' ../../Assets/Import-test.csv');
     browser.pause(8000);
     customersImportPage.cancelImport();
 
