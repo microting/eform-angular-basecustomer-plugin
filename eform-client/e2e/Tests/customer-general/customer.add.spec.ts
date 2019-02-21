@@ -36,6 +36,7 @@ describe('Customers plugin page', function () {
       email: 'user@user.com'
     };
     const rowCountBeforeCreation = customersPage.rowNum();
+    browser.pause(2000);
     customersModalPage.createCustomer(customerObject);
     const rowCountAfterCreation = customersPage.rowNum();
     browser.pause(2000);
