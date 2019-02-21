@@ -46,7 +46,7 @@ export class CustomersSettingsPage extends Page {
   public saveSettings() {
     const saveSettingsBtn = browser.$('#saveSettingsBtn');
     saveSettingsBtn.click();
-    browser.pause(6000)
+    browser.pause(6000);
   }
 }
 

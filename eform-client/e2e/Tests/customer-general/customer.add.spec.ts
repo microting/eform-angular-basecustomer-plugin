@@ -12,7 +12,7 @@ describe('Customers plugin page', function () {
     customersPage.goToCustomersPage();
   });
   it('should add new customer with all empty fields', function () {
-    browser.pause(8000);
+    browser.pause(6000);
     const rowCountBeforeCreation = browser.$$('#mainTableBody > tr').length;
     customersPage.newCustomerBtn.click();
     browser.pause(6000);
@@ -54,8 +54,15 @@ describe('Customers plugin page', function () {
     browser.pause(6000);
   });
   it('should not add new customer if cancel is clicked', function () {
+    browser.pause(4000);
+    // rows before
+    const rowsBefore = customersPage.rowNum();
     customersPage.newCustomerBtn.click();
     browser.pause(6000);
     customersModalPage.cancelCreateBtn.click();
+    browser.pause(4000);
+    // rows after
+    const rowsAfter = customersPage.rowNum();
+    expect(rowsAfter, 'Number of customers should be same as before').equal(rowsBefore);
   });
 });
