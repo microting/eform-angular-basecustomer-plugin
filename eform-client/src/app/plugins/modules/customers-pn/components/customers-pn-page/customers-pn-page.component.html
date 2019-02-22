@@ -1,6 +1,7 @@
 <subheader-pn [title]="'Customers' | translate">
   <div class="p-3">
     <button *ngIf="currentRole == 'admin'"
+            id="settingsCustomerBtn"
             class="btn btn-danger text-black-50 btn-icon"
             routerLink="settings"
             mdbTooltip="{{ 'Settings' | translate }}">
@@ -15,9 +16,10 @@
       (click)="showCreateCustomerModal()">{{ 'New Customer' | translate }}
     </button>
     <button
+      id="importCustomer"
       class="btn btn-success"
-      mdbTooltip="{{'Import Costumer' | translate}}"
-      routerLink="import">{{'Import Costumer' | translate}}</button>
+      mdbTooltip="{{'Import Customer' | translate}}"
+      routerLink="import">{{'Import Customer' | translate}}</button>
   </div>
 </subheader-pn>
 
@@ -56,7 +58,7 @@
         </th>
       </tr>
       </thead>
-      <tbody id="tableBody">
+      <tbody id="mainTableBody">
       <tr *ngFor="let customer of customersModel.customers">
         <td *ngFor="let field of customer.fields" [id]="field.name">
           <ng-container [ngSwitch]="field.name">

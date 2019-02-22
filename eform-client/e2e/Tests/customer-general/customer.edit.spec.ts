@@ -6,14 +6,14 @@ import {Guid} from "guid-typescript";
 
 const expect = require('chai').expect;
 
-describe('Customers plugin page should update customer', function () {
+describe('Customers plugin page', function () {
   before(function () {
     loginPage.open('/');
     loginPage.login();
     customersPage.goToCustomersPage();
   });
-  it('with all fields', function () {
-    const lastCustomerBeforeEdit = customersPage.getCustomer(customersPage.rowNum);
+  it('should update customer with all fields', function () {
+    const lastCustomerBeforeEdit = customersPage.getCustomer(customersPage.rowNum());
     lastCustomerBeforeEdit.editBtn.waitForVisible(3000);
     lastCustomerBeforeEdit.editBtn.click();
     browser.pause(3000);
@@ -29,7 +29,7 @@ describe('Customers plugin page should update customer', function () {
       email: Guid.create().toString()
     };
     customersModalPage.updateCustomer(customerObject);
-    const lastCustomerAfterEdit = customersPage.getCustomer(customersPage.rowNum);
+    const lastCustomerAfterEdit = customersPage.getCustomer(customersPage.rowNum());
     expect(lastCustomerAfterEdit.createdBy, 'Created by of updated customer is incorrect').equal(customerObject.createdBy);
     expect(lastCustomerAfterEdit.customerNo, 'Customer number of updated customer is incorrect').equal(customerObject.customerNo);
     expect(lastCustomerAfterEdit.contactPerson, 'Contact person of updated customer is incorrect').equal(customerObject.contactPerson);
@@ -40,10 +40,8 @@ describe('Customers plugin page should update customer', function () {
     expect(lastCustomerAfterEdit.phone, 'Phone of updated customer is incorrect').equal(customerObject.phone);
     expect(lastCustomerAfterEdit.email, 'Email of updated customer is incorrect').equal(customerObject.email);
   });
-});
-describe('Customers plugin page should not update customer', function () {
-  it('if cancel is clicked', function () {
-    const lastCustomerBeforeEdit = customersPage.getCustomer(customersPage.rowNum);
+  it('should not update customer if cancel is clicked', function () {
+    const lastCustomerBeforeEdit = customersPage.getCustomer(customersPage.rowNum());
     lastCustomerBeforeEdit.editBtn.waitForVisible(3000);
     lastCustomerBeforeEdit.editBtn.click();
     browser.pause(3000);

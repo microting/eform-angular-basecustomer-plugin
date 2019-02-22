@@ -1,7 +1,7 @@
 <subheader-pn [title]="'Customers plugin settings' | translate">
   <div class="p-3">
     <button
-      class="btn btn-success" (click)="updateSettings()">{{ 'Save' | translate }}
+      class="btn btn-success" (click)="updateSettings()" id="saveSettingsBtn">{{ 'Save' | translate }}
     </button>
   </div>
 </subheader-pn>
@@ -14,7 +14,7 @@
       <div class="container-fluid">
         <div class="row mt-2">
           <div class="col-md-2 mb-2" *ngFor="let field of fieldsUpdateModel.fields">
-            <div class="mat-checkbox">
+            <div class="mat-checkbox" id="mat-checkbox{{field.id}}">
               <input id="checkbox{{field.id}}" (click)="checkBoxChanged($event, field)"
                      [checked]="field.fieldStatus == fieldStatusEnum.Enabled"
                      [value]="field.fieldStatus == fieldStatusEnum.Enabled" type="checkbox">

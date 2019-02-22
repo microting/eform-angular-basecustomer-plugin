@@ -5,21 +5,23 @@ import customersModalPage from '../../Page objects/Customers/CustomersModal.page
 
 const expect = require('chai').expect;
 
-describe('Customers plugin page should add new customer', function () {
+describe('Customers plugin page', function () {
   before(function () {
     loginPage.open('/');
     loginPage.login();
     customersPage.goToCustomersPage();
   });
-  it('with all empty fields', function () {
+  it('should add new customer with all empty fields', function () {
+    browser.pause(6000);
+    const rowCountBeforeCreation = browser.$$('#mainTableBody > tr').length;
     customersPage.newCustomerBtn.click();
     browser.pause(6000);
-    const rowCountBeforeCreation = customersPage.rowNum;
     customersModalPage.createEmptyCustomer();
-    const rowCountAfterCreation = customersPage.rowNum;
+    browser.pause(8000);
+    const rowCountAfterCreation = browser.$$('#mainTableBody > tr').length;
     expect(rowCountAfterCreation, 'Number of rows hasn\'t changed after creating new customer').equal(rowCountBeforeCreation + 1);
   });
-  it('with all fields', function () {
+  it('should add new customer with all fields', function () {
     customersPage.newCustomerBtn.click();
     browser.pause(6000);
     const customerObject = {
@@ -33,12 +35,13 @@ describe('Customers plugin page should add new customer', function () {
       phone: '123124',
       email: 'user@user.com'
     };
-    const rowCountBeforeCreation = customersPage.rowNum;
+    const rowCountBeforeCreation = customersPage.rowNum();
+    browser.pause(2000);
     customersModalPage.createCustomer(customerObject);
-    const rowCountAfterCreation = customersPage.rowNum;
+    const rowCountAfterCreation = customersPage.rowNum();
     browser.pause(2000);
     expect(rowCountAfterCreation, 'Number of rows hasn\'t changed after creating new user').equal(rowCountBeforeCreation + 1);
-    const lastCustomer: CustomersRowObject = customersPage.getCustomer(customersPage.rowNum);
+    const lastCustomer: CustomersRowObject = customersPage.getCustomer(customersPage.rowNum());
     expect(lastCustomer.createdBy, 'Created by of created customer is incorrect').equal(customerObject.createdBy);
     expect(lastCustomer.customerNo, 'Customer number of created customer is incorrect').equal(customerObject.customerNo);
     expect(lastCustomer.contactPerson, 'Contact person of created customer is incorrect').equal(customerObject.contactPerson);
@@ -50,11 +53,16 @@ describe('Customers plugin page should add new customer', function () {
     expect(lastCustomer.email, 'Email of created customer is incorrect').equal(customerObject.email);
     browser.pause(6000);
   });
-});
-describe('Customers plugin page should not add new customer', function () {
-  it('if cancel is clicked', function () {
+  it('should not add new customer if cancel is clicked', function () {
+    browser.pause(4000);
+    // rows before
+    const rowsBefore = customersPage.rowNum();
     customersPage.newCustomerBtn.click();
     browser.pause(6000);
     customersModalPage.cancelCreateBtn.click();
+    browser.pause(4000);
+    // rows after
+    const rowsAfter = customersPage.rowNum();
+    expect(rowsAfter, 'Number of customers should be same as before').equal(rowsBefore);
   });
 });

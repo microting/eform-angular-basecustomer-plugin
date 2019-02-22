@@ -1,13 +1,36 @@
 import Page from '../Page';
+import {PageWithNavbarPage} from '../PageWithNavbar.page';
 
-export class CustomersPage extends Page {
+export class CustomersPage extends PageWithNavbarPage {
   constructor() {
     super();
   }
 
-  public get rowNum(): number {
-    return $$('#tableBody > tr').length;
+  public rowNum(): number {
+    return browser.$$('#mainTableBody > tr').length;
   }
+  public clickIdSort() {
+    browser.$('#IdTableHeader').click();
+    browser.pause(4000);
+  }
+  public clickContactSort() {
+    browser.$('#ContactPersonTableHeader').click();
+    browser.pause(4000);
+  }
+
+  public clickCompanySort() {
+    browser.$('#CompanyNameTableHeader').click();
+    browser.pause(4000);
+  }
+
+  public getFirstRowId(): Number {
+    return parseInt( $('#mainTableBody').$('tr:nth-child(1)').$('#Id').getText(), 10);
+  }
+  public getSecondRowId(): Number {
+    return  parseInt( $('#mainTableBody').$('tr:nth-child(2)').$('#Id').getText(), 10);
+  }
+
+
 
   getCustomer(num): CustomersRowObject {
     return new CustomersRowObject(num);
@@ -23,6 +46,11 @@ export class CustomersPage extends Page {
 
   public get importCustomersSettingsBtn() {
     return browser.element('#lastName');
+  }
+
+  // same purpose as previous method?
+  public  importCustomerBtn() {
+    return browser.element('#importCustomer');
   }
 
   public get saveImportCustomersBtn() {
@@ -43,6 +71,16 @@ export class CustomersPage extends Page {
 
   public get customersButton() {
     return browser.element('#customers-pn');
+  }
+
+  public get settingsCustomerBtn() {
+    return browser.$('#settingsCustomerBtn');
+  }
+
+  public goToCustomerSettings() {
+    const elem = browser.$('button .btn .btn-danger');
+    elem.click();
+    browser.pause(4000);
   }
 
   public goToCustomersPage() {

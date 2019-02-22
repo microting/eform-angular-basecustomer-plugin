@@ -27,7 +27,7 @@ export class CustomersModalPage extends Page {
   }
 
   public get cancelDeleteBtn() {
-    return browser.element('#customerCancelDeleteBtn');
+    return browser.element('#customerDeleteCancelBtn');
   }
 
   public get createCreatedByInput() {
