@@ -53,6 +53,11 @@ export class CustomersPage extends PageWithNavbarPage {
     return browser.element('#importCustomer');
   }
 
+  public  goToImportBtn() {
+    this.importCustomerBtn().click();
+    browser.pause(4000);
+  }
+
   public get saveImportCustomersBtn() {
     return browser.element('#saveCreateBtn');
   }
