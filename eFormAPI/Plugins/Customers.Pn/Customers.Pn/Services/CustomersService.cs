@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Reflection.Metadata;
 using Customers.Pn.Abstractions;
 using Customers.Pn.Infrastructure.Data;
 using Customers.Pn.Infrastructure.Data.Entities;
@@ -12,11 +13,13 @@ using Customers.Pn.Infrastructure.Models.Fields;
 using eFormCore;
 using eFormData;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebSockets.Internal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Newtonsoft.Json.Linq;
+using Constants = eFormShared.Constants;
 
 namespace Customers.Pn.Services
 {
@@ -153,6 +156,12 @@ namespace Customers.Pn.Services
 
                     JToken headers = rawHeadersJson;
                     IEnumerable<JToken> customerObjects = rawJson.Skip(1);
+                    
+                    Core core = _coreHelper.GetCore();
+
+                    CustomerSettings customerSettings = _dbContext.CustomerSettings.FirstOrDefault();
+
+                    EntityGroup entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
 
                     foreach (JToken customerObj in customerObjects)
                     {
@@ -172,51 +181,103 @@ namespace Customers.Pn.Services
                                 customerModel = AddValues(customerModel, headers, customerObj);
                                 customerModel.Save(_dbContext);
 
-                                CustomerSettings customerSettings = _dbContext.CustomerSettings.FirstOrDefault();
                                 if (customerSettings?.RelatedEntityGroupId != null)
                                 {
-                                    eFormCore.Core core = _coreHelper.GetCore();
-                                eFormData.EntityGroup entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
-                                if (entityGroup == null)
-                                {
-                                    return new OperationResult(false, "Entity group not found");
-                                }
-
-                                int nextItemUid = entityGroup.EntityGroupItemLst.Count;
-                                string label = customerModel.CompanyName;
-                                label += string.IsNullOrEmpty(customerModel.CompanyAddress) ? "" : " - " + customerModel.CompanyAddress;
-                                label += string.IsNullOrEmpty(customerModel.ZipCode) ? "" : " - " + customerModel.ZipCode;
-                                label += string.IsNullOrEmpty(customerModel.CityName) ? "" : " - " + customerModel.CityName;
-                                label += string.IsNullOrEmpty(customerModel.Phone) ? "" : " - " + customerModel.Phone;
-                                label += string.IsNullOrEmpty(customerModel.ContactPerson) ? "" : " - " + customerModel.ContactPerson;
-                                if (label.Count(f => f == '-') == 1 && label.Contains("..."))
-                                {
-                                    label = label.Replace(" - ", "");
-                                }
-
-                                if (string.IsNullOrEmpty(label))
-                                {
-                                    label = $"Empty company {nextItemUid}";
-                                }
-                                eFormData.EntityItem item = core.EntitySearchItemCreate(entityGroup.Id, $"{label}", $"{customerModel.Description}",
-                                    nextItemUid.ToString());
-                                if (item != null)
-                                {
-                                    entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
-                                    if (entityGroup != null)
+                                    if (entityGroup == null)
                                     {
-                                        foreach (var entityItem in entityGroup.EntityGroupItemLst)
+                                        return new OperationResult(false, "Entity group not found");
+                                    }
+    
+                                    int nextItemUid = entityGroup.EntityGroupItemLst.Count;
+                                    string label = customerModel.CompanyName;
+                                    label += string.IsNullOrEmpty(customerModel.CompanyAddress) ? "" : " - " + customerModel.CompanyAddress;
+                                    label += string.IsNullOrEmpty(customerModel.ZipCode) ? "" : " - " + customerModel.ZipCode;
+                                    label += string.IsNullOrEmpty(customerModel.CityName) ? "" : " - " + customerModel.CityName;
+                                    label += string.IsNullOrEmpty(customerModel.Phone) ? "" : " - " + customerModel.Phone;
+                                    label += string.IsNullOrEmpty(customerModel.ContactPerson) ? "" : " - " + customerModel.ContactPerson;
+                                    if (label.Count(f => f == '-') == 1 && label.Contains("..."))
+                                    {
+                                        label = label.Replace(" - ", "");
+                                    }
+    
+                                    if (string.IsNullOrEmpty(label))
+                                    {
+                                        label = $"Empty company {nextItemUid}";
+                                    }
+                                    eFormData.EntityItem item = core.EntitySearchItemCreate(entityGroup.Id, $"{label}", $"{customerModel.Description}",
+                                        nextItemUid.ToString());
+                                    if (item != null)
+                                    {
+                                        entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
+                                        if (entityGroup != null)
                                         {
-                                            if (entityItem.MicrotingUUID == item.MicrotingUUID)
+                                            foreach (var entityItem in entityGroup.EntityGroupItemLst)
                                             {
-                                                customerModel.RelatedEntityId = entityItem.Id;
-                                                customerModel.Update(_dbContext);
+                                                if (entityItem.MicrotingUUID == item.MicrotingUUID)
+                                                {
+                                                    customerModel.RelatedEntityId = entityItem.Id;
+                                                    customerModel.Update(_dbContext);
+                                                }
                                             }
                                         }
                                     }
                                 }
-                                }
 
+                            }
+                            else
+                            {
+                                if (existingCustomer.Workflow_state == Constants.WorkflowStates.Removed)
+                                {
+                                    CustomerFullModel customerModel = new CustomerFullModel();
+                                    customerModel.Id = existingCustomer.Id;
+                                    customerModel.Description = existingCustomer.Description;
+                                    customerModel.Email = existingCustomer.Email;
+                                    customerModel.Phone = existingCustomer.Phone;
+                                    customerModel.ZipCode = existingCustomer.ZipCode;
+                                    customerModel.CityName = existingCustomer.CityName;
+                                    customerModel.CreatedBy = existingCustomer.CreatedBy;
+                                    customerModel.CustomerNo = existingCustomer.CustomerNo;
+                                    customerModel.CompanyName = existingCustomer.CompanyName;
+                                    customerModel.CreatedDate = existingCustomer.CreatedDate;
+                                    customerModel.ContactPerson = existingCustomer.ContactPerson;
+                                    customerModel.CompanyAddress = existingCustomer.CompanyAddress;
+                                    customerModel.WorkflowState = Constants.WorkflowStates.Created;
+                                    customerModel.Update(_dbContext);
+                                                                        
+                                    int nextItemUid = entityGroup.EntityGroupItemLst.Count;
+                                    string label = customerModel.CompanyName;
+                                    label += string.IsNullOrEmpty(customerModel.CompanyAddress) ? "" : " - " + customerModel.CompanyAddress;
+                                    label += string.IsNullOrEmpty(customerModel.ZipCode) ? "" : " - " + customerModel.ZipCode;
+                                    label += string.IsNullOrEmpty(customerModel.CityName) ? "" : " - " + customerModel.CityName;
+                                    label += string.IsNullOrEmpty(customerModel.Phone) ? "" : " - " + customerModel.Phone;
+                                    label += string.IsNullOrEmpty(customerModel.ContactPerson) ? "" : " - " + customerModel.ContactPerson;
+                                    if (label.Count(f => f == '-') == 1 && label.Contains("..."))
+                                    {
+                                        label = label.Replace(" - ", "");
+                                    }
+    
+                                    if (string.IsNullOrEmpty(label))
+                                    {
+                                        label = $"Empty company {nextItemUid}";
+                                    }
+                                    eFormData.EntityItem item = core.EntitySearchItemCreate(entityGroup.Id, $"{label}", $"{customerModel.Description}",
+                                        nextItemUid.ToString());
+                                    if (item != null)
+                                    {
+                                        entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
+                                        if (entityGroup != null)
+                                        {
+                                            foreach (var entityItem in entityGroup.EntityGroupItemLst)
+                                            {
+                                                if (entityItem.MicrotingUUID == item.MicrotingUUID)
+                                                {
+                                                    customerModel.RelatedEntityId = entityItem.Id;
+                                                    customerModel.Update(_dbContext);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }                                
                             }
                         }
                     }
