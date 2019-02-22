@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -312,6 +312,7 @@ namespace Customers.Pn.Services
                         CreatedBy = x.CreatedBy,
                         CompanyAddress = x.CompanyAddress,
                         CompanyName = x.CompanyName,
+                        RelatedEntityId = x.RelatedEntityId
                     })
                     .FirstOrDefault(x => x.Id == id);
 

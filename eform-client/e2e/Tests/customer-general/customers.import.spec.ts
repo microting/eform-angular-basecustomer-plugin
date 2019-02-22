@@ -12,15 +12,25 @@ describe('Customers plugin import page', function () {
   });
   it('should import customers list', function () {
     const localPath = process.cwd();
-    const customersBefore = customersImportPage.numberOfCustomers;
-    const importButton = customersPage.importCustomerBtn();
-    importButton.click();
-    browser.pause(8000);
+    const customersBefore = customersPage.rowNum();
+    customersPage.goToImportBtn();
     browser.chooseFile('#files', localPath + '/e2e/Assets/Import-test.csv');
     browser.pause(8000);
-    // press 'continue import' button
+    // check if two customers ready to be imported
+    const customersN = customersImportPage.numberOfCustomers;
+    expect(customersN, 'After choosing file, two customers must appear in table').equal(3);
+    // choose Company name;Address; Zip; City; Contact
+    customersImportPage.chooseFromDropdown('CompanyName', 0);
+    customersImportPage.chooseFromDropdown('CompanyAddress', 1);
+    customersImportPage.chooseFromDropdown('ZipCode', 2);
+    customersImportPage.chooseFromDropdown('CityName', 3);
+    customersImportPage.chooseFromDropdown('ContactPerson', 4);
+
     customersImportPage.continueImport();
-    const customersAfter = customersImportPage.numberOfCustomers;
+    // refresh the page and check number of customers
+    browser.refresh();
+    browser.pause(8000);
+    const customersAfter = customersPage.rowNum();
     expect(customersAfter, 'Number of customers is not bigger than before').greaterThan(customersBefore);
   });
   it('should not import customers', function () {
