@@ -19,6 +19,8 @@ namespace Customers.Pn.Infrastructure.Models
         public string ContactPerson { get; set; }
         public string Description { get; set; }
         public int? RelatedEntityId { get; set; }
+        
+        public string WorkflowState { get; set; }
 
         public void Save(CustomersPnDbAnySql _dbContext)
         {
@@ -68,6 +70,7 @@ namespace Customers.Pn.Infrastructure.Models
             customer.ZipCode = ZipCode;
             customer.RelatedEntityId = RelatedEntityId;
             customer.Id = Id;
+            customer.Workflow_state = WorkflowState;
 
             if (_dbContext.ChangeTracker.HasChanges())
             {
