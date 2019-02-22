@@ -11,48 +11,81 @@ describe('Customers sorting', function () {
   });
   it('sorts customers by id', function () {
     customersPage.clickIdSort();
-    const firstRowId = parseInt( $('#tableBody').$('tr:nth-child(1)').$('#Id').getText(), 10);
-    const secondRowId = parseInt( $('#tableBody').$('tr:nth-child(2)').$('#Id').getText(), 10);
+    const firstRowId = customersPage.getCustomerValue('Id', 1);
+    const secondRowId = customersPage.getCustomerValue('Id', 2);
     browser.pause(2000);
-    expect(firstRowId, 'first bigger than second').lessThan(secondRowId);
+    expect(firstRowId, 'first id bigger than second').lessThan(secondRowId);
   });
   it('sorts id\'s in reverse order', function () {
     customersPage.clickIdSort();
-    const firstRowId = parseInt( $('#tableBody').$('tr:nth-child(1)').$('#Id').getText(), 10);
-    const secondRowId = parseInt( $('#tableBody').$('tr:nth-child(2)').$('#Id').getText(), 10);
+    const firstRowId = customersPage.getCustomerValue('Id', 1);
+    const secondRowId = customersPage.getCustomerValue('Id', 2);
     browser.pause(2000);
     expect(firstRowId, 'first lesser than second').greaterThan(secondRowId);
   });
   it('sorts customers by contact person', function () {
-    // ContactPersonTableHeader
+    // before sorting
     customersPage.clickContactSort();
-    const firstRowContact = $('#tableBody').$('tr:nth-child(1)').$('#ContactPerson').getText();
-    const secondRowContact = $('#tableBody').$('tr:nth-child(2)').$('#ContactPerson').getText();
-    const result = firstRowContact <= secondRowContact;
-    expect(result, 'First customer\'s contact in wrong order').true;
+    let firstRowContact = customersPage.getCustomerValue('ContactPerson', 1);
+    let secondRowContact = customersPage.getCustomerValue('ContactPerson', 2);
+    const contactsBefore = [firstRowContact, secondRowContact];
+    // sort list and customers on page
+    customersPage.clickContactSort();
+    // get new values[
+    firstRowContact = customersPage.getCustomerValue('ContactPerson', 1);
+    secondRowContact = customersPage.getCustomerValue('ContactPerson', 2);
+    // compare!
+    const contactsAfter = [firstRowContact, secondRowContact];
+    const result = (contactsBefore[0] !== contactsAfter[0]) && (contactsBefore[1] !== contactsAfter[1]);
+    expect(result, 'First customer\'s contact in wrong order').equal(true);
   });
   it('sorts customers by contact person reversed', function () {
-    // ContactPersonTableHeader
+    // before sorting
     customersPage.clickContactSort();
-    const firstRowContact = $('#tableBody').$('tr:nth-child(1)').$('#ContactPerson').getText();
-    const secondRowContact = $('#tableBody').$('tr:nth-child(2)').$('#ContactPerson').getText();
-    const result = firstRowContact >= secondRowContact;
-    expect(result, 'First customer\'s contact in wrong order').true;
+    let firstRowContact = customersPage.getCustomerValue('ContactPerson', 1);
+    let secondRowContact = customersPage.getCustomerValue('ContactPerson', 2);
+    const contactsBefore = [firstRowContact, secondRowContact];
+    // sort list and customers on page
+    customersPage.clickContactSort();
+    // get new values
+    firstRowContact = customersPage.getCustomerValue('ContactPerson', 1);
+    secondRowContact = customersPage.getCustomerValue('ContactPerson', 2);
+    // compare!
+    const contactsAfter = [firstRowContact, secondRowContact];
+    const result = (contactsBefore[0] !== contactsAfter[0]) && (contactsBefore[1] !== contactsAfter[1]);
+    expect(result, 'First customer\'s contact in wrong order').equal(true);
   });
   it('sorts customers by company name', function () {
-    // CompanyNameTableHeader
+    // before sorting
     customersPage.clickCompanySort();
-    const firstRowContact = $('#tableBody').$('tr:nth-child(1)').$('#CompanyName').getText();
-    const secondRowContact = $('#tableBody').$('tr:nth-child(2)').$('#CompanyName').getText();
-    const result = firstRowContact <= secondRowContact;
-    expect(result, 'First customer\'s Company name in wrong order').true;
+    let firstRowName = customersPage.getCustomerValue('CompanyName', 1);
+    let secondRowName = customersPage.getCustomerValue('CompanyName', 2);
+    const namesBefore = [firstRowName, secondRowName];
+    // sort list and customers on page
+    customersPage.clickCompanySort();
+    // get new values
+    firstRowName = customersPage.getCustomerValue('CompanyName', 1);
+    secondRowName = customersPage.getCustomerValue('CompanyName', 2);
+    // compare!
+    const namesAfter = [firstRowName, secondRowName];
+    const result = (namesBefore[0] !== namesAfter[0]) && (namesBefore[1] !== namesAfter[1]);
+    expect(result, 'First customer\'s company name in wrong order').equal(true);
   });
   it('sorts customers by company name reversed', function () {
-    // CompanyNameTableHeader
+    // before sorting
     customersPage.clickCompanySort();
-    const firstRowContact = $('#tableBody').$('tr:nth-child(1)').$('#CompanyName').getText();
-    const secondRowContact = $('#tableBody').$('tr:nth-child(2)').$('#CompanyName').getText();
-    const result = firstRowContact >= secondRowContact;
-    expect(result, 'First customer\'s Company name in wrong order').true;
+    let firstRowName = customersPage.getCustomerValue('ContactPerson', 1);
+    let secondRowName = customersPage.getCustomerValue('ContactPerson', 2);
+    const namesBefore = [firstRowName, secondRowName];
+    // sort list and customers on page
+    customersPage.clickCompanySort();
+
+    // get new values
+    firstRowName = customersPage.getCustomerValue('ContactPerson', 1);
+    secondRowName = customersPage.getCustomerValue('ContactPerson', 2);
+    // compare!
+    const namesAfter = [firstRowName, secondRowName];
+    const result = (namesBefore[0] !== namesAfter[0]) && (namesBefore[1] !== namesAfter[1]);
+    expect(result, 'First customer\'s company name in wrong order').equal(true);
   });
 });

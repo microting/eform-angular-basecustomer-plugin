@@ -23,14 +23,13 @@ export class CustomersPage extends PageWithNavbarPage {
     browser.pause(4000);
   }
 
-  public getFirstRowId(): Number {
-    return parseInt( $('#mainTableBody').$('tr:nth-child(1)').$('#Id').getText(), 10);
+  public getCustomerValue(selector: any, row: number) {
+    if (selector === 'Id') {
+      return  parseInt( $('#mainTableBody').$(`tr:nth-child(${row})`).$('#' + selector).getText(), 10);
+    } else {
+      return $('#mainTableBody').$(`tr:nth-child(${row})`).$('#' + selector).getText();
+    }
   }
-  public getSecondRowId(): Number {
-    return  parseInt( $('#mainTableBody').$('tr:nth-child(2)').$('#Id').getText(), 10);
-  }
-
-
 
   getCustomer(num): CustomersRowObject {
     return new CustomersRowObject(num);
