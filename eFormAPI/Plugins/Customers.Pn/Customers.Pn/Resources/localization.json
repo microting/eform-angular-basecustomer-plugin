@@ -82,5 +82,19 @@
       "da": "Felter opdateres med succes",
       "en-US": "Fields updated successfully"
     }
+  },
+  {
+    "Key": "SettingsUpdatedSuccessfully",
+    "LocalizedValue": {
+      "da": "Indstillinger opdateret med succes",
+      "en-US": "Settings updated successfully"
+    }
+  },
+  {
+    "Key": "ErrorWhileUpdatingSettings",
+    "LocalizedValue": {
+      "da": "Fejl under opdatering af indstillinger",
+      "en-US": "Error while updating settings"
+    }
   }
 ]

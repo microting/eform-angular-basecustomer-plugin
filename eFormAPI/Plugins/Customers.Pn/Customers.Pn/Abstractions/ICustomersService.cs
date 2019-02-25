@@ -11,7 +11,5 @@ namespace Customers.Pn.Abstractions
         OperationDataResult<CustomersModel> GetCustomers(CustomersRequestModel pnRequestModel);
         OperationDataResult<CustomerFullModel> GetSingleCustomer(int id);
         OperationResult UpdateCustomer(CustomerFullModel customerUpdateModel);
-        OperationDataResult<CustomerSettingsModel> GetSettings();
-        OperationResult UpdateSettings(CustomerSettingsModel customerUpdateModel);
     }
 }

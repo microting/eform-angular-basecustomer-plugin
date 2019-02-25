@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <OutputPath>../../../eFormAPI.Web/Plugins/Customers/netcoreapp2.2/</OutputPath>
+    <OutputPath>../../../../../eFormAPI.Web/Plugins/Customers/netcoreapp2.2/</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,10 +31,6 @@
     <PackageReference Include="Microting.eForm" Version="3.0.161" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.2" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="Infrastructure\Models\Customer\" />
   </ItemGroup>
   
 </Project>

@@ -19,12 +19,12 @@ namespace Customers.Pn.Test
         protected string ConnectionString;
 
 
-        private static string userName = "__USER_NAME__";
-        private static string password = "__PASSWORD__";
-        private static string databaseName = "__DBNAME__";
-        private static string databaseServerId = "__DB_SERVER_ID__";
-        private static string directoryId = "__DIRECTORY_ID__";
-        private static string applicationId = "__APPLICATION_ID__";
+        // private static string userName = "__USER_NAME__";
+        // private static string password = "__PASSWORD__";
+        // private static string databaseName = "__DBNAME__";
+        // private static string databaseServerId = "__DB_SERVER_ID__";
+        // private static string directoryId = "__DIRECTORY_ID__";
+        // private static string applicationId = "__APPLICATION_ID__";
 
         //public RentableItemsPnDbAnySql db;
 
@@ -42,7 +42,7 @@ namespace Customers.Pn.Test
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                ConnectionString = @"data source=(LocalDb)\SharedInstance;Initial catalog=customers-pn-tests;Integrated Security=True";
+                ConnectionString = @"data source=.\SQLEXPRESS;Initial catalog=customers-pn-tests;Integrated Security=True";
             }
             else
             {
