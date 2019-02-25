@@ -5,12 +5,12 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>../../../../../eform-angular-frontend/eFormAPI/eFormAPI.Web/Plugins/Customers/</OutputPath>
+    <OutputPath>..\..\..\eFormAPI.Web\Plugins\Customers\</OutputPath>
     <NoWarn>1701;1702</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <OutputPath>../../../../../eform-angular-frontend/eFormAPI/eFormAPI.Web/Plugins/Customers/</OutputPath>
+    <OutputPath>../../../../../eFormAPI.Web/Plugins/Customers/netcoreapp2.2/</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
