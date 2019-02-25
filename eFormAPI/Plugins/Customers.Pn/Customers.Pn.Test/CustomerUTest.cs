@@ -15,20 +15,22 @@ namespace Customers.Pn.Test
         public void CustomerFullModel_Save_DoesSave()
         {
             // Arrange
-            CustomerFullModel customerFullModel = new CustomerFullModel();
-            customerFullModel.CityName = Guid.NewGuid().ToString();
-            customerFullModel.CompanyAddress = Guid.NewGuid().ToString();
-            customerFullModel.CompanyName = Guid.NewGuid().ToString();
-            customerFullModel.ContactPerson = Guid.NewGuid().ToString();
-            customerFullModel.CreatedBy = Guid.NewGuid().ToString();
-            customerFullModel.CustomerNo = Guid.NewGuid().ToString();
-            customerFullModel.Description = Guid.NewGuid().ToString();
-            customerFullModel.Email = Guid.NewGuid().ToString();
-            customerFullModel.Phone = Guid.NewGuid().ToString();
-            customerFullModel.ZipCode = Guid.NewGuid().ToString();
+            Customer newCustomer = new Customer
+            {
+                CityName = Guid.NewGuid().ToString(),
+                CompanyAddress = Guid.NewGuid().ToString(),
+                CompanyName = Guid.NewGuid().ToString(),
+                ContactPerson = Guid.NewGuid().ToString(),
+                CreatedBy = Guid.NewGuid().ToString(),
+                CustomerNo = Guid.NewGuid().ToString(),
+                Description = Guid.NewGuid().ToString(),
+                Email = Guid.NewGuid().ToString(),
+                Phone = Guid.NewGuid().ToString(),
+                ZipCode = Guid.NewGuid().ToString()
+            };
 
             // Act
-            customerFullModel.Save(DbContext);
+            newCustomer.Create(DbContext);
 
             Customer customer = DbContext.Customers.AsNoTracking().First();
             List<Customer> customerList = DbContext.Customers.AsNoTracking().ToList();
@@ -37,50 +39,49 @@ namespace Customers.Pn.Test
 
             Assert.AreEqual(1, customerList.Count());
 
-            Assert.AreEqual(customerFullModel.CityName , customer.CityName);
-            Assert.AreEqual(customerFullModel.CompanyAddress , customer.CompanyAddress);
-            Assert.AreEqual(customerFullModel.CompanyName , customer.CompanyName);
-            Assert.AreEqual(customerFullModel.CustomerNo , customer.CustomerNo);
-            Assert.AreEqual(customerFullModel.Description , customer.Description);
-            Assert.AreEqual(customerFullModel.Email , customer.Email);
-            Assert.AreEqual(customerFullModel.Phone , customer.Phone);
-            Assert.AreEqual(customerFullModel.ZipCode , customer.ZipCode);
+            Assert.AreEqual(newCustomer.CityName , customer.CityName);
+            Assert.AreEqual(newCustomer.CompanyAddress , customer.CompanyAddress);
+            Assert.AreEqual(newCustomer.CompanyName , customer.CompanyName);
+            Assert.AreEqual(newCustomer.CustomerNo , customer.CustomerNo);
+            Assert.AreEqual(newCustomer.Description , customer.Description);
+            Assert.AreEqual(newCustomer.Email , customer.Email);
+            Assert.AreEqual(newCustomer.Phone , customer.Phone);
+            Assert.AreEqual(newCustomer.ZipCode , customer.ZipCode);
         }
         //needs version.
         [Test]
         public void CustomerFullModel_Update_DoesUpdate()
         {
             // Arrange
-            Customer customer = new Customer();
-            customer.CityName = Guid.NewGuid().ToString();
-            customer.CompanyAddress = Guid.NewGuid().ToString();
-            customer.CompanyName = Guid.NewGuid().ToString();
-            customer.ContactPerson = Guid.NewGuid().ToString();
-            customer.CreatedBy = Guid.NewGuid().ToString();
-            customer.CustomerNo = Guid.NewGuid().ToString();
-            customer.Description = Guid.NewGuid().ToString();
-            customer.Email = Guid.NewGuid().ToString();
-            customer.Phone = Guid.NewGuid().ToString();
-            customer.ZipCode = Guid.NewGuid().ToString();
+            Customer newCustomer = new Customer
+            {
+                CityName = Guid.NewGuid().ToString(),
+                CompanyAddress = Guid.NewGuid().ToString(),
+                CompanyName = Guid.NewGuid().ToString(),
+                ContactPerson = Guid.NewGuid().ToString(),
+                CreatedBy = Guid.NewGuid().ToString(),
+                CustomerNo = Guid.NewGuid().ToString(),
+                Description = Guid.NewGuid().ToString(),
+                Email = Guid.NewGuid().ToString(),
+                Phone = Guid.NewGuid().ToString(),
+                ZipCode = Guid.NewGuid().ToString()
+            };
 
-            DbContext.Customers.Add(customer);
-            DbContext.SaveChanges();
+            newCustomer.Create(DbContext);
 
             // Act
-            CustomerFullModel customerFullModel = new CustomerFullModel();
-            customerFullModel.CityName = customer.CityName;
-            customerFullModel.CompanyAddress = customer.CompanyAddress;
-            customerFullModel.CompanyName = customer.CompanyName;
-            customerFullModel.ContactPerson = customer.ContactPerson;
-            customerFullModel.CreatedBy = customer.CreatedBy;
-            customerFullModel.CustomerNo = customer.CustomerNo;
-            customerFullModel.Description = customer.Description;
-            customerFullModel.Email = customer.Email;
-            customerFullModel.Phone = customer.Phone;
-            customerFullModel.ZipCode = customer.ZipCode;
-            customerFullModel.Id = customer.Id;
+            newCustomer.CityName = Guid.NewGuid().ToString();
+            newCustomer.CompanyAddress = Guid.NewGuid().ToString();
+            newCustomer.CompanyName = Guid.NewGuid().ToString();
+            newCustomer.ContactPerson = Guid.NewGuid().ToString();
+            newCustomer.CreatedBy = Guid.NewGuid().ToString();
+            newCustomer.CustomerNo = Guid.NewGuid().ToString();
+            newCustomer.Description = Guid.NewGuid().ToString();
+            newCustomer.Email = Guid.NewGuid().ToString();
+            newCustomer.Phone = Guid.NewGuid().ToString();
+            newCustomer.ZipCode = Guid.NewGuid().ToString();
 
-            customerFullModel.Update(DbContext);
+            newCustomer.Update(DbContext);
 
             Customer dbCustomer = DbContext.Customers.AsNoTracking().First();
             List<Customer> customerList = DbContext.Customers.AsNoTracking().ToList();
@@ -90,52 +91,40 @@ namespace Customers.Pn.Test
 
             Assert.AreEqual(1, customerList.Count());
 
-            Assert.AreEqual(customer.CityName, dbCustomer.CityName);
-            Assert.AreEqual(customer.CompanyAddress, dbCustomer.CompanyAddress);
-            Assert.AreEqual(customer.CompanyName, dbCustomer.CompanyName);
-            Assert.AreEqual(customer.ContactPerson, dbCustomer.ContactPerson);
-            Assert.AreEqual(customer.CreatedBy, dbCustomer.CreatedBy);
-            Assert.AreEqual(customer.CustomerNo, dbCustomer.CustomerNo);
-            Assert.AreEqual(customer.Description, dbCustomer.Description);
-            Assert.AreEqual(customer.Email, dbCustomer.Email);
-            Assert.AreEqual(customer.Phone, dbCustomer.Phone);
-            Assert.AreEqual(customer.ZipCode, dbCustomer.ZipCode);
+            Assert.AreEqual(newCustomer.CityName, dbCustomer.CityName);
+            Assert.AreEqual(newCustomer.CompanyAddress, dbCustomer.CompanyAddress);
+            Assert.AreEqual(newCustomer.CompanyName, dbCustomer.CompanyName);
+            Assert.AreEqual(newCustomer.ContactPerson, dbCustomer.ContactPerson);
+            Assert.AreEqual(newCustomer.CreatedBy, dbCustomer.CreatedBy);
+            Assert.AreEqual(newCustomer.CustomerNo, dbCustomer.CustomerNo);
+            Assert.AreEqual(newCustomer.Description, dbCustomer.Description);
+            Assert.AreEqual(newCustomer.Email, dbCustomer.Email);
+            Assert.AreEqual(newCustomer.Phone, dbCustomer.Phone);
+            Assert.AreEqual(newCustomer.ZipCode, dbCustomer.ZipCode);
         }
         //needs versions.
         [Test]
         public void CustomerFullModel_Delete_DoesDelete()
         {
             // Arrange
-            Customer customer = new Customer();
-            customer.CityName = Guid.NewGuid().ToString();
-            customer.CompanyAddress = Guid.NewGuid().ToString();
-            customer.CompanyName = Guid.NewGuid().ToString();
-            customer.ContactPerson = Guid.NewGuid().ToString();
-            customer.CreatedBy = Guid.NewGuid().ToString();
-            customer.CustomerNo = Guid.NewGuid().ToString();
-            customer.Description = Guid.NewGuid().ToString();
-            customer.Email = Guid.NewGuid().ToString();
-            customer.Phone = Guid.NewGuid().ToString();
-            customer.ZipCode = Guid.NewGuid().ToString();
+            Customer customer = new Customer
+            {
+                CityName = Guid.NewGuid().ToString(),
+                CompanyAddress = Guid.NewGuid().ToString(),
+                CompanyName = Guid.NewGuid().ToString(),
+                ContactPerson = Guid.NewGuid().ToString(),
+                CreatedBy = Guid.NewGuid().ToString(),
+                CustomerNo = Guid.NewGuid().ToString(),
+                Description = Guid.NewGuid().ToString(),
+                Email = Guid.NewGuid().ToString(),
+                Phone = Guid.NewGuid().ToString(),
+                ZipCode = Guid.NewGuid().ToString()
+            };
 
-            DbContext.Customers.Add(customer);
-            DbContext.SaveChanges();
+            customer.Create(DbContext);
 
             // Act
-            CustomerFullModel customerFullModel = new CustomerFullModel();
-            customerFullModel.CityName = customer.CityName;
-            customerFullModel.CompanyAddress = customer.CompanyAddress;
-            customerFullModel.CompanyName = customer.CompanyName;
-            customerFullModel.ContactPerson = customer.ContactPerson;
-            customerFullModel.CreatedBy = customer.CreatedBy;
-            customerFullModel.CustomerNo = customer.CustomerNo;
-            customerFullModel.Description = customer.Description;
-            customerFullModel.Email = customer.Email;
-            customerFullModel.Phone = customer.Phone;
-            customerFullModel.ZipCode = customer.ZipCode;
-            customerFullModel.Id = customer.Id;
-
-            customerFullModel.Update(DbContext);
+            customer.Delete(DbContext);
 
             Customer dbCustomer = DbContext.Customers.AsNoTracking().First();
             List<Customer> customerList = DbContext.Customers.AsNoTracking().ToList();
@@ -155,7 +144,7 @@ namespace Customers.Pn.Test
             Assert.AreEqual(customer.Email, dbCustomer.Email);
             Assert.AreEqual(customer.Phone, dbCustomer.Phone);
             Assert.AreEqual(customer.ZipCode, dbCustomer.ZipCode);
-            //Assert.AreEqual(customer.workflow_state, eFormShared.Constants.WorkflowStates.Removed);
+            Assert.AreEqual(customer.Workflow_state, eFormShared.Constants.WorkflowStates.Removed);
         }
     }
 }
