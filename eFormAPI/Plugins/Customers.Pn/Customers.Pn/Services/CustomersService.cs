@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -73,14 +73,12 @@ namespace Customers.Pn.Services
 				}
 
 				customersQuery =
-					customersQuery.Where(x => x.Workflow_state != eFormShared.Constants.WorkflowStates.Removed);
-
-				customersQuery = customersQuery
+					customersQuery.Where(x => x.Workflow_state != Constants.WorkflowStates.Removed)
                     .Skip(pnRequestModel.Offset)
                     .Take(pnRequestModel.PageSize);
 
                 List<Customer> customers = customersQuery.ToList();
-                customersPnModel.Total = _dbContext.Customers.Count();
+                customersPnModel.Total = _dbContext.Customers.Count(x => x.Workflow_state != Constants.WorkflowStates.Removed);
                 List<FieldUpdateModel> fields = _dbContext.CustomerFields
                     .Include("Field")
                     .Select(x => new FieldUpdateModel()
@@ -312,7 +310,6 @@ namespace Customers.Pn.Services
                         CreatedBy = x.CreatedBy,
                         CompanyAddress = x.CompanyAddress,
                         CompanyName = x.CompanyName,
-                        RelatedEntityId = x.RelatedEntityId
                     })
                     .FirstOrDefault(x => x.Id == id);
 
