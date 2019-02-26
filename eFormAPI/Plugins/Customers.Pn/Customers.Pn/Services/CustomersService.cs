@@ -150,7 +150,6 @@ namespace Customers.Pn.Services
             try
             {
                 {
-                    Debugger.Break();
                     JToken rawJson = JRaw.Parse(customersAsJson.ImportList);
                     JToken rawHeadersJson = JRaw.Parse(customersAsJson.Headers);
 
@@ -331,6 +330,7 @@ namespace Customers.Pn.Services
                         CreatedBy = x.CreatedBy,
                         CompanyAddress = x.CompanyAddress,
                         CompanyName = x.CompanyName,
+                        RelatedEntityId = x.RelatedEntityId
                     })
                     .FirstOrDefault(x => x.Id == id);
 
@@ -444,19 +444,18 @@ namespace Customers.Pn.Services
         {
             try
             {
-                Debugger.Break();
                 Customer customerForUpdate = new Customer()
                 {
-                    CityName = customerUpdateModel.CityName,
-                    CompanyAddress = customerUpdateModel.CompanyAddress,
-                    CompanyName = customerUpdateModel.CompanyName,
-                    ContactPerson = customerUpdateModel.ContactPerson,
                     CreatedBy = customerUpdateModel.CreatedBy,
                     CustomerNo = customerUpdateModel.CustomerNo,
-                    Description = customerUpdateModel.Description,
-                    Email = customerUpdateModel.Email,
-                    Phone = customerUpdateModel.Phone,
+                    ContactPerson = customerUpdateModel.ContactPerson,
+                    CompanyName = customerUpdateModel.CompanyName,
+                    CompanyAddress = customerUpdateModel.CompanyAddress,
                     ZipCode = customerUpdateModel.ZipCode,
+                    CityName = customerUpdateModel.CityName,
+                    Phone = customerUpdateModel.Phone,
+                    Email = customerUpdateModel.Email,
+                    Description = customerUpdateModel.Description,
                     RelatedEntityId = customerUpdateModel.RelatedEntityId,
                     Id = customerUpdateModel.Id,
                 };
