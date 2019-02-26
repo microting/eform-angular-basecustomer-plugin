@@ -1,10 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
 
 namespace Customers.Pn.Infrastructure.Data.Entities
 {
-    public class Customer : BaseEntity
+    public class Customer : BaseEntity, IDataAccessObject
     {
         public DateTime? Created_at { get; set; }
 
@@ -40,5 +41,91 @@ namespace Customers.Pn.Infrastructure.Data.Entities
         public string ContactPerson { get; set; }
         public string Description { get; set; }
         public int? RelatedEntityId { get; set; }
+
+        public void Create(CustomersPnDbAnySql dbContext)
+        {
+            dbContext.Customers.Add(this);
+            dbContext.SaveChanges();
+
+            dbContext.CustomerVersions.Add(MapCustomerVersions(dbContext, this));
+            dbContext.SaveChanges();
+        }
+
+        public void Update(CustomersPnDbAnySql dbContext)
+        {
+            Customer customer = dbContext.Customers.FirstOrDefault(x => x.Id == Id);
+
+            if (customer == null)
+            {
+                throw new NullReferenceException($"Could not find Customer with {Id}");
+            }
+
+            customer.CityName = CityName;
+            customer.CompanyAddress = CompanyAddress;
+            customer.CompanyName = CompanyName;
+            customer.ContactPerson = ContactPerson;
+            customer.CreatedBy = CreatedBy;
+            customer.CustomerNo = CustomerNo;
+            customer.Description = Description;
+            customer.Email = Email;
+            customer.Phone = Phone;
+            customer.ZipCode = ZipCode;
+            customer.RelatedEntityId = RelatedEntityId;
+            customer.Id = Id;
+            customer.Workflow_state = Workflow_state;
+
+            if (dbContext.ChangeTracker.HasChanges())
+            {
+                customer.Updated_at = DateTime.Now;
+                customer.Version += 1;
+                dbContext.SaveChanges();
+
+                dbContext.CustomerVersions.Add(MapCustomerVersions(dbContext, customer));
+                dbContext.SaveChanges();
+            }
+        }
+
+        public void Delete(CustomersPnDbAnySql dbContext)
+        {
+            Customer customer = dbContext.Customers.FirstOrDefault(x => x.Id == Id);
+
+            if (customer == null)
+            {
+                throw new NullReferenceException($"Could not find Customer with {Id}");
+            }
+
+            customer.Workflow_state = eFormShared.Constants.WorkflowStates.Removed;
+            customer.RelatedEntityId = null;
+
+            if (dbContext.ChangeTracker.HasChanges())
+            {
+                customer.Updated_at = DateTime.Now;
+                customer.Version += 1;
+                dbContext.SaveChanges();
+                
+                dbContext.CustomerVersions.Add(MapCustomerVersions(dbContext, customer));
+                dbContext.SaveChanges();
+            }
+        }
+
+        private CustomerVersion MapCustomerVersions(CustomersPnDbAnySql dbContext, Customer customer)
+        {
+            CustomerVersion customerVer = new CustomerVersion();
+
+            customerVer.CityName = customer.CityName;
+            customerVer.CompanyAddress = customer.CompanyAddress;
+            customerVer.CompanyName = customer.CompanyName;
+            customerVer.ContactPerson = customer.ContactPerson;
+            customerVer.CreatedBy = customer.CreatedBy;
+            customerVer.CreatedDate = customer.CreatedDate;
+            customerVer.CustomerNo = customer.CustomerNo;
+            customerVer.Description = customer.Description;
+            customerVer.Email = customer.Email;
+            customerVer.Phone = customer.Phone;
+            customerVer.ZipCode = customer.ZipCode;
+            customerVer.CustomerId = customer.Id;
+
+            return customerVer;
+        }
     }
 }

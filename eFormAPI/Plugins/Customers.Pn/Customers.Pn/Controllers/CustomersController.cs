@@ -11,10 +11,12 @@ namespace Customers.Pn.Controllers
     public class CustomersController : Controller
     {
         private readonly ICustomersService _customersService;
- 
-        public CustomersController(ICustomersService customersService)
+        private readonly ICustomersSettingsService _customersSettingsService;
+
+        public CustomersController(ICustomersService customersService, ICustomersSettingsService customersSettingsService)
         {
             _customersService = customersService;
+            _customersSettingsService = customersSettingsService;
         }
 
         [HttpPost]
@@ -57,23 +59,6 @@ namespace Customers.Pn.Controllers
         public OperationResult DeleteCustomer(int id)
         {
             return _customersService.DeleteCustomer(id);
-        }
-
-        [HttpGet]
-        [Authorize(Roles = EformRole.Admin)]
-        [Route("api/customers-pn/settings")]
-        public OperationDataResult<CustomerSettingsModel> GetSettings()
-        {
-            return _customersService.GetSettings();
-        }
-
-
-        [HttpPost]
-        [Authorize(Roles = EformRole.Admin)]
-        [Route("api/customers-pn/settings")]
-        public OperationResult UpdateSettings([FromBody] CustomerSettingsModel customerUpdateModel)
-        {
-            return _customersService.UpdateSettings(customerUpdateModel);
         }
     }
 }

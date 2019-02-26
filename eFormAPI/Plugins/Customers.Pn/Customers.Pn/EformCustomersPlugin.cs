@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using Customers.Pn.Abstractions;
@@ -8,7 +7,6 @@ using Customers.Pn.Infrastructure.Data;
 using Customers.Pn.Infrastructure.Data.Entities;
 using Customers.Pn.Infrastructure.Data.Factories;
 using Customers.Pn.Infrastructure.Extensions;
-using Customers.Pn.Infrastructure.Models.Fields;
 using Customers.Pn.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -34,6 +32,7 @@ namespace Customers.Pn
             services.AddSingleton<ICustomersLocalizationService, CustomersLocalizationService>();
             services.AddTransient<IFieldsService, FieldsService>();
             services.AddTransient<ICustomersService, CustomersService>();
+            services.AddTransient<ICustomersSettingsService, CustomersSettingsService>();
         }
 
         public void ConfigureDbContext(IServiceCollection services, string connectionString)
@@ -94,9 +93,11 @@ namespace Customers.Pn
                 {
                     if (!context.Fields.Any(x => x.Name == name))
                     {
-                        FieldModel fieldModel = new FieldModel();
-                        fieldModel.Name = name;
-                        fieldModel.Save(context);
+                        Field newField = new Field
+                        {
+                            Name = name
+                        };
+                        newField.Create(context);
                     }
                 }
 
