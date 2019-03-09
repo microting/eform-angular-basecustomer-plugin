@@ -1,5 +1,6 @@
-﻿using Customers.Pn.Abstractions;
-using Customers.Pn.Infrastructure.Models;
+﻿using System.Threading.Tasks;
+using Customers.Pn.Abstractions;
+using Customers.Pn.Infrastructure.Models.Customer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
@@ -28,9 +29,9 @@ namespace Customers.Pn.Controllers
         [HttpPost]
         [Authorize(Roles = EformRole.Admin)]
         [Route("api/customers-pn/settings")]
-        public OperationResult UpdateSettings([FromBody] CustomerSettingsModel customerUpdateModel)
+        public async Task<OperationResult> UpdateSettings([FromBody] CustomerSettingsModel customerUpdateModel)
         {
-            return _customersSettingsService.UpdateSettings(customerUpdateModel);
+            return await _customersSettingsService.UpdateSettings(customerUpdateModel);
         }
     }
 }

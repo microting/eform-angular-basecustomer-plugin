@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Customers.Pn.Infrastructure.Models.Fields;
+using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
 
 namespace Customers.Pn.Infrastructure.Data.Entities
 {
-    public class CustomerField : BaseEntity, IDataAccessObject
+    public class CustomerField : BaseEntity, IDataAccessObject<CustomersPnDbAnySql>
     {
         public int FieldId { get; set; }
         public virtual Field Field { get; set; }

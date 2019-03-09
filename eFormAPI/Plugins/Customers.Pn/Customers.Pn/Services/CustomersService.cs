@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using System.Reflection.Metadata;
 using Customers.Pn.Abstractions;
 using Customers.Pn.Infrastructure.Data;
 using Customers.Pn.Infrastructure.Data.Entities;
 using Customers.Pn.Infrastructure.Extensions;
 using Customers.Pn.Infrastructure.Helpers;
-using Customers.Pn.Infrastructure.Models;
+using Customers.Pn.Infrastructure.Models.Customer;
 using Customers.Pn.Infrastructure.Models.Fields;
+using Customers.Pn.Infrastructure.Models.Settings;
 using eFormCore;
 using eFormData;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebSockets.Internal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Abstractions;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Newtonsoft.Json.Linq;
 using Constants = eFormShared.Constants;
@@ -30,6 +30,7 @@ namespace Customers.Pn.Services
         private readonly ILogger<CustomersService> _logger;
         private readonly CustomersPnDbAnySql _dbContext;
         private readonly ICustomersLocalizationService _customersLocalizationService;
+        private readonly IPluginDbOptions<CustomersSettings> _options;
 
         public CustomersService(ILogger<CustomersService> logger,
             CustomersPnDbAnySql dbContext,
@@ -161,7 +162,7 @@ namespace Customers.Pn.Services
                     
                     Core core = _coreHelper.GetCore();
 
-                    CustomerSettings customerSettings = _dbContext.CustomerSettings.FirstOrDefault();
+                    var customerSettings = _options.Value;
 
                     EntityGroup entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
 
@@ -360,7 +361,7 @@ namespace Customers.Pn.Services
         {
             try
             {
-				CustomerSettings customerSettings = _dbContext.CustomerSettings.FirstOrDefault();
+                var customerSettings = _options.Value;
 				if (customerSettings?.RelatedEntityGroupId != null)
 				{
                     Customer newCustomer = new Customer()

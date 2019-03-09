@@ -1,4 +1,4 @@
-﻿namespace Customers.Pn.Infrastructure.Models
+﻿namespace Customers.Pn.Infrastructure.Models.Customer
 {
     public class CustomerImportModel
     {
