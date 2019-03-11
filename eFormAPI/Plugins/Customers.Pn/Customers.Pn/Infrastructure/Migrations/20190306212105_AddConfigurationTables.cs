@@ -6,11 +6,17 @@ namespace Customers.Pn.Infrastructure.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            // Setup for MySQL Provider
+            if (migrationBuilder.ActiveProvider == "Pomelo.EntityFrameworkCore.MySql")
+            {
+                DbConfig.IsMySQL = true;
+            }
+
             migrationBuilder.CreateTable(
                 name: "PluginConfigurationValues",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<string>(),
                     Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -22,9 +28,9 @@ namespace Customers.Pn.Infrastructure.Migrations
                 name: "PluginConfigurationVersions",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<string>(),
                     Value = table.Column<string>(nullable: true),
-                    Version = table.Column<int>(nullable: false)
+                    Version = table.Column<int>()
                 },
                 constraints: table =>
                 {

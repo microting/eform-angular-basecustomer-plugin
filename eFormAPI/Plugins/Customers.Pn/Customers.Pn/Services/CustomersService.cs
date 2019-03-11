@@ -35,12 +35,14 @@ namespace Customers.Pn.Services
         public CustomersService(ILogger<CustomersService> logger,
             CustomersPnDbAnySql dbContext,
             IEFormCoreService coreHelper,
-            ICustomersLocalizationService customersLocalizationService)
+            ICustomersLocalizationService customersLocalizationService,
+            IPluginDbOptions<CustomersSettings> options)
         {
             _logger = logger;
             _dbContext = dbContext;
             _coreHelper = coreHelper;
             _customersLocalizationService = customersLocalizationService;
+            _options = options;
         }
 
 
@@ -75,7 +77,7 @@ namespace Customers.Pn.Services
 				}
 
 				customersQuery =
-					customersQuery.Where(x => x.Workflow_state != eFormShared.Constants.WorkflowStates.Removed);
+					customersQuery.Where(x => x.Workflow_state != Constants.WorkflowStates.Removed);
 
 				customersQuery = customersQuery
                     .Skip(pnRequestModel.Offset)
@@ -154,8 +156,8 @@ namespace Customers.Pn.Services
             {
                 {
                     Debugger.Break();
-                    JToken rawJson = JRaw.Parse(customersAsJson.ImportList);
-                    JToken rawHeadersJson = JRaw.Parse(customersAsJson.Headers);
+                    JToken rawJson = JToken.Parse(customersAsJson.ImportList);
+                    JToken rawHeadersJson = JToken.Parse(customersAsJson.Headers);
 
                     JToken headers = rawHeadersJson;
                     IEnumerable<JToken> customerObjects = rawJson.Skip(1);
@@ -224,7 +226,7 @@ namespace Customers.Pn.Services
                                     {
                                         label = $"Empty company {nextItemUid}";
                                     }
-                                    eFormData.EntityItem item = core.EntitySearchItemCreate(entityGroup.Id, $"{label}", $"{customerModel.Description}",
+                                    EntityItem item = core.EntitySearchItemCreate(entityGroup.Id, $"{label}", $"{customerModel.Description}",
                                         nextItemUid.ToString());
                                     if (item != null)
                                     {
@@ -282,7 +284,7 @@ namespace Customers.Pn.Services
                                     {
                                         label = $"Empty company {nextItemUid}";
                                     }
-                                    eFormData.EntityItem item = core.EntitySearchItemCreate(entityGroup.Id, $"{label}", $"{customer.Description}",
+                                    EntityItem item = core.EntitySearchItemCreate(entityGroup.Id, $"{label}", $"{customer.Description}",
                                         nextItemUid.ToString());
                                     if (item != null)
                                     {
@@ -377,7 +379,7 @@ namespace Customers.Pn.Services
                         Phone = customerPnCreateModel.Phone,
                         ZipCode = customerPnCreateModel.ZipCode,
                         RelatedEntityId = customerPnCreateModel.RelatedEntityId,
-                        Workflow_state = eFormShared.Constants.WorkflowStates.Created,
+                        Workflow_state = Constants.WorkflowStates.Created,
                         CreatedDate = DateTime.Now
                     };
 

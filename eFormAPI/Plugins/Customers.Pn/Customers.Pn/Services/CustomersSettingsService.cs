@@ -5,10 +5,8 @@ using Customers.Pn.Abstractions;
 using Customers.Pn.Infrastructure.Data;
 using Customers.Pn.Infrastructure.Models.Customer;
 using Customers.Pn.Infrastructure.Models.Settings;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Abstractions;
-using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
@@ -85,29 +83,6 @@ namespace Customers.Pn.Services
                     x => { x.RelatedEntityGroupId = customerSettingsModel.RelatedEntityId; },
                     _dbContext);
 
-                // Add settings version
-                var settingsId = $"{nameof(CustomersSettings)}:{nameof(CustomersSettings.RelatedEntityGroupId)}";
-                var settingsValueVersion = await _dbContext.PluginConfigurationVersions
-                    .FirstOrDefaultAsync(x => x.Id == settingsId);
-
-                int version;
-                if (settingsValueVersion == null)
-                {
-                    version = 1;
-                }
-                else
-                {
-                    version = settingsValueVersion.Version++;
-                }
-
-                var newVersion = new PluginConfigurationVersion()
-                {
-                    Version = version,
-                    Id = settingsId,
-                    Value = customerSettingsModel.RelatedEntityId.ToString(),
-                };
-                await _dbContext.PluginConfigurationVersions.AddAsync(newVersion);
-                await _dbContext.SaveChangesAsync();
                 return new OperationDataResult<CustomersModel>(true,
                     _customersLocalizationService.GetString("SettingsUpdatedSuccessfully"));
             }
