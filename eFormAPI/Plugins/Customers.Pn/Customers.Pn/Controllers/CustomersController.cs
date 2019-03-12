@@ -1,8 +1,7 @@
 using Customers.Pn.Abstractions;
-using Customers.Pn.Infrastructure.Models;
+using Customers.Pn.Infrastructure.Models.Customer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace Customers.Pn.Controllers
@@ -11,12 +10,10 @@ namespace Customers.Pn.Controllers
     public class CustomersController : Controller
     {
         private readonly ICustomersService _customersService;
-        private readonly ICustomersSettingsService _customersSettingsService;
 
-        public CustomersController(ICustomersService customersService, ICustomersSettingsService customersSettingsService)
+        public CustomersController(ICustomersService customersService)
         {
             _customersService = customersService;
-            _customersSettingsService = customersSettingsService;
         }
 
         [HttpPost]

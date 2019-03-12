@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using System.Reflection.Metadata;
 using Customers.Pn.Abstractions;
 using Customers.Pn.Infrastructure.Data;
 using Customers.Pn.Infrastructure.Data.Entities;
 using Customers.Pn.Infrastructure.Extensions;
 using Customers.Pn.Infrastructure.Helpers;
-using Customers.Pn.Infrastructure.Models;
+using Customers.Pn.Infrastructure.Models.Customer;
 using Customers.Pn.Infrastructure.Models.Fields;
+using Customers.Pn.Infrastructure.Models.Settings;
 using eFormCore;
 using eFormData;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebSockets.Internal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Abstractions;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Newtonsoft.Json.Linq;
 using Constants = eFormShared.Constants;
@@ -30,16 +30,19 @@ namespace Customers.Pn.Services
         private readonly ILogger<CustomersService> _logger;
         private readonly CustomersPnDbAnySql _dbContext;
         private readonly ICustomersLocalizationService _customersLocalizationService;
+        private readonly IPluginDbOptions<CustomersSettings> _options;
 
         public CustomersService(ILogger<CustomersService> logger,
             CustomersPnDbAnySql dbContext,
             IEFormCoreService coreHelper,
-            ICustomersLocalizationService customersLocalizationService)
+            ICustomersLocalizationService customersLocalizationService,
+            IPluginDbOptions<CustomersSettings> options)
         {
             _logger = logger;
             _dbContext = dbContext;
             _coreHelper = coreHelper;
             _customersLocalizationService = customersLocalizationService;
+            _options = options;
         }
 
 
@@ -150,15 +153,16 @@ namespace Customers.Pn.Services
             try
             {
                 {
-                    JToken rawJson = JRaw.Parse(customersAsJson.ImportList);
-                    JToken rawHeadersJson = JRaw.Parse(customersAsJson.Headers);
+                    Debugger.Break();
+                    JToken rawJson = JToken.Parse(customersAsJson.ImportList);
+                    JToken rawHeadersJson = JToken.Parse(customersAsJson.Headers);
 
                     JToken headers = rawHeadersJson;
                     IEnumerable<JToken> customerObjects = rawJson.Skip(1);
                     
                     Core core = _coreHelper.GetCore();
 
-                    CustomerSettings customerSettings = _dbContext.CustomerSettings.FirstOrDefault();
+                    var customerSettings = _options.Value;
 
                     EntityGroup entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
 
@@ -220,7 +224,7 @@ namespace Customers.Pn.Services
                                     {
                                         label = $"Empty company {nextItemUid}";
                                     }
-                                    eFormData.EntityItem item = core.EntitySearchItemCreate(entityGroup.Id, $"{label}", $"{customerModel.Description}",
+                                    EntityItem item = core.EntitySearchItemCreate(entityGroup.Id, $"{label}", $"{customerModel.Description}",
                                         nextItemUid.ToString());
                                     if (item != null)
                                     {
@@ -278,7 +282,7 @@ namespace Customers.Pn.Services
                                     {
                                         label = $"Empty company {nextItemUid}";
                                     }
-                                    eFormData.EntityItem item = core.EntitySearchItemCreate(entityGroup.Id, $"{label}", $"{customer.Description}",
+                                    EntityItem item = core.EntitySearchItemCreate(entityGroup.Id, $"{label}", $"{customer.Description}",
                                         nextItemUid.ToString());
                                     if (item != null)
                                     {
@@ -357,7 +361,7 @@ namespace Customers.Pn.Services
         {
             try
             {
-				CustomerSettings customerSettings = _dbContext.CustomerSettings.FirstOrDefault();
+                var customerSettings = _options.Value;
 				if (customerSettings?.RelatedEntityGroupId != null)
 				{
                     Customer newCustomer = new Customer()
@@ -373,7 +377,7 @@ namespace Customers.Pn.Services
                         Phone = customerPnCreateModel.Phone,
                         ZipCode = customerPnCreateModel.ZipCode,
                         RelatedEntityId = customerPnCreateModel.RelatedEntityId,
-                        Workflow_state = eFormShared.Constants.WorkflowStates.Created,
+                        Workflow_state = Constants.WorkflowStates.Created,
                         CreatedDate = DateTime.Now
                     };
 

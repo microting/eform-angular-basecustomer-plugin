@@ -6,13 +6,19 @@ using Customers.Pn.Abstractions;
 using Customers.Pn.Infrastructure.Data;
 using Customers.Pn.Infrastructure.Data.Entities;
 using Customers.Pn.Infrastructure.Data.Factories;
+using Customers.Pn.Infrastructure.Data.Seed;
+using Customers.Pn.Infrastructure.Data.Seed.Data;
 using Customers.Pn.Infrastructure.Extensions;
+using Customers.Pn.Infrastructure.Models.Settings;
 using Customers.Pn.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microting.eFormApi.BasePn;
+using Microting.eFormApi.BasePn.Infrastructure.Database.Extensions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
+using Microting.eFormApi.BasePn.Infrastructure.Settings;
 
 namespace Customers.Pn
 {
@@ -35,19 +41,26 @@ namespace Customers.Pn
             services.AddTransient<ICustomersSettingsService, CustomersSettingsService>();
         }
 
+        public void ConfigureOptionsServices(
+            IServiceCollection services,
+            IConfiguration configuration)
+        {
+            services.ConfigurePluginDbOptions<CustomersSettings>(configuration.GetSection("CustomersSettings"));
+        }
+
         public void ConfigureDbContext(IServiceCollection services, string connectionString)
         {
             if (connectionString.ToLower().Contains("convert zero datetime"))
             {
                 services.AddDbContext<CustomersPnDbAnySql>(o => o.UseMySql(connectionString,
-                    b => b.MigrationsAssembly(PluginAssembly().FullName)));                
+                    b => b.MigrationsAssembly(PluginAssembly().FullName)));
             }
             else
             {
                 services.AddDbContext<CustomersPnDbAnySql>(o => o.UseSqlServer(connectionString,
-                    b => b.MigrationsAssembly(PluginAssembly().FullName)));    
+                    b => b.MigrationsAssembly(PluginAssembly().FullName)));
             }
-            
+
             CustomersPnContextFactory contextFactory = new CustomersPnContextFactory();
             using (CustomersPnDbAnySql context = contextFactory.CreateDbContext(new[] {connectionString}))
             {
@@ -124,7 +137,22 @@ namespace Customers.Pn
                 }
 
                 context.SaveChanges();
+
+                // Seed configuration
+                CustomersPluginSeed.SeedData(context);
             }
+        }
+
+        public void AddPluginConfig(
+            IConfigurationBuilder builder,
+            string connectionString)
+        {
+            var seedData = new CustomersConfigurationSeedData();
+            var contextFactory = new CustomersPnContextFactory();
+            builder.AddPluginConfiguration(
+                connectionString,
+                seedData,
+                contextFactory);
         }
     }
 }

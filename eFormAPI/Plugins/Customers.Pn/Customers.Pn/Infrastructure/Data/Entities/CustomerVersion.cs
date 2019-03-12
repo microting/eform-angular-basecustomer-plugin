@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
+// ReSharper disable InconsistentNaming
 
 namespace Customers.Pn.Infrastructure.Data.Entities
 {

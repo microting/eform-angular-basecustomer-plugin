@@ -1,11 +1,13 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
+// ReSharper disable InconsistentNaming
 
 namespace Customers.Pn.Infrastructure.Data.Entities
 {
-    public class Customer : BaseEntity, IDataAccessObject
+    public class Customer : BaseEntity, IDataAccessObject<CustomersPnDbAnySql>
     {
         public DateTime? Created_at { get; set; }
 

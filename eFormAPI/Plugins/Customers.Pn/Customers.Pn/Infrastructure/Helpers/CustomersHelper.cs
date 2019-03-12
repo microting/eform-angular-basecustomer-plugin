@@ -1,5 +1,5 @@
 ﻿using System;
-using Customers.Pn.Infrastructure.Models;
+using Customers.Pn.Infrastructure.Models.Customer;
 using Newtonsoft.Json.Linq;
 
 namespace Customers.Pn.Infrastructure.Helpers

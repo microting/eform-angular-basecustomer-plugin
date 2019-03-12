@@ -1,4 +1,4 @@
-﻿using Customers.Pn.Infrastructure.Models;
+﻿using Customers.Pn.Infrastructure.Models.Customer;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace Customers.Pn.Abstractions

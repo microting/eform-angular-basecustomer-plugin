@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Linq;
+using System.Threading.Tasks;
 using Customers.Pn.Abstractions;
 using Customers.Pn.Infrastructure.Data;
-using Customers.Pn.Infrastructure.Data.Entities;
-using Customers.Pn.Infrastructure.Models;
-using eFormCore;
-using eFormData;
+using Customers.Pn.Infrastructure.Models.Customer;
+using Customers.Pn.Infrastructure.Models.Settings;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Abstractions;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 
 namespace Customers.Pn.Services
@@ -19,29 +18,32 @@ namespace Customers.Pn.Services
         private readonly ILogger<CustomersSettingsService> _logger;
         private readonly CustomersPnDbAnySql _dbContext;
         private readonly ICustomersLocalizationService _customersLocalizationService;
+        private readonly IPluginDbOptions<CustomersSettings> _options;
 
         public CustomersSettingsService(ILogger<CustomersSettingsService> logger,
             CustomersPnDbAnySql dbContext,
             IEFormCoreService coreHelper,
-            ICustomersLocalizationService customersLocalizationService)
+            ICustomersLocalizationService customersLocalizationService,
+            IPluginDbOptions<CustomersSettings> options)
         {
             _logger = logger;
             _dbContext = dbContext;
             _coreHelper = coreHelper;
             _customersLocalizationService = customersLocalizationService;
+            _options = options;
         }
 
         public OperationDataResult<CustomerSettingsModel> GetSettings()
         {
             try
             {
-                CustomerSettingsModel result = new CustomerSettingsModel();
-                CustomerSettings customerSettings = _dbContext.CustomerSettings.FirstOrDefault();
+                var result = new CustomerSettingsModel();
+                var customerSettings = _options.Value;
                 if (customerSettings?.RelatedEntityGroupId != null)
                 {
-                    result.RelatedEntityId = (int)customerSettings.RelatedEntityGroupId;
-                    Core core = _coreHelper.GetCore();
-                    EntityGroup entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
+                    result.RelatedEntityId = (int) customerSettings.RelatedEntityGroupId;
+                    var core = _coreHelper.GetCore();
+                    var entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
                     if (entityGroup == null)
                     {
                         return new OperationDataResult<CustomerSettingsModel>(false, "Entity group not found");
@@ -61,7 +63,7 @@ namespace Customers.Pn.Services
             }
         }
 
-        public OperationResult UpdateSettings(CustomerSettingsModel customerSettingsModel)
+        public async Task<OperationResult> UpdateSettings(CustomerSettingsModel customerSettingsModel)
         {
             try
             {
@@ -69,29 +71,17 @@ namespace Customers.Pn.Services
                 {
                     return new OperationDataResult<CustomersModel>(true);
                 }
-                CustomerSettings customerSettings = _dbContext.CustomerSettings.FirstOrDefault();
-                if (customerSettings == null)
-                {
-                    customerSettings = new CustomerSettings()
-                    {
-                        RelatedEntityGroupId = customerSettingsModel.RelatedEntityId
-                    };
 
-                    customerSettings.Create(_dbContext);
-                }
-                else
-                {
-                    customerSettings.RelatedEntityGroupId = customerSettingsModel.RelatedEntityId;
-
-                    customerSettings.Update(_dbContext);
-                }
-
-                Core core = _coreHelper.GetCore();
-                EntityGroup newEntityGroup = core.EntityGroupRead(customerSettingsModel.RelatedEntityId.ToString());
+                var core = _coreHelper.GetCore();
+                var newEntityGroup = core.EntityGroupRead(customerSettingsModel.RelatedEntityId.ToString());
                 if (newEntityGroup == null)
                 {
                     return new OperationResult(false, "Entity group not found");
                 }
+
+                await _options.UpdateDb(
+                    x => { x.RelatedEntityGroupId = customerSettingsModel.RelatedEntityId; },
+                    _dbContext);
 
                 return new OperationDataResult<CustomersModel>(true,
                     _customersLocalizationService.GetString("SettingsUpdatedSuccessfully"));

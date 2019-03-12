@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Customers.Pn.Infrastructure.Models
+namespace Customers.Pn.Infrastructure.Models.Customer
 {
     public class CustomersModel
     {

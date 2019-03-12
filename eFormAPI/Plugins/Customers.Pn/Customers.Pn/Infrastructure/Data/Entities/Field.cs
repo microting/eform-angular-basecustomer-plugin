@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Base;
 
 namespace Customers.Pn.Infrastructure.Data.Entities
 {
-    public class Field : BaseEntity, IDataAccessObject
+    public class Field : BaseEntity, IDataAccessObject<CustomersPnDbAnySql>
     {
         [StringLength(50)]
         public string Name { get; set; }

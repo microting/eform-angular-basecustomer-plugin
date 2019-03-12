@@ -1,4 +1,4 @@
-﻿namespace Customers.Pn
+﻿namespace Customers.Pn.Infrastructure
 {
     public static class DbConfig
     {
