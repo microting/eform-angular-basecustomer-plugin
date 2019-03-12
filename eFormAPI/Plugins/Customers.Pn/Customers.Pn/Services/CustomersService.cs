@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -77,14 +77,12 @@ namespace Customers.Pn.Services
 				}
 
 				customersQuery =
-					customersQuery.Where(x => x.Workflow_state != Constants.WorkflowStates.Removed);
-
-				customersQuery = customersQuery
+					customersQuery.Where(x => x.Workflow_state != Constants.WorkflowStates.Removed)
                     .Skip(pnRequestModel.Offset)
                     .Take(pnRequestModel.PageSize);
 
                 List<Customer> customers = customersQuery.ToList();
-                customersPnModel.Total = _dbContext.Customers.Count();
+                customersPnModel.Total = _dbContext.Customers.Count(x => x.Workflow_state != Constants.WorkflowStates.Removed);
                 List<FieldUpdateModel> fields = _dbContext.CustomerFields
                     .Include("Field")
                     .Select(x => new FieldUpdateModel()
@@ -450,19 +448,18 @@ namespace Customers.Pn.Services
         {
             try
             {
-                Debugger.Break();
                 Customer customerForUpdate = new Customer()
                 {
-                    CityName = customerUpdateModel.CityName,
-                    CompanyAddress = customerUpdateModel.CompanyAddress,
-                    CompanyName = customerUpdateModel.CompanyName,
-                    ContactPerson = customerUpdateModel.ContactPerson,
                     CreatedBy = customerUpdateModel.CreatedBy,
                     CustomerNo = customerUpdateModel.CustomerNo,
-                    Description = customerUpdateModel.Description,
-                    Email = customerUpdateModel.Email,
-                    Phone = customerUpdateModel.Phone,
+                    ContactPerson = customerUpdateModel.ContactPerson,
+                    CompanyName = customerUpdateModel.CompanyName,
+                    CompanyAddress = customerUpdateModel.CompanyAddress,
                     ZipCode = customerUpdateModel.ZipCode,
+                    CityName = customerUpdateModel.CityName,
+                    Phone = customerUpdateModel.Phone,
+                    Email = customerUpdateModel.Email,
+                    Description = customerUpdateModel.Description,
                     RelatedEntityId = customerUpdateModel.RelatedEntityId,
                     Id = customerUpdateModel.Id,
                 };
