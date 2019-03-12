@@ -14,11 +14,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Infrastructure\Migrations\20190306211229_AddConfigurationTables.cs" />
-    <Compile Remove="Infrastructure\Migrations\20190306211348_AddConfigurationTables.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Resources\localization.json" />
   </ItemGroup>
 
@@ -29,19 +24,13 @@
   <ItemGroup>
     <PackageReference Include="Automapper" Version="6.1.0" />
     <PackageReference Include="McMaster.NETCore.Plugins" Version="0.2.1" />
-    <!--<PackageReference Include="Microting.eFormApi.BasePn" Version="1.1.97" />-->
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="1.1.105" />
     <PackageReference Include="OtpSharp.Core" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.2" />
-    <PackageReference Include="Microting.eForm" Version="3.0.161" />
+    <PackageReference Include="Microting.eForm" Version="3.0.173" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.2" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Reference Include="Microting.eFormApi.BasePn">
-      <HintPath>..\..\..\..\..\eFormApi.BasePn\eFormApi.BasePn\bin\Debug\netcoreapp2.2\Microting.eFormApi.BasePn.dll</HintPath>
-    </Reference>
   </ItemGroup>
   
 </Project>
