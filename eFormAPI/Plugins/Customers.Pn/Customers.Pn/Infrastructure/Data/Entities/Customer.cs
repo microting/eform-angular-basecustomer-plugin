@@ -49,8 +49,8 @@ namespace Customers.Pn.Infrastructure.Data.Entities
             dbContext.Customers.Add(this);
             dbContext.SaveChanges();
 
-            //_dbContext.CustomersVersion.add(MapCustomerVersions(_dbContext, customer));
-            //_dbContext.SaveChanges();
+            dbContext.CustomerVersions.Add(MapCustomerVersions(dbContext, this));
+            dbContext.SaveChanges();
         }
 
         public void Update(CustomersPnDbAnySql dbContext)
@@ -78,10 +78,11 @@ namespace Customers.Pn.Infrastructure.Data.Entities
 
             if (dbContext.ChangeTracker.HasChanges())
             {
-                //customer.Updated_at = DateTime.Now;
-                //customer.Version += 1;
+                customer.Updated_at = DateTime.Now;
+                customer.Version += 1;
+                dbContext.SaveChanges();
 
-                //_dbContext.CustomerVersions.Add(MapCustomerVersions(_dbContext, customer));
+                dbContext.CustomerVersions.Add(MapCustomerVersions(dbContext, customer));
                 dbContext.SaveChanges();
             }
         }
@@ -100,32 +101,33 @@ namespace Customers.Pn.Infrastructure.Data.Entities
 
             if (dbContext.ChangeTracker.HasChanges())
             {
-                //customer.Updated_at = DateTime.Now;
-                //customer.Version += 1;
-                //_dbContext.Customers.Remove(customer);
-                //_dbContext.CustomerVersions.Add(MapCustomerVersions(_dbContext, customer));
+                customer.Updated_at = DateTime.Now;
+                customer.Version += 1;
+                dbContext.SaveChanges();
+                
+                dbContext.CustomerVersions.Add(MapCustomerVersions(dbContext, customer));
                 dbContext.SaveChanges();
             }
         }
 
-        //private CustomerVersions MapCustomerVersions(CustomersPnDbAnySql _dbContext, Customer customer)
-        //{
-        //    CustomerVersions customerVer = new CustomerVersions();
+        private CustomerVersion MapCustomerVersions(CustomersPnDbAnySql dbContext, Customer customer)
+        {
+            CustomerVersion customerVer = new CustomerVersion();
 
-        //    customerVer.CityName = customer.CityName;
-        //    customerVer.CompanyAddress = customer.CompanyAddress;
-        //    customerVer.CompanyName = customer.CompanyName;
-        //    customerVer.ContactPerson = customer.ContactPerson;
-        //    customerVer.CreatedBy = customer.CreatedBy;
-        //    customerVer.CreatedDate = customer.CreatedDate;
-        //    customerVer.CustomerNo = customer.CustomerNo;
-        //    customerVer.Description = customer.Description;
-        //    customerVer.Email = customer.Email;
-        //    customerVer.Phone = customer.Phone;
-        //    customerVer.ZipCode = customer.ZipCode;
-        //    customerVer.CustomerId = customer.Id;
+            customerVer.CityName = customer.CityName;
+            customerVer.CompanyAddress = customer.CompanyAddress;
+            customerVer.CompanyName = customer.CompanyName;
+            customerVer.ContactPerson = customer.ContactPerson;
+            customerVer.CreatedBy = customer.CreatedBy;
+            customerVer.CreatedDate = customer.CreatedDate;
+            customerVer.CustomerNo = customer.CustomerNo;
+            customerVer.Description = customer.Description;
+            customerVer.Email = customer.Email;
+            customerVer.Phone = customer.Phone;
+            customerVer.ZipCode = customer.ZipCode;
+            customerVer.CustomerId = customer.Id;
 
-        //    return customerVer;
-        //}
+            return customerVer;
+        }
     }
 }
