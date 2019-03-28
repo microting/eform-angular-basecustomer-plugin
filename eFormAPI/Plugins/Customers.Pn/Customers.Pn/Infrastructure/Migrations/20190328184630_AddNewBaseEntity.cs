@@ -1,82 +1,18 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Customers.Pn.Infrastructure.Migrations
 {
-    public partial class UpdateSettings : Migration
+    public partial class AddNewBaseEntity : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            string autoIdGenStrategy = "SqlServer:ValueGenerationStrategy";
-            object autoIdGenStrategyValue = SqlServerValueGenerationStrategy.IdentityColumn;
-
-            // Setup for MySQL Provider
-            if (migrationBuilder.ActiveProvider == "Pomelo.EntityFrameworkCore.MySql")
-            {
-                DbConfig.IsMySQL = true;
-                autoIdGenStrategy = "MySql:ValueGenerationStrategy";
-                autoIdGenStrategyValue = MySqlValueGenerationStrategy.IdentityColumn;
-            }
+            migrationBuilder.DropTable(
+                name: "PluginConfigurationValues");
 
             migrationBuilder.DropTable(
                 name: "PluginConfigurationVersions");
 
-            migrationBuilder.DropIndex(
-                name: "IX_PluginConfigurationValues_Id",
-                table: "PluginConfigurationValues");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Customers_RelatedEntityId",
-                table: "Customers");
-
-            migrationBuilder.AlterColumn<int>(
-                name: "Id",
-                table: "PluginConfigurationValues",
-                nullable: false,
-                oldClrType: typeof(string))
-                .Annotation(autoIdGenStrategy, autoIdGenStrategyValue);
-
-            migrationBuilder.AddColumn<DateTime>(
-                name: "CreatedAt",
-                table: "PluginConfigurationValues",
-                nullable: false,
-                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
-
-            migrationBuilder.AddColumn<int>(
-                name: "CreatedByUserId",
-                table: "PluginConfigurationValues",
-                nullable: false,
-                defaultValue: 0);
-
-            migrationBuilder.AddColumn<string>(
-                name: "Name",
-                table: "PluginConfigurationValues",
-                nullable: true);
-
-            migrationBuilder.AddColumn<DateTime>(
-                name: "UpdatedAt",
-                table: "PluginConfigurationValues",
-                nullable: true);
-
-            migrationBuilder.AddColumn<int>(
-                name: "UpdatedByUserId",
-                table: "PluginConfigurationValues",
-                nullable: false,
-                defaultValue: 0);
-
-            migrationBuilder.AddColumn<int>(
-                name: "Version",
-                table: "PluginConfigurationValues",
-                nullable: false,
-                defaultValue: 0);
-
-            migrationBuilder.AddColumn<string>(
-                name: "WorkflowState",
-                table: "PluginConfigurationValues",
-                maxLength: 255,
-                nullable: true);
-
             migrationBuilder.AddColumn<DateTime>(
                 name: "CreatedAt",
                 table: "Fields",
@@ -204,82 +140,10 @@ namespace Customers.Pn.Infrastructure.Migrations
                 table: "CustomerFields",
                 maxLength: 255,
                 nullable: true);
-
-            migrationBuilder.CreateTable(
-                name: "PluginConfigurationValueVersions",
-                columns: table => new
-                {
-                    Id = table.Column<int>()
-                        .Annotation(autoIdGenStrategy, autoIdGenStrategyValue),
-                    CreatedAt = table.Column<DateTime>(),
-                    UpdatedAt = table.Column<DateTime>(nullable: true),
-                    WorkflowState = table.Column<string>(maxLength: 255, nullable: true),
-                    CreatedByUserId = table.Column<int>(),
-                    UpdatedByUserId = table.Column<int>(),
-                    Version = table.Column<int>(),
-                    Name = table.Column<string>(nullable: true),
-                    Value = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PluginConfigurationValueVersions", x => x.Id);
-                });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Customers_RelatedEntityId",
-                table: "Customers",
-                column: "RelatedEntityId",
-                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            string autoIdGenStrategy = "SqlServer:ValueGenerationStrategy";
-            object autoIdGenStrategyValue = SqlServerValueGenerationStrategy.IdentityColumn;
-
-            // Setup for MySQL Provider
-            if (migrationBuilder.ActiveProvider == "Pomelo.EntityFrameworkCore.MySql")
-            {
-                DbConfig.IsMySQL = true;
-                autoIdGenStrategy = "MySql:ValueGenerationStrategy";
-                autoIdGenStrategyValue = MySqlValueGenerationStrategy.IdentityColumn;
-            }
-
-            migrationBuilder.DropTable(
-                name: "PluginConfigurationValueVersions");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Customers_RelatedEntityId",
-                table: "Customers");
-
-            migrationBuilder.DropColumn(
-                name: "CreatedAt",
-                table: "PluginConfigurationValues");
-
-            migrationBuilder.DropColumn(
-                name: "CreatedByUserId",
-                table: "PluginConfigurationValues");
-
-            migrationBuilder.DropColumn(
-                name: "Name",
-                table: "PluginConfigurationValues");
-
-            migrationBuilder.DropColumn(
-                name: "UpdatedAt",
-                table: "PluginConfigurationValues");
-
-            migrationBuilder.DropColumn(
-                name: "UpdatedByUserId",
-                table: "PluginConfigurationValues");
-
-            migrationBuilder.DropColumn(
-                name: "Version",
-                table: "PluginConfigurationValues");
-
-            migrationBuilder.DropColumn(
-                name: "WorkflowState",
-                table: "PluginConfigurationValues");
-
             migrationBuilder.DropColumn(
                 name: "CreatedAt",
                 table: "Fields");
@@ -368,20 +232,25 @@ namespace Customers.Pn.Infrastructure.Migrations
                 name: "WorkflowState",
                 table: "CustomerFields");
 
-            migrationBuilder.AlterColumn<string>(
-                name: "Id",
-                table: "PluginConfigurationValues",
-                nullable: false,
-                oldClrType: typeof(int))
-                .OldAnnotation(autoIdGenStrategy, autoIdGenStrategyValue);
+            migrationBuilder.CreateTable(
+                name: "PluginConfigurationValues",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Value = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PluginConfigurationValues", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "PluginConfigurationVersions",
                 columns: table => new
                 {
-                    Id = table.Column<string>(),
+                    Id = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: true),
-                    Version = table.Column<int>()
+                    Version = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -393,13 +262,6 @@ namespace Customers.Pn.Infrastructure.Migrations
                 table: "PluginConfigurationValues",
                 column: "Id",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Customers_RelatedEntityId",
-                table: "Customers",
-                column: "RelatedEntityId",
-                unique: true,
-                filter: "[RelatedEntityId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PluginConfigurationVersions_Id",

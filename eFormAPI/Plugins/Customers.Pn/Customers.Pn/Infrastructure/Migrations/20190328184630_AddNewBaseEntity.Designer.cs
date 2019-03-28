@@ -10,20 +10,30 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Customers.Pn.Infrastructure.Migrations
 {
     [DbContext(typeof(CustomersPnDbAnySql))]
-    [Migration("20190328140209_UpdateSettings")]
-    partial class UpdateSettings
+    [Migration("20190328184630_AddNewBaseEntity")]
+    partial class AddNewBaseEntity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
+            string autoIdGenStrategy = "SqlServer:ValueGenerationStrategy";
+            object autoIdGenStrategyValue = SqlServerValueGenerationStrategy.IdentityColumn;
+            if (DbConfig.IsMySQL)
+            {
+                autoIdGenStrategy = "MySql:ValueGenerationStrategy";
+                autoIdGenStrategyValue = MySqlValueGenerationStrategy.IdentityColumn;
+            }
+
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation(autoIdGenStrategy, autoIdGenStrategyValue);
 
             modelBuilder.Entity("Customers.Pn.Infrastructure.Data.Entities.Customer", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation(autoIdGenStrategy, autoIdGenStrategyValue);
 
                     b.Property<string>("CityName")
                         .HasMaxLength(250);
@@ -84,7 +94,8 @@ namespace Customers.Pn.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("RelatedEntityId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[RelatedEntityId] IS NOT NULL");
 
                     b.ToTable("Customers");
                 });
@@ -92,7 +103,8 @@ namespace Customers.Pn.Infrastructure.Migrations
             modelBuilder.Entity("Customers.Pn.Infrastructure.Data.Entities.CustomerField", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation(autoIdGenStrategy, autoIdGenStrategyValue);
 
                     b.Property<DateTime>("CreatedAt");
 
@@ -121,7 +133,8 @@ namespace Customers.Pn.Infrastructure.Migrations
             modelBuilder.Entity("Customers.Pn.Infrastructure.Data.Entities.CustomerVersion", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation(autoIdGenStrategy, autoIdGenStrategyValue);
 
                     b.Property<string>("CityName")
                         .HasMaxLength(250);
@@ -189,7 +202,8 @@ namespace Customers.Pn.Infrastructure.Migrations
             modelBuilder.Entity("Customers.Pn.Infrastructure.Data.Entities.Field", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation(autoIdGenStrategy, autoIdGenStrategyValue);
 
                     b.Property<DateTime>("CreatedAt");
 
@@ -212,60 +226,6 @@ namespace Customers.Pn.Infrastructure.Migrations
                     b.HasIndex("Name");
 
                     b.ToTable("Fields");
-                });
-
-            modelBuilder.Entity("Microting.eFormApi.BasePn.Infrastructure.Database.Entities.PluginConfigurationValue", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("CreatedAt");
-
-                    b.Property<int>("CreatedByUserId");
-
-                    b.Property<string>("Name");
-
-                    b.Property<DateTime?>("UpdatedAt");
-
-                    b.Property<int>("UpdatedByUserId");
-
-                    b.Property<string>("Value");
-
-                    b.Property<int>("Version");
-
-                    b.Property<string>("WorkflowState")
-                        .HasMaxLength(255);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PluginConfigurationValues");
-                });
-
-            modelBuilder.Entity("Microting.eFormApi.BasePn.Infrastructure.Database.Entities.PluginConfigurationValueVersion", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("CreatedAt");
-
-                    b.Property<int>("CreatedByUserId");
-
-                    b.Property<string>("Name");
-
-                    b.Property<DateTime?>("UpdatedAt");
-
-                    b.Property<int>("UpdatedByUserId");
-
-                    b.Property<string>("Value");
-
-                    b.Property<int>("Version");
-
-                    b.Property<string>("WorkflowState")
-                        .HasMaxLength(255);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PluginConfigurationValueVersions");
                 });
 
             modelBuilder.Entity("Customers.Pn.Infrastructure.Data.Entities.CustomerField", b =>
