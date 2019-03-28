@@ -9,7 +9,7 @@ namespace Customers.Pn.Infrastructure.Data.Seed.Data
         {
             new PluginConfigurationValue()
             {
-                Id = "CustomersSettings:RelatedEntityGroupId",
+                Name = "CustomersSettings:RelatedEntityGroupId",
                 Value = ""
             },
         };

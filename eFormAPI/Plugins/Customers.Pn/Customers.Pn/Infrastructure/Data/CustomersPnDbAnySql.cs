@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
-using Microting.eFormApi.BasePn.Infrastructure.Database.Extensions;
 
 namespace Customers.Pn.Infrastructure.Data
 {
@@ -19,7 +18,7 @@ namespace Customers.Pn.Infrastructure.Data
         public DbSet<Field> Fields { get; set; }
         public DbSet<CustomerField> CustomerFields { get; set; }
         public DbSet<PluginConfigurationValue> PluginConfigurationValues { get; set; }
-        public DbSet<PluginConfigurationVersion> PluginConfigurationVersions { get; set; }
+        public DbSet<PluginConfigurationValueVersion> PluginConfigurationValueVersions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -30,8 +29,6 @@ namespace Customers.Pn.Infrastructure.Data
                 .IsUnique();
             modelBuilder.Entity<Field>()
                 .HasIndex(x => x.Name);
-
-            modelBuilder.AddPluginSettingsRules();
         }
     }
 }

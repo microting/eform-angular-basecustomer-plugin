@@ -14,8 +14,6 @@ namespace Customers.Pn.Infrastructure.Data.Entities
         [StringLength(255)]
         public string Workflow_state { get; set; }
 
-        public int Version { get; set; }
-
         public int Created_By_User_Id { get; set; }
 
         public int Updated_By_User_Id { get; set; }
