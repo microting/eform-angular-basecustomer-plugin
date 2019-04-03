@@ -9,7 +9,6 @@ namespace Customers.Pn.Infrastructure.Data.Factories
     {
         public CustomersPnDbAnySql CreateDbContext(string[] args)
         {
-            // args = new[] {"Data Source=.\\SQLEXPRESS;Database=111_TEST;Integrated Security=True"};
             var optionsBuilder = new DbContextOptionsBuilder<CustomersPnDbAnySql>();
             if (args.Any())
             {

@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Customers.Pn.Infrastructure.Data.Seed.Data;
+using eFormShared;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 
 namespace Customers.Pn.Infrastructure.Data.Seed
@@ -12,12 +14,16 @@ namespace Customers.Pn.Infrastructure.Data.Seed
             var configurationList = seedData.Data;
             foreach (var configurationItem in configurationList)
             {
-                if (!dbContext.PluginConfigurationValues.Any(x=>x.Id == configurationItem.Id))
+                if (!dbContext.PluginConfigurationValues.Any(x=>x.Name == configurationItem.Name))
                 {
                     var newConfigValue = new PluginConfigurationValue()
                     {
-                        Id = configurationItem.Id,
+                        Name = configurationItem.Name,
                         Value = configurationItem.Value,
+                        CreatedAt = DateTime.UtcNow,
+                        Version = 1,
+                        WorkflowState = Constants.WorkflowStates.Created,
+                        CreatedByUserId = 1
                     };
                     dbContext.PluginConfigurationValues.Add(newConfigValue);
                     dbContext.SaveChanges();

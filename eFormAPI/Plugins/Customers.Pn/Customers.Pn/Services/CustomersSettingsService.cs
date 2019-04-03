@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Customers.Pn.Abstractions;
 using Customers.Pn.Infrastructure.Data;
 using Customers.Pn.Infrastructure.Models.Customer;
 using Customers.Pn.Infrastructure.Models.Settings;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
@@ -19,18 +21,21 @@ namespace Customers.Pn.Services
         private readonly CustomersPnDbAnySql _dbContext;
         private readonly ICustomersLocalizationService _customersLocalizationService;
         private readonly IPluginDbOptions<CustomersSettings> _options;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public CustomersSettingsService(ILogger<CustomersSettingsService> logger,
             CustomersPnDbAnySql dbContext,
             IEFormCoreService coreHelper,
             ICustomersLocalizationService customersLocalizationService,
-            IPluginDbOptions<CustomersSettings> options)
+            IPluginDbOptions<CustomersSettings> options,
+            IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
             _dbContext = dbContext;
             _coreHelper = coreHelper;
             _customersLocalizationService = customersLocalizationService;
             _options = options;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public OperationDataResult<CustomerSettingsModel> GetSettings()
@@ -79,9 +84,11 @@ namespace Customers.Pn.Services
                     return new OperationResult(false, "Entity group not found");
                 }
 
+                var userId = UserId;
                 await _options.UpdateDb(
                     x => { x.RelatedEntityGroupId = customerSettingsModel.RelatedEntityId; },
-                    _dbContext);
+                    _dbContext,
+                    userId);
 
                 return new OperationDataResult<CustomersModel>(true,
                     _customersLocalizationService.GetString("SettingsUpdatedSuccessfully"));
@@ -92,6 +99,15 @@ namespace Customers.Pn.Services
                 _logger.LogError(e.Message);
                 return new OperationDataResult<CustomersModel>(false,
                     _customersLocalizationService.GetString("ErrorWhileUpdatingSettings"));
+            }
+        }
+
+        public int UserId
+        {
+            get
+            {
+                var value = _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+                return value == null ? 0 : int.Parse(value);
             }
         }
     }
