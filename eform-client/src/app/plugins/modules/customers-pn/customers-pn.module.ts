@@ -19,6 +19,8 @@ import {
   CustomerPnAddComponent,
   CustomerPnImportComponent
 } from './components';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+
 
 @NgModule({
   imports: [
@@ -30,7 +32,8 @@ import {
     TranslateModule,
     MDBRootModule,
     NgSelectModule,
-    PapaParseModule
+    PapaParseModule,
+    FontAwesomeModule
   ],
   declarations: [
     CustomerPnLayoutComponent,
@@ -47,4 +50,5 @@ import {
     CustomersPnSettingsService
   ]
 })
-export class CustomersPnModule { }
+export class CustomersPnModule {
+}

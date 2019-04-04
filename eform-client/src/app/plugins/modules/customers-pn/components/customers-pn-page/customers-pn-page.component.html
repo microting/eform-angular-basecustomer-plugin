@@ -5,9 +5,7 @@
             class="btn btn-danger text-black-50 btn-icon"
             routerLink="settings"
             mdbTooltip="{{ 'Settings' | translate }}">
-      <i class="material-icons">
-        build
-      </i>
+<fa-icon icon="wrench"  size="lg" [fixedWidth]="true"></fa-icon>
     </button>
     <button
       class="btn btn-success"
@@ -78,16 +76,12 @@
             <button class="btn btn-accent text-black-50 btn-icon mb-2"
                     mdbTooltip="{{ 'Edit Customer' | translate }}" id="editCustomerBtn"
                     (click)="showEditCustomerModal(customer)">
-              <i class="material-icons">
-                edit
-              </i>
+              <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
             <button class="btn btn-danger btn-icon mb-2 "
                     mdbTooltip="{{ 'Delete Customer' | translate }}" id="deleteCustomerBtn"
                     (click)="showDeleteCustomerModal(customer)">
-              <i class="material-icons" >
-                delete_forever
-              </i>
+              <fa-icon size="lg" [fixedWidth]="true" icon="trash-alt"></fa-icon>
             </button>
           </div>
         </td>
