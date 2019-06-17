@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Customers.Pn.Infrastructure.Data.Entities;
-using Customers.Pn.Infrastructure.Models.Fields;
 using Microsoft.EntityFrameworkCore;
+using Microting.eFormBaseCustomerBase.Infrastructure.Data.Entities;
+using Microting.eFormBaseCustomerBase.Infrastructure.Models;
+using Microting.eFormBaseCustomerBase.Infrastructure.Models.Fields;
 using NUnit.Framework;
 
 namespace Customers.Pn.Test

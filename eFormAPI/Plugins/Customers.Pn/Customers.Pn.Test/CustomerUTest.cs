@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Customers.Pn.Infrastructure.Data.Entities;
-using Customers.Pn.Infrastructure.Models;
 using Microsoft.EntityFrameworkCore;
+using Microting.eFormBaseCustomerBase.Infrastructure.Data.Entities;
 using NUnit.Framework;
 
 namespace Customers.Pn.Test

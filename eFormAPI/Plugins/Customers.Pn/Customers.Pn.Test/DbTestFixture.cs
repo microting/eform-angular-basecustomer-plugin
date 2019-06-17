@@ -1,12 +1,11 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Microsoft.EntityFrameworkCore;
-using Customers.Pn.Infrastructure.Data;
 using System.IO;
 using System.Runtime.InteropServices;
-using Customers.Pn.Infrastructure.Data.Factories;
+using Microting.eFormBaseCustomerBase.Infrastructure.Data;
+using Microting.eFormBaseCustomerBase.Infrastructure.Data.Factories;
 
 
 namespace Customers.Pn.Test
