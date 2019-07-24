@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Customers.Pn.Infrastructure.Data.Seed.Data;
-using eFormShared;
+using Microting.eForm.Infrastructure.Constants;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using Microting.eFormBaseCustomerBase.Infrastructure.Data;
 
