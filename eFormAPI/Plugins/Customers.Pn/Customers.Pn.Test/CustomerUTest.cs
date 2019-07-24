@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microting.eForm.Infrastructure.Constants;
 using Microting.eFormBaseCustomerBase.Infrastructure.Data.Entities;
 using NUnit.Framework;
 
@@ -143,7 +144,7 @@ namespace Customers.Pn.Test
             Assert.AreEqual(customer.Email, dbCustomer.Email);
             Assert.AreEqual(customer.Phone, dbCustomer.Phone);
             Assert.AreEqual(customer.ZipCode, dbCustomer.ZipCode);
-            Assert.AreEqual(customer.Workflow_state, eFormShared.Constants.WorkflowStates.Removed);
+            Assert.AreEqual(customer.Workflow_state, Constants.WorkflowStates.Removed);
         }
     }
 }
