@@ -12,7 +12,7 @@ Build status
 | Danish | 100% | 100% |
 | German | 0% | 0% |
 
-# Plugin installation tutorial
+# Plugin manual installation tutorial
 Extract zip content to a root application directory.
 On front-end part plugins will be included into `eform-client/src/app/plugins/modules` To include module into front-end application add routing block to plugins.routing.module.ts
 
@@ -96,6 +96,15 @@ export const routes: Routes = [
 })
 export class PluginsRouting {
 }
+```
+
+# Plugin automatic installation
+
+This is expection you to have eform-angular-frontend installed as default in /var/www/microting/
+
+```
+cd /var/www/microting/
+curl -s -L https://raw.githubusercontent.com/microting/eform-angular-basecustomer-plugin/master/install.sh | sudo bash
 ```
 
 ## Contributing
