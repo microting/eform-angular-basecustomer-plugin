@@ -10,6 +10,7 @@ namespace Customers.Pn.Infrastructure.Models.Customer
         public string CustomerNo { get; set; }
         public string CompanyName { get; set; }
         public string CompanyAddress { get; set; }
+        public string CompanyAddress2 { get; set; }
         public string ZipCode { get; set; }
         public string CityName { get; set; }
         public string Phone { get; set; }
@@ -17,6 +18,9 @@ namespace Customers.Pn.Infrastructure.Models.Customer
         public string ContactPerson { get; set; }
         public string Description { get; set; }
         public int? RelatedEntityId { get; set; }
+        public string EanCode { get; set; }
+        public string VatNumber { get; set; }
+        public string CountryCode { get; set; }
         
     }
 }

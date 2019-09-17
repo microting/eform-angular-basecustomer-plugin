@@ -72,7 +72,7 @@ namespace Customers.Pn.Services
 
                 if (fields.Any())
                 {
-                    fields.First().UpdateFields(_dbContext, fieldsModel, fields);
+                    UpdateFields(_dbContext, fieldsModel, fields);
                 }
 
                 return new OperationResult(true,
@@ -85,6 +85,20 @@ namespace Customers.Pn.Services
                 return new OperationResult(false,
                     _localizationService.GetString("ErrorWhileUpdatingFields"));
             }
+        }
+        
+        private void UpdateFields(CustomersPnDbAnySql dbContext, FieldsUpdateModel fieldsUpdate, List<CustomerField> customerFields)
+        {
+            foreach (CustomerField field in customerFields)// Itterating through a list of customerFields.
+            {
+                FieldUpdateModel fieldModel = fieldsUpdate.Fields.FirstOrDefault(x => x.Id == field.FieldId); // takes field from list of fields
+                if (fieldModel != null) 
+                {
+                    field.FieldStatus = fieldModel.FieldStatus;// sets new status for field, based on the updatemodels status.
+                }
+            }
+
+            dbContext.SaveChanges();
         }
     }
 }

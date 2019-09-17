@@ -27,14 +27,18 @@ export class CustomerPnImportComponent implements OnInit {
   options = [
     {value: 0, label: 'CityName'},
     {value: 1, label: 'CompanyAddress'},
-    {value: 2, label: 'CompanyName'},
-    {value: 3, label: 'ContactPerson'},
-    {value: 4, label: 'CustomerNo'},
-    {value: 5, label: 'Description'},
-    {value: 6, label: 'E-mail'},
-    {value: 7, label: 'Phone'},
-    {value: 8, label: 'ZipCode'},
-    {value: 9, label: 'Ignore'}
+    {value: 2, label: 'CompanyAddress2'},
+    {value: 3, label: 'CompanyName'},
+    {value: 4, label: 'ContactPerson'},
+    {value: 5, label: 'CustomerNo'},
+    {value: 6, label: 'Description'},
+    {value: 7, label: 'E-mail'},
+    {value: 8, label: 'Phone'},
+    {value: 9, label: 'ZipCode'},
+    {value: 10, label: 'EanCode'},
+    {value: 11, label: 'VatNumber'},
+    {value: 12, label: 'CountryCode'},
+    {value: 13, label: 'Ignore'}
 
   ];
   constructor(private customerService: CustomersPnService) {
