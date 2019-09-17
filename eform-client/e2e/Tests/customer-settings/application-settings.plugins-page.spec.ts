@@ -13,8 +13,8 @@ describe('Application settings page - site header section', function () {
     it('should go to plugin settings page', function () {
         myEformsPage.Navbar.advancedDropdown();
         myEformsPage.Navbar.clickonSubMenuItem('Plugins');
-        browser.waitForVisible('#plugin-id', 80000);
-
+        // browser.waitForVisible('#plugin-id', 80000);
+        browser.pause(8000);
         const plugin = pluginsPage.getFirstPluginRowObj();
         expect(plugin.id).equal(1);
         expect(plugin.name).equal('Microting Customers plugin');
