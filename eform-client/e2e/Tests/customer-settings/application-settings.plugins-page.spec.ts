@@ -39,7 +39,7 @@ describe('Application settings page - site header section', function () {
         expect(plugin.name).equal('Microting Customers plugin');
         expect(plugin.version).equal('1.0.0.0');
         expect(plugin.status).equal('Aktiveret');
-        expect(browser.element(`//*[contains(@class, 'dropdown')]//*[contains(text(), 'Kunder')]`).isExisting()).equal(true);
+        expect(browser.element(`//*[contains(text(), 'Kunder')]`).isExisting()).equal(true);
 
         // validate that the customers index page is shown with all fields active in the header
     });
