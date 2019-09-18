@@ -40,8 +40,9 @@ namespace Customers.Pn.Services
                         FieldStatus = x.FieldStatus,
                         Id = x.FieldId,
                         Name = x.Field.Name,
-                    }).Reverse().ToList();
+                    }).ToList();
                 // Mode Id field to top
+                fields.Reverse();
                 int index = fields.FindIndex(x => x.Name == "Id");
                 FieldUpdateModel item = fields[index];
                 fields[index] = fields[0];

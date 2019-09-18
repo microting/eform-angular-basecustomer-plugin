@@ -83,7 +83,9 @@ namespace Customers.Pn.Services
                     .Take(pnRequestModel.PageSize);
 
                 List<Customer> customers = customersQuery.ToList();
+                
                 customersPnModel.Total = _dbContext.Customers.Count(x => x.WorkflowState != Constants.WorkflowStates.Removed);
+                
                 List<FieldUpdateModel> fields = _dbContext.CustomerFields
                     .Include("Field")
                     .Select(x => new FieldUpdateModel()
@@ -91,7 +93,9 @@ namespace Customers.Pn.Services
                         FieldStatus = x.FieldStatus,
                         Id = x.FieldId,
                         Name = x.Field.Name,
-                    }).Reverse().ToList();
+                    }).ToList();
+                
+//                fields.Reverse();
 
                 foreach (Customer customer in customers)
                 {
@@ -99,6 +103,7 @@ namespace Customers.Pn.Services
                     {
                         Id = customer.Id,
                     };
+                    
                     foreach (FieldUpdateModel field in fields)
                     {
                         if (field.FieldStatus == 1)
@@ -129,10 +134,29 @@ namespace Customers.Pn.Services
                     if (customerModel.Fields.Any())
                     {
                         // Mode Id field to top
+                        customerModel.Fields.Reverse();
+
                         int index = customerModel.Fields.FindIndex(x => x.Name == "Id");
-                        FieldModel item = customerModel.Fields[index];
-                        customerModel.Fields[index] = customerModel.Fields[0];
-                        customerModel.Fields[0] = item;
+                        FieldModel idField = customerModel.Fields[index];
+                        FieldModel lastField = customerModel.Fields.Last();
+
+                        for (int i = customerModel.Fields.Count() - 2; i >= 0; i--)
+                        {
+                            customerModel.Fields[i + 1] = customerModel.Fields[i];
+                        }
+
+//                        customerModel.Fields[customerModel.Fields.Count() - 1] = lastField;
+
+                        customerModel.Fields[0] = idField;
+
+//                        for (int i = 0; i < 1; i++)
+//                        {
+//                            customerModel.Fields[i] = 
+//                        }
+
+//                        FieldModel item = customerModel.Fields[index];
+//                        customerModel.Fields[index] = customerModel.Fields[0];
+//                        customerModel.Fields[0] = item;
                     }
 
                     customersPnModel.Customers.Add(customerModel);
