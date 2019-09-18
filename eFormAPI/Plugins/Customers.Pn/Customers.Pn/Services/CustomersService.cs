@@ -91,7 +91,7 @@ namespace Customers.Pn.Services
                         FieldStatus = x.FieldStatus,
                         Id = x.FieldId,
                         Name = x.Field.Name,
-                    }).ToList();
+                    }).Reverse().ToList();
 
                 foreach (Customer customer in customers)
                 {
