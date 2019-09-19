@@ -14,7 +14,7 @@ describe('Application settings page - site header section', function () {
         myEformsPage.Navbar.advancedDropdown();
         myEformsPage.Navbar.clickonSubMenuItem('Plugins');
         browser.waitForVisible('#plugin-id', 80000);
-        browser.pause(10000);
+        browser.pause(20000);
 
         const plugin = pluginsPage.getFirstPluginRowObj();
         expect(plugin.id).equal(1);
@@ -28,7 +28,7 @@ describe('Application settings page - site header section', function () {
         pluginPage.pluginSettingsBtn.click();
         // browser.pause(8000);
         browser.waitForVisible('#PluginDropDown', 80000);
-        browser.pause(10000);
+        browser.pause(20000);
         pluginPage.selectValue('PluginDropDown', 'PluginDropDown', 'Aktiveret');
         // browser.pause(8000);
         pluginPage.saveBtn.click();
