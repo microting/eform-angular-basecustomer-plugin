@@ -25,7 +25,7 @@ describe('Application settings page - site header section', function () {
     });
     it('should activate the plugin', function () {
         pluginPage.pluginSettingsBtn.click();
-        browser.waitForVisible('#PluginDropDown', 40000);
+        browser.waitForVisible('#PluginDropDown', 50000);
         pluginPage.selectValue('PluginDropDown', 'PluginDropDown', 'Aktiveret');
         // browser.pause(8000);
         pluginPage.saveBtn.click();
