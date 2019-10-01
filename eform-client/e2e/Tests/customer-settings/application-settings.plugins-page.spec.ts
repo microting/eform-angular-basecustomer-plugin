@@ -25,14 +25,14 @@ describe('Application settings page - site header section', function () {
     });
     it('should activate the plugin', function () {
         pluginPage.pluginSettingsBtn.click();
-        browser.waitForVisible('#PluginDropDown', 50000);
+        browser.waitForVisible('#PluginDropDown', 40000);
         pluginPage.selectValue('PluginDropDown', 'PluginDropDown', 'Aktiveret');
         // browser.pause(8000);
         pluginPage.saveBtn.click();
-        browser.pause(2000);
+        browser.pause(50000); // We need to wait 50 seconds for the plugin to create db etc.
         browser.refresh();
 
-        browser.pause(20000);
+        browser.waitForVisible('#plugin-id', 40000);
         const plugin = pluginsPage.getFirstPluginRowObj();
         expect(plugin.id).equal(1);
         expect(plugin.name).equal('Microting Customers plugin');
