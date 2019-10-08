@@ -3,6 +3,7 @@ export class CustomerPnFullModel {
   createdBy: string;
   companyName: string;
   companyAddress: string;
+  companyAddress2: string;
   customerNo: string;
   zipCode: string;
   cityName: string;
@@ -11,4 +12,7 @@ export class CustomerPnFullModel {
   contactPerson: string;
   description: string = null;
   relatedEntityId: string;
+  eanCode: string;
+  vatNumber;
+  countryCode;
 }
