@@ -1,14 +1,17 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
-import {AdminGuard, AuthGuard} from 'src/app/common/guards';
+import {AdminGuard, AuthGuard, PermissionGuard} from 'src/app/common/guards';
 import {CustomerPnLayoutComponent} from './layouts';
 import {CustomersPnPageComponent, CustomersPnFieldsComponent, CustomerPnImportComponent} from './components';
+import {CustomersPnClaims} from './enums';
 
 export const routes: Routes = [
   {
     path: '',
     component: CustomerPnLayoutComponent,
+    canActivate: [PermissionGuard],
+    data: {requiredPermission: CustomersPnClaims.accessCustomersPlugin},
     children: [
       {
         path: '',
