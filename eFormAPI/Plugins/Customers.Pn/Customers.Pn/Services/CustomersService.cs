@@ -376,7 +376,11 @@ namespace Customers.Pn.Services
                         ContactPerson = x.ContactPerson,
                         CreatedBy = x.CreatedBy,
                         CompanyAddress = x.CompanyAddress,
+                        CompanyAddress2 = x.CompanyAddress2,
                         CompanyName = x.CompanyName,
+                        CountryCode = x.CountryCode,
+                        EanCode = x.EanCode,
+                        VatNumber = x.VatNumber,
                         RelatedEntityId = x.RelatedEntityId
                     })
                     .FirstOrDefault(x => x.Id == id);
@@ -411,13 +415,17 @@ namespace Customers.Pn.Services
                     {
                         CityName = customerPnCreateModel.CityName,
                         CompanyAddress = customerPnCreateModel.CompanyAddress,
+                        CompanyAddress2 =  customerPnCreateModel.CompanyAddress2,
                         CompanyName = customerPnCreateModel.CompanyName,
                         ContactPerson = customerPnCreateModel.ContactPerson,
+                        CountryCode = customerPnCreateModel.CountryCode,
                         CreatedBy = customerPnCreateModel.CreatedBy,
                         CustomerNo = customerPnCreateModel.CustomerNo,
                         Description = customerPnCreateModel.Description,
+                        EanCode = customerPnCreateModel.EanCode,
                         Email = customerPnCreateModel.Email,
                         Phone = customerPnCreateModel.Phone,
+                        VatNumber = customerPnCreateModel.VatNumber,
                         ZipCode = customerPnCreateModel.ZipCode,
                         RelatedEntityId = customerPnCreateModel.RelatedEntityId,
                         CreatedDate = DateTime.Now
@@ -497,9 +505,13 @@ namespace Customers.Pn.Services
                     ContactPerson = customerUpdateModel.ContactPerson,
                     CompanyName = customerUpdateModel.CompanyName,
                     CompanyAddress = customerUpdateModel.CompanyAddress,
+                    CompanyAddress2 = customerUpdateModel.CompanyAddress2,
+                    CountryCode = customerUpdateModel.CountryCode,
+                    EanCode = customerUpdateModel.EanCode,
                     ZipCode = customerUpdateModel.ZipCode,
                     CityName = customerUpdateModel.CityName,
                     Phone = customerUpdateModel.Phone,
+                    VatNumber = customerUpdateModel.VatNumber,
                     Email = customerUpdateModel.Email,
                     Description = customerUpdateModel.Description,
                     RelatedEntityId = customerUpdateModel.RelatedEntityId,

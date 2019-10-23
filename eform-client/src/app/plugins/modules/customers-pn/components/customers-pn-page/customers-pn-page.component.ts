@@ -3,9 +3,10 @@ import {TranslateService} from '@ngx-translate/core';
 import {PageSettingsModel, UserInfoModel} from 'src/app/common/models';
 import {AuthService, LocaleService} from 'src/app/common/services/auth';
 import {SharedPnService} from 'src/app/plugins/modules/shared/services';
-import {CustomersPnFieldStatusEnum, CustomerPnFieldsEnum} from '../../enums';
+import {CustomersPnFieldStatusEnum, CustomerPnFieldsEnum, CustomersPnClaims} from '../../enums';
 import {CustomerPnModel, CustomersPnModel, CustomersPnRequestModel, FieldsPnUpdateModel} from '../../models';
 import {CustomersPnFieldsService, CustomersPnService} from '../../services';
+import {PluginClaimsHelper} from '../../../../../common/helpers';
 
 declare var require: any;
 
@@ -28,6 +29,15 @@ export class CustomersPnPageComponent implements OnInit {
   localPageSettings: PageSettingsModel = new PageSettingsModel();
 
   spinnerStatus = false;
+
+  get pluginClaimsHelper() {
+    return PluginClaimsHelper;
+  }
+
+  get customersPnClaims() {
+    return CustomersPnClaims;
+  }
+
   constructor(private customersService: CustomersPnService,
               private customersFieldsService: CustomersPnFieldsService,
               private translateService: TranslateService,

@@ -3,6 +3,7 @@ using Customers.Pn.Infrastructure.Models.Customer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
+using Microting.eFormBaseCustomerBase.Infrastructure.Const;
 
 namespace Customers.Pn.Controllers
 {
@@ -32,6 +33,7 @@ namespace Customers.Pn.Controllers
 
         [HttpPost]
         [Route("api/customers-pn")]
+        [Authorize(Policy = CustomersClaims.CreateCustomers)]
         public OperationResult CreateCustomer([FromBody] CustomerFullModel customerPnCreateModel)
         {
             return _customersService.CreateCustomer(customerPnCreateModel);

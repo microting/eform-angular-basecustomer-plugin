@@ -10,5 +10,6 @@ export enum CustomerPnFieldsEnum {
   Email,
   ContactPerson,
   Description,
-  CreatedDate
+  CreatedDate,
+  CompanyAddress2
 }

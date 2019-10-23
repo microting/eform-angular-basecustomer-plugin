@@ -14,8 +14,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microting.eFormApi.BasePn;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Extensions;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Settings;
+using Microting.eFormBaseCustomerBase.Infrastructure.Const;
 using Microting.eFormBaseCustomerBase.Infrastructure.Data;
 using Microting.eFormBaseCustomerBase.Infrastructure.Data.Entities;
 using Microting.eFormBaseCustomerBase.Infrastructure.Data.Factories;
@@ -27,6 +29,7 @@ namespace Customers.Pn
         public string Name => "Microting Customers plugin";
         public string PluginId => "eform-angular-basecustomer-plugin";
         public string PluginPath => PluginAssembly().Location;
+        public string PluginBaseUrl => "customers-pn";
 
         public Assembly PluginAssembly()
         {
@@ -85,7 +88,8 @@ namespace Customers.Pn
             {
                 Name = localizationService.GetString("Customers"),
                 E2EId = "customers-pn",
-                Link = "/plugins/customers-pn"
+                Link = "/plugins/customers-pn",
+                Guards = new List<string>() { CustomersClaims.AccessCustomersPlugin }
             });
             return result;
         }
@@ -153,6 +157,14 @@ namespace Customers.Pn
                 connectionString,
                 seedData,
                 contextFactory);
+        }
+
+        public PluginPermissionsManager GetPermissionsManager(string connectionString)
+        {
+            var contextFactory = new CustomersPnContextFactory();
+            var context = contextFactory.CreateDbContext(new[] { connectionString });
+
+            return new PluginPermissionsManager(context);
         }
     }
 }
