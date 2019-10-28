@@ -13,6 +13,7 @@ describe('Application settings page - site header section', function () {
         loginPage.login();
         myEformsPage.Navbar.advancedDropdown();
         myEformsPage.Navbar.clickonSubMenuItem('Plugins');
+        browser.waitForExist('#plugin-name', 50000);
         browser.pause(40000);
 
         const plugin = pluginsPage.getFirstPluginRowObj();
