@@ -1,10 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {PageSettingsModel, UserInfoModel} from 'src/app/common/models';
 import {AuthService, LocaleService} from 'src/app/common/services/auth';
 import {SharedPnService} from 'src/app/plugins/modules/shared/services';
 import {CustomersPnFieldStatusEnum, CustomerPnFieldsEnum, CustomersPnClaims} from '../../enums';
-import {CustomerPnModel, CustomersPnModel, CustomersPnRequestModel, FieldsPnUpdateModel} from '../../models';
+import {CustomerPnModel, CustomersPnModel, CustomersPnRequestModel, FieldsPnUpdateModel, CustomerPnFullModel} from '../../models';
 import {CustomersPnFieldsService, CustomersPnService} from '../../services';
 import {PluginClaimsHelper} from '../../../../../common/helpers';
 
@@ -19,6 +19,7 @@ export class CustomersPnPageComponent implements OnInit {
   @ViewChild('createCustomerModal') createCustomerModal;
   @ViewChild('editCustomerModal') editCustomerModal;
   @ViewChild('deleteCustomerModal') deleteCustomerModal;
+  @Output() onCustomerDuplicated: EventEmitter<void> = new EventEmitter<void>();
   get fieldStatusEnum() { return CustomersPnFieldStatusEnum; }
   get fieldStatusEnumString() { return CustomersPnFieldStatusEnum; }
   get fieldsEnum() { return CustomerPnFieldsEnum; }
@@ -27,7 +28,7 @@ export class CustomersPnPageComponent implements OnInit {
   customersModel: CustomersPnModel = new CustomersPnModel();
   fieldsModel: FieldsPnUpdateModel = new FieldsPnUpdateModel();
   localPageSettings: PageSettingsModel = new PageSettingsModel();
-
+  customerModel: CustomerPnFullModel = new CustomerPnFullModel();
   spinnerStatus = false;
 
   get pluginClaimsHelper() {
@@ -89,7 +90,26 @@ export class CustomersPnPageComponent implements OnInit {
       this.spinnerStatus = false;
     }));
   }
-
+  duplicateCustomer(customerId: number) {
+    this.spinnerStatus = true;
+    this.customersService.getSingleCustomer(customerId).subscribe(((data) => {
+      if (data && data.success) {
+        // debugger;
+        this.customerModel = data.model;
+        this.customerModel.relatedEntityId = null;
+        this.customerModel.companyName += '_copy';
+        debugger;
+        this.customersService.createCustomer(this.customerModel).subscribe(((result) => {
+          if (result && result.success) {
+            debugger;
+            this.customerModel = new CustomerPnFullModel();
+            this.onCustomerDuplicated.emit();
+          }
+        }));
+      }
+    }));
+    this.spinnerStatus = false;
+  }
   changePage(e: any) {
     if (e || e === 0) {
       this.customersRequestModel.offset = e;

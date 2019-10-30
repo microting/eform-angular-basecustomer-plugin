@@ -409,75 +409,91 @@ namespace Customers.Pn.Services
             try
             {
                 var customerSettings = _options.Value;
-				if (customerSettings?.RelatedEntityGroupId != null)
-				{
-                    Customer newCustomer = new Customer()
+                if (customerSettings?.RelatedEntityGroupId != null)
+                {
+                    Customer customerCopy = _dbContext.Customers.FirstOrDefault(x =>
+                        x.CompanyName + "_copy" == customerPnCreateModel.CompanyName);
+
+                    if (customerCopy == null)
                     {
-                        CityName = customerPnCreateModel.CityName,
-                        CompanyAddress = customerPnCreateModel.CompanyAddress,
-                        CompanyAddress2 =  customerPnCreateModel.CompanyAddress2,
-                        CompanyName = customerPnCreateModel.CompanyName,
-                        ContactPerson = customerPnCreateModel.ContactPerson,
-                        CountryCode = customerPnCreateModel.CountryCode,
-                        CreatedBy = customerPnCreateModel.CreatedBy,
-                        CustomerNo = customerPnCreateModel.CustomerNo,
-                        Description = customerPnCreateModel.Description,
-                        EanCode = customerPnCreateModel.EanCode,
-                        Email = customerPnCreateModel.Email,
-                        Phone = customerPnCreateModel.Phone,
-                        VatNumber = customerPnCreateModel.VatNumber,
-                        ZipCode = customerPnCreateModel.ZipCode,
-                        RelatedEntityId = customerPnCreateModel.RelatedEntityId,
-                        CreatedDate = DateTime.Now
-                    };
+                        Customer newCustomer = new Customer()
+                        {
+                            CityName = customerPnCreateModel.CityName,
+                            CompanyAddress = customerPnCreateModel.CompanyAddress,
+                            CompanyAddress2 = customerPnCreateModel.CompanyAddress2,
+                            CompanyName = customerPnCreateModel.CompanyName,
+                            ContactPerson = customerPnCreateModel.ContactPerson,
+                            CountryCode = customerPnCreateModel.CountryCode,
+                            CreatedBy = customerPnCreateModel.CreatedBy,
+                            CustomerNo = customerPnCreateModel.CustomerNo,
+                            Description = customerPnCreateModel.Description,
+                            EanCode = customerPnCreateModel.EanCode,
+                            Email = customerPnCreateModel.Email,
+                            Phone = customerPnCreateModel.Phone,
+                            VatNumber = customerPnCreateModel.VatNumber,
+                            ZipCode = customerPnCreateModel.ZipCode,
+                            RelatedEntityId = customerPnCreateModel.RelatedEntityId,
+                            CreatedDate = DateTime.Now
+                        };
 
-                    newCustomer.Create(_dbContext);
-					// create item
-					Core core = _coreHelper.GetCore();
-					EntityGroup entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
-					if (entityGroup == null)
-					{
-						return new OperationResult(false, "Entity group not found");
-					}
+                        newCustomer.Create(_dbContext);
+                        // create item
+                        Core core = _coreHelper.GetCore();
+                        EntityGroup entityGroup =
+                            core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
+                        if (entityGroup == null)
+                        {
+                            return new OperationResult(false, "Entity group not found");
+                        }
 
-					int nextItemUid = entityGroup.EntityGroupItemLst.Count;
-					string label = newCustomer.CompanyName;
-					label += string.IsNullOrEmpty(newCustomer.CompanyAddress) ? "" : " - " + newCustomer.CompanyAddress;
-					label += string.IsNullOrEmpty(newCustomer.ZipCode) ? "" : " - " + newCustomer.ZipCode;
-					label += string.IsNullOrEmpty(newCustomer.CityName) ? "" : " - " + newCustomer.CityName;
-					label += string.IsNullOrEmpty(newCustomer.Phone) ? "" : " - " + newCustomer.Phone;
-					label += string.IsNullOrEmpty(newCustomer.ContactPerson) ? "" : " - " + newCustomer.ContactPerson;
-					if (label.Count(f => f == '-') == 1 && label.Contains("..."))
-					{
-						label = label.Replace(" - ", "");
-					}
-					if (string.IsNullOrEmpty(label))
-					{
-						label = $"Empty company {nextItemUid}";
-					}
+                        int nextItemUid = entityGroup.EntityGroupItemLst.Count;
+                        string label = newCustomer.CompanyName;
+                        label += string.IsNullOrEmpty(newCustomer.CompanyAddress)
+                            ? ""
+                            : " - " + newCustomer.CompanyAddress;
+                        label += string.IsNullOrEmpty(newCustomer.ZipCode) ? "" : " - " + newCustomer.ZipCode;
+                        label += string.IsNullOrEmpty(newCustomer.CityName) ? "" : " - " + newCustomer.CityName;
+                        label += string.IsNullOrEmpty(newCustomer.Phone) ? "" : " - " + newCustomer.Phone;
+                        label += string.IsNullOrEmpty(newCustomer.ContactPerson)
+                            ? ""
+                            : " - " + newCustomer.ContactPerson;
+                        if (label.Count(f => f == '-') == 1 && label.Contains("..."))
+                        {
+                            label = label.Replace(" - ", "");
+                        }
 
-					EntityItem item = core.EntitySearchItemCreate(entityGroup.Id, $"{label}", $"{newCustomer.Description}",
-						nextItemUid.ToString());
-					if (item != null)
-					{
-						entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
-						if (entityGroup != null)
-						{
-							foreach (EntityItem entityItem in entityGroup.EntityGroupItemLst)
-							{
-								if (entityItem.MicrotingUUID == item.MicrotingUUID)
-								{
-                                    newCustomer.RelatedEntityId = entityItem.Id;
-								}
-							}
-						}
-					}
+                        if (string.IsNullOrEmpty(label))
+                        {
+                            label = $"Empty company {nextItemUid}";
+                        }
 
-                    newCustomer.Update(_dbContext);
-					return new OperationResult(true,
-					_customersLocalizationService.GetString("CustomerCreated"));
-				}
-				else
+                        EntityItem item = core.EntitySearchItemCreate(entityGroup.Id, $"{label}",
+                            $"{newCustomer.Description}",
+                            nextItemUid.ToString());
+                        if (item != null)
+                        {
+                            entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
+                            if (entityGroup != null)
+                            {
+                                foreach (EntityItem entityItem in entityGroup.EntityGroupItemLst)
+                                {
+                                    if (entityItem.MicrotingUUID == item.MicrotingUUID)
+                                    {
+                                        newCustomer.RelatedEntityId = entityItem.Id;
+                                    }
+                                }
+                            }
+                        }
+                        newCustomer.Update(_dbContext);
+                        return new OperationResult(true,
+                            _customersLocalizationService.GetString("CustomerCreated"));
+                    }
+                    else
+                    {
+                        return new OperationResult(false, "Copy already exists");
+                    }
+                }
+                else
 				{
 					return new OperationResult(false,
 						_customersLocalizationService.GetString("ErrorWhileCreatingCustomer"));
