@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 using Customers.Pn.Abstractions;
 using Customers.Pn.Infrastructure.Extensions;
 using Customers.Pn.Infrastructure.Helpers;
@@ -47,7 +48,7 @@ namespace Customers.Pn.Services
         }
 
 
-        public OperationDataResult<CustomersModel> GetCustomers(CustomersRequestModel pnRequestModel)
+        public async Task<OperationDataResult<CustomersModel>> GetCustomers(CustomersRequestModel pnRequestModel)
         {
             try
             {
@@ -173,7 +174,7 @@ namespace Customers.Pn.Services
             }
         }
 
-        public OperationResult ImportCustomers(CustomerImportModel customersAsJson)
+        public async Task<OperationResult> ImportCustomers(CustomerImportModel customersAsJson)
         {
             try
             {
@@ -184,11 +185,11 @@ namespace Customers.Pn.Services
                     JToken headers = rawHeadersJson;
                     IEnumerable<JToken> customerObjects = rawJson.Skip(1);
                     
-                    Core core = _coreHelper.GetCore();
+                    Core core = await _coreHelper.GetCore();
 
                     var customerSettings = _options.Value;
 
-                    EntityGroup entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
+                    EntityGroup entityGroup = await core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
 
                     foreach (JToken customerObj in customerObjects)
                     {
@@ -251,11 +252,11 @@ namespace Customers.Pn.Services
                                     {
                                         label = $"Empty company {nextItemUid}";
                                     }
-                                    EntityItem item = core.EntitySearchItemCreate(entityGroup.Id, $"{label}", $"{customerModel.Description}",
+                                    EntityItem item = await core.EntitySearchItemCreate(entityGroup.Id, $"{label}", $"{customerModel.Description}",
                                         nextItemUid.ToString());
                                     if (item != null)
                                     {
-                                        entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
+                                        entityGroup = await core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
                                         if (entityGroup != null)
                                         {
                                             foreach (var entityItem in entityGroup.EntityGroupItemLst)
@@ -325,11 +326,11 @@ namespace Customers.Pn.Services
                                     {
                                         label = $"Empty company {nextItemUid}";
                                     }
-                                    EntityItem item = core.EntitySearchItemCreate(entityGroup.Id, $"{label}", $"{existingCustomer.Description}",
+                                    EntityItem item = await core.EntitySearchItemCreate(entityGroup.Id, $"{label}", $"{existingCustomer.Description}",
                                         nextItemUid.ToString());
                                     if (item != null)
                                     {
-                                        entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
+                                        entityGroup = await core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
                                         if (entityGroup != null)
                                         {
                                             foreach (var entityItem in entityGroup.EntityGroupItemLst)
@@ -360,7 +361,7 @@ namespace Customers.Pn.Services
             }
         }
 
-        public OperationDataResult<CustomerFullModel> GetSingleCustomer(int id)
+        public async Task<OperationDataResult<CustomerFullModel>> GetSingleCustomer(int id)
         {
             try
             {
@@ -404,7 +405,7 @@ namespace Customers.Pn.Services
 
         [HttpPost]
         [Route("api/customers-pn")]
-        public OperationResult CreateCustomer(CustomerFullModel customerPnCreateModel)
+        public async Task<OperationResult> CreateCustomer(CustomerFullModel customerPnCreateModel)
         {
             try
             {
@@ -438,9 +439,9 @@ namespace Customers.Pn.Services
 
                         newCustomer.Create(_dbContext);
                         // create item
-                        Core core = _coreHelper.GetCore();
+                        Core core = await _coreHelper.GetCore();
                         EntityGroup entityGroup =
-                            core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
+                           await core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
                         if (entityGroup == null)
                         {
                             return new OperationResult(false, "Entity group not found");
@@ -467,12 +468,12 @@ namespace Customers.Pn.Services
                             label = $"Empty company {nextItemUid}";
                         }
 
-                        EntityItem item = core.EntitySearchItemCreate(entityGroup.Id, $"{label}",
+                        EntityItem item = await core.EntitySearchItemCreate(entityGroup.Id, $"{label}",
                             $"{newCustomer.Description}",
                             nextItemUid.ToString());
                         if (item != null)
                         {
-                            entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
+                            entityGroup = await core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
                             if (entityGroup != null)
                             {
                                 foreach (EntityItem entityItem in entityGroup.EntityGroupItemLst)
@@ -510,7 +511,7 @@ namespace Customers.Pn.Services
             }
         }
 
-        public OperationResult UpdateCustomer(CustomerFullModel customerUpdateModel)
+        public async Task<OperationResult> UpdateCustomer(CustomerFullModel customerUpdateModel)
         {
             try
             {
@@ -534,7 +535,7 @@ namespace Customers.Pn.Services
                     Id = customerUpdateModel.Id,
                 };
                 customerForUpdate.Update(_dbContext);
-                Core core = _coreHelper.GetCore();
+                Core core = await _coreHelper.GetCore();
 
 
                 string label = customerUpdateModel.CompanyName;
@@ -555,7 +556,7 @@ namespace Customers.Pn.Services
                 string descrption = string.IsNullOrEmpty(customerUpdateModel.Description)
                     ? ""
                     : customerUpdateModel.Description.Replace("</p>", "<br>").Replace("<p>", "");
-                core.EntityItemUpdate((int) customerUpdateModel.RelatedEntityId, label, descrption, "", 0);
+                await core.EntityItemUpdate((int) customerUpdateModel.RelatedEntityId, label, descrption, "", 0);
                 return new OperationDataResult<CustomersModel>(true,
                     _customersLocalizationService.GetString("CustomerUpdatedSuccessfully"));
             }
@@ -568,7 +569,7 @@ namespace Customers.Pn.Services
             }
         }
 
-        public OperationResult DeleteCustomer(int id)
+        public async Task<OperationResult> DeleteCustomer(int id)
         {
             try
             {
@@ -584,8 +585,8 @@ namespace Customers.Pn.Services
                             _customersLocalizationService.GetString("ErrorWhileDeletingCustomer"));
                     }
                     int relatedEntityId = (int)entityId;
-                    Core core = _coreHelper.GetCore();
-                    core.EntityItemDelete(relatedEntityId);
+                    Core core = await _coreHelper.GetCore();
+                    await core.EntityItemDelete(relatedEntityId);
                 }
 
 				return new OperationResult(true,

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using Customers.Pn.Abstractions;
 using Customers.Pn.Infrastructure.Models.Fields;
 using Microsoft.EntityFrameworkCore;
@@ -29,7 +30,7 @@ namespace Customers.Pn.Services
             _localizationService = localizationService;
         }
 
-        public OperationDataResult<FieldsUpdateModel> GetFields()
+        public async Task<OperationDataResult<FieldsUpdateModel>> GetFields()
         {
             try
             {
@@ -62,7 +63,7 @@ namespace Customers.Pn.Services
             }
         }
 
-        public OperationResult UpdateFields(FieldsUpdateModel fieldsModel)
+        public async Task<OperationResult> UpdateFields(FieldsUpdateModel fieldsModel)
         {
             try
             {

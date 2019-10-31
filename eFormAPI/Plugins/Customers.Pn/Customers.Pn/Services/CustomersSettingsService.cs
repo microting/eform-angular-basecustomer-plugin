@@ -38,7 +38,7 @@ namespace Customers.Pn.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public OperationDataResult<CustomerSettingsModel> GetSettings()
+        public async Task<OperationDataResult<CustomerSettingsModel>> GetSettings()
         {
             try
             {
@@ -48,7 +48,7 @@ namespace Customers.Pn.Services
                 {
                     result.RelatedEntityId = (int) customerSettings.RelatedEntityGroupId;
                     var core = _coreHelper.GetCore();
-                    var entityGroup = core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
+                    var entityGroup = await core.Result.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
                     if (entityGroup == null)
                     {
                         return new OperationDataResult<CustomerSettingsModel>(false, "Entity group not found");
@@ -78,7 +78,7 @@ namespace Customers.Pn.Services
                 }
 
                 var core = _coreHelper.GetCore();
-                var newEntityGroup = core.EntityGroupRead(customerSettingsModel.RelatedEntityId.ToString());
+                var newEntityGroup = await core.Result.EntityGroupRead(customerSettingsModel.RelatedEntityId.ToString());
                 if (newEntityGroup == null)
                 {
                     return new OperationResult(false, "Entity group not found");
