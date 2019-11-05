@@ -7,6 +7,7 @@ if [ ! -d "/var/www/microting/eform-angular-basecustomer-plugin" ]; then
 fi
 
 cd /var/www/microting/eform-angular-basecustomer-plugin
+git pull
 su ubuntu -c \
 "dotnet restore eFormAPI/Plugins/Customers.Pn/Customers.Pn.sln"
 
