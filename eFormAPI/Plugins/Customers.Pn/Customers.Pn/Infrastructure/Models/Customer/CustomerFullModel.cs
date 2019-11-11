@@ -21,6 +21,7 @@ namespace Customers.Pn.Infrastructure.Models.Customer
         public string EanCode { get; set; }
         public string VatNumber { get; set; }
         public string CountryCode { get; set; }
+        public int? CrmId { get; set; }
         
     }
 }

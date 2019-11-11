@@ -288,6 +288,7 @@ namespace Customers.Pn.Services
                                 existingCustomer.CompanyAddress2 = customerModel.CompanyAddress2;
                                 existingCustomer.ContactPerson = customerModel.ContactPerson;
                                 existingCustomer.CountryCode = customerModel.CountryCode;
+                                existingCustomer.CrmId = customerModel.CrmId;
 //                                existingCustomer.Update(_dbContext);
                                 
                                 if (existingCustomer.WorkflowState == Constants.WorkflowStates.Removed)
@@ -382,7 +383,8 @@ namespace Customers.Pn.Services
                         CountryCode = x.CountryCode,
                         EanCode = x.EanCode,
                         VatNumber = x.VatNumber,
-                        RelatedEntityId = x.RelatedEntityId
+                        RelatedEntityId = x.RelatedEntityId,
+                        CrmId = x.CrmId
                     })
                     .FirstOrDefault(x => x.Id == id);
 
@@ -434,6 +436,7 @@ namespace Customers.Pn.Services
                             VatNumber = customerPnCreateModel.VatNumber,
                             ZipCode = customerPnCreateModel.ZipCode,
                             RelatedEntityId = customerPnCreateModel.RelatedEntityId,
+                            CrmId = customerPnCreateModel.CrmId,
                             CreatedDate = DateTime.Now
                         };
 
@@ -533,6 +536,7 @@ namespace Customers.Pn.Services
                     Description = customerUpdateModel.Description,
                     RelatedEntityId = customerUpdateModel.RelatedEntityId,
                     Id = customerUpdateModel.Id,
+                    CrmId = customerUpdateModel.CrmId
                 };
                 customerForUpdate.Update(_dbContext);
                 Core core = await _coreHelper.GetCore();
