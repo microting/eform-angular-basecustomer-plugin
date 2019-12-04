@@ -48,7 +48,7 @@ namespace Customers.Pn.Services
         }
 
 
-        public async Task<OperationDataResult<CustomersModel>> GetCustomers(CustomersRequestModel pnRequestModel)
+        public async Task<OperationDataResult<CustomersModel>> Index(CustomersRequestModel pnRequestModel)
         {
             try
             {
@@ -171,6 +171,251 @@ namespace Customers.Pn.Services
                 _logger.LogError(e.Message);
                 return new OperationDataResult<CustomersModel>(false,
                     _customersLocalizationService.GetString("ErrorObtainingCustomersInfo"));
+            }
+        }
+
+        [HttpPost]
+        [Route("api/customers-pn")]
+        public async Task<OperationResult> Create(CustomerFullModel customerPnCreateModel)
+        {
+            try
+            {
+                var customerSettings = _options.Value;
+                if (customerSettings?.RelatedEntityGroupId != null)
+                {
+                    Customer customerCopy = _dbContext.Customers.FirstOrDefault(x =>
+                        x.CompanyName + "_copy" == customerPnCreateModel.CompanyName);
+
+                    if (customerCopy == null)
+                    {
+                        Customer newCustomer = new Customer()
+                        {
+                            CityName = customerPnCreateModel.CityName,
+                            CompanyAddress = customerPnCreateModel.CompanyAddress,
+                            CompanyAddress2 = customerPnCreateModel.CompanyAddress2,
+                            CompanyName = customerPnCreateModel.CompanyName,
+                            ContactPerson = customerPnCreateModel.ContactPerson,
+                            CountryCode = customerPnCreateModel.CountryCode,
+                            CreatedBy = customerPnCreateModel.CreatedBy,
+                            CustomerNo = customerPnCreateModel.CustomerNo,
+                            Description = customerPnCreateModel.Description,
+                            EanCode = customerPnCreateModel.EanCode,
+                            Email = customerPnCreateModel.Email,
+                            Phone = customerPnCreateModel.Phone,
+                            VatNumber = customerPnCreateModel.VatNumber,
+                            ZipCode = customerPnCreateModel.ZipCode,
+                            RelatedEntityId = customerPnCreateModel.RelatedEntityId,
+                            CrmId = customerPnCreateModel.CrmId,
+                            CreatedDate = DateTime.Now
+                        };
+
+                        newCustomer.Create(_dbContext);
+                        // create item
+                        Core core = await _coreHelper.GetCore();
+                        EntityGroup entityGroup =
+                           await core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
+                        if (entityGroup == null)
+                        {
+                            return new OperationResult(false, "Entity group not found");
+                        }
+
+                        int nextItemUid = entityGroup.EntityGroupItemLst.Count;
+                        string label = newCustomer.CompanyName;
+                        label += string.IsNullOrEmpty(newCustomer.CompanyAddress)
+                            ? ""
+                            : " - " + newCustomer.CompanyAddress;
+                        label += string.IsNullOrEmpty(newCustomer.ZipCode) ? "" : " - " + newCustomer.ZipCode;
+                        label += string.IsNullOrEmpty(newCustomer.CityName) ? "" : " - " + newCustomer.CityName;
+                        label += string.IsNullOrEmpty(newCustomer.Phone) ? "" : " - " + newCustomer.Phone;
+                        label += string.IsNullOrEmpty(newCustomer.ContactPerson)
+                            ? ""
+                            : " - " + newCustomer.ContactPerson;
+                        if (label.Count(f => f == '-') == 1 && label.Contains("..."))
+                        {
+                            label = label.Replace(" - ", "");
+                        }
+
+                        if (string.IsNullOrEmpty(label))
+                        {
+                            label = $"Empty company {nextItemUid}";
+                        }
+
+                        EntityItem item = await core.EntitySearchItemCreate(entityGroup.Id, $"{label}",
+                            $"{newCustomer.Description}",
+                            nextItemUid.ToString());
+                        if (item != null)
+                        {
+                            entityGroup = await core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
+                            if (entityGroup != null)
+                            {
+                                foreach (EntityItem entityItem in entityGroup.EntityGroupItemLst)
+                                {
+                                    if (entityItem.MicrotingUUID == item.MicrotingUUID)
+                                    {
+                                        newCustomer.RelatedEntityId = entityItem.Id;
+                                    }
+                                }
+                            }
+                        }
+                        newCustomer.Update(_dbContext);
+                        return new OperationResult(true,
+                            _customersLocalizationService.GetString("CustomerCreated"));
+                    }
+                    else
+                    {
+                        return new OperationResult(false, "Copy already exists");
+                    }
+                }
+                else
+				{
+					return new OperationResult(false,
+						_customersLocalizationService.GetString("ErrorWhileCreatingCustomer"));
+				}
+
+                
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError(e.Message);
+                _logger.LogError(e.Message);
+                return new OperationResult(false,
+                    _customersLocalizationService.GetString("ErrorWhileCreatingCustomer"));
+            }
+        }
+        
+        public async Task<OperationDataResult<CustomerFullModel>> Read(int id)
+        {
+            try
+            {
+                CustomerFullModel customer = _dbContext.Customers.Select(x => new CustomerFullModel()
+                    {
+                        Id = x.Id,
+                        Description = x.Description,
+                        Phone = x.Phone,
+                        CityName = x.CityName,
+                        CustomerNo = x.CustomerNo,
+                        ZipCode = x.ZipCode,
+                        Email = x.Email,
+                        ContactPerson = x.ContactPerson,
+                        CreatedBy = x.CreatedBy,
+                        CompanyAddress = x.CompanyAddress,
+                        CompanyAddress2 = x.CompanyAddress2,
+                        CompanyName = x.CompanyName,
+                        CountryCode = x.CountryCode,
+                        EanCode = x.EanCode,
+                        VatNumber = x.VatNumber,
+                        RelatedEntityId = x.RelatedEntityId,
+                        CrmId = x.CrmId
+                    })
+                    .FirstOrDefault(x => x.Id == id);
+
+                if (customer == null)
+                {
+                    return new OperationDataResult<CustomerFullModel>(false,
+                        _customersLocalizationService.GetString("CustomerNotFound"));
+                }
+
+                return new OperationDataResult<CustomerFullModel>(true, customer);
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError(e.Message);
+                _logger.LogError(e.Message);
+                return new OperationDataResult<CustomerFullModel>(false,
+                    _customersLocalizationService.GetString("ErrorObtainingCustomersInfo"));
+            }
+        }
+
+        
+
+        public async Task<OperationResult> Update(CustomerFullModel customerUpdateModel)
+        {
+            try
+            {
+                Customer customerForUpdate = new Customer()
+                {
+                    CreatedBy = customerUpdateModel.CreatedBy,
+                    CustomerNo = customerUpdateModel.CustomerNo,
+                    ContactPerson = customerUpdateModel.ContactPerson,
+                    CompanyName = customerUpdateModel.CompanyName,
+                    CompanyAddress = customerUpdateModel.CompanyAddress,
+                    CompanyAddress2 = customerUpdateModel.CompanyAddress2,
+                    CountryCode = customerUpdateModel.CountryCode,
+                    EanCode = customerUpdateModel.EanCode,
+                    ZipCode = customerUpdateModel.ZipCode,
+                    CityName = customerUpdateModel.CityName,
+                    Phone = customerUpdateModel.Phone,
+                    VatNumber = customerUpdateModel.VatNumber,
+                    Email = customerUpdateModel.Email,
+                    Description = customerUpdateModel.Description,
+                    RelatedEntityId = customerUpdateModel.RelatedEntityId,
+                    Id = customerUpdateModel.Id,
+                    CrmId = customerUpdateModel.CrmId
+                };
+                customerForUpdate.Update(_dbContext);
+                Core core = await _coreHelper.GetCore();
+
+
+                string label = customerUpdateModel.CompanyName;
+                label += string.IsNullOrEmpty(customerUpdateModel.CompanyAddress)
+                    ? ""
+                    : " - " + customerUpdateModel.CompanyAddress;
+                label += string.IsNullOrEmpty(customerUpdateModel.ZipCode) ? "" : " - " + customerUpdateModel.ZipCode;
+                label += string.IsNullOrEmpty(customerUpdateModel.CityName) ? "" : " - " + customerUpdateModel.CityName;
+                label += string.IsNullOrEmpty(customerUpdateModel.Phone) ? "" : " - " + customerUpdateModel.Phone;
+                label += string.IsNullOrEmpty(customerUpdateModel.ContactPerson)
+                    ? ""
+                    : " - " + customerUpdateModel.ContactPerson;
+                if (label.Count(f => f == '-') == 1 && label.Contains("..."))
+                {
+                    label = label.Replace(" - ", "");
+                }
+
+                string descrption = string.IsNullOrEmpty(customerUpdateModel.Description)
+                    ? ""
+                    : customerUpdateModel.Description.Replace("</p>", "<br>").Replace("<p>", "");
+                await core.EntityItemUpdate((int) customerUpdateModel.RelatedEntityId, label, descrption, "", 0);
+                return new OperationDataResult<CustomersModel>(true,
+                    _customersLocalizationService.GetString("CustomerUpdatedSuccessfully"));
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError(e.Message);
+                _logger.LogError(e.Message);
+                return new OperationDataResult<CustomersModel>(false,
+                    _customersLocalizationService.GetString("ErrorWhileUpdatingCustomerInfo"));
+            }
+        }
+
+        public async Task<OperationResult> Delete(int id)
+        {
+            try
+            {
+                Customer customer = new Customer {Id = id};
+                customer.Delete(_dbContext);
+
+				if (_dbContext.Customers.SingleOrDefault(x => x.Id == id)?.RelatedEntityId != null)
+                {
+                    int? entityId = _dbContext.Customers.SingleOrDefault(x => x.Id == id).RelatedEntityId;
+                    if (entityId == null)
+                    {
+                        return new OperationResult(true,
+                            _customersLocalizationService.GetString("ErrorWhileDeletingCustomer"));
+                    }
+                    int relatedEntityId = (int)entityId;
+                    Core core = await _coreHelper.GetCore();
+                    await core.EntityItemDelete(relatedEntityId);
+                }
+
+				return new OperationResult(true,
+                    _customersLocalizationService.GetString("CustomerDeletedSuccessfully"));
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError(e.Message);
+                _logger.LogError(e.Message);
+                return new OperationDataResult<CustomerFullModel>(false,
+                    _customersLocalizationService.GetString("ErrorWhileDeletingCustomer"));
             }
         }
 
@@ -361,251 +606,6 @@ namespace Customers.Pn.Services
                     _customersLocalizationService.GetString("ErrorWhileCreatingCustomer"));
             }
         }
-
-        public async Task<OperationDataResult<CustomerFullModel>> GetSingleCustomer(int id)
-        {
-            try
-            {
-                CustomerFullModel customer = _dbContext.Customers.Select(x => new CustomerFullModel()
-                    {
-                        Id = x.Id,
-                        Description = x.Description,
-                        Phone = x.Phone,
-                        CityName = x.CityName,
-                        CustomerNo = x.CustomerNo,
-                        ZipCode = x.ZipCode,
-                        Email = x.Email,
-                        ContactPerson = x.ContactPerson,
-                        CreatedBy = x.CreatedBy,
-                        CompanyAddress = x.CompanyAddress,
-                        CompanyAddress2 = x.CompanyAddress2,
-                        CompanyName = x.CompanyName,
-                        CountryCode = x.CountryCode,
-                        EanCode = x.EanCode,
-                        VatNumber = x.VatNumber,
-                        RelatedEntityId = x.RelatedEntityId,
-                        CrmId = x.CrmId
-                    })
-                    .FirstOrDefault(x => x.Id == id);
-
-                if (customer == null)
-                {
-                    return new OperationDataResult<CustomerFullModel>(false,
-                        _customersLocalizationService.GetString("CustomerNotFound"));
-                }
-
-                return new OperationDataResult<CustomerFullModel>(true, customer);
-            }
-            catch (Exception e)
-            {
-                Trace.TraceError(e.Message);
-                _logger.LogError(e.Message);
-                return new OperationDataResult<CustomerFullModel>(false,
-                    _customersLocalizationService.GetString("ErrorObtainingCustomersInfo"));
-            }
-        }
-
-        [HttpPost]
-        [Route("api/customers-pn")]
-        public async Task<OperationResult> CreateCustomer(CustomerFullModel customerPnCreateModel)
-        {
-            try
-            {
-                var customerSettings = _options.Value;
-                if (customerSettings?.RelatedEntityGroupId != null)
-                {
-                    Customer customerCopy = _dbContext.Customers.FirstOrDefault(x =>
-                        x.CompanyName + "_copy" == customerPnCreateModel.CompanyName);
-
-                    if (customerCopy == null)
-                    {
-                        Customer newCustomer = new Customer()
-                        {
-                            CityName = customerPnCreateModel.CityName,
-                            CompanyAddress = customerPnCreateModel.CompanyAddress,
-                            CompanyAddress2 = customerPnCreateModel.CompanyAddress2,
-                            CompanyName = customerPnCreateModel.CompanyName,
-                            ContactPerson = customerPnCreateModel.ContactPerson,
-                            CountryCode = customerPnCreateModel.CountryCode,
-                            CreatedBy = customerPnCreateModel.CreatedBy,
-                            CustomerNo = customerPnCreateModel.CustomerNo,
-                            Description = customerPnCreateModel.Description,
-                            EanCode = customerPnCreateModel.EanCode,
-                            Email = customerPnCreateModel.Email,
-                            Phone = customerPnCreateModel.Phone,
-                            VatNumber = customerPnCreateModel.VatNumber,
-                            ZipCode = customerPnCreateModel.ZipCode,
-                            RelatedEntityId = customerPnCreateModel.RelatedEntityId,
-                            CrmId = customerPnCreateModel.CrmId,
-                            CreatedDate = DateTime.Now
-                        };
-
-                        newCustomer.Create(_dbContext);
-                        // create item
-                        Core core = await _coreHelper.GetCore();
-                        EntityGroup entityGroup =
-                           await core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
-                        if (entityGroup == null)
-                        {
-                            return new OperationResult(false, "Entity group not found");
-                        }
-
-                        int nextItemUid = entityGroup.EntityGroupItemLst.Count;
-                        string label = newCustomer.CompanyName;
-                        label += string.IsNullOrEmpty(newCustomer.CompanyAddress)
-                            ? ""
-                            : " - " + newCustomer.CompanyAddress;
-                        label += string.IsNullOrEmpty(newCustomer.ZipCode) ? "" : " - " + newCustomer.ZipCode;
-                        label += string.IsNullOrEmpty(newCustomer.CityName) ? "" : " - " + newCustomer.CityName;
-                        label += string.IsNullOrEmpty(newCustomer.Phone) ? "" : " - " + newCustomer.Phone;
-                        label += string.IsNullOrEmpty(newCustomer.ContactPerson)
-                            ? ""
-                            : " - " + newCustomer.ContactPerson;
-                        if (label.Count(f => f == '-') == 1 && label.Contains("..."))
-                        {
-                            label = label.Replace(" - ", "");
-                        }
-
-                        if (string.IsNullOrEmpty(label))
-                        {
-                            label = $"Empty company {nextItemUid}";
-                        }
-
-                        EntityItem item = await core.EntitySearchItemCreate(entityGroup.Id, $"{label}",
-                            $"{newCustomer.Description}",
-                            nextItemUid.ToString());
-                        if (item != null)
-                        {
-                            entityGroup = await core.EntityGroupRead(customerSettings.RelatedEntityGroupId.ToString());
-                            if (entityGroup != null)
-                            {
-                                foreach (EntityItem entityItem in entityGroup.EntityGroupItemLst)
-                                {
-                                    if (entityItem.MicrotingUUID == item.MicrotingUUID)
-                                    {
-                                        newCustomer.RelatedEntityId = entityItem.Id;
-                                    }
-                                }
-                            }
-                        }
-                        newCustomer.Update(_dbContext);
-                        return new OperationResult(true,
-                            _customersLocalizationService.GetString("CustomerCreated"));
-                    }
-                    else
-                    {
-                        return new OperationResult(false, "Copy already exists");
-                    }
-                }
-                else
-				{
-					return new OperationResult(false,
-						_customersLocalizationService.GetString("ErrorWhileCreatingCustomer"));
-				}
-
-                
-            }
-            catch (Exception e)
-            {
-                Trace.TraceError(e.Message);
-                _logger.LogError(e.Message);
-                return new OperationResult(false,
-                    _customersLocalizationService.GetString("ErrorWhileCreatingCustomer"));
-            }
-        }
-
-        public async Task<OperationResult> UpdateCustomer(CustomerFullModel customerUpdateModel)
-        {
-            try
-            {
-                Customer customerForUpdate = new Customer()
-                {
-                    CreatedBy = customerUpdateModel.CreatedBy,
-                    CustomerNo = customerUpdateModel.CustomerNo,
-                    ContactPerson = customerUpdateModel.ContactPerson,
-                    CompanyName = customerUpdateModel.CompanyName,
-                    CompanyAddress = customerUpdateModel.CompanyAddress,
-                    CompanyAddress2 = customerUpdateModel.CompanyAddress2,
-                    CountryCode = customerUpdateModel.CountryCode,
-                    EanCode = customerUpdateModel.EanCode,
-                    ZipCode = customerUpdateModel.ZipCode,
-                    CityName = customerUpdateModel.CityName,
-                    Phone = customerUpdateModel.Phone,
-                    VatNumber = customerUpdateModel.VatNumber,
-                    Email = customerUpdateModel.Email,
-                    Description = customerUpdateModel.Description,
-                    RelatedEntityId = customerUpdateModel.RelatedEntityId,
-                    Id = customerUpdateModel.Id,
-                    CrmId = customerUpdateModel.CrmId
-                };
-                customerForUpdate.Update(_dbContext);
-                Core core = await _coreHelper.GetCore();
-
-
-                string label = customerUpdateModel.CompanyName;
-                label += string.IsNullOrEmpty(customerUpdateModel.CompanyAddress)
-                    ? ""
-                    : " - " + customerUpdateModel.CompanyAddress;
-                label += string.IsNullOrEmpty(customerUpdateModel.ZipCode) ? "" : " - " + customerUpdateModel.ZipCode;
-                label += string.IsNullOrEmpty(customerUpdateModel.CityName) ? "" : " - " + customerUpdateModel.CityName;
-                label += string.IsNullOrEmpty(customerUpdateModel.Phone) ? "" : " - " + customerUpdateModel.Phone;
-                label += string.IsNullOrEmpty(customerUpdateModel.ContactPerson)
-                    ? ""
-                    : " - " + customerUpdateModel.ContactPerson;
-                if (label.Count(f => f == '-') == 1 && label.Contains("..."))
-                {
-                    label = label.Replace(" - ", "");
-                }
-
-                string descrption = string.IsNullOrEmpty(customerUpdateModel.Description)
-                    ? ""
-                    : customerUpdateModel.Description.Replace("</p>", "<br>").Replace("<p>", "");
-                await core.EntityItemUpdate((int) customerUpdateModel.RelatedEntityId, label, descrption, "", 0);
-                return new OperationDataResult<CustomersModel>(true,
-                    _customersLocalizationService.GetString("CustomerUpdatedSuccessfully"));
-            }
-            catch (Exception e)
-            {
-                Trace.TraceError(e.Message);
-                _logger.LogError(e.Message);
-                return new OperationDataResult<CustomersModel>(false,
-                    _customersLocalizationService.GetString("ErrorWhileUpdatingCustomerInfo"));
-            }
-        }
-
-        public async Task<OperationResult> DeleteCustomer(int id)
-        {
-            try
-            {
-                Customer customer = new Customer {Id = id};
-                customer.Delete(_dbContext);
-
-				if (_dbContext.Customers.SingleOrDefault(x => x.Id == id)?.RelatedEntityId != null)
-                {
-                    int? entityId = _dbContext.Customers.SingleOrDefault(x => x.Id == id).RelatedEntityId;
-                    if (entityId == null)
-                    {
-                        return new OperationResult(true,
-                            _customersLocalizationService.GetString("ErrorWhileDeletingCustomer"));
-                    }
-                    int relatedEntityId = (int)entityId;
-                    Core core = await _coreHelper.GetCore();
-                    await core.EntityItemDelete(relatedEntityId);
-                }
-
-				return new OperationResult(true,
-                    _customersLocalizationService.GetString("CustomerDeletedSuccessfully"));
-            }
-            catch (Exception e)
-            {
-                Trace.TraceError(e.Message);
-                _logger.LogError(e.Message);
-                return new OperationDataResult<CustomerFullModel>(false,
-                    _customersLocalizationService.GetString("ErrorWhileDeletingCustomer"));
-            }
-        }
-
-        
         private Customer FindCustomer(bool customerNoExists, int customerNoColumn, bool companyNameExists, int companyNameColumn, bool contactPersonExists, int contactPersonColumn, JToken headers, JToken customerObj)
         {
             Customer customer = null;
