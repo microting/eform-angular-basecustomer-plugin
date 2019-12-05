@@ -26,7 +26,7 @@ namespace Customers.Pn
 {
     public class EformCustomersPlugin : IEformPlugin
     {
-        public string Name => "Microting Customers plugin";
+        public string Name => "Microting Customers Plugin";
         public string PluginId => "eform-angular-basecustomer-plugin";
         public string PluginPath => PluginAssembly().Location;
         public string PluginBaseUrl => "customers-pn";
