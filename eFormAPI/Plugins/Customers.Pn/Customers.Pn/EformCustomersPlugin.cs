@@ -12,15 +12,20 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microting.eForm.Infrastructure.Constants;
+using Microting.eForm.Infrastructure.Models;
 using Microting.eFormApi.BasePn;
+using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Extensions;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
+using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
 using Microting.eFormApi.BasePn.Infrastructure.Settings;
 using Microting.eFormBaseCustomerBase.Infrastructure.Const;
 using Microting.eFormBaseCustomerBase.Infrastructure.Data;
 using Microting.eFormBaseCustomerBase.Infrastructure.Data.Entities;
 using Microting.eFormBaseCustomerBase.Infrastructure.Data.Factories;
+using Field = Microting.eFormBaseCustomerBase.Infrastructure.Data.Entities.Field;
 
 namespace Customers.Pn
 {
@@ -42,6 +47,8 @@ namespace Customers.Pn
             services.AddTransient<IFieldsService, FieldsService>();
             services.AddTransient<ICustomersService, CustomersService>();
             services.AddTransient<ICustomersSettingsService, CustomersSettingsService>();
+
+            SeedCustomersEntityGroup(services);
         }
 
         public void ConfigureOptionsServices(
@@ -165,6 +172,43 @@ namespace Customers.Pn
             var context = contextFactory.CreateDbContext(new[] { connectionString });
 
             return new PluginPermissionsManager(context);
+        }
+
+        private async void SeedCustomersEntityGroup(IServiceCollection serviceCollection)
+        {
+            var serviceProvider = serviceCollection.BuildServiceProvider();
+            var pluginDbOptions = serviceProvider.GetRequiredService<IPluginDbOptions<CustomersSettings>>();
+
+            if (pluginDbOptions.Value.RelatedEntityGroupId == null)
+            {
+                var core = await serviceProvider.GetRequiredService<IEFormCoreService>().GetCore();
+                var context = serviceProvider.GetRequiredService<CustomersPnDbAnySql>();
+
+
+                EntityGroupList model = await core.Advanced_EntityGroupAll(
+                    "id", 
+                    "eform-angular-basecustomer-plugin-Customers",
+                    0, 1, Constants.FieldTypes.EntitySearch,
+                    false,
+                    Constants.WorkflowStates.NotRemoved);
+
+                EntityGroup group;
+                
+                if (!model.EntityGroups.Any())
+                {
+                    group = await core.EntityGroupCreate(Constants.FieldTypes.EntitySearch, 
+                        "eform-angular-basecustomer-plugin-Customers");
+                }
+                else
+                {
+                    group = model.EntityGroups.First();
+                }
+
+                await pluginDbOptions.UpdateDb(
+                    settings => settings.RelatedEntityGroupId = group.Id,
+                    context, 
+                    1);
+            }
         }
     }
 }
