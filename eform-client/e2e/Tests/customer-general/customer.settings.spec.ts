@@ -45,8 +45,8 @@ describe('Customers plugin settings page', function () {
   //   const fieldToCheck = customersSettingsPage.selectedListField();
   //   expect(fieldToCheck.getText(), 'Searchable list is not selected').equal('My testing list');
   // });
-  it('should select only company name, id and customer № for show', function () {
-    loginPage.login();
+  it('should select only company name, id and customer no for show', function () {
+    //loginPage.login();
     myEformsPage.Navbar.advancedDropdown();
     myEformsPage.Navbar.clickonSubMenuItem('Plugins');
     browser.pause(4000);
@@ -68,8 +68,8 @@ describe('Customers plugin settings page', function () {
       customersSettingsPage.clickCheckboxById('18');
     }
     customersSettingsPage.saveSettings();
-    browser.pause(4000);
-    customersPage.goToCustomersPage();
+    //browser.pause(4000);
+    //customersPage.goToCustomersPage();
     browser.pause(4000);
 
     myEformsPage.Navbar.advancedDropdown();
