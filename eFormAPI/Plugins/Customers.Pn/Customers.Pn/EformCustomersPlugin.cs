@@ -205,7 +205,7 @@ namespace Customers.Pn
                 }
 
                 await pluginDbOptions.UpdateDb(
-                    settings => settings.RelatedEntityGroupId = group.Id,
+                    settings => settings.RelatedEntityGroupId = int.Parse(group.MicrotingUUID),
                     context, 
                     1);
             }
