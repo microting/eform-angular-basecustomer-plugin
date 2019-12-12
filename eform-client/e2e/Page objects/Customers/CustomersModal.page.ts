@@ -7,6 +7,7 @@ export class CustomersModalPage extends Page {
   }
 
   public get createBtn() {
+    browser.waitForExist('#createCustomerBtn', 50000);
     return browser.element('#createCustomerBtn');
   }
 
