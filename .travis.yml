@@ -1,4 +1,4 @@
-dist: xenial
+dist: bionic
 language: csharp
 solution: Customers.Pn.sln
 mono: none
@@ -54,4 +54,4 @@ script:
   - echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> ~/.aws/config || true
   - echo "region=$AWS_DEFAULT_REGION" >> ~/.aws/config || true
   - aws s3 sync errorShots/ s3://$S3_STORAGE_FOLDER/Customers/$TRAVIS_BUILD_NUMBER || true
-	- aws s3 cp dotnet_log s3://$S3_STORAGE_FOLDER/Customers/$TRAVIS_BUILD_NUMBER/dotnet_log || true
+  - aws s3 cp dotnet_log s3://$S3_STORAGE_FOLDER/Customers/$TRAVIS_BUILD_NUMBER/dotnet_log || true
