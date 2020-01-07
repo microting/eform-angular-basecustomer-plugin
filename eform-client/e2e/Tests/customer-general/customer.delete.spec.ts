@@ -12,14 +12,14 @@ describe('Customer modal', function () {
     customersPage.goToCustomersPage();
   });
   it('should delete customer', function () {
-    const rowBeforeDeletion: Number = customersPage.rowNum();
+    const rowBeforeDeletion = customersPage.rowNum();
     const lastCustomer: CustomersRowObject = customersPage.getCustomer(rowBeforeDeletion);
     lastCustomer.deleteBtn.waitForVisible(3000);
     lastCustomer.deleteBtn.click();
     browser.pause(3000);
     customersModalPage.deleteCustomer();
     browser.$('#tableBody').waitForValue(9000);
-    const rowAfterDeletion: Number = customersPage.rowNum();
+    const rowAfterDeletion = customersPage.rowNum();
     expect(rowBeforeDeletion, 'Number of rows hasn\'t changed after deleting customer').equal(rowAfterDeletion + 1);
   });
   it('should not delete customer if cancel was clicked', function () {

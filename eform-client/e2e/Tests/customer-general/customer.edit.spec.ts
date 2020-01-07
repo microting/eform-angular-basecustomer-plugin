@@ -26,7 +26,10 @@ describe('Customers plugin page', function () {
       zipCode: Guid.create().toString(),
       cityName: Guid.create().toString(),
       phone: Guid.create().toString(),
-      email: Guid.create().toString()
+      email: Guid.create().toString(),
+      eanCode: Guid.create().toString(),
+      vatNumber: Guid.create().toString(),
+      countryCode: Guid.create().toString()
     };
     customersModalPage.updateCustomer(customerObject);
     const lastCustomerAfterEdit = customersPage.getCustomer(customersPage.rowNum());

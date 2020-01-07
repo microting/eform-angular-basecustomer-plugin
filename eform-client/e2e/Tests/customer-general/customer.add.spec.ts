@@ -33,7 +33,10 @@ describe('Customers plugin page', function () {
       zipCode: '021551',
       cityName: 'Odense',
       phone: '123124',
-      email: 'user@user.com'
+      email: 'user@user.com',
+      eanCode: '784565',
+      vatNumber: '821456',
+      countryCode: 'DK'
     };
     const rowCountBeforeCreation = customersPage.rowNum();
     browser.pause(2000);
