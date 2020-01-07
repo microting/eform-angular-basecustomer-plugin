@@ -98,10 +98,8 @@ export class CustomersPnPageComponent implements OnInit {
         this.customerModel = data.model;
         this.customerModel.relatedEntityId = null;
         this.customerModel.companyName += '_copy';
-        debugger;
         this.customersService.createCustomer(this.customerModel).subscribe(((result) => {
           if (result && result.success) {
-            debugger;
             this.customerModel = new CustomerPnFullModel();
             this.onCustomerDuplicated.emit();
           }

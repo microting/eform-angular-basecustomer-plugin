@@ -184,7 +184,7 @@ namespace Customers.Pn.Services
                 if (customerSettings?.RelatedEntityGroupId != null)
                 {
                     Customer customerCopy = _dbContext.Customers.FirstOrDefault(x =>
-                        x.CompanyName + "_copy" == customerPnCreateModel.CompanyName);
+                        x.CompanyName == customerPnCreateModel.CompanyName);
 
                     if (customerCopy == null)
                     {
