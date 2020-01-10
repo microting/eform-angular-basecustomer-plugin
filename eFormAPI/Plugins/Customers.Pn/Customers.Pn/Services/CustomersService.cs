@@ -183,10 +183,11 @@ namespace Customers.Pn.Services
                 var customerSettings = _options.Value;
                 if (customerSettings?.RelatedEntityGroupId != null)
                 {
-                    Customer customerCopy = _dbContext.Customers.FirstOrDefault(x =>
-                        x.CompanyName == customerPnCreateModel.CompanyName);
+                    // Customer customerCopy = _dbContext.Customers.FirstOrDefault(x =>
+                    //     x.CompanyName == customerPnCreateModel.CompanyName && x.WorkflowState != Constants.WorkflowStates.Removed);
 
-                    if (customerCopy == null)
+                    Customer existingCustomer = MatchCustomer(customerPnCreateModel);
+                    if (existingCustomer == null)
                     {
                         Customer newCustomer = new Customer()
                         {
@@ -631,6 +632,21 @@ namespace Customers.Pn.Services
 
             return null;
         }
-        
+
+        private Customer MatchCustomer(CustomerFullModel customerModel)
+        {
+            Customer existingCustomer = _dbContext.Customers.FirstOrDefault(x =>
+                x.Description == customerModel.Description && x.Email == customerModel.Email &&
+                x.Phone == customerModel.Phone && x.CityName == customerModel.CityName &&
+                x.CompanyAddress == customerModel.CompanyAddress &&
+                x.CompanyAddress2 == customerModel.CompanyAddress2 && x.CompanyName == customerModel.CompanyName &&
+                x.ContactPerson == customerModel.ContactPerson && x.CountryCode == customerModel.CountryCode &&
+                x.CreatedBy == customerModel.CreatedBy && x.CustomerNo == customerModel.CustomerNo &&
+                x.EanCode == customerModel.EanCode && x.CrmId == customerModel.CrmId &&
+                x.VatNumber == customerModel.VatNumber && x.ZipCode == customerModel.ZipCode);
+            
+            return existingCustomer;
+            
+        }
     }
 }

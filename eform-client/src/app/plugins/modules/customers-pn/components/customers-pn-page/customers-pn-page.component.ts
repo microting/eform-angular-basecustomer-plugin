@@ -134,6 +134,10 @@ export class CustomersPnPageComponent implements OnInit {
     this.createCustomerModal.show();
   }
 
+  showCopyCustomerModal(model: CustomerPnModel) {
+    this.createCustomerModal.showCopy(model.id);
+  }
+
   showEditCustomerModal(model: CustomerPnModel) {
     this.editCustomerModal.show(model.id);
   }

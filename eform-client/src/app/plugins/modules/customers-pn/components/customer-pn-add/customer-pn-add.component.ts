@@ -25,6 +25,21 @@ export class CustomerPnAddComponent implements OnInit {
     this.newCustomerModel = new CustomerPnFullModel();
     this.frame.show();
   }
+  showCopy(customerId: number) {
+    this.newCustomerModel = new CustomerPnFullModel();
+    this.getSingleCustomer(customerId);
+    this.frame.show();
+  }
+
+  getSingleCustomer(customerId: number) {
+    this.spinnerStatus = true;
+    this.customersService.getSingleCustomer(customerId).subscribe(((data) => {
+      if (data && data.success) {
+        this.newCustomerModel = data.model;
+      }
+      this.spinnerStatus = false;
+    }));
+  }
 
   createCustomer() {
     this.spinnerStatus = true;

@@ -73,7 +73,7 @@
             </button>
             <button class="btn btn-success text-black-50 btn-icon mb-2"
                     mdbTooltip="{{ 'Duplicate Customer' | translate}}" id="copyCustomerBtn"
-                    (click)="duplicateCustomer(customer.id)">
+                    (click)="showCopyCustomerModal(customer)">
               <fa-icon icon="copy" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
             <button class="btn btn-danger btn-icon mb-2 "
