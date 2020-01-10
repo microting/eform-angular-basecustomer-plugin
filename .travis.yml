@@ -1,4 +1,4 @@
-dist: xenial
+dist: bionic
 language: csharp
 solution: Customers.Pn.sln
 mono: none
@@ -6,6 +6,7 @@ dotnet: 2.2
 services:
   - mysql
 script:
+  - pip install --user awscli
   - echo 'deb http://www.rabbitmq.com/debian/ testing main' | sudo tee /etc/apt/sources.list.d/rabbitmq.list
   - wget -O- https://www.rabbitmq.com/rabbitmq-release-signing-key.asc | sudo apt-key add -
   - sudo apt-get update
@@ -24,7 +25,7 @@ script:
   - dotnet build eFormAPI/Plugins/Customers.Pn/Customers.Pn.sln
   - dotnet test -v n eFormAPI/Plugins/Customers.Pn/Customers.Pn.Test/Customers.Pn.Test.csproj
   - cd ../..
-  - git clone --depth=50 --branch=master https://github.com/microting/eform-angular-frontend.git microting/eform-angular-frontend
+  - git clone --depth=50 --branch=stable https://github.com/microting/eform-angular-frontend.git microting/eform-angular-frontend
   - cp -av microting/eform-angular-basecustomer-plugin/eform-client/src/app/plugins/modules/customers-pn microting/eform-angular-frontend/eform-client/src/app/plugins/modules/customers-pn
   - cp -av microting/eform-angular-basecustomer-plugin/eform-client/e2e/Tests/customer-settings microting/eform-angular-frontend/eform-client/e2e/Tests/customer-settings
   - cp -av microting/eform-angular-basecustomer-plugin/eform-client/e2e/Tests/customer-general microting/eform-angular-frontend/eform-client/e2e/Tests/customer-general
@@ -46,6 +47,11 @@ script:
   - sleep 40
   - npm run testheadless
   - sleep 40
-  - dotnet run --project ../eFormAPI/eFormAPI.Web/eFormAPI.Web.csproj > dotnet_log 2>&1 &
-  - sleep 40
   - npm run testheadlessplugin
+  - touch ~/.aws/config || true
+  - echo "[default]" >> ~/.aws/config || true
+  - echo "aws_access_key_id=$AWS_ACCESS_KEY_ID" >> ~/.aws/config || true
+  - echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> ~/.aws/config || true
+  - echo "region=$AWS_DEFAULT_REGION" >> ~/.aws/config || true
+  - aws s3 sync errorShots/ s3://$S3_STORAGE_FOLDER/Customers/$TRAVIS_BUILD_NUMBER || true
+  - aws s3 cp dotnet_log s3://$S3_STORAGE_FOLDER/Customers/$TRAVIS_BUILD_NUMBER/dotnet_log || true

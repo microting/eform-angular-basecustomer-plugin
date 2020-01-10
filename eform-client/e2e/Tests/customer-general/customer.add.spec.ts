@@ -11,16 +11,16 @@ describe('Customers plugin page', function () {
     loginPage.login();
     customersPage.goToCustomersPage();
   });
-  it('should add new customer with all empty fields', function () {
-    browser.pause(6000);
-    const rowCountBeforeCreation = browser.$$('#mainTableBody > tr').length;
-    customersPage.newCustomerBtn.click();
-    browser.pause(6000);
-    customersModalPage.createEmptyCustomer();
-    browser.pause(8000);
-    const rowCountAfterCreation = browser.$$('#mainTableBody > tr').length;
-    expect(rowCountAfterCreation, 'Number of rows hasn\'t changed after creating new customer').equal(rowCountBeforeCreation + 1);
-  });
+  // it('should add new customer with all empty fields', function () {
+  //   browser.pause(6000);
+  //   const rowCountBeforeCreation = browser.$$('#mainTableBody > tr').length;
+  //   customersPage.newCustomerBtn.click();
+  //   browser.pause(6000);
+  //   customersModalPage.createEmptyCustomer();
+  //   browser.pause(8000);
+  //   const rowCountAfterCreation = browser.$$('#mainTableBody > tr').length;
+  //   expect(rowCountAfterCreation, 'Number of rows hasn\'t changed after creating new customer').equal(rowCountBeforeCreation + 1);
+  // });
   it('should add new customer with all fields', function () {
     customersPage.newCustomerBtn.click();
     browser.pause(6000);
@@ -33,7 +33,10 @@ describe('Customers plugin page', function () {
       zipCode: '021551',
       cityName: 'Odense',
       phone: '123124',
-      email: 'user@user.com'
+      email: 'user@user.com',
+      eanCode: '784565',
+      vatNumber: '821456',
+      countryCode: 'DK'
     };
     const rowCountBeforeCreation = customersPage.rowNum();
     browser.pause(2000);

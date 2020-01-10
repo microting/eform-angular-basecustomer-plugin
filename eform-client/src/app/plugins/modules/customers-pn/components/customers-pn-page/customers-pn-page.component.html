@@ -1,12 +1,5 @@
 <subheader-pn [title]="'Customers' | translate">
   <div class="p-3">
-    <button *ngIf="pluginClaimsHelper.check(customersPnClaims.createCustomers)"
-            id="settingsCustomerBtn"
-            class="btn btn-danger text-black-50 btn-icon"
-            routerLink="settings"
-            mdbTooltip="{{ 'Settings' | translate }}">
-<fa-icon icon="wrench"  size="lg" [fixedWidth]="true"></fa-icon>
-    </button>
     <button
       class="btn btn-success"
       mdbTooltip="{{ 'Create Customer' | translate }}"
@@ -77,6 +70,11 @@
                     mdbTooltip="{{ 'Edit Customer' | translate }}" id="editCustomerBtn"
                     (click)="showEditCustomerModal(customer)">
               <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
+            </button>
+            <button class="btn btn-success text-black-50 btn-icon mb-2"
+                    mdbTooltip="{{ 'Duplicate Customer' | translate}}" id="copyCustomerBtn"
+                    (click)="duplicateCustomer(customer.id)">
+              <fa-icon icon="copy" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
             <button class="btn btn-danger btn-icon mb-2 "
                     mdbTooltip="{{ 'Delete Customer' | translate }}" id="deleteCustomerBtn"

@@ -13,8 +13,8 @@ exports.config = {
     'e2e/Tests/customer-settings/application-settings.plugins-page.spec.ts',
     'e2e/Tests/customer-general/customer.settings.spec.ts',
     'e2e/Tests/customer-general/customers.import.spec.ts',
-    'e2e/Tests/customer-general/customer.add.spec.ts',
     'e2e/Tests/customer-general/customers.sorting.spec.ts',
+    'e2e/Tests/customer-general/customer.add.spec.ts',
     'e2e/Tests/customer-general/customer.edit.spec.ts',
     'e2e/Tests/customer-general/customer.delete.spec.ts'
   ],

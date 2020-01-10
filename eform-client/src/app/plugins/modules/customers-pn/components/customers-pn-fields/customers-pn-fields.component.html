@@ -26,27 +26,6 @@
       </div>
     </div>
   </div>
-  <div class="row mt-4">
-    <div class="col-md-12 col-xs-12 control-block">
-      <subheader-pn [title]="'Settings' | translate" [heandingSizeRem]="1">
-      </subheader-pn>
-      <div class="container-fluid">
-        <div class="row mt-2">
-          <div class="col-md-6">
-            <ng-select [items]="advEntitySearchableGroupListModel.entityGroups"
-                       bindLabel="name"
-                       [placeholder]="customersPnSettingsModel.relatedEntityName || ('Selected list' | translate)"
-                       bindValue="microtingUUID"
-                       [typeahead]="typeahead"
-                       (change)="onSelectedChanged($event)">
-            </ng-select>
-          </div>
-
-        </div>
-
-      </div>
-    </div>
-  </div>
 </div>
 
 <spinner-pn [spinnerVisibility]="spinnerStatus"></spinner-pn>

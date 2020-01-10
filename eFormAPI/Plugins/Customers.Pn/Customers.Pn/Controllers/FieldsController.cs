@@ -1,4 +1,5 @@
-﻿using Customers.Pn.Abstractions;
+﻿using System.Threading.Tasks;
+using Customers.Pn.Abstractions;
 using Customers.Pn.Infrastructure.Models.Fields;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,16 +20,16 @@ namespace Customers.Pn.Controllers
 
         [HttpGet]
         [Route("api/fields-pn")]
-        public OperationDataResult<FieldsUpdateModel> GetFields()
+        public async Task<OperationDataResult<FieldsUpdateModel>> GetFields()
         {
-            return _fieldsService.GetFields();
+            return await _fieldsService.GetFields();
         }
 
         [HttpPut]
         [Route("api/fields-pn")]
-        public OperationResult UpdateFields([FromBody] FieldsUpdateModel fieldsModel)
+        public async Task<OperationResult> UpdateFields([FromBody] FieldsUpdateModel fieldsModel)
         {
-            return _fieldsService.UpdateFields(fieldsModel);
+            return await _fieldsService.UpdateFields(fieldsModel);
         }
     }
 }

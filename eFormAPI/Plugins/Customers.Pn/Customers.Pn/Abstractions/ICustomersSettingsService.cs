@@ -6,7 +6,7 @@ namespace Customers.Pn.Abstractions
 {
     public interface ICustomersSettingsService
     {
-        OperationDataResult<CustomerSettingsModel> GetSettings();
+        Task<OperationDataResult<CustomerSettingsModel>> GetSettings();
         Task<OperationResult> UpdateSettings(CustomerSettingsModel customerUpdateModel);
     }
 }

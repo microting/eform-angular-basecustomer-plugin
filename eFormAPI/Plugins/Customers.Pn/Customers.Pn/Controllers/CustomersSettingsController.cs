@@ -20,9 +20,9 @@ namespace Customers.Pn.Controllers
         [HttpGet]
         [Authorize(Roles = EformRole.Admin)]
         [Route("api/customers-pn/settings")]
-        public OperationDataResult<CustomerSettingsModel> GetSettings()
+        public async Task<OperationDataResult<CustomerSettingsModel>> GetSettings()
         {
-            return _customersSettingsService.GetSettings();
+            return await _customersSettingsService.GetSettings();
         }
 
 

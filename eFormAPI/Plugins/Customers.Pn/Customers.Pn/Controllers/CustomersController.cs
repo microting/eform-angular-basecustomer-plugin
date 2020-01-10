@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Customers.Pn.Abstractions;
 using Customers.Pn.Infrastructure.Models.Customer;
 using Microsoft.AspNetCore.Authorization;
@@ -19,45 +20,46 @@ namespace Customers.Pn.Controllers
 
         [HttpPost]
         [Route("api/customers-pn/get-all")]
-        public OperationDataResult<CustomersModel> GetCustomers([FromBody] CustomersRequestModel pnRequestModel)
+        public async Task<OperationDataResult<CustomersModel>> Index([FromBody] CustomersRequestModel pnRequestModel)
         {
-            return _customersService.GetCustomers(pnRequestModel);
-        }
-
-        [HttpGet]
-        [Route("api/customers-pn/{id}")]
-        public OperationDataResult<CustomerFullModel> GetSingleCustomer(int id)
-        {
-            return _customersService.GetSingleCustomer(id);
+            return await _customersService.Index(pnRequestModel);
         }
 
         [HttpPost]
         [Route("api/customers-pn")]
         [Authorize(Policy = CustomersClaims.CreateCustomers)]
-        public OperationResult CreateCustomer([FromBody] CustomerFullModel customerPnCreateModel)
+        public async Task<OperationResult> Create([FromBody] CustomerFullModel customerPnCreateModel)
         {
-            return _customersService.CreateCustomer(customerPnCreateModel);
+            return await _customersService.Create(customerPnCreateModel);
         }
-        
-        [HttpPost]
-        [Route("api/customers-pn/import")]
-        public OperationResult ImportCustomer([FromBody] CustomerImportModel customerImportModel)
+
+        [HttpGet]
+        [Route("api/customers-pn/{id}")]
+        public async Task<OperationDataResult<CustomerFullModel>> Read(int id)
         {
-            return _customersService.ImportCustomers(customerImportModel);
+            return await _customersService.Read(id);
         }
 
         [HttpPut]
         [Route("api/customers-pn")]
-        public OperationResult UpdateCustomer([FromBody] CustomerFullModel customerUpdateModel)
+        public async Task<OperationResult> Update([FromBody] CustomerFullModel customerUpdateModel)
         {
-            return _customersService.UpdateCustomer(customerUpdateModel);
+            return await _customersService.Update(customerUpdateModel);
         }
 
         [HttpDelete]
         [Route("api/customers-pn/{id}")]
-        public OperationResult DeleteCustomer(int id)
+        public async Task<OperationResult> Delete(int id)
         {
-            return _customersService.DeleteCustomer(id);
+            return await _customersService.Delete(id);
         }
+                
+        [HttpPost]
+        [Route("api/customers-pn/import")]
+        public async Task<OperationResult> ImportCustomer([FromBody] CustomerImportModel customerImportModel)
+        {
+            return await _customersService.ImportCustomers(customerImportModel);
+        }
+
     }
 }

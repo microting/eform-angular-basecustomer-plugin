@@ -1,5 +1,5 @@
 import Page from '../Page';
-import customersPage from "./Customers.page";
+import customersPage from './Customers.page';
 
 export class CustomersModalPage extends Page {
   constructor() {
@@ -7,6 +7,7 @@ export class CustomersModalPage extends Page {
   }
 
   public get createBtn() {
+    browser.waitForExist('#createCustomerBtn', 50000);
     return browser.element('#createCustomerBtn');
   }
 
@@ -70,6 +71,14 @@ export class CustomersModalPage extends Page {
     return browser.element('#editCompanyAddress');
   }
 
+  public get createCompanyAddress2() {
+    return browser.element('#createCompanyAddress2');
+  }
+
+  public get editCompanyAddress2() {
+    return browser.element('#editCompanyAddress2');
+  }
+
   public get createZipCode() {
     return browser.element('#createZipCode');
   }
@@ -102,6 +111,30 @@ export class CustomersModalPage extends Page {
     return browser.element('#editEmail');
   }
 
+  public get createEanCode() {
+   return browser.element('#createEanCode');
+  }
+
+  public get editEanCode() {
+    return browser.element('#editEanCode');
+  }
+
+  public get createVatNumber() {
+    return browser.element('#createVatNumber');
+  }
+
+  public get editVatNumber() {
+    return browser.element('#editVatNumber');
+  }
+
+  public get createCountryCode() {
+    return browser.element('#createCountryCode');
+  }
+
+  public get editCountryCode() {
+    return browser.element('#editCountryCode');
+  }
+
   public createCustomer(data: any) {
     this.createCreatedByInput.setValue(data.createdBy);
     this.createCustomerNo.setValue(data.customerNo);
@@ -112,6 +145,9 @@ export class CustomersModalPage extends Page {
     this.createCityName.setValue(data.cityName);
     this.createPhone.setValue(data.phone);
     this.createEmail.setValue(data.email);
+    this.createEanCode.setValue(data.eanCode);
+    this.createVatNumber.setValue(data.vatNumber);
+    this.createCountryCode.setValue(data.countryCode);
     this.createBtn.click();
     browser.pause(16000);
   }
@@ -126,6 +162,9 @@ export class CustomersModalPage extends Page {
     this.editCityName.setValue(data.cityName);
     this.editPhone.setValue(data.phone);
     this.editEmail.setValue(data.email);
+    this.editEanCode.setValue(data.eanCode);
+    this.editVatNumber.setValue(data.vatNumber);
+    this.editCountryCode.setValue(data.countryCode);
     this.saveEditBtn.click();
     browser.pause(16000);
   }
