@@ -43,6 +43,7 @@ export class CustomerPnAddComponent implements OnInit {
 
   createCustomer() {
     this.spinnerStatus = true;
+    this.newCustomerModel.relatedEntityId = null;
     this.customersService.createCustomer(this.newCustomerModel).subscribe(((data) => {
       if (data && data.success) {
         this.newCustomerModel = new CustomerPnFullModel();
