@@ -179,6 +179,18 @@ export class CustomersModalPage extends Page {
     browser.pause(16000);
   }
 
+  public cleanup() {
+    const deleteObject = customersPage.getCustomer(customersPage.rowNum());
+    if (deleteObject != null) {
+      browser.pause(8000);
+      deleteObject.deleteBtn.click();
+      browser.pause(4000);
+      this.saveDeleteBtn.click();
+      browser.pause(2000);
+      browser.refresh();
+    }
+  }
+
 }
 
 const customersModalPage = new CustomersModalPage();

@@ -112,6 +112,7 @@ export class CustomersRowObject {
     this.email = $$('#Email')[rowNumber - 1].getText();
     this.phone = $$('#Phone')[rowNumber - 1].getText();
     this.editBtn = $$('#editCustomerBtn')[rowNumber - 1];
+    this.copyBtn = $$('#copyCustomerBtn')[rowNumber - 1];
     this.deleteBtn = $$('#deleteCustomerBtn')[rowNumber - 1];
   }
 
@@ -128,5 +129,6 @@ export class CustomersRowObject {
   public email;
   public phone;
   public editBtn;
+  public copyBtn;
   public deleteBtn;
 }
