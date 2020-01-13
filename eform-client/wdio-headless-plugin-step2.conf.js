@@ -12,6 +12,7 @@ exports.config = {
   specs: [
     'e2e/Tests/customer-settings/application-settings.plugins-page.spec.ts',
     'e2e/Tests/customer-general/customer.settings.spec.ts',
+    'e2e/Tests/customer-general/customer.copy.spec.ts',
     'e2e/Tests/customer-general/customers.import.spec.ts',
     'e2e/Tests/customer-general/customers.sorting.spec.ts',
     'e2e/Tests/customer-general/customer.add.spec.ts',
