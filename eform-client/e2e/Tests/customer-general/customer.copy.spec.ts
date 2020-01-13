@@ -27,7 +27,7 @@ describe('Customers plugin page', function () {
     const customerObject = {
       createdBy: 'John Smith',
       customerNo: '1',
-      contactPerson: 'Samantha Black',
+      contactPerson: 'Jack Black',
       companyName: 'BMW',
       companyAddress: 'ABC Street 22',
       zipCode: '021551',
@@ -68,6 +68,7 @@ describe('Customers plugin page', function () {
     const lastCustomer: CustomersRowObject = customersPage.getCustomer(customersPage.rowNum());
     expect(lastCustomer.companyAddress, 'Created by of created customer is incorrect').equal(customer.companyAddress + '_copy');
     browser.pause(2000);
+    customersModalPage.cleanup();
     customersModalPage.cleanup();
   });
 });
