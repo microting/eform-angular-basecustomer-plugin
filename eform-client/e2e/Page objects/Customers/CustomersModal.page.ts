@@ -117,7 +117,7 @@ export class CustomersModalPage extends Page {
     return browser.element('#editCadastralNumber');
   }
   public get createPropertyNumber() {
-    return browser.element('#createPorpertyNumber');
+    return browser.element('#createPropertyNumber');
   }
   public get editPropertyNumber() {
     return browser.element('#editPropertyNumber');

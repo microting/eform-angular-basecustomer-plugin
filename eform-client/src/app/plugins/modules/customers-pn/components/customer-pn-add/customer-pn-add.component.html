@@ -146,6 +146,16 @@
                   <label for="createCountryCode">{{'CountryCode' | translate}}</label>
                 </div>
               </div>
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CadastralNumber)">
+                <div class="md-form">
+                  <input mdbInputDirective
+                         [mdbValidate]="false" [(ngModel)]="newCustomerModel.cadastralNumber"
+                         class="form-control"
+                         type="text" id="createCadastralNumber"
+                         name="createCadastralNumber">
+                  <label for="createCadastralNumber">{{'CadastralNumber' | translate}}</label>
+                </div>
+              </div>
               <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CrmId)">
                 <div class="md-form">
                   <input mdbInputDirective
@@ -156,6 +166,8 @@
                   <label for="createCrmId">{{'CrmId' | translate}}</label>
                 </div>
               </div>
+            </div>
+            <div class="row">
               <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.PropertyNumber)">
                 <div class="md-form">
                   <input mdbInputDirective
@@ -166,8 +178,6 @@
                   <label for="createPropertyNumber">{{'PropertyNumber' | translate}}</label>
                 </div>
               </div>
-            </div>
-            <div class="row">
               <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.ApartmentNumber)">
                 <div class="md-form">
                   <input mdbInputDirective
@@ -188,6 +198,8 @@
                   <label for="createCompletionYear">{{'CompletionYear' | translate}}</label>
                 </div>
               </div>
+            </div>
+            <div class="row">
               <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.FloorsWithLivingSpace)">
                 <div class="md-form">
                   <input mdbInputDirective
@@ -196,18 +208,6 @@
                          type="text" id="createFloorsWithLivingSpace"
                          name="createFloorsWithLivingSpace">
                   <label for="createFloorsWithLivingSpace">{{'FloorsWithLivingSpace' | translate}}</label>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CadastralNumber)">
-                <div class="md-form">
-                  <input mdbInputDirective
-                         [mdbValidate]="false" [(ngModel)]="newCustomerModel.cadastralNumber"
-                         class="form-control"
-                         type="text" id="createCadastralNumber"
-                         name="createCadastralNumber">
-                  <label for="createCadastralNumber">{{'CadastralNumber' | translate}}</label>
                 </div>
               </div>
             </div>
