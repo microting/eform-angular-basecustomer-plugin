@@ -55,7 +55,7 @@ describe('Customers plugin settings page', function () {
     browser.pause(4000);
     const customerCheckbox =  customersSettingsPage.getCheckboxById('3');
     const companyNameCheckbox =  customersSettingsPage.getCheckboxById('4');
-    const idCheckbox =  customersSettingsPage.getCheckboxById('17');
+    const idCheckbox =  customersSettingsPage.getCheckboxById('22');
 
     customersSettingsPage.clickCheckboxById('1');
     customersSettingsPage.clickCheckboxById('2');
@@ -71,11 +71,16 @@ describe('Customers plugin settings page', function () {
     customersSettingsPage.clickCheckboxById('14');
     customersSettingsPage.clickCheckboxById('15');
     customersSettingsPage.clickCheckboxById('16');
+    customersSettingsPage.clickCheckboxById('17');
     customersSettingsPage.clickCheckboxById('18');
     customersSettingsPage.clickCheckboxById('19');
     customersSettingsPage.clickCheckboxById('20');
     customersSettingsPage.clickCheckboxById('21');
-    customersSettingsPage.clickCheckboxById('22');
+    customersSettingsPage.clickCheckboxById('23');
+    customersSettingsPage.clickCheckboxById('24');
+    customersSettingsPage.clickCheckboxById('25');
+    customersSettingsPage.clickCheckboxById('26');
+    customersSettingsPage.clickCheckboxById('27');
     browser.pause(2000);
     customersSettingsPage.saveSettings();
     //browser.pause(4000);
@@ -119,8 +124,7 @@ describe('Customers plugin settings page', function () {
     const plugin = pluginsPage.getFirstPluginRowObj();
     plugin.settingsBtn.click();
     browser.pause(10000);
-    customersSettingsPage.clickCheckboxById('22');
-    customersSettingsPage.clickCheckboxById('23');
+    customersSettingsPage.clickCheckboxById('17');
     customersSettingsPage.clickCheckboxById('18');
     customersSettingsPage.clickCheckboxById('19');
     customersSettingsPage.clickCheckboxById('20');
