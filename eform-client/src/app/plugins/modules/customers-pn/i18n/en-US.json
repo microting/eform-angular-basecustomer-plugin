@@ -15,5 +15,10 @@
   "Edit Customer": "Edit Customer",
   "Delete Customer": "Delete Customer",
   "New Customer":  "New Customer",
-  "Create Customer": "Create Customer"
+  "Create Customer": "Create Customer",
+  "CadastralNumber": "Cadastral number",
+  "PropertyNumber": "Property number.",
+  "ApartmentNumber": "Apartment number",
+  "CompletionYear": "Completion year",
+  "FloorsWithLivingSpace": "Floors with living space"
 }

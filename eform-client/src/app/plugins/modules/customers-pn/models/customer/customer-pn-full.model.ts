@@ -13,6 +13,12 @@ export class CustomerPnFullModel {
   description: string = null;
   relatedEntityId: string;
   eanCode: string;
-  vatNumber;
-  countryCode;
+  vatNumber: string;
+  countryCode: string;
+  crmId: number;
+  cadastralNumber: string;
+  propertyNumber: number;
+  apartmentNumber: number;
+  completionYear: number;
+  floorsWithLivingSpace: number;
 }

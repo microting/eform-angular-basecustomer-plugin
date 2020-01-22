@@ -16,5 +16,13 @@
   "Delete Customer": "Slet Kunde",
   "New Customer":  "Ny Kunde",
   "Create Customer": "Opret Kunde",
-  "CompanyAddress2": "Virksomhedsadddresse 2"
+  "CompanyAddress2": "Virksomhedsadddresse 2",
+  "CountryCode": "Land",
+  "CadastralNumber": "Matrikelnummer",
+  "PropertyNumber": "Ejendomsnr.",
+  "ApartmentNumber": "Lejlighedsnummer",
+  "CompletionYear": "Opførelsesår",
+  "FloorsWithLivingSpace": "Antal etager med beboelse",
+  "EanCode": "Ean nummer",
+  "VatNumber": "Vat nummer"
 }

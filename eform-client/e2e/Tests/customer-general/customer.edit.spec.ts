@@ -2,7 +2,7 @@ import loginPage from '../../Page objects/Login.page';
 import {generateRandmString} from '../../Helpers/helper-functions';
 import customersPage, {CustomersRowObject} from '../../Page objects/Customers/Customers.page';
 import customersModalPage from '../../Page objects/Customers/CustomersModal.page';
-import {Guid} from "guid-typescript";
+import {Guid} from 'guid-typescript';
 
 const expect = require('chai').expect;
 
@@ -29,7 +29,12 @@ describe('Customers plugin page', function () {
       email: Guid.create().toString(),
       eanCode: Guid.create().toString(),
       vatNumber: Guid.create().toString(),
-      countryCode: Guid.create().toString()
+      countryCode: Guid.create().toString(),
+      cadastralNumber: Guid.create().toString(),
+      propertyNumber: Math.floor(Math.random() * 100),
+      apartmentNumber: Math.floor(Math.random() * 25),
+      completionYear: Math.floor(Math.random() * 100),
+      floorsWithLivingSpace: Math.floor(Math.random() * 5)
     };
     customersModalPage.updateCustomer(customerObject);
     const lastCustomerAfterEdit = customersPage.getCustomer(customersPage.rowNum());

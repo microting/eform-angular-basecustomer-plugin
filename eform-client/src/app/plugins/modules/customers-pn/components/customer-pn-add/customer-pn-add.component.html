@@ -79,7 +79,7 @@
                          class="form-control"
                          type="text" id="createZipCode"
                          name="createZipCode">
-                  <label for="createZipCode">{{'Zip Code' | translate}}</label>
+                  <label for="createZipCode">{{'ZipCode' | translate}}</label>
                 </div>
               </div>
               <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CityName)">
@@ -114,7 +114,7 @@
                   <label for="createEmail">{{'Email' | translate}}</label>
                 </div>
               </div>
-              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.Email)">
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.EanCode)">
                 <div class="md-form">
                   <input mdbInputDirective
                          [mdbValidate]="false" [(ngModel)]="newCustomerModel.eanCode"
@@ -124,7 +124,7 @@
                   <label for="createEanCode">{{'EanCode' | translate}}</label>
                 </div>
               </div>
-              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.Email)">
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.VatNumber)">
                 <div class="md-form">
                   <input mdbInputDirective
                          [mdbValidate]="false" [(ngModel)]="newCustomerModel.vatNumber"
@@ -136,7 +136,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.Email)">
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CountryCode)">
                 <div class="md-form">
                   <input mdbInputDirective
                          [mdbValidate]="false" [(ngModel)]="newCustomerModel.countryCode"
@@ -144,6 +144,70 @@
                          type="text" id="createCountryCode"
                          name="createCountryCode">
                   <label for="createCountryCode">{{'CountryCode' | translate}}</label>
+                </div>
+              </div>
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CrmId)">
+                <div class="md-form">
+                  <input mdbInputDirective
+                         [mdbValidate]="false" [(ngModel)]="newCustomerModel.crmId"
+                         class="form-control"
+                         type="text" id="createCrmId"
+                         name="createCrmId">
+                  <label for="createCrmId">{{'CrmId' | translate}}</label>
+                </div>
+              </div>
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.PropertyNumber)">
+                <div class="md-form">
+                  <input mdbInputDirective
+                         [mdbValidate]="false" [(ngModel)]="newCustomerModel.propertyNumber"
+                         class="form-control"
+                         type="text" id="createPropertyNumber"
+                         name="createPropertyNumber">
+                  <label for="createPropertyNumber">{{'PropertyNumber' | translate}}</label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.ApartmentNumber)">
+                <div class="md-form">
+                  <input mdbInputDirective
+                         [mdbValidate]="false" [(ngModel)]="newCustomerModel.apartmentNumber"
+                         class="form-control"
+                         type="text" id="createApartmentNumber"
+                         name="createApartmentNumber">
+                  <label for="createApartmentNumber">{{'ApartmentNumber' | translate}}</label>
+                </div>
+              </div>
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CompletionYear)">
+                <div class="md-form">
+                  <input mdbInputDirective
+                         [mdbValidate]="false" [(ngModel)]="newCustomerModel.completionYear"
+                         class="form-control"
+                         type="text" id="createCompletionYear"
+                         name="createCompletionYear">
+                  <label for="createCompletionYear">{{'CompletionYear' | translate}}</label>
+                </div>
+              </div>
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.FloorsWithLivingSpace)">
+                <div class="md-form">
+                  <input mdbInputDirective
+                         [mdbValidate]="false" [(ngModel)]="newCustomerModel.floorsWithLivingSpace"
+                         class="form-control"
+                         type="text" id="createFloorsWithLivingSpace"
+                         name="createFloorsWithLivingSpace">
+                  <label for="createFloorsWithLivingSpace">{{'FloorsWithLivingSpace' | translate}}</label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CadastralNumber)">
+                <div class="md-form">
+                  <input mdbInputDirective
+                         [mdbValidate]="false" [(ngModel)]="newCustomerModel.cadastralNumber"
+                         class="form-control"
+                         type="text" id="createCadastralNumber"
+                         name="createCadastralNumber">
+                  <label for="createCadastralNumber">{{'CadastralNumber' | translate}}</label>
                 </div>
               </div>
             </div>

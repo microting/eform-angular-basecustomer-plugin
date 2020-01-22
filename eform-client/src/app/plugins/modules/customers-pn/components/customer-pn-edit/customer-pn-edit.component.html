@@ -136,7 +136,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.Email)">
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CountryCode)">
                 <div class="md-form">
                   <input mdbInputDirective
                          [mdbValidate]="false" [(ngModel)]="selectedCustomerModel.countryCode"
@@ -144,6 +144,70 @@
                          type="text" id="editCountryCode"
                          name="editCountryCode">
                   <label for="editCountryCode">{{'CountryCode' | translate}}</label>
+                </div>
+              </div>
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CrmId)">
+                <div class="md-form">
+                  <input mdbInputDirective
+                         [mdbValidate]="false" [(ngModel)]="selectedCustomerModel.crmId"
+                         class="form-control"
+                         type="text" id="editCrmId"
+                         name="editCrmId">
+                  <label for="editCrmId">{{'CrmId' | translate}}</label>
+                </div>
+              </div>
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.PropertyNumber)">
+                <div class="md-form">
+                  <input mdbInputDirective
+                         [mdbValidate]="false" [(ngModel)]="selectedCustomerModel.propertyNumber"
+                         class="form-control"
+                         type="text" id="editPropertyNumber"
+                         name="editPropertyNumber">
+                  <label for="editPropertyNumber">{{'PropertyNumber' | translate}}</label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.ApartmentNumber)">
+                <div class="md-form">
+                  <input mdbInputDirective
+                         [mdbValidate]="false" [(ngModel)]="selectedCustomerModel.apartmentNumber"
+                         class="form-control"
+                         type="text" id="editApartmentNumber"
+                         name="editApartmentNumber">
+                  <label for="editApartmentNumber">{{'ApartmentNumber' | translate}}</label>
+                </div>
+              </div>
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CompletionYear)">
+                <div class="md-form">
+                  <input mdbInputDirective
+                         [mdbValidate]="false" [(ngModel)]="selectedCustomerModel.completionYear"
+                         class="form-control"
+                         type="text" id="editCompletionYear"
+                         name="editCompletionYear">
+                  <label for="editCompletionYear">{{'CompletionYear' | translate}}</label>
+                </div>
+              </div>
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.FloorsWithLivingSpace)">
+                <div class="md-form">
+                  <input mdbInputDirective
+                         [mdbValidate]="false" [(ngModel)]="selectedCustomerModel.floorsWithLivingSpace"
+                         class="form-control"
+                         type="text" id="editFloorsWithLivingSpace"
+                         name="editFloorsWithLivingSpace">
+                  <label for="editFloorsWithLivingSpace">{{'FloorsWithLivingSpace' | translate}}</label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CadastralNumber)">
+                <div class="md-form">
+                  <input mdbInputDirective
+                         [mdbValidate]="false" [(ngModel)]="selectedCustomerModel.cadastralNumber"
+                         class="form-control"
+                         type="text" id="editCadastralNumber"
+                         name="editCadastralNumber">
+                  <label for="editCadastralNumber">{{'CadastralNumber' | translate}}</label>
                 </div>
               </div>
             </div>

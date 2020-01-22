@@ -36,7 +36,12 @@ describe('Customers plugin page', function () {
       email: 'user@user.com',
       eanCode: '784565',
       vatNumber: '821456',
-      countryCode: 'DK'
+      countryCode: 'DK',
+      cadastralNumber: 'eal10230',
+      propertyNumber: 1235,
+      apartmentNumber: 52,
+      completionYear: 1960,
+      floorsWithLivingSpace: 3
     };
     const rowCountBeforeCreation = customersPage.rowNum();
     browser.pause(2000);

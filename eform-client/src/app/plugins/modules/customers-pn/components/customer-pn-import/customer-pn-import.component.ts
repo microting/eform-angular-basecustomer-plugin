@@ -38,8 +38,13 @@ export class CustomerPnImportComponent implements OnInit {
     {value: 10, label: 'EanCode'},
     {value: 11, label: 'VatNumber'},
     {value: 12, label: 'CountryCode'},
-    {value: 13, label: 'Ignore'}
-
+    {value: 13, label: 'CrmId'},
+    {value: 14, label: 'CadastralNumber'},
+    {value: 15, label: 'PropertyNumber'},
+    {value: 16, label: 'ApartmentNumber'},
+    {value: 17, label: 'CompletionYear'},
+    {value: 18, label: 'FloorsWithLivingSpace'},
+    {value: 19, label: 'Ignore'}
   ];
   constructor(private customerService: CustomersPnService) {
     this.customerImportModel = new CustomersPnImportModel();

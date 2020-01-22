@@ -11,5 +11,14 @@ export enum CustomerPnFieldsEnum {
   ContactPerson,
   Description,
   CreatedDate,
-  CompanyAddress2
+  CompanyAddress2,
+  EanCode,
+  VatNumber,
+  CountryCode,
+  CrmId,
+  CadastralNumber,
+  PropertyNumber,
+  ApartmentNumber,
+  CompletionYear,
+  FloorsWithLivingSpace
 }

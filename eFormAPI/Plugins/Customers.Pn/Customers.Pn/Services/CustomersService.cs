@@ -207,10 +207,15 @@ namespace Customers.Pn.Services
                             ZipCode = customerPnCreateModel.ZipCode,
                             RelatedEntityId = customerPnCreateModel.RelatedEntityId,
                             CrmId = customerPnCreateModel.CrmId,
-                            CreatedDate = DateTime.Now
+                            CreatedDate = DateTime.Now,
+                            CadastralNumber = customerPnCreateModel.CadastralNumber,
+                            PropertyNumber = customerPnCreateModel.PropertyNumber,
+                            ApartmentNumber = customerPnCreateModel.ApartmentNumber,
+                            CompletionYear = customerPnCreateModel.CompletionYear,
+                            FloorsWithLivingSpace = customerPnCreateModel.FloorsWithLivingSpace
                         };
 
-                        newCustomer.Create(_dbContext);
+                        await newCustomer.Create(_dbContext);
                         // create item
                         Core core = await _coreHelper.GetCore();
                         EntityGroup entityGroup =
@@ -258,7 +263,7 @@ namespace Customers.Pn.Services
                                 }
                             }
                         }
-                        newCustomer.Update(_dbContext);
+                        await newCustomer.Update(_dbContext);
                         return new OperationResult(true,
                             _customersLocalizationService.GetString("CustomerCreated"));
                     }
@@ -306,7 +311,12 @@ namespace Customers.Pn.Services
                         EanCode = x.EanCode,
                         VatNumber = x.VatNumber,
                         RelatedEntityId = x.RelatedEntityId,
-                        CrmId = x.CrmId
+                        CrmId = x.CrmId,
+                        CadastralNumber = x.CadastralNumber,
+                        PropertyNumber = x.PropertyNumber,
+                        ApartmentNumber = x.ApartmentNumber,
+                        CompletionYear = x.CompletionYear,
+                        FloorsWithLivingSpace = x.FloorsWithLivingSpace
                     })
                     .FirstOrDefault(x => x.Id == id);
 
@@ -351,9 +361,14 @@ namespace Customers.Pn.Services
                     Description = customerUpdateModel.Description,
                     RelatedEntityId = customerUpdateModel.RelatedEntityId,
                     Id = customerUpdateModel.Id,
-                    CrmId = customerUpdateModel.CrmId
+                    CrmId = customerUpdateModel.CrmId,
+                    CadastralNumber = customerUpdateModel.CadastralNumber,
+                    PropertyNumber = customerUpdateModel.PropertyNumber,
+                    ApartmentNumber = customerUpdateModel.ApartmentNumber,
+                    CompletionYear = customerUpdateModel.CompletionYear,
+                    FloorsWithLivingSpace = customerUpdateModel.FloorsWithLivingSpace
                 };
-                customerForUpdate.Update(_dbContext);
+                await customerForUpdate.Update(_dbContext);
                 Core core = await _coreHelper.GetCore();
 
 
@@ -393,7 +408,7 @@ namespace Customers.Pn.Services
             try
             {
                 Customer customer = new Customer {Id = id};
-                customer.Delete(_dbContext);
+                await customer.Delete(_dbContext);
 
 				if (_dbContext.Customers.SingleOrDefault(x => x.Id == id)?.RelatedEntityId != null)
                 {
@@ -470,10 +485,16 @@ namespace Customers.Pn.Services
                                     EanCode = customerModel.EanCode,
                                     VatNumber = customerModel.VatNumber,
                                     CountryCode = customerModel.CountryCode,
-                                    CreatedDate = DateTime.Now
+                                    CreatedDate = DateTime.Now,
+                                    CrmId = customerModel.CrmId,
+                                    CadastralNumber = customerModel.CadastralNumber,
+                                    PropertyNumber = customerModel.PropertyNumber,
+                                    ApartmentNumber = customerModel.ApartmentNumber,
+                                    CompletionYear = customerModel.CompletionYear,
+                                    FloorsWithLivingSpace = customerModel.FloorsWithLivingSpace
                                 };
 
-                                newCustomer.Create(_dbContext);
+                                await newCustomer.Create(_dbContext);
 
                                 if (customerSettings?.RelatedEntityGroupId != null)
                                 {
@@ -510,7 +531,7 @@ namespace Customers.Pn.Services
                                                 if (entityItem.MicrotingUUID == item.MicrotingUUID)
                                                 {
                                                     newCustomer.RelatedEntityId = entityItem.Id;
-                                                    newCustomer.Update(_dbContext);
+                                                    await newCustomer.Update(_dbContext);
                                                 }
                                             }
                                         }
@@ -535,6 +556,11 @@ namespace Customers.Pn.Services
                                 existingCustomer.ContactPerson = customerModel.ContactPerson;
                                 existingCustomer.CountryCode = customerModel.CountryCode;
                                 existingCustomer.CrmId = customerModel.CrmId;
+                                existingCustomer.CadastralNumber = customerModel.CadastralNumber;
+                                existingCustomer.PropertyNumber = customerModel.PropertyNumber;
+                                existingCustomer.ApartmentNumber = customerModel.ApartmentNumber;
+                                existingCustomer.CompletionYear = customerModel.CompletionYear;
+                                existingCustomer.FloorsWithLivingSpace = customerModel.FloorsWithLivingSpace;
 //                                existingCustomer.Update(_dbContext);
                                 
                                 if (existingCustomer.WorkflowState == Constants.WorkflowStates.Removed)
@@ -590,7 +616,7 @@ namespace Customers.Pn.Services
                                         }
                                     }
                                 }
-                                existingCustomer.Update(_dbContext);                                
+                                await existingCustomer.Update(_dbContext);                                
                             }
                         }
                     }
@@ -643,8 +669,11 @@ namespace Customers.Pn.Services
                 x.ContactPerson == customerModel.ContactPerson && x.CountryCode == customerModel.CountryCode &&
                 x.CreatedBy == customerModel.CreatedBy && x.CustomerNo == customerModel.CustomerNo &&
                 x.EanCode == customerModel.EanCode && x.CrmId == customerModel.CrmId &&
-                x.VatNumber == customerModel.VatNumber && x.ZipCode == customerModel.ZipCode);
+                x.VatNumber == customerModel.VatNumber && x.ZipCode == customerModel.ZipCode && x.CadastralNumber == customerModel.CadastralNumber &&
+                x.PropertyNumber == customerModel.PropertyNumber && x.ApartmentNumber == customerModel.ApartmentNumber &&
+                x.CompletionYear == customerModel.CompletionYear && x.FloorsWithLivingSpace == customerModel.FloorsWithLivingSpace);
             
+
             return existingCustomer;
             
         }

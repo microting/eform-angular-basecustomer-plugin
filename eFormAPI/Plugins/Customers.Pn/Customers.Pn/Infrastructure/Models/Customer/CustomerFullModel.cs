@@ -22,6 +22,11 @@ namespace Customers.Pn.Infrastructure.Models.Customer
         public string VatNumber { get; set; }
         public string CountryCode { get; set; }
         public int? CrmId { get; set; }
+        public string CadastralNumber { get; set; }
+        public int? PropertyNumber { get; set; }
+        public int? ApartmentNumber { get; set; }
+        public int? CompletionYear { get; set; }
+        public int? FloorsWithLivingSpace { get; set; }
         
     }
 }
