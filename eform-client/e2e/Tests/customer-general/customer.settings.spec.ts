@@ -124,11 +124,6 @@ describe('Customers plugin settings page', function () {
     const plugin = pluginsPage.getFirstPluginRowObj();
     plugin.settingsBtn.click();
     browser.pause(10000);
-    customersSettingsPage.clickCheckboxById('17');
-    customersSettingsPage.clickCheckboxById('18');
-    customersSettingsPage.clickCheckboxById('19');
-    customersSettingsPage.clickCheckboxById('20');
-    customersSettingsPage.clickCheckboxById('21');
     customersSettingsPage.clickCheckboxById('1');
 
     browser.pause(2000);
