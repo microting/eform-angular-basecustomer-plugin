@@ -462,7 +462,9 @@ namespace Customers.Pn.Services
                             || contactPersonExists
                             )
                         {
-                            Customer existingCustomer = FindCustomer(customerNoExists, customerNoColumn, companyNameExists, companyNameColumn, contactPersonExists, contactPersonColumn, headers, customerObj);
+                            Customer existingCustomer = FindCustomer(customerNoExists, customerNoColumn,
+                                companyNameExists, companyNameColumn, contactPersonExists,
+                                contactPersonColumn, headers, customerObj);
                             if (existingCustomer == null)
                             {
                                  CustomerFullModel customerModel = 
