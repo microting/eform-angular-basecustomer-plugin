@@ -23,6 +23,7 @@ describe('Customers plugin page', function () {
   // });
   it('should add new customer with all fields', function () {
     customersPage.newCustomerBtn.click();
+    browser.waitForVisible('#createCustomerNo', 20000);
     browser.pause(6000);
     const customerObject = {
       createdBy: 'John Smith',
