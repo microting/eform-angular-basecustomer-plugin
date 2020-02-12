@@ -46,6 +46,9 @@ describe('Customers plugin page', function () {
     const rowCountBeforeCreation = customersPage.rowNum();
     browser.pause(2000);
     customersModalPage.createCustomer(customerObject);
+    browser.pause(2000);
+    browser.reload();
+    browser.pause(10000);
     const rowCountAfterCreation = customersPage.rowNum();
     browser.pause(2000);
     expect(rowCountAfterCreation, 'Number of rows hasn\'t changed after creating new user').equal(rowCountBeforeCreation + 1);
