@@ -50,8 +50,8 @@
       </tr>
       </thead>
       <tbody id="mainTableBody">
-      <tr *ngFor="let customer of customersModel.customers">
-        <td *ngFor="let field of customer.fields" [id]="field.name">
+      <tr *ngFor="let customer of customersModel.customers; let i = index">
+        <td *ngFor="let field of customer.fields" [id]="{{field.name}}_{{i}}">
           <ng-container [ngSwitch]="field.name">
             <ng-container *ngSwitchCase="fieldsEnum[fieldsEnum.Description]">
               <div class="max-lines" [innerHTML]="field.value"></div>
