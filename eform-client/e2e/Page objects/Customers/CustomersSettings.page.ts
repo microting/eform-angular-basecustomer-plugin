@@ -31,7 +31,7 @@ export class CustomersSettingsPage extends Page {
   public clickCheckboxById(id: string) {
     const el = browser.element('#mat-checkbox' + id);
     el.click();
-    browser.pause(5000);
+    // browser.pause(1000);
   }
   public  getSearchField() {
     return browser.element('.ng-input > input');

@@ -11,29 +11,29 @@ describe('Customers sorting', function () {
   });
   it('sorts customers by id', function () {
     customersPage.clickIdSort();
-    const firstRowId = customersPage.getCustomerValue('Id', 1);
-    const secondRowId = customersPage.getCustomerValue('Id', 2);
+    const firstRowId = customersPage.getCustomerValue('Id_0', 1);
+    const secondRowId = customersPage.getCustomerValue('Id_1', 2);
     browser.pause(2000);
     expect(firstRowId, 'first id bigger than second').lessThan(secondRowId);
   });
   it('sorts id\'s in reverse order', function () {
     customersPage.clickIdSort();
-    const firstRowId = customersPage.getCustomerValue('Id', 1);
-    const secondRowId = customersPage.getCustomerValue('Id', 2);
+    const firstRowId = customersPage.getCustomerValue('Id_0', 1);
+    const secondRowId = customersPage.getCustomerValue('Id_1', 2);
     browser.pause(2000);
     expect(firstRowId, 'first lesser than second').greaterThan(secondRowId);
   });
   it('sorts customers by contact person', function () {
     // before sorting
     customersPage.clickContactSort();
-    let firstRowContact = customersPage.getCustomerValue('ContactPerson', 1);
-    let secondRowContact = customersPage.getCustomerValue('ContactPerson', 2);
+    let firstRowContact = customersPage.getCustomerValue('ContactPerson_0', 1);
+    let secondRowContact = customersPage.getCustomerValue('ContactPerson_1', 2);
     const contactsBefore = [firstRowContact, secondRowContact];
     // sort list and customers on page
     customersPage.clickContactSort();
     // get new values[
-    firstRowContact = customersPage.getCustomerValue('ContactPerson', 1);
-    secondRowContact = customersPage.getCustomerValue('ContactPerson', 2);
+    firstRowContact = customersPage.getCustomerValue('ContactPerson_0', 1);
+    secondRowContact = customersPage.getCustomerValue('ContactPerson_1', 2);
     // compare!
     const contactsAfter = [firstRowContact, secondRowContact];
     const result = (contactsBefore[0] !== contactsAfter[0]) && (contactsBefore[1] !== contactsAfter[1]);
@@ -42,14 +42,14 @@ describe('Customers sorting', function () {
   it('sorts customers by contact person reversed', function () {
     // before sorting
     customersPage.clickContactSort();
-    let firstRowContact = customersPage.getCustomerValue('ContactPerson', 1);
-    let secondRowContact = customersPage.getCustomerValue('ContactPerson', 2);
+    let firstRowContact = customersPage.getCustomerValue('ContactPerson_0', 1);
+    let secondRowContact = customersPage.getCustomerValue('ContactPerson_1', 2);
     const contactsBefore = [firstRowContact, secondRowContact];
     // sort list and customers on page
     customersPage.clickContactSort();
     // get new values
-    firstRowContact = customersPage.getCustomerValue('ContactPerson', 1);
-    secondRowContact = customersPage.getCustomerValue('ContactPerson', 2);
+    firstRowContact = customersPage.getCustomerValue('ContactPerson_0', 1);
+    secondRowContact = customersPage.getCustomerValue('ContactPerson_1', 2);
     // compare!
     const contactsAfter = [firstRowContact, secondRowContact];
     const result = (contactsBefore[0] !== contactsAfter[0]) && (contactsBefore[1] !== contactsAfter[1]);
@@ -58,14 +58,14 @@ describe('Customers sorting', function () {
   it('sorts customers by company name', function () {
     // before sorting
     customersPage.clickCompanySort();
-    let firstRowName = customersPage.getCustomerValue('CompanyName', 1);
-    let secondRowName = customersPage.getCustomerValue('CompanyName', 2);
+    let firstRowName = customersPage.getCustomerValue('CompanyName_0', 1);
+    let secondRowName = customersPage.getCustomerValue('CompanyName_1', 2);
     const namesBefore = [firstRowName, secondRowName];
     // sort list and customers on page
     customersPage.clickCompanySort();
     // get new values
-    firstRowName = customersPage.getCustomerValue('CompanyName', 1);
-    secondRowName = customersPage.getCustomerValue('CompanyName', 2);
+    firstRowName = customersPage.getCustomerValue('CompanyName_0', 1);
+    secondRowName = customersPage.getCustomerValue('CompanyName_1', 2);
     // compare!
     const namesAfter = [firstRowName, secondRowName];
     const result = (namesBefore[0] !== namesAfter[0]) && (namesBefore[1] !== namesAfter[1]);
@@ -74,15 +74,15 @@ describe('Customers sorting', function () {
   it('sorts customers by company name reversed', function () {
     // before sorting
     customersPage.clickCompanySort();
-    let firstRowName = customersPage.getCustomerValue('ContactPerson', 1);
-    let secondRowName = customersPage.getCustomerValue('ContactPerson', 2);
+    let firstRowName = customersPage.getCustomerValue('ContactPerson_0', 1);
+    let secondRowName = customersPage.getCustomerValue('ContactPerson_1', 2);
     const namesBefore = [firstRowName, secondRowName];
     // sort list and customers on page
     customersPage.clickCompanySort();
 
     // get new values
-    firstRowName = customersPage.getCustomerValue('ContactPerson', 1);
-    secondRowName = customersPage.getCustomerValue('ContactPerson', 2);
+    firstRowName = customersPage.getCustomerValue('ContactPerson_0', 1);
+    secondRowName = customersPage.getCustomerValue('ContactPerson_1', 2);
     // compare!
     const namesAfter = [firstRowName, secondRowName];
     const result = (namesBefore[0] !== namesAfter[0]) && (namesBefore[1] !== namesAfter[1]);

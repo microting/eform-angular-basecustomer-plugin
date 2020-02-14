@@ -53,38 +53,38 @@ describe('Customers plugin settings page', function () {
     const plugin = pluginsPage.getFirstPluginRowObj();
     plugin.settingsBtn.click();
     browser.pause(4000);
-    const customerCheckbox =  customersSettingsPage.getCheckboxById('3');
-    const companyNameCheckbox =  customersSettingsPage.getCheckboxById('4');
-    const idCheckbox =  customersSettingsPage.getCheckboxById('22');
+    const customerCheckbox =  customersSettingsPage.getCheckboxById('CustomerNo');
+    const companyNameCheckbox =  customersSettingsPage.getCheckboxById('CompanyName');
+    const idCheckbox =  customersSettingsPage.getCheckboxById('Id');
 
-    customersSettingsPage.clickCheckboxById('1');
-    customersSettingsPage.clickCheckboxById('2');
-    customersSettingsPage.clickCheckboxById('5');
-    customersSettingsPage.clickCheckboxById('6');
-    customersSettingsPage.clickCheckboxById('7');
-    customersSettingsPage.clickCheckboxById('8');
-    customersSettingsPage.clickCheckboxById('9');
-    customersSettingsPage.clickCheckboxById('10');
-    customersSettingsPage.clickCheckboxById('11');
-    customersSettingsPage.clickCheckboxById('12');
-    customersSettingsPage.clickCheckboxById('13');
-    customersSettingsPage.clickCheckboxById('14');
-    customersSettingsPage.clickCheckboxById('15');
-    customersSettingsPage.clickCheckboxById('16');
-    customersSettingsPage.clickCheckboxById('17');
-    customersSettingsPage.clickCheckboxById('18');
-    customersSettingsPage.clickCheckboxById('19');
-    customersSettingsPage.clickCheckboxById('20');
-    customersSettingsPage.clickCheckboxById('21');
-    customersSettingsPage.clickCheckboxById('23');
-    customersSettingsPage.clickCheckboxById('24');
-    customersSettingsPage.clickCheckboxById('25');
-    customersSettingsPage.clickCheckboxById('26');
-    customersSettingsPage.clickCheckboxById('27');
+    customersSettingsPage.clickCheckboxById('VatNumber');
+    customersSettingsPage.clickCheckboxById('CreatedBy');
+    customersSettingsPage.clickCheckboxById('CompanyAddress');
+    customersSettingsPage.clickCheckboxById('CompanyAddress2');
+    customersSettingsPage.clickCheckboxById('ZipCode');
+    customersSettingsPage.clickCheckboxById('CityName');
+    customersSettingsPage.clickCheckboxById('Phone');
+    customersSettingsPage.clickCheckboxById('Email');
+    customersSettingsPage.clickCheckboxById('ContactPerson');
+    customersSettingsPage.clickCheckboxById('Description');
+    customersSettingsPage.clickCheckboxById('EanCode');
+    customersSettingsPage.clickCheckboxById('CountryCode');
+    customersSettingsPage.clickCheckboxById('UpdatedByUserId');
+    customersSettingsPage.clickCheckboxById('CrmId');
+    customersSettingsPage.clickCheckboxById('CadastralNumber');
+    customersSettingsPage.clickCheckboxById('PropertyNumber');
+    customersSettingsPage.clickCheckboxById('ApartmentNumber');
+    customersSettingsPage.clickCheckboxById('CompletionYear');
+    customersSettingsPage.clickCheckboxById('FloorsWithLivingSpace');
+    customersSettingsPage.clickCheckboxById('CadastralType');
+    customersSettingsPage.clickCheckboxById('Version');
+    customersSettingsPage.clickCheckboxById('CreatedAt');
+    customersSettingsPage.clickCheckboxById('UpdatedAt');
+    customersSettingsPage.clickCheckboxById('WorkflowState');
+    customersSettingsPage.clickCheckboxById('CreatedByUserId');
+    customersSettingsPage.clickCheckboxById('CreatedDate');
     browser.pause(2000);
     customersSettingsPage.saveSettings();
-    //browser.pause(4000);
-    //customersPage.goToCustomersPage();
     browser.pause(4000);
 
     myEformsPage.Navbar.advancedDropdown();
@@ -106,13 +106,32 @@ describe('Customers plugin settings page', function () {
     const plugin = pluginsPage.getFirstPluginRowObj();
     plugin.settingsBtn.click();
     browser.pause(4000);
-    for (let i = 1; i < 23; i++) {
-      if (customersSettingsPage.getCheckboxById(i).getValue() === 'true') {
-        continue;
-      } else {
-        customersSettingsPage.clickCheckboxById(i);
-      }
-    }
+    customersSettingsPage.clickCheckboxById('VatNumber');
+    customersSettingsPage.clickCheckboxById('CreatedBy');
+    customersSettingsPage.clickCheckboxById('CompanyAddress');
+    customersSettingsPage.clickCheckboxById('CompanyAddress2');
+    customersSettingsPage.clickCheckboxById('ZipCode');
+    customersSettingsPage.clickCheckboxById('CityName');
+    customersSettingsPage.clickCheckboxById('Phone');
+    customersSettingsPage.clickCheckboxById('Email');
+    customersSettingsPage.clickCheckboxById('ContactPerson');
+    customersSettingsPage.clickCheckboxById('Description');
+    customersSettingsPage.clickCheckboxById('EanCode');
+    customersSettingsPage.clickCheckboxById('CountryCode');
+    customersSettingsPage.clickCheckboxById('UpdatedByUserId');
+    customersSettingsPage.clickCheckboxById('CrmId');
+    customersSettingsPage.clickCheckboxById('CadastralNumber');
+    customersSettingsPage.clickCheckboxById('PropertyNumber');
+    customersSettingsPage.clickCheckboxById('ApartmentNumber');
+    customersSettingsPage.clickCheckboxById('CompletionYear');
+    customersSettingsPage.clickCheckboxById('FloorsWithLivingSpace');
+    customersSettingsPage.clickCheckboxById('CadastralType');
+    customersSettingsPage.clickCheckboxById('Version');
+    customersSettingsPage.clickCheckboxById('CreatedAt');
+    customersSettingsPage.clickCheckboxById('UpdatedAt');
+    customersSettingsPage.clickCheckboxById('WorkflowState');
+    customersSettingsPage.clickCheckboxById('CreatedByUserId');
+    customersSettingsPage.clickCheckboxById('CreatedDate');
     browser.pause(2000);
     customersSettingsPage.saveSettings();
   });
@@ -123,8 +142,16 @@ describe('Customers plugin settings page', function () {
 
     const plugin = pluginsPage.getFirstPluginRowObj();
     plugin.settingsBtn.click();
-    browser.pause(10000);
-    customersSettingsPage.clickCheckboxById('1');
+    browser.pause(4000);
+    // customersSettingsPage.clickCheckboxById('VatNumber');
+    // customersSettingsPage.clickCheckboxById('CreatedBy');
+    customersSettingsPage.clickCheckboxById('Version');
+    customersSettingsPage.clickCheckboxById('CreatedAt');
+    customersSettingsPage.clickCheckboxById('UpdatedAt');
+    customersSettingsPage.clickCheckboxById('UpdatedByUserId');
+    customersSettingsPage.clickCheckboxById('WorkflowState');
+    customersSettingsPage.clickCheckboxById('CreatedByUserId');
+    customersSettingsPage.clickCheckboxById('CreatedDate');
 
     browser.pause(2000);
     customersSettingsPage.saveSettings();

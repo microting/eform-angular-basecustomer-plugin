@@ -14,11 +14,11 @@
       <div class="container-fluid">
         <div class="row mt-2">
           <div class="col-md-2 mb-2" *ngFor="let field of fieldsUpdateModel.fields">
-            <div class="mat-checkbox" id="mat-checkbox{{field.id}}">
-              <input id="checkbox{{field.id}}" (click)="checkBoxChanged($event, field)"
+            <div class="mat-checkbox" id="mat-checkbox{{field.name}}">
+              <input id="checkbox{{field.name}}" (click)="checkBoxChanged($event, field)"
                      [checked]="field.fieldStatus == fieldStatusEnum.Enabled"
                      [value]="field.fieldStatus == fieldStatusEnum.Enabled" type="checkbox">
-              <label for="checkbox{{field.id}}">{{field.name | translate}}</label>
+              <label for="checkbox{{field.name}}">{{field.name | translate}}</label>
             </div>
           </div>
         </div>
