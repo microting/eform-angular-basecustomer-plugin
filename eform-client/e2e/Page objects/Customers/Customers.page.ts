@@ -24,7 +24,7 @@ export class CustomersPage extends PageWithNavbarPage {
   }
 
   public getCustomerValue(selector: any, row: number) {
-    if (selector === 'Id') {
+    if (selector.includes('Id')) {
       return  parseInt( $('#mainTableBody').$(`tr:nth-child(${row})`).$('#' + selector).getText(), 10);
     } else {
       return $('#mainTableBody').$(`tr:nth-child(${row})`).$('#' + selector).getText();
