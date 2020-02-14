@@ -41,7 +41,7 @@ export class CustomersImportPage extends Page {
     // ng-dropdown-panel
     // const choicesList = browser.$$('.ng-dropdown-panel-items');
     browser.$('span=' + fieldName).click();
-    browser.pause(4000);
+    // browser.pause(4000);
   }
 }
 

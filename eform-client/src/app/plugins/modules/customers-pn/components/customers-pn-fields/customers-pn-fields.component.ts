@@ -72,9 +72,9 @@ export class CustomersPnFieldsComponent implements OnInit {
     this.customersSettingsService.updateSettings(this.customersPnSettingsModel).subscribe((data) => {
       if (data && data.success) {
         this.spinnerStatus = true;
-        this.customersFieldsService.updateFields(this.fieldsUpdateModel).subscribe((data) => {
-          if (data && data.success) {
-            this.router.navigate(['/plugins/customers-pn']).then();
+        this.customersFieldsService.updateFields(this.fieldsUpdateModel).subscribe((innerData) => {
+          if (innerData && innerData.success) {
+            this.router.navigate(['/plugins-settings']).then();
           } this.spinnerStatus = false;
         });
       } this.spinnerStatus = false;

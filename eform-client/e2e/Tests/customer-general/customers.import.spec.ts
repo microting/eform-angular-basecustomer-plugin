@@ -15,7 +15,9 @@ describe('Customers plugin import page', function () {
     const customersBefore = customersPage.rowNum();
     customersPage.goToImportBtn();
     browser.chooseFile('#files', localPath + '/e2e/Assets/Import-test.csv');
-    browser.pause(8000);
+    browser.waitForVisible('row_0', 20000);
+    browser.waitForVisible('row_1', 20000);
+    browser.waitForVisible('row_2', 20000);
     // check if two customers ready to be imported
     const customersN = customersImportPage.numberOfCustomers;
     expect(customersN, 'After choosing file, two customers must appear in table').equal(3);
@@ -40,7 +42,9 @@ describe('Customers plugin import page', function () {
     importButton.click();
     browser.pause(8000);
     browser.chooseFile('#files', localPath + '/e2e/Assets/Import-test.csv');
-    browser.pause(8000);
+    browser.waitForVisible('row_0', 20000);
+    browser.waitForVisible('row_1', 20000);
+    browser.waitForVisible('row_2', 20000);
     customersImportPage.cancelImport();
 
     const customersAfter = customersImportPage.numberOfCustomers;
