@@ -42,9 +42,9 @@ describe('Customers plugin import page', function () {
     importButton.click();
     browser.pause(8000);
     browser.chooseFile('#files', localPath + '/e2e/Assets/Import-test.csv');
-    browser.waitForVisible('row_0', 20000);
-    browser.waitForVisible('row_1', 20000);
-    browser.waitForVisible('row_2', 20000);
+    browser.waitForVisible('#row_0', 20000);
+    browser.waitForVisible('#row_1', 20000);
+    browser.waitForVisible('#row_2', 20000);
     customersImportPage.cancelImport();
 
     const customersAfter = customersImportPage.numberOfCustomers;
