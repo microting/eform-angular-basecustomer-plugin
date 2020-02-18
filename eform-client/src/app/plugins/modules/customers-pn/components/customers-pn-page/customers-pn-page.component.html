@@ -31,7 +31,7 @@
       <tr>
         <ng-container *ngFor="let field of fieldsModel.fields">
           <th scope="col" class="table-header-sortable" id="{{field.name}}TableHeader"
-              *ngIf="field.fieldStatus == fieldStatusEnum.Enabled"
+              *ngIf="field.fieldStatus === fieldStatusEnum.Enabled"
               (click)="sortTable(field.name)">
             <div class="d-flex align-items-center justify-content-center">
               {{ field.name | translate }}

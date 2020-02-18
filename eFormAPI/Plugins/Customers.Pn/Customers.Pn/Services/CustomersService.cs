@@ -135,7 +135,8 @@ namespace Customers.Pn.Services
                     if (customerModel.Fields.Any())
                     {
                         // Mode Id field to top
-                        customerModel.Fields.Reverse();
+                        customerModel.Fields = customerModel.Fields.OrderBy(x => x.Id).ToList();
+//                        customerModel.Fields.Reverse();
 
                         int index = customerModel.Fields.FindIndex(x => x.Name == "Id");
                         FieldModel idField = customerModel.Fields[index];
