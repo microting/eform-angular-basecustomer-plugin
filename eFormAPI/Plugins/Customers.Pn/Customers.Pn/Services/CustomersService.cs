@@ -83,7 +83,7 @@ namespace Customers.Pn.Services
                     .Skip(pnRequestModel.Offset)
                     .Take(pnRequestModel.PageSize);
 
-                List<Customer> customers = customersQuery.ToList();
+                List<Customer> customers = await customersQuery.ToListAsync().ConfigureAwait(false);
                 
                 customersPnModel.Total = _dbContext.Customers.Count(x => x.WorkflowState != Constants.WorkflowStates.Removed);
                 
@@ -294,7 +294,7 @@ namespace Customers.Pn.Services
         {
             try
             {
-                CustomerFullModel customer = _dbContext.Customers.Select(x => new CustomerFullModel()
+                CustomerFullModel customer = await _dbContext.Customers.Select(x => new CustomerFullModel()
                     {
                         Id = x.Id,
                         Description = x.Description,
@@ -319,7 +319,7 @@ namespace Customers.Pn.Services
                         CompletionYear = x.CompletionYear,
                         FloorsWithLivingSpace = x.FloorsWithLivingSpace
                     })
-                    .FirstOrDefault(x => x.Id == id);
+                    .FirstOrDefaultAsync(x => x.Id == id).ConfigureAwait(false);
 
                 if (customer == null)
                 {

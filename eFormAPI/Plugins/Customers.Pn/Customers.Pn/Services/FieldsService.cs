@@ -34,14 +34,14 @@ namespace Customers.Pn.Services
         {
             try
             {
-                List<FieldUpdateModel> fields = _dbContext.CustomerFields
+                List<FieldUpdateModel> fields = await _dbContext.CustomerFields
                     .Include("Field")
                     .Select(x => new FieldUpdateModel()
                     {
                         FieldStatus = x.FieldStatus,
                         Id = x.FieldId,
                         Name = x.Field.Name,
-                    }).ToList();
+                    }).ToListAsync().ConfigureAwait(false);
                 // Mode Id field to top
                 fields.Reverse();
                 int index = fields.FindIndex(x => x.Name == "Id");
@@ -68,9 +68,9 @@ namespace Customers.Pn.Services
             try
             {
                 List<int> list = fieldsModel.Fields.Select(s => s.Id).ToList(); // list of field ids.
-                List<CustomerField> fields = _dbContext.CustomerFields
+                List<CustomerField> fields = await _dbContext.CustomerFields
                     .Where(x => list.Contains(x.FieldId))
-                    .ToList(); // lists the fields for the specific customer.
+                    .ToListAsync().ConfigureAwait(false); // lists the fields for the specific customer.
 
                 if (fields.Any())
                 {
