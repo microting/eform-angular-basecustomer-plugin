@@ -25,16 +25,16 @@ describe('Application settings page - site header section', function () {
     });
     it('should activate the plugin', function () {
         pluginPage.pluginSettingsBtn.click();
-        browser.waitForVisible('#pluginOKBtn', 40000);
+        $('#pluginOKBtn').waitForDisplayed(40000);
         pluginPage.pluginOKBtn.click();
         browser.pause(50000); // We need to wait 50 seconds for the plugin to create db etc.
-        browser.refresh();
+        loginPage.open('/');
 
         loginPage.login();
         myEformsPage.Navbar.advancedDropdown();
         myEformsPage.Navbar.clickonSubMenuItem('Plugins');
         browser.waitForExist('#plugin-name', 50000);
-        browser.pause(10000);
+        $('#spinner-animation').waitForDisplayed(90000, true);
     
         const plugin = pluginsPage.getFirstPluginRowObj();
         expect(plugin.id).equal(1);

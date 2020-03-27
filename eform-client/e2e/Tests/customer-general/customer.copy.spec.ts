@@ -23,7 +23,7 @@ describe('Customers plugin page', function () {
   // });
   it('should add new customer with all fields', function () {
     customersPage.newCustomerBtn.click();
-    browser.waitForVisible('#createCustomerNo', 20000);
+    $('#createCustomerNo').waitForDisplayed(20000);
     browser.pause(6000);
     const customerObject = {
       createdBy: 'John Smith',
@@ -47,7 +47,7 @@ describe('Customers plugin page', function () {
     const rowCountBeforeCreation = customersPage.rowNum();
     browser.pause(2000);
     customersModalPage.createCustomer(customerObject);
-    browser.waitForVisible('#Id_0', 20000);
+    $('#Id_0').waitForDisplayed(20000);
     browser.pause(5000);
     const rowCountAfterCreation = customersPage.rowNum();
     browser.pause(2000);

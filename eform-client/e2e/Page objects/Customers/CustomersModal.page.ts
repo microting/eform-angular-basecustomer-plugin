@@ -7,138 +7,225 @@ export class CustomersModalPage extends Page {
   }
 
   public get createBtn() {
-    browser.waitForExist('#createCustomerBtn', 50000);
-    return browser.element('#createCustomerBtn');
+    $('#createCustomerBtn').waitForDisplayed(20000);
+    $('#createCustomerBtn').waitForClickable({timeout: 20000});
+    return $('#createCustomerBtn');
   }
 
   public get cancelCreateBtn() {
-    return browser.element('#cancelCreateCustomerBtn');
+    $('#cancelCreateCustomerBtn').waitForDisplayed(20000);
+    $('#cancelCreateCustomerBtn').waitForClickable({timeout: 20000});
+    return $('#cancelCreateCustomerBtn');
   }
   public get saveEditBtn() {
-    return browser.element('#saveEditBtn');
+    $('#saveEditBtn').waitForDisplayed(20000);
+    $('#saveEditBtn').waitForClickable({timeout: 20000});
+    return $('#saveEditBtn');
   }
   public get cancelEditBtn() {
-    return browser.element('#cancelEditBtn');
+    $('#cancelEditBtn').waitForDisplayed(20000);
+    $('#cancelEditBtn').waitForClickable({timeout: 20000});
+    return $('#cancelEditBtn');
   }
   public get saveDeleteBtn() {
-    return browser.element('#customerSaveDeleteBtn');
+    $('#customerSaveDeleteBtn').waitForDisplayed(20000);
+    $('#customerSaveDeleteBtn').waitForClickable({timeout: 20000});
+    return $('#customerSaveDeleteBtn');
   }
   public get cancelDeleteBtn() {
-    return browser.element('#customerDeleteCancelBtn');
+    $('#customerDeleteCancelBtn').waitForDisplayed(20000);
+    $('#customerDeleteCancelBtn').waitForClickable({timeout: 20000});
+    return $('#customerDeleteCancelBtn');
   }
   public get createCreatedByInput() {
-    return browser.element('#createCreatedBy');
+    $('#createCreatedBy').waitForDisplayed(20000);
+    $('#createCreatedBy').waitForClickable({timeout: 20000});
+    return $('#createCreatedBy');
   }
   public get editCreatedByInput() {
-    return browser.element('#editCreatedBy');
+    $('#editCreatedBy').waitForDisplayed(20000);
+    $('#editCreatedBy').waitForClickable({timeout: 20000});
+    return $('#editCreatedBy');
   }
   public get createCustomerNo() {
-    return browser.element('#createCustomerNo');
+    $('#createCustomerNo').waitForDisplayed(20000);
+    $('#createCustomerNo').waitForClickable({timeout: 20000});
+    return $('#createCustomerNo');
   }
   public get editCustomerNo() {
-    return browser.element('#editCustomerNo');
+    $('#editCustomerNo').waitForDisplayed(20000);
+    $('#editCustomerNo').waitForClickable({timeout: 20000});
+    return $('#editCustomerNo');
   }
   public get createContactPerson() {
-    return browser.element('#createContactPerson');
+    $('#createContactPerson').waitForDisplayed(20000);
+    $('#createContactPerson').waitForClickable({timeout: 20000});
+    return $('#createContactPerson');
   }
   public get editContactPerson() {
-    return browser.element('#editContactPerson');
+    $('#editContactPerson').waitForDisplayed(20000);
+    $('#editContactPerson').waitForClickable({timeout: 20000});
+    return $('#editContactPerson');
   }
   public get createCompanyName() {
-    return browser.element('#createCompanyName');
+    $('#createCompanyName').waitForDisplayed(20000);
+    $('#createCompanyName').waitForClickable({timeout: 20000});
+    return $('#createCompanyName');
   }
   public get editCompanyName() {
-    return browser.element('#editCompanyName');
+    $('#editCompanyName').waitForDisplayed(20000);
+    $('#editCompanyName').waitForClickable({timeout: 20000});
+    return $('#editCompanyName');
   }
   public get createCompanyAddress() {
-    return browser.element('#createCompanyAddress');
+    $('#createCompanyAddress').waitForDisplayed(20000);
+    $('#createCompanyAddress').waitForClickable({timeout: 20000});
+    return $('#createCompanyAddress');
   }
   public get editCompanyAddress() {
-    return browser.element('#editCompanyAddress');
+    $('#editCompanyAddress').waitForDisplayed(20000);
+    $('#editCompanyAddress').waitForClickable({timeout: 20000});
+    return $('#editCompanyAddress');
   }
   public get createCompanyAddress2() {
-    return browser.element('#createCompanyAddress2');
+    $('#createCompanyAddress2').waitForDisplayed(20000);
+    $('#createCompanyAddress2').waitForClickable({timeout: 20000});
+    return $('#createCompanyAddress2');
   }
   public get editCompanyAddress2() {
-    return browser.element('#editCompanyAddress2');
+    $('#editCompanyAddress2').waitForDisplayed(20000);
+    $('#editCompanyAddress2').waitForClickable({timeout: 20000});
+    return $('#editCompanyAddress2');
   }
   public get createZipCode() {
-    return browser.element('#createZipCode');
+    $('#createZipCode').waitForDisplayed(20000);
+    $('#createZipCode').waitForClickable({timeout: 20000});
+    return $('#createZipCode');
   }
   public get editZipCode() {
-    return browser.element('#editZipCode');
+    $('#editZipCode').waitForDisplayed(20000);
+    $('#editZipCode').waitForClickable({timeout: 20000});
+    return $('#editZipCode');
   }
   public get createCityName() {
-    return browser.element('#createCityName');
+    $('#createCityName').waitForDisplayed(20000);
+    $('#createCityName').waitForClickable({timeout: 20000});
+    return $('#createCityName');
   }
   public get editCityName() {
-    return browser.element('#editCityName');
+    $('#editCityName').waitForDisplayed(20000);
+    $('#editCityName').waitForClickable({timeout: 20000});
+    return $('#editCityName');
   }
   public get createPhone() {
-    return browser.element('#createPhone');
+    $('#createPhone').waitForDisplayed(20000);
+    $('#createPhone').waitForClickable({timeout: 20000});
+    return $('#createPhone');
   }
   public get editPhone() {
-    return browser.element('#editPhone');
+    $('#editPhone').waitForDisplayed(20000);
+    $('#editPhone').waitForClickable({timeout: 20000});
+    return $('#editPhone');
   }
   public get createEmail() {
-    return browser.element('#createEmail');
+    $('#createEmail').waitForDisplayed(20000);
+    $('#createEmail').waitForClickable({timeout: 20000});
+    return $('#createEmail');
   }
   public get editEmail() {
-    return browser.element('#editEmail');
+    $('#editEmail').waitForDisplayed(20000);
+    $('#editEmail').waitForClickable({timeout: 20000});
+    return $('#editEmail');
   }
   public get createEanCode() {
-   return browser.element('#createEanCode');
+    $('#createEanCode').waitForDisplayed(20000);
+    $('#createEanCode').waitForClickable({timeout: 20000});
+    return $('#createEanCode');
   }
   public get editEanCode() {
-    return browser.element('#editEanCode');
+    $('#editEanCode').waitForDisplayed(20000);
+    $('#editEanCode').waitForClickable({timeout: 20000});
+    return $('#editEanCode');
   }
   public get createVatNumber() {
-    return browser.element('#createVatNumber');
+    $('#createVatNumber').waitForDisplayed(20000);
+    $('#createVatNumber').waitForClickable({timeout: 20000});
+    return $('#createVatNumber');
   }
   public get editVatNumber() {
-    return browser.element('#editVatNumber');
+    $('#editVatNumber').waitForDisplayed(20000);
+    $('#editVatNumber').waitForClickable({timeout: 20000});
+    return $('#editVatNumber');
   }
   public get createCountryCode() {
-    return browser.element('#createCountryCode');
+    $('#createCountryCode').waitForDisplayed(20000);
+    $('#createCountryCode').waitForClickable({timeout: 20000});
+    return $('#createCountryCode');
   }
   public get editCountryCode() {
-    return browser.element('#editCountryCode');
+    $('#editCountryCode').waitForDisplayed(20000);
+    $('#editCountryCode').waitForClickable({timeout: 20000});
+    return $('#editCountryCode');
   }
   public get createCrmId() {
-    return browser.element('#createCrmId');
+    $('#createCrmId').waitForDisplayed(20000);
+    $('#createCrmId').waitForClickable({timeout: 20000});
+    return $('#createCrmId');
   }
   public get editCrmId() {
-    return browser.element('#editCrmId');
+    $('#editCrmId').waitForDisplayed(20000);
+    $('#editCrmId').waitForClickable({timeout: 20000});
+    return $('#editCrmId');
   }
   public get createCadastralNumber() {
-    return browser.element('#createCadastralNumber');
+    $('#createCadastralNumber').waitForDisplayed(20000);
+    $('#createCadastralNumber').waitForClickable({timeout: 20000});
+    return $('#createCadastralNumber');
   }
   public get editCadastralNumber() {
-    return browser.element('#editCadastralNumber');
+    $('#editCadastralNumber').waitForDisplayed(20000);
+    $('#editCadastralNumber').waitForClickable({timeout: 20000});
+    return $('#editCadastralNumber');
   }
   public get createPropertyNumber() {
-    return browser.element('#createPropertyNumber');
+    $('#createPropertyNumber').waitForDisplayed(20000);
+    $('#createPropertyNumber').waitForClickable({timeout: 20000});
+    return $('#createPropertyNumber');
   }
   public get editPropertyNumber() {
-    return browser.element('#editPropertyNumber');
+    $('#editPropertyNumber').waitForDisplayed(20000);
+    $('#editPropertyNumber').waitForClickable({timeout: 20000});
+    return $('#editPropertyNumber');
   }
   public get createApartmentNumber() {
-    return browser.element('#createApartmentNumber');
+    $('#createApartmentNumber').waitForDisplayed(20000);
+    $('#createApartmentNumber').waitForClickable({timeout: 20000});
+    return $('#createApartmentNumber');
   }
   public get editApartmentNumber() {
-    return browser.element('#editApartmentNumber');
+    $('#editApartmentNumber').waitForDisplayed(20000);
+    $('#editApartmentNumber').waitForClickable({timeout: 20000});
+    return $('#editApartmentNumber');
   }
   public get createCompletionYear() {
-    return browser.element('#createCompletionYear');
+    $('#createCompletionYear').waitForDisplayed(20000);
+    $('#createCompletionYear').waitForClickable({timeout: 20000});
+    return $('#createCompletionYear');
   }
   public get editCompletionYear() {
-    return browser.element('#editCompletionYear');
+    $('#editCompletionYear').waitForDisplayed(20000);
+    $('#editCompletionYear').waitForClickable({timeout: 20000});
+    return $('#editCompletionYear');
   }
   public get createFloorsWithLivingSpace() {
-    return browser.element('#createFloorsWithLivingSpace');
+    $('#createFloorsWithLivingSpace').waitForDisplayed(20000);
+    $('#createFloorsWithLivingSpace').waitForClickable({timeout: 20000});
+    return $('#createFloorsWithLivingSpace');
   }
   public get editFloorsWithLivingSpace() {
-    return browser.element('#editFloorsWithLivingSpace');
+    $('#editFloorsWithLivingSpace').waitForDisplayed(20000);
+    $('#editFloorsWithLivingSpace').waitForClickable({timeout: 20000});
+    return $('#editFloorsWithLivingSpace');
   }
 
   public createCustomer(data: any) {
@@ -160,7 +247,7 @@ export class CustomersModalPage extends Page {
     this.createCompletionYear.setValue(data.completionYear);
     this.createFloorsWithLivingSpace.setValue(data.floorsWithLivingSpace);
     this.createBtn.click();
-    browser.pause(16000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
 
   public updateCustomer(data: any) {
@@ -182,28 +269,27 @@ export class CustomersModalPage extends Page {
     this.editCompletionYear.setValue(data.completionYear);
     this.editFloorsWithLivingSpace.setValue(data.floorsWithLivingSpace);
     this.saveEditBtn.click();
-    browser.pause(16000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
 
   public createEmptyCustomer() {
     this.createBtn.click();
-    browser.pause(16000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
 
   public deleteCustomer() {
     this.saveDeleteBtn.click();
-    browser.pause(16000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
   }
 
   public cleanup() {
     const deleteObject = customersPage.getCustomer(customersPage.rowNum());
     if (deleteObject != null) {
-      browser.pause(8000);
+      $('#spinner-animation').waitForDisplayed(90000, true);
       deleteObject.deleteBtn.click();
-      browser.pause(4000);
+      $('#spinner-animation').waitForDisplayed(90000, true);
       this.saveDeleteBtn.click();
-      browser.pause(2000);
-      browser.refresh();
+      $('#spinner-animation').waitForDisplayed(90000, true);
     }
   }
 

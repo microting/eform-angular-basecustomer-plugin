@@ -13,7 +13,7 @@ class ApplicationSettingsPluginsPage extends PageWithNavbarPage {
 
     goTopluginSettings() {
       browser.$('#plugin-settings-btn').click();
-      browser.pause(3000);
+        $('#spinner-animation').waitForDisplayed(90000, true);
     }
 
     settingsMenu() {
@@ -25,7 +25,7 @@ class ApplicationSettingsPluginsPage extends PageWithNavbarPage {
     }
     saveChangesBtn() {
       browser.$('#saveBtn').click();
-      browser.pause(3000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     }
 }
 

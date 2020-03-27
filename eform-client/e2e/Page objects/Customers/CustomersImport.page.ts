@@ -6,11 +6,15 @@ export class CustomersImportPage extends Page {
   }
 
   public get saveImportCustomersBtn() {
-    return browser.element('#saveCreateBtn');
+    $('#saveCreateBtn').waitForDisplayed(20000);
+$('#saveCreateBtn').waitForClickable({timeout: 20000});
+return $('#saveCreateBtn');
   }
 
   public get cancelImportCustomersBtn() {
-    return browser.element('#saveCreateBtn');
+    $('#saveCreateBtn').waitForDisplayed(20000);
+$('#saveCreateBtn').waitForClickable({timeout: 20000});
+return $('#saveCreateBtn');
   }
 
   public continueImport() {
@@ -28,7 +32,9 @@ export class CustomersImportPage extends Page {
   }
 
   public chooseFileBtn() {
-    return browser.element('#files');
+    $('#files').waitForDisplayed(20000);
+$('#files').waitForClickable({timeout: 20000});
+return $('#files');
   }
   public getField(index: number) {
     const fieldsList = browser.$$('thead > tr > th');
