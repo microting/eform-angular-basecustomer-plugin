@@ -13,7 +13,7 @@ describe('Application settings page - site header section', function () {
         loginPage.login();
         myEformsPage.Navbar.advancedDropdown();
         myEformsPage.Navbar.clickonSubMenuItem('Plugins');
-        browser.waitForExist('#plugin-name', 50000);
+        $('#plugin-name').waitForDisplayed(50000);
         browser.pause(10000);
 
         const plugin = pluginsPage.getFirstPluginRowObj();
@@ -33,7 +33,7 @@ describe('Application settings page - site header section', function () {
         loginPage.login();
         myEformsPage.Navbar.advancedDropdown();
         myEformsPage.Navbar.clickonSubMenuItem('Plugins');
-        browser.waitForExist('#plugin-name', 50000);
+        $('#plugin-name').waitForDisplayed(50000);
         $('#spinner-animation').waitForDisplayed(90000, true);
     
         const plugin = pluginsPage.getFirstPluginRowObj();
