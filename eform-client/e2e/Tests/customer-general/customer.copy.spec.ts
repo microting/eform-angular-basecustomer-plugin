@@ -12,19 +12,19 @@ describe('Customers plugin page', function () {
     customersPage.goToCustomersPage();
   });
   // it('should add new customer with all empty fields', function () {
-  //   browser.pause(6000);
+  //   $('#spinner-animation').waitForDisplayed(20000, true);
   //   const rowCountBeforeCreation = browser.$$('#mainTableBody > tr').length;
   //   customersPage.newCustomerBtn.click();
-  //   browser.pause(6000);
+  //   $('#spinner-animation').waitForDisplayed(20000, true);
   //   customersModalPage.createEmptyCustomer();
-  //   browser.pause(8000);
+  //   $('#spinner-animation').waitForDisplayed(20000, true);
   //   const rowCountAfterCreation = browser.$$('#mainTableBody > tr').length;
   //   expect(rowCountAfterCreation, 'Number of rows hasn\'t changed after creating new customer').equal(rowCountBeforeCreation + 1);
   // });
   it('should add new customer with all fields', function () {
     customersPage.newCustomerBtn.click();
     $('#createCustomerNo').waitForDisplayed(20000);
-    browser.pause(6000);
+    $('#spinner-animation').waitForDisplayed(20000, true);
     const customerObject = {
       createdBy: 'John Smith',
       customerNo: '1',
@@ -45,12 +45,12 @@ describe('Customers plugin page', function () {
       floorsWithLivingSpace: 3
     };
     const rowCountBeforeCreation = customersPage.rowNum();
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(20000, true);
     customersModalPage.createCustomer(customerObject);
     $('#Id_0').waitForDisplayed(20000);
-    browser.pause(5000);
+    $('#spinner-animation').waitForDisplayed(20000, true);
     const rowCountAfterCreation = customersPage.rowNum();
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(20000, true);
     expect(rowCountAfterCreation, 'Number of rows hasn\'t changed after creating new user').equal(rowCountBeforeCreation + 1);
     const lastCustomer: CustomersRowObject = customersPage.getCustomer(customersPage.rowNum());
     expect(lastCustomer.createdBy, 'Created by of created customer is incorrect').equal(customerObject.createdBy);
@@ -62,20 +62,20 @@ describe('Customers plugin page', function () {
     expect(lastCustomer.cityName, 'City name of created customer is incorrect').equal(customerObject.cityName);
     expect(lastCustomer.phone, 'Phone of created customer is incorrect').equal(customerObject.phone);
     expect(lastCustomer.email, 'Email of created customer is incorrect').equal(customerObject.email);
-    browser.pause(6000);
+    $('#spinner-animation').waitForDisplayed(20000, true);
   });
   it('should make a copy of the customer', function () {
     const customer = customersPage.getCustomer(customersPage.rowNum());
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(20000, true);
     customer.copyBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(20000, true);
     customersModalPage.createCompanyAddress.addValue('_copy');
-    browser.pause(1000);
+    $('#spinner-animation').waitForDisplayed(20000, true);
     customersModalPage.createBtn.click();
-    browser.pause(8000);
+    $('#spinner-animation').waitForDisplayed(20000, true);
     const lastCustomer: CustomersRowObject = customersPage.getCustomer(customersPage.rowNum());
     expect(lastCustomer.companyAddress, 'Created by of created customer is incorrect').equal(customer.companyAddress + '_copy');
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(20000, true);
     customersModalPage.cleanup();
     customersModalPage.cleanup();
   });

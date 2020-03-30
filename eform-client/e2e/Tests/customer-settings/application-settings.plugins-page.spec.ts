@@ -14,7 +14,7 @@ describe('Application settings page - site header section', function () {
         myEformsPage.Navbar.advancedDropdown();
         myEformsPage.Navbar.clickonSubMenuItem('Plugins');
         $('#plugin-name').waitForDisplayed(50000);
-        browser.pause(10000);
+        $('#spinner-animation').waitForDisplayed(20000, true);
 
         const plugin = pluginsPage.getFirstPluginRowObj();
         expect(plugin.id).equal(1);

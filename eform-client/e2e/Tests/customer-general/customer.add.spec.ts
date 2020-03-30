@@ -12,10 +12,10 @@ describe('Customers plugin page', function () {
     customersPage.goToCustomersPage();
   });
   // it('should add new customer with all empty fields', function () {
-  //   browser.pause(6000);
+  //   $('#spinner-animation').waitForDisplayed(20000, true);
   //   const rowCountBeforeCreation = browser.$$('#mainTableBody > tr').length;
   //   customersPage.newCustomerBtn.click();
-  //   browser.pause(6000);
+  //   $('#spinner-animation').waitForDisplayed(20000, true);
   //   customersModalPage.createEmptyCustomer();
   //   browser.pause(8000);
   //   const rowCountAfterCreation = browser.$$('#mainTableBody > tr').length;
@@ -23,7 +23,7 @@ describe('Customers plugin page', function () {
   // });
   it('should add new customer with all fields', function () {
     customersPage.newCustomerBtn.click();
-    browser.pause(6000);
+    $('#spinner-animation').waitForDisplayed(20000, true);
     const customerObject = {
       createdBy: 'John Smith',
       customerNo: '1',
@@ -44,10 +44,10 @@ describe('Customers plugin page', function () {
       floorsWithLivingSpace: 3
     };
     const rowCountBeforeCreation = customersPage.rowNum();
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(20000, true);
     customersModalPage.createCustomer(customerObject);
     const rowCountAfterCreation = customersPage.rowNum();
-    browser.pause(2000);
+    $('#spinner-animation').waitForDisplayed(20000, true);
     expect(rowCountAfterCreation, 'Number of rows hasn\'t changed after creating new user').equal(rowCountBeforeCreation + 1);
     const lastCustomer: CustomersRowObject = customersPage.getCustomer(customersPage.rowNum());
     expect(lastCustomer.createdBy, 'Created by of created customer is incorrect').equal(customerObject.createdBy);
@@ -59,16 +59,15 @@ describe('Customers plugin page', function () {
     expect(lastCustomer.cityName, 'City name of created customer is incorrect').equal(customerObject.cityName);
     expect(lastCustomer.phone, 'Phone of created customer is incorrect').equal(customerObject.phone);
     expect(lastCustomer.email, 'Email of created customer is incorrect').equal(customerObject.email);
-    browser.pause(6000);
   });
   it('should not add new customer if cancel is clicked', function () {
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(20000, true);
     // rows before
     const rowsBefore = customersPage.rowNum();
     customersPage.newCustomerBtn.click();
-    browser.pause(6000);
+    $('#spinner-animation').waitForDisplayed(20000, true);
     customersModalPage.cancelCreateBtn.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(20000, true);
     // rows after
     const rowsAfter = customersPage.rowNum();
     expect(rowsAfter, 'Number of customers should be same as before').equal(rowsBefore);
