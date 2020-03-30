@@ -35,12 +35,12 @@ describe('Application settings page - site header section', function () {
         myEformsPage.Navbar.clickonSubMenuItem('Plugins');
         $('#plugin-name').waitForDisplayed(50000);
         $('#spinner-animation').waitForDisplayed(90000, true);
-    
+
         const plugin = pluginsPage.getFirstPluginRowObj();
         expect(plugin.id).equal(1);
         expect(plugin.name).equal('Microting Customers Plugin');
         expect(plugin.version).equal('1.0.0.0');
-        expect(browser.element(`//*[contains(text(), 'Kunder')]`).isExisting()).equal(true);
+        $(`//*[contains(text(), 'Kunder')]`).waitForDisplayed(20000);
 
     });
 });
