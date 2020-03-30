@@ -11,16 +11,16 @@ export class CustomersPage extends PageWithNavbarPage {
   }
   public clickIdSort() {
     browser.$('#IdTableHeader').click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(20000, true);
   }
   public clickContactSort() {
     browser.$('#ContactPersonTableHeader').click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(20000, true);
   }
 
   public clickCompanySort() {
     browser.$('#CompanyNameTableHeader').click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(20000, true);
   }
 
   public getCustomerValue(selector: any, row: number) {
@@ -37,62 +37,62 @@ export class CustomersPage extends PageWithNavbarPage {
 
   public get newCustomerBtn() {
     $('#newCustomerBtn').waitForDisplayed(20000);
-$('#newCustomerBtn').waitForClickable({timeout: 20000});
-return $('#newCustomerBtn');
+    $('#newCustomerBtn').waitForClickable({timeout: 20000});
+    return $('#newCustomerBtn');
   }
 
   public get customersSettingsBtn() {
     $('#firstName').waitForDisplayed(20000);
-$('#firstName').waitForClickable({timeout: 20000});
-return $('#firstName');
+    $('#firstName').waitForClickable({timeout: 20000});
+    return $('#firstName');
   }
 
   public get importCustomersSettingsBtn() {
     $('#lastName').waitForDisplayed(20000);
-$('#lastName').waitForClickable({timeout: 20000});
-return $('#lastName');
+    $('#lastName').waitForClickable({timeout: 20000});
+    return $('#lastName');
   }
 
   // same purpose as previous method?
   public  importCustomerBtn() {
     $('#importCustomer').waitForDisplayed(20000);
-$('#importCustomer').waitForClickable({timeout: 20000});
-return $('#importCustomer');
+    $('#importCustomer').waitForClickable({timeout: 20000});
+    return $('#importCustomer');
   }
 
   public  goToImportBtn() {
     this.importCustomerBtn().click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(20000, true);
   }
 
   public get saveImportCustomersBtn() {
     $('#saveCreateBtn').waitForDisplayed(20000);
-$('#saveCreateBtn').waitForClickable({timeout: 20000});
-return $('#saveCreateBtn');
+    $('#saveCreateBtn').waitForClickable({timeout: 20000});
+    return $('#saveCreateBtn');
   }
 
   public get cancelImportCustomersBtn() {
     $('#saveCreateBtn').waitForDisplayed(20000);
-$('#saveCreateBtn').waitForClickable({timeout: 20000});
-return $('#saveCreateBtn');
+    $('#saveCreateBtn').waitForClickable({timeout: 20000});
+    return $('#saveCreateBtn');
   }
 
   public get deleteCustomerBtn() {
     $('#cancelCreateBtn').waitForDisplayed(20000);
-$('#cancelCreateBtn').waitForClickable({timeout: 20000});
-return $('#cancelCreateBtn');
+    $('#cancelCreateBtn').waitForClickable({timeout: 20000});
+    return $('#cancelCreateBtn');
   }
 
   public get editCustomerBtn() {
     $('#editCustomerBtn').waitForDisplayed(20000);
-$('#editCustomerBtn').waitForClickable({timeout: 20000});
-return $('#editCustomerBtn');
+    $('#editCustomerBtn').waitForClickable({timeout: 20000});
+    return $('#editCustomerBtn');
   }
 
   public get customersButton() {
     $('#customers-pn').waitForDisplayed(20000);
-$('#customers-pn').waitForClickable({timeout: 20000});
-return $('#customers-pn');
+    $('#customers-pn').waitForClickable({timeout: 20000});
+    return $('#customers-pn');
   }
 
   public get settingsCustomerBtn() {
@@ -102,18 +102,18 @@ return $('#customers-pn');
   public goToCustomerSettings() {
     const elem = browser.$('button .btn .btn-danger');
     elem.click();
-    browser.pause(4000);
+    $('#spinner-animation').waitForDisplayed(20000, true);
   }
 
   public goToCustomersPage() {
     this.customersButton.click();
-    browser.pause(20000);
+    $('#spinner-animation').waitForDisplayed(20000, true);
   }
 
   public get saveDeleteBtn() {
     $('#customerSaveDeleteBtn').waitForDisplayed(20000);
-$('#customerSaveDeleteBtn').waitForClickable({timeout: 20000});
-return $('#customerSaveDeleteBtn');
+    $('#customerSaveDeleteBtn').waitForClickable({timeout: 20000});
+    return $('#customerSaveDeleteBtn');
   }
 }
 

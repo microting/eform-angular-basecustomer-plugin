@@ -14,7 +14,7 @@ describe('Customer modal', function () {
   it('should delete customer', function () {
     const rowBeforeDeletion = customersPage.rowNum();
     const lastCustomer: CustomersRowObject = customersPage.getCustomer(rowBeforeDeletion);
-    lastCustomer.deleteBtn.waitForVisible(3000);
+    lastCustomer.deleteBtn.waitForDisplayed(3000);
     lastCustomer.deleteBtn.click();
     $('#spinner-animation').waitForDisplayed(20000, true);
     customersModalPage.deleteCustomer();

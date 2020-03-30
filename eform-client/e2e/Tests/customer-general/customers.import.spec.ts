@@ -39,7 +39,7 @@ describe('Customers plugin import page', function () {
     const customersBefore = customersImportPage.numberOfCustomers;
     const importButton = customersPage.importCustomerBtn();
     importButton.click();
-    browser.pause(8000);
+    $('#spinner-animation').waitForDisplayed(20000, true);
     browser.chooseFile('#files', localPath + '/e2e/Assets/Import-test.csv');
     $('#row_0').waitForDisplayed(20000);
     $('#row_1').waitForDisplayed(20000);

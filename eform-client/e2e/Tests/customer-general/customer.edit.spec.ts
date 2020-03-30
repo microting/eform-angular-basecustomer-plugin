@@ -14,7 +14,7 @@ describe('Customers plugin page', function () {
   });
   it('should update customer with all fields', function () {
     const lastCustomerBeforeEdit = customersPage.getCustomer(customersPage.rowNum());
-    lastCustomerBeforeEdit.editBtn.waitForVisible(3000);
+    lastCustomerBeforeEdit.editBtn.waitForDisplayed(3000);
     lastCustomerBeforeEdit.editBtn.click();
     $('#spinner-animation').waitForDisplayed(20000, true);
     const customerObject = {
@@ -50,7 +50,7 @@ describe('Customers plugin page', function () {
   });
   it('should not update customer if cancel is clicked', function () {
     const lastCustomerBeforeEdit = customersPage.getCustomer(customersPage.rowNum());
-    lastCustomerBeforeEdit.editBtn.waitForVisible(3000);
+    lastCustomerBeforeEdit.editBtn.waitForDisplayed(3000);
     lastCustomerBeforeEdit.editBtn.click();
     $('#spinner-animation').waitForDisplayed(20000, true);
     customersModalPage.cancelEditBtn.click();
