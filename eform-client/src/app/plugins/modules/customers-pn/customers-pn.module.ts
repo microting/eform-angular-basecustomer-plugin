@@ -4,7 +4,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {TranslateModule} from '@ngx-translate/core';
 import {MDBRootModule} from 'port/angular-bootstrap-md';
-import { PapaParseModule } from 'ngx-papaparse';
+import { Papa } from 'ngx-papaparse';
 
 import {CustomerPnLayoutComponent} from './layouts';
 import {CustomersPnFieldsService, CustomersPnService, CustomersPnSettingsService} from './services';
@@ -32,7 +32,6 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
     TranslateModule,
     MDBRootModule,
     NgSelectModule,
-    PapaParseModule,
     FontAwesomeModule
   ],
   declarations: [

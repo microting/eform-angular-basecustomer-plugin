@@ -3,7 +3,6 @@ import {FileUploader} from 'ng2-file-upload';
 import {Papa} from 'ngx-papaparse';
 import { CustomersPnService} from '../../services';
 import {CustomersPnImportModel, CustomerPnHeadersModel} from '../../models/customer';
-import {forEach} from '@angular/router/src/utils/collection';
 
 const URL = '';
 @Component({
