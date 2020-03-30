@@ -16,9 +16,9 @@ declare var require: any;
   styleUrls: ['./customers-pn-page.component.scss']
 })
 export class CustomersPnPageComponent implements OnInit {
-  @ViewChild('createCustomerModal') createCustomerModal;
-  @ViewChild('editCustomerModal') editCustomerModal;
-  @ViewChild('deleteCustomerModal') deleteCustomerModal;
+  @ViewChild('createCustomerModal', {static: false}) createCustomerModal;
+  @ViewChild('editCustomerModal', {static: false}) editCustomerModal;
+  @ViewChild('deleteCustomerModal', {static: false}) deleteCustomerModal;
   @Output() onCustomerDuplicated: EventEmitter<void> = new EventEmitter<void>();
   get fieldStatusEnum() { return CustomersPnFieldStatusEnum; }
   get fieldStatusEnumString() { return CustomersPnFieldStatusEnum; }

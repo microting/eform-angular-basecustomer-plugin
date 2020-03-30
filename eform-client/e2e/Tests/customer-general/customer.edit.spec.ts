@@ -16,7 +16,7 @@ describe('Customers plugin page', function () {
     const lastCustomerBeforeEdit = customersPage.getCustomer(customersPage.rowNum());
     lastCustomerBeforeEdit.editBtn.waitForVisible(3000);
     lastCustomerBeforeEdit.editBtn.click();
-    browser.pause(3000);
+    $('#spinner-animation').waitForDisplayed(20000, true);
     const customerObject = {
       createdBy: Guid.create().toString(),
       customerNo: Guid.create().toString(),
@@ -52,7 +52,7 @@ describe('Customers plugin page', function () {
     const lastCustomerBeforeEdit = customersPage.getCustomer(customersPage.rowNum());
     lastCustomerBeforeEdit.editBtn.waitForVisible(3000);
     lastCustomerBeforeEdit.editBtn.click();
-    browser.pause(3000);
+    $('#spinner-animation').waitForDisplayed(20000, true);
     customersModalPage.cancelEditBtn.click();
   });
 });

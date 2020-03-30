@@ -30,8 +30,7 @@ describe('Customers plugin import page', function () {
 
     customersImportPage.continueImport();
     // refresh the page and check number of customers
-    browser.refresh();
-    browser.pause(8000);
+    $('#spinner-animation').waitForDisplayed(90000, true);
     const customersAfter = customersPage.rowNum();
     expect(customersAfter, 'Number of customers is not bigger than before').greaterThan(customersBefore);
   });
