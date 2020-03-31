@@ -18,7 +18,7 @@ describe('Customer modal', function () {
     lastCustomer.deleteBtn.click();
     $('#spinner-animation').waitForDisplayed(20000, true);
     customersModalPage.deleteCustomer();
-    browser.$('#tableBody').waitForValue(9000);
+    $('#tableBody').waitForDisplayed(20000);
     const rowAfterDeletion = customersPage.rowNum();
     expect(rowBeforeDeletion, 'Number of rows hasn\'t changed after deleting customer').equal(rowAfterDeletion + 1);
   });

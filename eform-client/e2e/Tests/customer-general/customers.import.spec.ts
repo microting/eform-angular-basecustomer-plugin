@@ -14,7 +14,8 @@ describe('Customers plugin import page', function () {
     const localPath = process.cwd();
     const customersBefore = customersPage.rowNum();
     customersPage.goToImportBtn();
-    browser.chooseFile('#files', localPath + '/e2e/Assets/Import-test.csv');
+    $('#files').addValue(localPath + '/e2e/Assets/Import-test.csv');
+    //browser.chooseFile('#files', localPath + '/e2e/Assets/Import-test.csv');
     $('#row_0').waitForDisplayed(20000);
     $('#row_1').waitForDisplayed(20000);
     $('#row_2').waitForDisplayed(20000);
@@ -30,6 +31,7 @@ describe('Customers plugin import page', function () {
 
     customersImportPage.continueImport();
     // refresh the page and check number of customers
+    loginPage.open('/plugins/customers-pn');
     $('#spinner-animation').waitForDisplayed(90000, true);
     const customersAfter = customersPage.rowNum();
     expect(customersAfter, 'Number of customers is not bigger than before').greaterThan(customersBefore);
@@ -40,7 +42,8 @@ describe('Customers plugin import page', function () {
     const importButton = customersPage.importCustomerBtn();
     importButton.click();
     $('#spinner-animation').waitForDisplayed(20000, true);
-    browser.chooseFile('#files', localPath + '/e2e/Assets/Import-test.csv');
+    $('#files').addValue(localPath + '/e2e/Assets/Import-test.csv');
+    //browser.chooseFile('#files', localPath + '/e2e/Assets/Import-test.csv');
     $('#row_0').waitForDisplayed(20000);
     $('#row_1').waitForDisplayed(20000);
     $('#row_2').waitForDisplayed(20000);

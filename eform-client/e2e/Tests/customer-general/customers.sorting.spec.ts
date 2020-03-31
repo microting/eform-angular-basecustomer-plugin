@@ -11,29 +11,31 @@ describe('Customers sorting', function () {
   });
   it('sorts customers by id', function () {
     customersPage.clickIdSort();
-    const firstRowId = customersPage.getCustomerValue('Id_0', 1);
-    const secondRowId = customersPage.getCustomerValue('Id_1', 2);
     $('#spinner-animation').waitForDisplayed(20000, true);
+    const firstRowId = Number($('#Id_0').getText());
+    const secondRowId = Number($('#Id_1').getText());
     expect(firstRowId, 'first id bigger than second').lessThan(secondRowId);
   });
   it('sorts id\'s in reverse order', function () {
     customersPage.clickIdSort();
-    const firstRowId = customersPage.getCustomerValue('Id_0', 1);
-    const secondRowId = customersPage.getCustomerValue('Id_1', 2);
     $('#spinner-animation').waitForDisplayed(20000, true);
+    const firstRowId = Number($('#Id_0').getText());
+    const secondRowId = Number($('#Id_1').getText());
     expect(firstRowId, 'first lesser than second').greaterThan(secondRowId);
   });
   it('sorts customers by contact person', function () {
     // before sorting
     customersPage.clickContactSort();
-    let firstRowContact = customersPage.getCustomerValue('ContactPerson_0', 1);
-    let secondRowContact = customersPage.getCustomerValue('ContactPerson_1', 2);
+    $('#spinner-animation').waitForDisplayed(20000, true);
+    let firstRowContact = $('#ContactPerson_0');
+    let secondRowContact = $('#ContactPerson_1');
     const contactsBefore = [firstRowContact, secondRowContact];
     // sort list and customers on page
     customersPage.clickContactSort();
     // get new values[
-    firstRowContact = customersPage.getCustomerValue('ContactPerson_0', 1);
-    secondRowContact = customersPage.getCustomerValue('ContactPerson_1', 2);
+    $('#spinner-animation').waitForDisplayed(20000, true);
+    firstRowContact = $('#ContactPerson_0');
+    secondRowContact = $('#ContactPerson_1');
     // compare!
     const contactsAfter = [firstRowContact, secondRowContact];
     const result = (contactsBefore[0] !== contactsAfter[0]) && (contactsBefore[1] !== contactsAfter[1]);
@@ -42,14 +44,16 @@ describe('Customers sorting', function () {
   it('sorts customers by contact person reversed', function () {
     // before sorting
     customersPage.clickContactSort();
-    let firstRowContact = customersPage.getCustomerValue('ContactPerson_0', 1);
-    let secondRowContact = customersPage.getCustomerValue('ContactPerson_1', 2);
+    $('#spinner-animation').waitForDisplayed(20000, true);
+    let firstRowContact = $('#ContactPerson_0');
+    let secondRowContact = $('#ContactPerson_1');
     const contactsBefore = [firstRowContact, secondRowContact];
     // sort list and customers on page
     customersPage.clickContactSort();
     // get new values
-    firstRowContact = customersPage.getCustomerValue('ContactPerson_0', 1);
-    secondRowContact = customersPage.getCustomerValue('ContactPerson_1', 2);
+    $('#spinner-animation').waitForDisplayed(20000, true);
+    firstRowContact = $('#ContactPerson_0');
+    secondRowContact = $('#ContactPerson_1');
     // compare!
     const contactsAfter = [firstRowContact, secondRowContact];
     const result = (contactsBefore[0] !== contactsAfter[0]) && (contactsBefore[1] !== contactsAfter[1]);
@@ -58,14 +62,16 @@ describe('Customers sorting', function () {
   it('sorts customers by company name', function () {
     // before sorting
     customersPage.clickCompanySort();
-    let firstRowName = customersPage.getCustomerValue('CompanyName_0', 1);
-    let secondRowName = customersPage.getCustomerValue('CompanyName_1', 2);
+    $('#spinner-animation').waitForDisplayed(20000, true);
+    let firstRowName = $('#CompanyName_0');
+    let secondRowName = $('#CompanyName_1');
     const namesBefore = [firstRowName, secondRowName];
     // sort list and customers on page
     customersPage.clickCompanySort();
     // get new values
-    firstRowName = customersPage.getCustomerValue('CompanyName_0', 1);
-    secondRowName = customersPage.getCustomerValue('CompanyName_1', 2);
+    $('#spinner-animation').waitForDisplayed(20000, true);
+    firstRowName = $('#CompanyName_0');
+    secondRowName = $('#CompanyName_1');
     // compare!
     const namesAfter = [firstRowName, secondRowName];
     const result = (namesBefore[0] !== namesAfter[0]) && (namesBefore[1] !== namesAfter[1]);
@@ -74,15 +80,17 @@ describe('Customers sorting', function () {
   it('sorts customers by company name reversed', function () {
     // before sorting
     customersPage.clickCompanySort();
-    let firstRowName = customersPage.getCustomerValue('ContactPerson_0', 1);
-    let secondRowName = customersPage.getCustomerValue('ContactPerson_1', 2);
+    $('#spinner-animation').waitForDisplayed(20000, true);
+    let firstRowName = $('#ContactPerson_0');
+    let secondRowName = $('#ContactPerson_1');
     const namesBefore = [firstRowName, secondRowName];
     // sort list and customers on page
     customersPage.clickCompanySort();
 
+    $('#spinner-animation').waitForDisplayed(20000, true);
     // get new values
-    firstRowName = customersPage.getCustomerValue('ContactPerson_0', 1);
-    secondRowName = customersPage.getCustomerValue('ContactPerson_1', 2);
+    firstRowName = $('#ContactPerson_0');
+    secondRowName = $('#ContactPerson_1');
     // compare!
     const namesAfter = [firstRowName, secondRowName];
     const result = (namesBefore[0] !== namesAfter[0]) && (namesBefore[1] !== namesAfter[1]);

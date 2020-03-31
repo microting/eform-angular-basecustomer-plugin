@@ -80,6 +80,7 @@ export class CustomersPnPageComponent implements OnInit {
   }
 
   getAllCustomers() {
+    this.spinnerStatus = true;
     this.customersRequestModel.isSortDsc = this.localPageSettings.isSortDsc;
     this.customersRequestModel.sortColumnName = this.localPageSettings.sort;
     this.customersRequestModel.pageSize = this.localPageSettings.pageSize;
@@ -121,11 +122,14 @@ export class CustomersPnPageComponent implements OnInit {
   }
 
   sortTable(sort: string) {
+    this.spinnerStatus = true;
     if (this.localPageSettings.sort === sort) {
       this.localPageSettings.isSortDsc = !this.localPageSettings.isSortDsc;
+      this.spinnerStatus = false;
     } else {
       this.localPageSettings.isSortDsc = false;
       this.localPageSettings.sort = sort;
+      this.spinnerStatus = false;
     }
     this.updateLocalPageSettings();
   }

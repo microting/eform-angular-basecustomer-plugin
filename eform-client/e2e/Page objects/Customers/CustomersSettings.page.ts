@@ -56,9 +56,10 @@ export class CustomersSettingsPage extends Page {
   }
 
   public saveSettings() {
-    const saveSettingsBtn = browser.$('#saveSettingsBtn');
+    const saveSettingsBtn = $('#saveSettingsBtn');
     saveSettingsBtn.click();
-    $('.ng-input > input').waitForClickable({timeout: 20000});
+    //$('.ng-input > input').waitForDisplayed(20000);
+    //$('.ng-input > input').waitForClickable({timeout: 20000});
   }
 }
 
