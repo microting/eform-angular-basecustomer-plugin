@@ -6,35 +6,47 @@ export class CustomersSettingsPage extends Page {
   }
 
   public get deleteCustomerBtn() {
-    return browser.element('#cancelCreateBtn');
+    $('#cancelCreateBtn').waitForDisplayed(20000);
+    $('#cancelCreateBtn').waitForClickable({timeout: 20000});
+    return $('#cancelCreateBtn');
   }
 
   public get saveEditBtn() {
-    return browser.element('#saveEditBtn');
+    $('#saveEditBtn').waitForDisplayed(20000);
+    $('#saveEditBtn').waitForClickable({timeout: 20000});
+    return $('#saveEditBtn');
   }
 
   public get cancelEditBtn() {
-    return browser.element('#cancelEditBtn');
+    $('#cancelEditBtn').waitForDisplayed(20000);
+    $('#cancelEditBtn').waitForClickable({timeout: 20000});
+    return $('#cancelEditBtn');
   }
 
   public get saveDeleteBtn() {
-    return browser.element('#saveDeleteBtn');
+    $('#saveDeleteBtn').waitForDisplayed(20000);
+    $('#saveDeleteBtn').waitForClickable({timeout: 20000});
+    return $('#saveDeleteBtn');
   }
 
   public get cancelDeleteBtn() {
-    return browser.element('#cancelDeleteBtn');
+    $('#cancelDeleteBtn').waitForDisplayed(20000);
+    $('#cancelDeleteBtn').waitForClickable({timeout: 20000});
+    return $('#cancelDeleteBtn');
   }
   public getCheckboxById(id: string) {
-    return browser.element('#checkbox' + id);
+    return $('#checkbox' + id);
   }
 
   public clickCheckboxById(id: string) {
-    const el = browser.element('#mat-checkbox' + id);
+    const el = $('#mat-checkbox' + id);
     el.click();
     // browser.pause(1000);
   }
   public  getSearchField() {
-    return browser.element('.ng-input > input');
+    $('.ng-input > input').waitForDisplayed(20000);
+    $('.ng-input > input').waitForClickable({timeout: 20000});
+    return $('.ng-input > input');
   }
   public getListOfChoices() {
     return browser.$$('.ng-option');
@@ -44,9 +56,10 @@ export class CustomersSettingsPage extends Page {
   }
 
   public saveSettings() {
-    const saveSettingsBtn = browser.$('#saveSettingsBtn');
+    const saveSettingsBtn = $('#saveSettingsBtn');
     saveSettingsBtn.click();
-    browser.pause(6000);
+    //$('.ng-input > input').waitForDisplayed(20000);
+    //$('.ng-input > input').waitForClickable({timeout: 20000});
   }
 }
 

@@ -10,7 +10,7 @@ import {CustomersPnService} from '../../services';
   styleUrls: ['./customer-pn-delete.component.scss']
 })
 export class CustomerPnDeleteComponent implements OnInit {
-  @ViewChild('frame') frame;
+  @ViewChild('frame', {static: false}) frame;
   @Output() onCustomerDeleted: EventEmitter<void> = new EventEmitter<void>();
   selectedCustomer: CustomerPnModel = new CustomerPnModel();
   @Input() fields: FieldsPnUpdateModel = new FieldsPnUpdateModel();

@@ -9,7 +9,7 @@ import {CustomersPnService} from '../../services';
   styleUrls: ['./customer-pn-edit.component.scss']
 })
 export class CustomerPnEditComponent implements OnInit {
-  @ViewChild('frame') frame;
+  @ViewChild('frame', {static: false}) frame;
   @Input() fieldsModel = new FieldsPnUpdateModel();
   @Output() onCustomerUpdated: EventEmitter<void> = new EventEmitter<void>();
 

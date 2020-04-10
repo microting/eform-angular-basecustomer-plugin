@@ -14,10 +14,11 @@ describe('Customers plugin import page', function () {
     const localPath = process.cwd();
     const customersBefore = customersPage.rowNum();
     customersPage.goToImportBtn();
-    browser.chooseFile('#files', localPath + '/e2e/Assets/Import-test.csv');
-    browser.waitForVisible('#row_0', 20000);
-    browser.waitForVisible('#row_1', 20000);
-    browser.waitForVisible('#row_2', 20000);
+    $('#files').addValue(localPath + '/e2e/Assets/Import-test.csv');
+    //browser.chooseFile('#files', localPath + '/e2e/Assets/Import-test.csv');
+    $('#row_0').waitForDisplayed(20000);
+    $('#row_1').waitForDisplayed(20000);
+    $('#row_2').waitForDisplayed(20000);
     // check if two customers ready to be imported
     const customersN = customersImportPage.numberOfCustomers;
     expect(customersN, 'After choosing file, two customers must appear in table').equal(3);
@@ -30,8 +31,8 @@ describe('Customers plugin import page', function () {
 
     customersImportPage.continueImport();
     // refresh the page and check number of customers
-    browser.refresh();
-    browser.pause(8000);
+    loginPage.open('/plugins/customers-pn');
+    $('#spinner-animation').waitForDisplayed(90000, true);
     const customersAfter = customersPage.rowNum();
     expect(customersAfter, 'Number of customers is not bigger than before').greaterThan(customersBefore);
   });
@@ -40,11 +41,12 @@ describe('Customers plugin import page', function () {
     const customersBefore = customersImportPage.numberOfCustomers;
     const importButton = customersPage.importCustomerBtn();
     importButton.click();
-    browser.pause(8000);
-    browser.chooseFile('#files', localPath + '/e2e/Assets/Import-test.csv');
-    browser.waitForVisible('#row_0', 20000);
-    browser.waitForVisible('#row_1', 20000);
-    browser.waitForVisible('#row_2', 20000);
+    $('#spinner-animation').waitForDisplayed(20000, true);
+    $('#files').addValue(localPath + '/e2e/Assets/Import-test.csv');
+    //browser.chooseFile('#files', localPath + '/e2e/Assets/Import-test.csv');
+    $('#row_0').waitForDisplayed(20000);
+    $('#row_1').waitForDisplayed(20000);
+    $('#row_2').waitForDisplayed(20000);
     customersImportPage.cancelImport();
 
     const customersAfter = customersImportPage.numberOfCustomers;

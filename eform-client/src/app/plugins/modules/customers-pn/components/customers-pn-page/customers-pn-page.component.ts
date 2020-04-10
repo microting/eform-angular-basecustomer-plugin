@@ -16,9 +16,9 @@ declare var require: any;
   styleUrls: ['./customers-pn-page.component.scss']
 })
 export class CustomersPnPageComponent implements OnInit {
-  @ViewChild('createCustomerModal') createCustomerModal;
-  @ViewChild('editCustomerModal') editCustomerModal;
-  @ViewChild('deleteCustomerModal') deleteCustomerModal;
+  @ViewChild('createCustomerModal', {static: false}) createCustomerModal;
+  @ViewChild('editCustomerModal', {static: false}) editCustomerModal;
+  @ViewChild('deleteCustomerModal', {static: false}) deleteCustomerModal;
   @Output() onCustomerDuplicated: EventEmitter<void> = new EventEmitter<void>();
   get fieldStatusEnum() { return CustomersPnFieldStatusEnum; }
   get fieldStatusEnumString() { return CustomersPnFieldStatusEnum; }
@@ -80,6 +80,7 @@ export class CustomersPnPageComponent implements OnInit {
   }
 
   getAllCustomers() {
+    this.spinnerStatus = true;
     this.customersRequestModel.isSortDsc = this.localPageSettings.isSortDsc;
     this.customersRequestModel.sortColumnName = this.localPageSettings.sort;
     this.customersRequestModel.pageSize = this.localPageSettings.pageSize;
@@ -121,11 +122,14 @@ export class CustomersPnPageComponent implements OnInit {
   }
 
   sortTable(sort: string) {
+    this.spinnerStatus = true;
     if (this.localPageSettings.sort === sort) {
       this.localPageSettings.isSortDsc = !this.localPageSettings.isSortDsc;
+      this.spinnerStatus = false;
     } else {
       this.localPageSettings.isSortDsc = false;
       this.localPageSettings.sort = sort;
+      this.spinnerStatus = false;
     }
     this.updateLocalPageSettings();
   }
