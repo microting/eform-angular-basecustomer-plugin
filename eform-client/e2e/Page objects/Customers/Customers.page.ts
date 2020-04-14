@@ -11,16 +11,16 @@ export class CustomersPage extends PageWithNavbarPage {
   }
   public clickIdSort() {
     browser.$('#IdTableHeader').click();
-    $('#spinner-animation').waitForDisplayed(20000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
   }
   public clickContactSort() {
     browser.$('#ContactPersonTableHeader').click();
-    $('#spinner-animation').waitForDisplayed(20000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
   }
 
   public clickCompanySort() {
     browser.$('#CompanyNameTableHeader').click();
-    $('#spinner-animation').waitForDisplayed(20000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
   }
 
   public getCustomerValue(selector: any, row: number) {
@@ -36,61 +36,61 @@ export class CustomersPage extends PageWithNavbarPage {
   }
 
   public get newCustomerBtn() {
-    $('#newCustomerBtn').waitForDisplayed(20000);
+    $('#newCustomerBtn').waitForDisplayed({timeout: 20000});
     $('#newCustomerBtn').waitForClickable({timeout: 20000});
     return $('#newCustomerBtn');
   }
 
   public get customersSettingsBtn() {
-    $('#firstName').waitForDisplayed(20000);
+    $('#firstName').waitForDisplayed({timeout: 20000});
     $('#firstName').waitForClickable({timeout: 20000});
     return $('#firstName');
   }
 
   public get importCustomersSettingsBtn() {
-    $('#lastName').waitForDisplayed(20000);
+    $('#lastName').waitForDisplayed({timeout: 20000});
     $('#lastName').waitForClickable({timeout: 20000});
     return $('#lastName');
   }
 
   // same purpose as previous method?
   public  importCustomerBtn() {
-    $('#importCustomer').waitForDisplayed(20000);
+    $('#importCustomer').waitForDisplayed({timeout: 20000});
     $('#importCustomer').waitForClickable({timeout: 20000});
     return $('#importCustomer');
   }
 
   public  goToImportBtn() {
     this.importCustomerBtn().click();
-    $('#spinner-animation').waitForDisplayed(20000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
   }
 
   public get saveImportCustomersBtn() {
-    $('#saveCreateBtn').waitForDisplayed(20000);
+    $('#saveCreateBtn').waitForDisplayed({timeout: 20000});
     $('#saveCreateBtn').waitForClickable({timeout: 20000});
     return $('#saveCreateBtn');
   }
 
   public get cancelImportCustomersBtn() {
-    $('#saveCreateBtn').waitForDisplayed(20000);
+    $('#saveCreateBtn').waitForDisplayed({timeout: 20000});
     $('#saveCreateBtn').waitForClickable({timeout: 20000});
     return $('#saveCreateBtn');
   }
 
   public get deleteCustomerBtn() {
-    $('#cancelCreateBtn').waitForDisplayed(20000);
+    $('#cancelCreateBtn').waitForDisplayed({timeout: 20000});
     $('#cancelCreateBtn').waitForClickable({timeout: 20000});
     return $('#cancelCreateBtn');
   }
 
   public get editCustomerBtn() {
-    $('#editCustomerBtn').waitForDisplayed(20000);
+    $('#editCustomerBtn').waitForDisplayed({timeout: 20000});
     $('#editCustomerBtn').waitForClickable({timeout: 20000});
     return $('#editCustomerBtn');
   }
 
   public get customersButton() {
-    $('#customers-pn').waitForDisplayed(20000);
+    $('#customers-pn').waitForDisplayed({timeout: 20000});
     $('#customers-pn').waitForClickable({timeout: 20000});
     return $('#customers-pn');
   }
@@ -102,16 +102,16 @@ export class CustomersPage extends PageWithNavbarPage {
   public goToCustomerSettings() {
     const elem = browser.$('button .btn .btn-danger');
     elem.click();
-    $('#spinner-animation').waitForDisplayed(20000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
   }
 
   public goToCustomersPage() {
     this.customersButton.click();
-    $('#spinner-animation').waitForDisplayed(20000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
   }
 
   public get saveDeleteBtn() {
-    $('#customerSaveDeleteBtn').waitForDisplayed(20000);
+    $('#customerSaveDeleteBtn').waitForDisplayed({timeout: 20000});
     $('#customerSaveDeleteBtn').waitForClickable({timeout: 20000});
     return $('#customerSaveDeleteBtn');
   }

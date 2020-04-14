@@ -18,7 +18,7 @@
   <div class="row pl-1">
     <div class="col-md-2">
       <div class="md-form">
-        <input mdbInputDirective [mdbValidate]="false"
+        <input mdbInput
                type="text" (input)="onSearchInputChanged($event.target.value)"
                class="form-control input-sm" id="searchInput">
         <label for="searchInput">{{'Search' | translate}}</label>
@@ -66,17 +66,17 @@
         </td>
         <td>
           <div class="d-flex flex-row justify-content-center">
-            <button class="btn btn-accent text-black-50 btn-icon mb-2"
+            <button mdbBtn class="btn-accent text-black-50 btn-icon mb-2"
                     mdbTooltip="{{ 'Edit Customer' | translate }}" id="editCustomerBtn_{{i}}"
                     (click)="showEditCustomerModal(customer)">
               <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
-            <button class="btn btn-success text-black-50 btn-icon mb-2"
+            <button mdbBtn class="btn-success text-black-50 btn-icon mb-2"
                     mdbTooltip="{{ 'Duplicate Customer' | translate}}" id="copyCustomerBtn_{{i}}"
                     (click)="showCopyCustomerModal(customer)">
               <fa-icon icon="copy" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
-            <button class="btn btn-danger btn-icon mb-2 "
+            <button mdbBtn class="btn-danger btn-icon mb-2 "
                     mdbTooltip="{{ 'Delete Customer' | translate }}" id="deleteCustomerBtn_{{i}}"
                     (click)="showDeleteCustomerModal(customer)">
               <fa-icon size="lg" [fixedWidth]="true" icon="trash-alt"></fa-icon>

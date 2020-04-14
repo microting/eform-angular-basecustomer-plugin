@@ -10,8 +10,8 @@
             <div class="row">
               <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CreatedBy)">
                 <div class="md-form">
-                  <input mdbInputDirective
-                         [mdbValidate]="false"
+                  <input mdbInput
+
                          [(ngModel)]="selectedCustomerModel.createdBy"
                          type="text" id="editCreatedBy"
                          name="editCreatedBy" class="form-control">
@@ -20,8 +20,8 @@
               </div>
               <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CustomerNo)">
                 <div class="md-form">
-                  <input mdbInputDirective
-                         [mdbValidate]="false"
+                  <input mdbInput
+
                          [(ngModel)]="selectedCustomerModel.customerNo"
                          type="text" id="editCustomerNo"
                          name="editCustomerNo" class="form-control">
@@ -30,8 +30,8 @@
               </div>
               <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.ContactPerson)">
                 <div class="md-form">
-                  <input mdbInputDirective
-                         [mdbValidate]="false" [(ngModel)]="selectedCustomerModel.contactPerson"
+                  <input mdbInput
+                          [(ngModel)]="selectedCustomerModel.contactPerson"
                          class="form-control"
                          type="text" id="editContactPerson"
                          name="editContactPerson">
@@ -42,8 +42,8 @@
             <div class="row">
               <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CompanyName)">
                 <div class="md-form">
-                  <input mdbInputDirective
-                         [mdbValidate]="false" [(ngModel)]="selectedCustomerModel.companyName"
+                  <input mdbInput
+                          [(ngModel)]="selectedCustomerModel.companyName"
                          class="form-control"
                          type="text" id="editCompanyName"
                          name="editCompanyName">
@@ -52,8 +52,8 @@
               </div>
               <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CompanyAddress)">
                 <div class="md-form">
-                  <input mdbInputDirective
-                         [mdbValidate]="false" [(ngModel)]="selectedCustomerModel.companyAddress"
+                  <input mdbInput
+                          [(ngModel)]="selectedCustomerModel.companyAddress"
                          class="form-control"
                          type="text" id="editCompanyAddress"
                          name="editCompanyAddress">
@@ -62,8 +62,8 @@
               </div>
               <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CompanyAddress)">
                 <div class="md-form">
-                  <input mdbInputDirective
-                         [mdbValidate]="false" [(ngModel)]="selectedCustomerModel.companyAddress2"
+                  <input mdbInput
+                          [(ngModel)]="selectedCustomerModel.companyAddress2"
                          class="form-control"
                          type="text" id="editCompanyAddress2"
                          name="editCompanyAddress2">
@@ -74,8 +74,8 @@
             <div class="row">
               <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.ZipCode)">
                 <div class="md-form">
-                  <input mdbInputDirective
-                         [mdbValidate]="false" [(ngModel)]="selectedCustomerModel.zipCode"
+                  <input mdbInput
+                          [(ngModel)]="selectedCustomerModel.zipCode"
                          class="form-control"
                          type="text" id="editZipCode"
                          name="editZipCode">
@@ -84,8 +84,8 @@
               </div>
               <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CityName)">
                 <div class="md-form">
-                  <input mdbInputDirective
-                         [mdbValidate]="false" [(ngModel)]="selectedCustomerModel.cityName"
+                  <input mdbInput
+                          [(ngModel)]="selectedCustomerModel.cityName"
                          class="form-control"
                          type="text" id="editCityName"
                          name="editCityName">
@@ -94,8 +94,8 @@
               </div>
               <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.Phone)">
                 <div class="md-form">
-                  <input mdbInputDirective
-                         [mdbValidate]="false" [(ngModel)]="selectedCustomerModel.phone"
+                  <input mdbInput
+                          [(ngModel)]="selectedCustomerModel.phone"
                          class="form-control"
                          type="text" id="editPhone"
                          name="editPhone">
@@ -106,8 +106,8 @@
             <div class="row">
               <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.Email)">
                 <div class="md-form">
-                  <input mdbInputDirective
-                         [mdbValidate]="false" [(ngModel)]="selectedCustomerModel.email"
+                  <input mdbInput
+                          [(ngModel)]="selectedCustomerModel.email"
                          class="form-control"
                          type="text" id="editEmail"
                          name="editEmail">
@@ -116,8 +116,8 @@
               </div>
               <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.Email)">
                 <div class="md-form">
-                  <input mdbInputDirective
-                         [mdbValidate]="false" [(ngModel)]="selectedCustomerModel.eanCode"
+                  <input mdbInput
+                          [(ngModel)]="selectedCustomerModel.eanCode"
                          class="form-control"
                          type="text" id="editEanCode"
                          name="editEanCode">
@@ -126,8 +126,8 @@
               </div>
               <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.Email)">
                 <div class="md-form">
-                  <input mdbInputDirective
-                         [mdbValidate]="false" [(ngModel)]="selectedCustomerModel.vatNumber"
+                  <input mdbInput
+                          [(ngModel)]="selectedCustomerModel.vatNumber"
                          class="form-control"
                          type="text" id="editVatNumber"
                          name="editVatNumber">
@@ -138,8 +138,8 @@
             <div class="row">
               <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CountryCode)">
                 <div class="md-form">
-                  <input mdbInputDirective
-                         [mdbValidate]="false" [(ngModel)]="selectedCustomerModel.countryCode"
+                  <input mdbInput
+                          [(ngModel)]="selectedCustomerModel.countryCode"
                          class="form-control"
                          type="text" id="editCountryCode"
                          name="editCountryCode">
@@ -148,8 +148,8 @@
               </div>
               <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CadastralNumber)">
                 <div class="md-form">
-                  <input mdbInputDirective
-                         [mdbValidate]="false" [(ngModel)]="selectedCustomerModel.cadastralNumber"
+                  <input mdbInput
+                          [(ngModel)]="selectedCustomerModel.cadastralNumber"
                          class="form-control"
                          type="text" id="editCadastralNumber"
                          name="editCadastralNumber">
@@ -158,8 +158,8 @@
               </div>
               <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CrmId)">
                 <div class="md-form">
-                  <input mdbInputDirective
-                         [mdbValidate]="false" [(ngModel)]="selectedCustomerModel.crmId"
+                  <input mdbInput
+                          [(ngModel)]="selectedCustomerModel.crmId"
                          class="form-control"
                          type="text" id="editCrmId"
                          name="editCrmId">
@@ -170,8 +170,8 @@
             <div class="row">
               <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.PropertyNumber)">
                 <div class="md-form">
-                  <input mdbInputDirective
-                         [mdbValidate]="false" [(ngModel)]="selectedCustomerModel.propertyNumber"
+                  <input mdbInput
+                          [(ngModel)]="selectedCustomerModel.propertyNumber"
                          class="form-control"
                          type="text" id="editPropertyNumber"
                          name="editPropertyNumber">
@@ -180,8 +180,8 @@
               </div>
               <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.ApartmentNumber)">
                 <div class="md-form">
-                  <input mdbInputDirective
-                         [mdbValidate]="false" [(ngModel)]="selectedCustomerModel.apartmentNumber"
+                  <input mdbInput
+                          [(ngModel)]="selectedCustomerModel.apartmentNumber"
                          class="form-control"
                          type="text" id="editApartmentNumber"
                          name="editApartmentNumber">
@@ -190,8 +190,8 @@
               </div>
               <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CompletionYear)">
                 <div class="md-form">
-                  <input mdbInputDirective
-                         [mdbValidate]="false" [(ngModel)]="selectedCustomerModel.completionYear"
+                  <input mdbInput
+                          [(ngModel)]="selectedCustomerModel.completionYear"
                          class="form-control"
                          type="text" id="editCompletionYear"
                          name="editCompletionYear">
@@ -202,8 +202,8 @@
             <div class="row">
               <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.FloorsWithLivingSpace)">
                 <div class="md-form">
-                  <input mdbInputDirective
-                         [mdbValidate]="false" [(ngModel)]="selectedCustomerModel.floorsWithLivingSpace"
+                  <input mdbInput
+                          [(ngModel)]="selectedCustomerModel.floorsWithLivingSpace"
                          class="form-control"
                          type="text" id="editFloorsWithLivingSpace"
                          name="editFloorsWithLivingSpace">
@@ -223,10 +223,10 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-success" [disabled]="!editForm.form.valid" (click)="updateCustomer()" id="saveEditBtn">
+        <button mdbBtn class="btn-success" [disabled]="!editForm.form.valid" (click)="updateCustomer()" id="saveEditBtn">
           {{ 'Update' | translate }}
         </button>
-        <button class="btn btn-accent text-black-50" (click)="frame.hide()" id="cancelEditBtn">{{'Cancel' | translate}}</button>
+        <button mdbBtn class="btn-accent text-black-50" (click)="frame.hide()" id="cancelEditBtn">{{'Cancel' | translate}}</button>
       </div>
     </div>
   </div>

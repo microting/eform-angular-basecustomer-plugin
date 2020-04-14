@@ -14,9 +14,9 @@ describe('Customers plugin page', function () {
   });
   it('should update customer with all fields', function () {
     const lastCustomerBeforeEdit = customersPage.getCustomer(customersPage.rowNum());
-    lastCustomerBeforeEdit.editBtn.waitForDisplayed(3000);
+    lastCustomerBeforeEdit.editBtn.waitForDisplayed({timeout: 3000});
     lastCustomerBeforeEdit.editBtn.click();
-    $('#spinner-animation').waitForDisplayed(20000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
     const customerObject = {
       createdBy: Guid.create().toString(),
       customerNo: Guid.create().toString(),
@@ -50,9 +50,9 @@ describe('Customers plugin page', function () {
   });
   it('should not update customer if cancel is clicked', function () {
     const lastCustomerBeforeEdit = customersPage.getCustomer(customersPage.rowNum());
-    lastCustomerBeforeEdit.editBtn.waitForDisplayed(3000);
+    lastCustomerBeforeEdit.editBtn.waitForDisplayed({timeout: 3000});
     lastCustomerBeforeEdit.editBtn.click();
-    $('#spinner-animation').waitForDisplayed(20000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
     customersModalPage.cancelEditBtn.click();
   });
 });

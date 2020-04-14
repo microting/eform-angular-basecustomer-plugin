@@ -12,10 +12,10 @@ describe('Customers plugin page', function () {
     customersPage.goToCustomersPage();
   });
   // it('should add new customer with all empty fields', function () {
-  //   $('#spinner-animation').waitForDisplayed(20000, true);
+  //   $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
   //   const rowCountBeforeCreation = browser.$$('#mainTableBody > tr').length;
   //   customersPage.newCustomerBtn.click();
-  //   $('#spinner-animation').waitForDisplayed(20000, true);
+  //   $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
   //   customersModalPage.createEmptyCustomer();
   //   browser.pause(8000);
   //   const rowCountAfterCreation = browser.$$('#mainTableBody > tr').length;
@@ -23,7 +23,7 @@ describe('Customers plugin page', function () {
   // });
   it('should add new customer with all fields', function () {
     customersPage.newCustomerBtn.click();
-    $('#spinner-animation').waitForDisplayed(20000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
     const customerObject = {
       createdBy: 'John Smith',
       customerNo: '1',
@@ -44,10 +44,10 @@ describe('Customers plugin page', function () {
       floorsWithLivingSpace: 3
     };
     const rowCountBeforeCreation = customersPage.rowNum();
-    $('#spinner-animation').waitForDisplayed(20000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
     customersModalPage.createCustomer(customerObject);
     const rowCountAfterCreation = customersPage.rowNum();
-    $('#spinner-animation').waitForDisplayed(20000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
     expect(rowCountAfterCreation, 'Number of rows hasn\'t changed after creating new user').equal(rowCountBeforeCreation + 1);
     const lastCustomer: CustomersRowObject = customersPage.getCustomer(customersPage.rowNum());
     expect(lastCustomer.createdBy, 'Created by of created customer is incorrect').equal(customerObject.createdBy);
@@ -61,13 +61,13 @@ describe('Customers plugin page', function () {
     expect(lastCustomer.email, 'Email of created customer is incorrect').equal(customerObject.email);
   });
   it('should not add new customer if cancel is clicked', function () {
-    $('#spinner-animation').waitForDisplayed(20000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
     // rows before
     const rowsBefore = customersPage.rowNum();
     customersPage.newCustomerBtn.click();
-    $('#spinner-animation').waitForDisplayed(20000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
     customersModalPage.cancelCreateBtn.click();
-    $('#spinner-animation').waitForDisplayed(20000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
     // rows after
     const rowsAfter = customersPage.rowNum();
     expect(rowsAfter, 'Number of customers should be same as before').equal(rowsBefore);

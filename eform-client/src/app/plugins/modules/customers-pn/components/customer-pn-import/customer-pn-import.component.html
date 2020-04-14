@@ -99,13 +99,13 @@
       </tbody>
     </table>
   </div>
-  <button class="btn btn-danger"
+  <button mdbBtn class="btn-danger"
           routerLink="/plugins/customers-pn"
           id="cancelImportBtn"
           mdbTooltip="{{'Cancel' | translate}}">
           <fa-icon icon="times-circle" [fixedWidth]="true" size="lg"></fa-icon>
   </button>
-  <button class="btn btn-success"
+  <button mdbBtn class="btn-success"
           (click)="importCustomer()"
           routerLink="/plugins/customers-pn"
           id="continueImportBtn"

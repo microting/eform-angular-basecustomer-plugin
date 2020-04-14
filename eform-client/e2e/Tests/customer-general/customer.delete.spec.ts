@@ -14,19 +14,19 @@ describe('Customer modal', function () {
   it('should delete customer', function () {
     const rowBeforeDeletion = customersPage.rowNum();
     const lastCustomer: CustomersRowObject = customersPage.getCustomer(rowBeforeDeletion);
-    lastCustomer.deleteBtn.waitForDisplayed(3000);
+    lastCustomer.deleteBtn.waitForDisplayed({timeout: 3000});
     lastCustomer.deleteBtn.click();
-    $('#spinner-animation').waitForDisplayed(20000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
     customersModalPage.deleteCustomer();
-    $('#tableBody').waitForDisplayed(20000);
+    $('#tableBody').waitForDisplayed({timeout: 20000});
     const rowAfterDeletion = customersPage.rowNum();
     expect(rowBeforeDeletion, 'Number of rows hasn\'t changed after deleting customer').equal(rowAfterDeletion + 1);
   });
   it('should not delete customer if cancel was clicked', function () {
     const lastCustomer: CustomersRowObject = customersPage.getCustomer(customersPage.rowNum());
-    $('#spinner-animation').waitForDisplayed(20000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
     lastCustomer.deleteBtn.click();
-    $('#spinner-animation').waitForDisplayed(20000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
     customersModalPage.cancelDeleteBtn.click();
   });
 });

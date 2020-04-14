@@ -14,7 +14,7 @@ class ApplicationSettingsPluginsPage extends PageWithNavbarPage {
 
   goTopluginSettings() {
     $('#plugin-settings-btn').click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
 
   settingsMenu() {
@@ -26,7 +26,7 @@ class ApplicationSettingsPluginsPage extends PageWithNavbarPage {
   }
   saveChangesBtn() {
     $('#saveBtn').click();
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
   }
 }
 
