@@ -79,7 +79,7 @@ export class CustomersModalPage extends Page {
   }
   public get createCompanyAddress() {
     $('#createCompanyAddress').waitForDisplayed({timeout: 20000});
-    $('#createCompanyAddress').waitForClickable({timeout: 20000});
+    //$('#createCompanyAddress').waitForClickable({timeout: 20000});
     return $('#createCompanyAddress');
   }
   public get editCompanyAddress() {
@@ -179,12 +179,12 @@ export class CustomersModalPage extends Page {
   }
   public get createCadastralNumber() {
     $('#createCadastralNumber').waitForDisplayed({timeout: 20000});
-    $('#createCadastralNumber').waitForClickable({timeout: 20000});
+    //$('#createCadastralNumber').waitForClickable({timeout: 20000});
     return $('#createCadastralNumber');
   }
   public get editCadastralNumber() {
     $('#editCadastralNumber').waitForDisplayed({timeout: 20000});
-    $('#editCadastralNumber').waitForClickable({timeout: 20000});
+    //$('#editCadastralNumber').waitForClickable({timeout: 20000});
     return $('#editCadastralNumber');
   }
   public get createPropertyNumber() {
@@ -199,7 +199,7 @@ export class CustomersModalPage extends Page {
   }
   public get createApartmentNumber() {
     $('#createApartmentNumber').waitForDisplayed({timeout: 20000});
-    $('#createApartmentNumber').waitForClickable({timeout: 20000});
+    //$('#createApartmentNumber').waitForClickable({timeout: 20000});
     return $('#createApartmentNumber');
   }
   public get editApartmentNumber() {
@@ -219,7 +219,7 @@ export class CustomersModalPage extends Page {
   }
   public get createFloorsWithLivingSpace() {
     $('#createFloorsWithLivingSpace').waitForDisplayed({timeout: 20000});
-    $('#createFloorsWithLivingSpace').waitForClickable({timeout: 20000});
+    //$('#createFloorsWithLivingSpace').waitForClickable({timeout: 20000});
     return $('#createFloorsWithLivingSpace');
   }
   public get editFloorsWithLivingSpace() {
