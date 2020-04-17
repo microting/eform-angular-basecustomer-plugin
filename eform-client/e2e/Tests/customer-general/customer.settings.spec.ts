@@ -48,11 +48,11 @@ describe('Customers plugin settings page', function () {
   it('should select only company name, id and customer no for show', function () {
     myEformsPage.Navbar.advancedDropdown();
     myEformsPage.Navbar.clickonSubMenuItem('Plugins');
-    $('#spinner-animation').waitForDisplayed(20000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
 
     const plugin = pluginsPage.getFirstPluginRowObj();
     plugin.settingsBtn.click();
-    $('#spinner-animation').waitForDisplayed(20000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
     const customerCheckbox =  customersSettingsPage.getCheckboxById('CustomerNo');
     const companyNameCheckbox =  customersSettingsPage.getCheckboxById('CompanyName');
     const idCheckbox =  customersSettingsPage.getCheckboxById('Id');
@@ -83,16 +83,16 @@ describe('Customers plugin settings page', function () {
     customersSettingsPage.clickCheckboxById('WorkflowState');
     customersSettingsPage.clickCheckboxById('CreatedByUserId');
     customersSettingsPage.clickCheckboxById('CreatedDate');
-    $('#spinner-animation').waitForDisplayed(20000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
     customersSettingsPage.saveSettings();
-    $('#spinner-animation').waitForDisplayed(20000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
 
     myEformsPage.Navbar.advancedDropdown();
     myEformsPage.Navbar.clickonSubMenuItem('Plugins');
-    $('#spinner-animation').waitForDisplayed(20000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
 
     plugin.settingsBtn.click();
-    $('#spinner-animation').waitForDisplayed(20000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
     expect(customerCheckbox.getValue(), 'Customer number checkbox is\'t set').equal('true');
     expect(companyNameCheckbox.getValue(), 'Company name checkbox is\'t set').equal('true');
     expect(idCheckbox.getValue(), 'Id checkbox is\'t set').equals('true');
@@ -101,11 +101,11 @@ describe('Customers plugin settings page', function () {
   it ('checks out all the checkboxes', function () {
     myEformsPage.Navbar.advancedDropdown();
     myEformsPage.Navbar.clickonSubMenuItem('Plugins');
-    $('#spinner-animation').waitForDisplayed(20000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
 
     const plugin = pluginsPage.getFirstPluginRowObj();
     plugin.settingsBtn.click();
-    $('#spinner-animation').waitForDisplayed(20000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
     customersSettingsPage.clickCheckboxById('VatNumber');
     customersSettingsPage.clickCheckboxById('CreatedBy');
     customersSettingsPage.clickCheckboxById('CompanyAddress');
@@ -132,17 +132,17 @@ describe('Customers plugin settings page', function () {
     customersSettingsPage.clickCheckboxById('WorkflowState');
     customersSettingsPage.clickCheckboxById('CreatedByUserId');
     customersSettingsPage.clickCheckboxById('CreatedDate');
-    $('#spinner-animation').waitForDisplayed(20000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
     customersSettingsPage.saveSettings();
   });
   it('should deactivate unnecessary fields', function () {
     myEformsPage.Navbar.advancedDropdown();
     myEformsPage.Navbar.clickonSubMenuItem('Plugins');
-    $('#spinner-animation').waitForDisplayed(20000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
 
     const plugin = pluginsPage.getFirstPluginRowObj();
     plugin.settingsBtn.click();
-    $('#spinner-animation').waitForDisplayed(20000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
     // customersSettingsPage.clickCheckboxById('VatNumber');
     // customersSettingsPage.clickCheckboxById('CreatedBy');
     customersSettingsPage.clickCheckboxById('Version');
@@ -153,7 +153,7 @@ describe('Customers plugin settings page', function () {
     customersSettingsPage.clickCheckboxById('CreatedByUserId');
     customersSettingsPage.clickCheckboxById('CreatedDate');
 
-    $('#spinner-animation').waitForDisplayed(20000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
     customersSettingsPage.saveSettings();
   });
 });

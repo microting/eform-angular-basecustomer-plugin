@@ -16,9 +16,9 @@ describe('Customers plugin import page', function () {
     customersPage.goToImportBtn();
     $('#files').addValue(localPath + '/e2e/Assets/Import-test.csv');
     //browser.chooseFile('#files', localPath + '/e2e/Assets/Import-test.csv');
-    $('#row_0').waitForDisplayed(20000);
-    $('#row_1').waitForDisplayed(20000);
-    $('#row_2').waitForDisplayed(20000);
+    $('#row_0').waitForDisplayed({timeout: 20000});
+    $('#row_1').waitForDisplayed({timeout: 20000});
+    $('#row_2').waitForDisplayed({timeout: 20000});
     // check if two customers ready to be imported
     const customersN = customersImportPage.numberOfCustomers;
     expect(customersN, 'After choosing file, two customers must appear in table').equal(3);
@@ -32,7 +32,7 @@ describe('Customers plugin import page', function () {
     customersImportPage.continueImport();
     // refresh the page and check number of customers
     loginPage.open('/plugins/customers-pn');
-    $('#spinner-animation').waitForDisplayed(90000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
     const customersAfter = customersPage.rowNum();
     expect(customersAfter, 'Number of customers is not bigger than before').greaterThan(customersBefore);
   });
@@ -41,12 +41,12 @@ describe('Customers plugin import page', function () {
     const customersBefore = customersImportPage.numberOfCustomers;
     const importButton = customersPage.importCustomerBtn();
     importButton.click();
-    $('#spinner-animation').waitForDisplayed(20000, true);
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
     $('#files').addValue(localPath + '/e2e/Assets/Import-test.csv');
     //browser.chooseFile('#files', localPath + '/e2e/Assets/Import-test.csv');
-    $('#row_0').waitForDisplayed(20000);
-    $('#row_1').waitForDisplayed(20000);
-    $('#row_2').waitForDisplayed(20000);
+    $('#row_0').waitForDisplayed({timeout: 20000});
+    $('#row_1').waitForDisplayed({timeout: 20000});
+    $('#row_2').waitForDisplayed({timeout: 20000});
     customersImportPage.cancelImport();
 
     const customersAfter = customersImportPage.numberOfCustomers;

@@ -8,8 +8,8 @@ addons:
 services:
   - mysql
 intstall:
-  - nvm install 11.0.0
-  - nvm use 11.0.0
+  - nvm install 12.16.2
+  - nvm use 12.16.2
   - pip install --user awscli
   - echo 'deb http://www.rabbitmq.com/debian/ testing main' | sudo tee /etc/apt/sources.list.d/rabbitmq.list
   - wget -O- https://www.rabbitmq.com/rabbitmq-release-signing-key.asc | sudo apt-key add -
@@ -48,8 +48,9 @@ script:
   - cd eform-client && npm install
   - ../../eform-angular-basecustomer-plugin/testinginstallpn.sh
   - npm start &
+  - sleep 75
   - dotnet run --project ../eFormAPI/eFormAPI.Web/eFormAPI.Web.csproj > dotnet_log 2>&1 &
-  - sleep 40
+  - sleep 75
   - npm run testheadless
   - npm run testheadlessplugin
   - touch ~/.aws/config || true

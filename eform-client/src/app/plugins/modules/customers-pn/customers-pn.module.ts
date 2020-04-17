@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {TranslateModule} from '@ngx-translate/core';
-import {MDBRootModule} from 'port/angular-bootstrap-md';
+import {MDBRootModule} from 'angular-bootstrap-md';
 import { Papa } from 'ngx-papaparse';
 
 import {CustomerPnLayoutComponent} from './layouts';
