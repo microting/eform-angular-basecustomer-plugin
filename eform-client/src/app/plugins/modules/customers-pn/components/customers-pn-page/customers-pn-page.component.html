@@ -26,7 +26,7 @@
     </div>
   </div>
   <div class="row p-1 table-responsive no-gutters">
-    <table class="table table-sm table-striped text-center z-depth-1">
+    <table mdbTable striped="true" hover="true" small="true" class="z-depth-1 text-center">
       <thead>
       <tr>
         <ng-container *ngFor="let field of fieldsModel.fields">
@@ -71,7 +71,7 @@
                     (click)="showEditCustomerModal(customer)">
               <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
             </button>
-            <button mdbBtn class="btn-success text-black-50 btn-icon mb-2"
+            <button mdbBtn class="btn-success btn-icon mb-2"
                     mdbTooltip="{{ 'Duplicate Customer' | translate}}" id="copyCustomerBtn_{{i}}"
                     (click)="showCopyCustomerModal(customer)">
               <fa-icon icon="copy" [fixedWidth]="true" size="lg"></fa-icon>
