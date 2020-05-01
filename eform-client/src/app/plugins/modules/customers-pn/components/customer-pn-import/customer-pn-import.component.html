@@ -1,23 +1,10 @@
 <subheader-pn [title]="'Import Customer' | translate">
 </subheader-pn>
-<subheader-pn
-  [heandingSizeRem]="1">
-  <!--[title]="'File name: '+this.fileName +' '+'Total Columns: '+this.totalColumns+' '+'Total Rows: '+this.totalRows"-->
-</subheader-pn>
-<input type="file" class="form-control" id="files" accept="text/csv" (change)="csv2Array($event)">
-<!--<div class="container-fluid">-->
-  <!--<div class="row mt-4">-->
-    <!--<div class="col-md-2" *ngFor="let name of chboxNames">-->
-      <!--<div class="mat-checkbox">-->
-        <!--<label>-->
-          <!--<input type="checkbox" (click)="logThings(name)" color="primary">{{name | translate}}-->
-        <!--</label>-->
-      <!--</div>-->
-    <!--</div>-->
-  <!--</div>-->
-<!--</div>-->
-
 <div class="p-3">
+  <input #fileUploader id="fileUploaded" type="file" class="form-control" id="files" accept="text/csv" (change)="csv2Array($event)" style="display: none">
+  <button mdbBtn (click)="fileUploader.click()">
+    {{'Select file' | translate}}
+  </button>
   <div class="row p-1 table-responsive-lg no-gutters">
     <table class="table mh-100 table-striped text-center z-depth-1" *ngIf="tableData">
       <thead>
@@ -103,7 +90,7 @@
           routerLink="/plugins/customers-pn"
           id="cancelImportBtn"
           mdbTooltip="{{'Cancel' | translate}}">
-          <fa-icon icon="times-circle" [fixedWidth]="true" size="lg"></fa-icon>
+    {{'Cancel' | translate}}
   </button>
   <button mdbBtn class="btn-success"
           (click)="importCustomer()"
