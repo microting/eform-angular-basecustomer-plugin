@@ -16,7 +16,6 @@ export class CustomerPnImportComponent implements OnInit {
   customerImportModel: CustomersPnImportModel;
   customerHeaderModel: CustomerPnHeadersModel;
   fileName: string;
-  spinnerStatus = false;
   totalColumns: number;
   totalRows: number;
   myFile: any;
@@ -96,14 +95,13 @@ export class CustomerPnImportComponent implements OnInit {
     return this.tableData;
   }
     importCustomer() {
-    this.spinnerStatus = true;
     // this.customerImportModel.importList = this.tableData;
     // debugger;
     this.customerImportModel.headers = JSON.stringify(this.customerImportModel.headerlist);
     return this.customerService.importCustomer(this.customerImportModel).subscribe(((data) => {
       if (data && data.success) {
         this.customerImportModel = new CustomersPnImportModel();
-      } this.spinnerStatus = false;
+      }
     }));
   }
   logThings(value) {

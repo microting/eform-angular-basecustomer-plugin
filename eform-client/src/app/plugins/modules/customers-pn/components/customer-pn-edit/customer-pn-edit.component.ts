@@ -16,7 +16,6 @@ export class CustomerPnEditComponent implements OnInit {
   get fieldsEnum() { return CustomerPnFieldsEnum; }
 
   selectedCustomerModel = new CustomerPnFullModel();
-  spinnerStatus = false;
 
   constructor(private customersService: CustomersPnService) {
   }
@@ -31,24 +30,22 @@ export class CustomerPnEditComponent implements OnInit {
   }
 
   getSingleCustomer(customerId: number) {
-    this.spinnerStatus = true;
     this.customersService.getSingleCustomer(customerId).subscribe(((data) => {
       if (data && data.success) {
         this.selectedCustomerModel = data.model;
       }
-      this.spinnerStatus = false;
+
     }));
   }
 
   updateCustomer() {
-    this.spinnerStatus = true;
     this.customersService.updateCustomer(this.selectedCustomerModel).subscribe(((data) => {
       if (data && data.success) {
         this.selectedCustomerModel = new CustomerPnFullModel();
         this.onCustomerUpdated.emit();
         this.frame.hide();
       }
-      this.spinnerStatus = false;
+
     }));
   }
 

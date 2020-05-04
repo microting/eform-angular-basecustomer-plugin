@@ -14,7 +14,6 @@ export class CustomerPnDeleteComponent implements OnInit {
   @Output() onCustomerDeleted: EventEmitter<void> = new EventEmitter<void>();
   selectedCustomer: CustomerPnModel = new CustomerPnModel();
   @Input() fields: FieldsPnUpdateModel = new FieldsPnUpdateModel();
-  spinnerStatus = false;
   get fieldsEnum() { return CustomerPnFieldsEnum; }
 
 
@@ -29,12 +28,11 @@ export class CustomerPnDeleteComponent implements OnInit {
   }
 
   deleteCustomer() {
-    this.spinnerStatus = true;
     this.customersService.deleteCustomer(this.selectedCustomer.id).subscribe(((data) => {
       if (data && data.success) {
         this.onCustomerDeleted.emit();
         this.frame.hide();
-      } this.spinnerStatus = false;
+      }
     }));
   }
 

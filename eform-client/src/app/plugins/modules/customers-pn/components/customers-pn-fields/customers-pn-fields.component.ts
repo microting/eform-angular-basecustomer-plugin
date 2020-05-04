@@ -14,7 +14,6 @@ import {CustomersPnFieldsService, CustomersPnSettingsService} from '../../servic
 })
 export class CustomersPnFieldsComponent implements OnInit {
   isChecked = false;
-  spinnerStatus = false;
   fieldsUpdateModel: FieldsPnUpdateModel = new FieldsPnUpdateModel();
   customersPnSettingsModel: CustomersPnSettingsModel = new CustomersPnSettingsModel();
   advEntitySearchableGroupListModel: AdvEntitySearchableGroupListModel = new AdvEntitySearchableGroupListModel();
@@ -50,11 +49,10 @@ export class CustomersPnFieldsComponent implements OnInit {
   }
 
   getAllFields() {
-    this.spinnerStatus = true;
     this.customersFieldsService.getAllFields().subscribe((data) => {
       if (data && data.success) {
         this.fieldsUpdateModel = data.model;
-      } this.spinnerStatus = false;
+      }
     });
   }
 
@@ -68,16 +66,14 @@ export class CustomersPnFieldsComponent implements OnInit {
 
   updateSettings() {
     // debugger;
-    this.spinnerStatus = true;
     this.customersSettingsService.updateSettings(this.customersPnSettingsModel).subscribe((data) => {
       if (data && data.success) {
-        this.spinnerStatus = true;
         this.customersFieldsService.updateFields(this.fieldsUpdateModel).subscribe((innerData) => {
           if (innerData && innerData.success) {
             this.router.navigate(['/plugins-settings']).then();
-          } this.spinnerStatus = false;
+          }
         });
-      } this.spinnerStatus = false;
+      }
     });
   }
 

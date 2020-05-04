@@ -29,7 +29,6 @@ export class CustomersPnPageComponent implements OnInit {
   fieldsModel: FieldsPnUpdateModel = new FieldsPnUpdateModel();
   localPageSettings: PageSettingsModel = new PageSettingsModel();
   customerModel: CustomerPnFullModel = new CustomerPnFullModel();
-  spinnerStatus = false;
 
   get pluginClaimsHelper() {
     return PluginClaimsHelper;
@@ -70,17 +69,15 @@ export class CustomersPnPageComponent implements OnInit {
   }
 
   getAllInitialData() {
-    this.spinnerStatus = true;
     this.customersFieldsService.getAllFields().subscribe((data) => {
       if (data && data.success) {
         this.fieldsModel = data.model;
         this.getAllCustomers();
-      } this.spinnerStatus = false;
+      }
     });
   }
 
   getAllCustomers() {
-    this.spinnerStatus = true;
     this.customersRequestModel.isSortDsc = this.localPageSettings.isSortDsc;
     this.customersRequestModel.sortColumnName = this.localPageSettings.sort;
     this.customersRequestModel.pageSize = this.localPageSettings.pageSize;
@@ -88,11 +85,10 @@ export class CustomersPnPageComponent implements OnInit {
       if (result && result.success) {
         this.customersModel = result.model;
       }
-      this.spinnerStatus = false;
+
     }));
   }
   duplicateCustomer(customerId: number) {
-    this.spinnerStatus = true;
     this.customersService.getSingleCustomer(customerId).subscribe(((data) => {
       if (data && data.success) {
         // debugger;
@@ -107,7 +103,7 @@ export class CustomersPnPageComponent implements OnInit {
         }));
       }
     }));
-    this.spinnerStatus = false;
+
   }
   changePage(e: any) {
     if (e || e === 0) {
@@ -122,14 +118,13 @@ export class CustomersPnPageComponent implements OnInit {
   }
 
   sortTable(sort: string) {
-    this.spinnerStatus = true;
     if (this.localPageSettings.sort === sort) {
       this.localPageSettings.isSortDsc = !this.localPageSettings.isSortDsc;
-      this.spinnerStatus = false;
+
     } else {
       this.localPageSettings.isSortDsc = false;
       this.localPageSettings.sort = sort;
-      this.spinnerStatus = false;
+
     }
     this.updateLocalPageSettings();
   }
