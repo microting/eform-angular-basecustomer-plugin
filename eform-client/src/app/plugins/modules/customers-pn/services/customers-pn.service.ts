@@ -19,7 +19,7 @@ export class CustomersPnService extends BaseService{
   }
 
   getAllCustomers(model: CustomersPnRequestModel): Observable<OperationDataResult<CustomersPnModel>> {
-    return this.post(CustomerPnMethods.CustomerPn, model);
+    return this.get(CustomerPnMethods.CustomerPn, model);
   }
 
   getSingleCustomer(customerId: number): Observable<OperationDataResult<CustomerPnFullModel>> {

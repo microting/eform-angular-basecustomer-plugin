@@ -19,9 +19,9 @@ namespace Customers.Pn.Controllers
             _customersService = customersService;
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("")]
-        public async Task<OperationDataResult<CustomersModel>> Index([FromBody] CustomersRequestModel pnRequestModel)
+        public async Task<OperationDataResult<CustomersModel>> Index(CustomersRequestModel pnRequestModel)
         {
             return await _customersService.Index(pnRequestModel);
         }
