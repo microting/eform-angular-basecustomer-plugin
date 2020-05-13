@@ -28,22 +28,297 @@
   <div class="row p-1 table-responsive no-gutters">
     <table mdbTable striped="true" hover="true" small="true" class="z-depth-1 text-center">
       <thead>
-      <tr>
-        <ng-container *ngFor="let field of fieldsModel.fields">
-          <th scope="col" class="table-header-sortable" id="{{field.name}}TableHeader"
-              *ngIf="field.fieldStatus === fieldStatusEnum.Enabled"
-              (click)="sortTable(field.name)">
-            <div class="d-flex align-items-center justify-content-center">
-              {{ field.name | translate }}
-              <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != field.name">unfold_more</i>
-              <i class="material-icons"
-                 *ngIf="localPageSettings.sort == field.name && !customersRequestModel.isSortDsc">expand_less</i>
-              <i class="material-icons"
-                 *ngIf="localPageSettings.sort == field.name && customersRequestModel.isSortDsc">expand_more</i>
-            </div>
-          </th>
-        </ng-container>
-
+      <tr *ngIf="fieldsModel.fields.length > 0">
+        <th *ngIf="fieldsModel.fields[0].fieldStatus === fieldStatusEnum.Enabled">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ fieldsModel.fields[0].name | translate }}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != fieldsModel.fields[0].name">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[0].name && !customersRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[0].name && customersRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th *ngIf="fieldsModel.fields[1].fieldStatus === fieldStatusEnum.Enabled">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ fieldsModel.fields[1].name | translate }}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != fieldsModel.fields[1].name">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[1].name && !customersRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[1].name && customersRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th *ngIf="fieldsModel.fields[2].fieldStatus === fieldStatusEnum.Enabled">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ fieldsModel.fields[2].name | translate }}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != fieldsModel.fields[2].name">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[2].name && !customersRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[2].name && customersRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th *ngIf="fieldsModel.fields[3].fieldStatus === fieldStatusEnum.Enabled">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ fieldsModel.fields[3].name | translate }}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != fieldsModel.fields[3].name">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[3].name && !customersRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[3].name && customersRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th *ngIf="fieldsModel.fields[4].fieldStatus === fieldStatusEnum.Enabled">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ fieldsModel.fields[4].name | translate }}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != fieldsModel.fields[4].name">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[4].name && !customersRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[4].name && customersRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th *ngIf="fieldsModel.fields[5].fieldStatus === fieldStatusEnum.Enabled">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ fieldsModel.fields[5].name | translate }}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != fieldsModel.fields[5].name">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[5].name && !customersRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[5].name && customersRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th *ngIf="fieldsModel.fields[6].fieldStatus === fieldStatusEnum.Enabled">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ fieldsModel.fields[6].name | translate }}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != fieldsModel.fields[6].name">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[6].name && !customersRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[6].name && customersRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th *ngIf="fieldsModel.fields[7].fieldStatus === fieldStatusEnum.Enabled">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ fieldsModel.fields[7].name | translate }}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != fieldsModel.fields[7].name">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[7].name && !customersRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[7].name && customersRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th *ngIf="fieldsModel.fields[8].fieldStatus === fieldStatusEnum.Enabled">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ fieldsModel.fields[8].name | translate }}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != fieldsModel.fields[8].name">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[8].name && !customersRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[8].name && customersRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th *ngIf="fieldsModel.fields[9].fieldStatus === fieldStatusEnum.Enabled">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ fieldsModel.fields[9].name | translate }}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != fieldsModel.fields[9].name">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[9].name && !customersRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[9].name && customersRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th *ngIf="fieldsModel.fields[10].fieldStatus === fieldStatusEnum.Enabled">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ fieldsModel.fields[10].name | translate }}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != fieldsModel.fields[10].name">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[10].name && !customersRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[10].name && customersRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th *ngIf="fieldsModel.fields[11].fieldStatus === fieldStatusEnum.Enabled">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ fieldsModel.fields[11].name | translate }}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != fieldsModel.fields[11].name">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[11].name && !customersRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[11].name && customersRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th *ngIf="fieldsModel.fields[12].fieldStatus === fieldStatusEnum.Enabled">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ fieldsModel.fields[12].name | translate }}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != fieldsModel.fields[12].name">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[12].name && !customersRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[12].name && customersRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th *ngIf="fieldsModel.fields[13].fieldStatus === fieldStatusEnum.Enabled">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ fieldsModel.fields[13].name | translate }}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != fieldsModel.fields[13].name">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[13].name && !customersRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[13].name && customersRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th *ngIf="fieldsModel.fields[14].fieldStatus === fieldStatusEnum.Enabled">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ fieldsModel.fields[14].name | translate }}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != fieldsModel.fields[14].name">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[14].name && !customersRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[14].name && customersRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th *ngIf="fieldsModel.fields[15].fieldStatus === fieldStatusEnum.Enabled">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ fieldsModel.fields[15].name | translate }}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != fieldsModel.fields[15].name">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[15].name && !customersRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[15].name && customersRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th *ngIf="fieldsModel.fields[16].fieldStatus === fieldStatusEnum.Enabled">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ fieldsModel.fields[16].name | translate }}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != fieldsModel.fields[16].name">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[16].name && !customersRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[16].name && customersRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th *ngIf="fieldsModel.fields[17].fieldStatus === fieldStatusEnum.Enabled">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ fieldsModel.fields[17].name | translate }}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != fieldsModel.fields[17].name">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[17].name && !customersRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[17].name && customersRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th *ngIf="fieldsModel.fields[18].fieldStatus === fieldStatusEnum.Enabled">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ fieldsModel.fields[18].name | translate }}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != fieldsModel.fields[18].name">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[18].name && !customersRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[18].name && customersRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th *ngIf="fieldsModel.fields[19].fieldStatus === fieldStatusEnum.Enabled">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ fieldsModel.fields[19].name | translate }}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != fieldsModel.fields[19].name">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[19].name && !customersRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[19].name && customersRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th *ngIf="fieldsModel.fields[20].fieldStatus === fieldStatusEnum.Enabled">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ fieldsModel.fields[20].name | translate }}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != fieldsModel.fields[20].name">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[20].name && !customersRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[20].name && customersRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th *ngIf="fieldsModel.fields[21].fieldStatus === fieldStatusEnum.Enabled">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ fieldsModel.fields[21].name | translate }}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != fieldsModel.fields[21].name">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[21].name && !customersRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[21].name && customersRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th *ngIf="fieldsModel.fields[22].fieldStatus === fieldStatusEnum.Enabled">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ fieldsModel.fields[22].name | translate }}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != fieldsModel.fields[22].name">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[22].name && !customersRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[22].name && customersRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th *ngIf="fieldsModel.fields[23].fieldStatus === fieldStatusEnum.Enabled">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ fieldsModel.fields[23].name | translate }}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != fieldsModel.fields[23].name">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[23].name && !customersRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[23].name && customersRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th *ngIf="fieldsModel.fields[24].fieldStatus === fieldStatusEnum.Enabled">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ fieldsModel.fields[24].name | translate }}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != fieldsModel.fields[24].name">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[24].name && !customersRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[24].name && customersRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th *ngIf="fieldsModel.fields[25].fieldStatus === fieldStatusEnum.Enabled">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ fieldsModel.fields[25].name | translate }}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != fieldsModel.fields[25].name">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[25].name && !customersRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[25].name && customersRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th *ngIf="fieldsModel.fields[26].fieldStatus === fieldStatusEnum.Enabled">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ fieldsModel.fields[26].name | translate }}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != fieldsModel.fields[26].name">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[26].name && !customersRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[26].name && customersRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th *ngIf="fieldsModel.fields[27].fieldStatus === fieldStatusEnum.Enabled">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ fieldsModel.fields[27].name | translate }}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != fieldsModel.fields[27].name">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[27].name && !customersRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[27].name && customersRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
+        <th *ngIf="fieldsModel.fields[28].fieldStatus === fieldStatusEnum.Enabled">
+          <div class="d-flex align-items-center justify-content-center">
+            {{ fieldsModel.fields[28].name | translate }}
+            <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != fieldsModel.fields[28].name">unfold_more</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[28].name && !customersRequestModel.isSortDsc">expand_less</i>
+            <i class="material-icons"
+               *ngIf="localPageSettings.sort == fieldsModel.fields[28].name && customersRequestModel.isSortDsc">expand_more</i>
+          </div>
+        </th>
         <th scope="col">
           {{ 'Actions' | translate }}
         </th>
@@ -51,19 +326,106 @@
       </thead>
       <tbody id="mainTableBody">
       <tr *ngFor="let customer of customersModel.customers; let i = index">
-        <td *ngFor="let field of customer.fields" [id]="field.name +'_'+i">
-          <ng-container [ngSwitch]="field.name">
-            <ng-container *ngSwitchCase="fieldsEnum[fieldsEnum.Description]">
-              <div class="max-lines" [innerHTML]="field.value"></div>
-            </ng-container>
-            <ng-container *ngSwitchCase="fieldsEnum[fieldsEnum.CreatedDate]">
-              {{field.value}}
-            </ng-container>
-            <ng-container *ngSwitchDefault>
-              {{field.value}}
-            </ng-container>
-          </ng-container>
+        <td *ngIf="fieldsModel.fields[0].fieldStatus === fieldStatusEnum.Enabled">
+          {{customer.id}}
         </td>
+        <td *ngIf="fieldsModel.fields[1].fieldStatus === fieldStatusEnum.Enabled">
+          {{customer.createdByUserId}}
+        </td>
+        <td *ngIf="fieldsModel.fields[2].fieldStatus === fieldStatusEnum.Enabled">
+          {{customer.workflowState}}
+        </td>
+        <td *ngIf="fieldsModel.fields[3].fieldStatus === fieldStatusEnum.Enabled">
+          {{customer.updateAt}}
+        </td>
+        <td *ngIf="fieldsModel.fields[4].fieldStatus === fieldStatusEnum.Enabled">
+          {{customer.createdAt}}
+        </td>
+        <td *ngIf="fieldsModel.fields[5].fieldStatus === fieldStatusEnum.Enabled">
+          {{customer.createdDate}}
+        </td>
+        <td *ngIf="fieldsModel.fields[6].fieldStatus === fieldStatusEnum.Enabled">
+          {{customer.crmId}}
+        </td>
+        <td *ngIf="fieldsModel.fields[7].fieldStatus === fieldStatusEnum.Enabled">
+          {{customer.countryCode}}
+        </td>
+        <td *ngIf="fieldsModel.fields[8].fieldStatus === fieldStatusEnum.Enabled">
+          {{customer.vatNumber}}
+        </td>
+        <td *ngIf="fieldsModel.fields[9].fieldStatus === fieldStatusEnum.Enabled">
+          {{customer.eanCode}}
+        </td>
+        <td *ngIf="fieldsModel.fields[10].fieldStatus === fieldStatusEnum.Enabled">
+          {{customer.updatedByUserId}}
+        </td>
+        <td *ngIf="fieldsModel.fields[11].fieldStatus === fieldStatusEnum.Enabled">
+          {{customer.description}}
+        </td>
+        <td *ngIf="fieldsModel.fields[12].fieldStatus === fieldStatusEnum.Enabled">
+          {{customer.email}}
+        </td>
+        <td *ngIf="fieldsModel.fields[13].fieldStatus === fieldStatusEnum.Enabled">
+          {{customer.phone}}
+        </td>
+        <td *ngIf="fieldsModel.fields[14].fieldStatus === fieldStatusEnum.Enabled">
+          {{customer.cityName}}
+        </td>
+        <td *ngIf="fieldsModel.fields[15].fieldStatus === fieldStatusEnum.Enabled">
+          {{customer.zipCode}}
+        </td>
+        <td *ngIf="fieldsModel.fields[16].fieldStatus === fieldStatusEnum.Enabled">
+          {{customer.companyAddress2}}
+        </td>
+        <td *ngIf="fieldsModel.fields[17].fieldStatus === fieldStatusEnum.Enabled">
+          {{customer.companyAddress}}
+        </td>
+        <td *ngIf="fieldsModel.fields[18].fieldStatus === fieldStatusEnum.Enabled">
+          {{customer.companyName}}
+        </td>
+        <td *ngIf="fieldsModel.fields[19].fieldStatus === fieldStatusEnum.Enabled">
+          {{customer.customerNo}}
+        </td>
+        <td *ngIf="fieldsModel.fields[20].fieldStatus === fieldStatusEnum.Enabled">
+          {{customer.createdBy}}
+        </td>
+        <td *ngIf="fieldsModel.fields[21].fieldStatus === fieldStatusEnum.Enabled">
+          {{customer.contactPerson}}
+        </td>
+        <td *ngIf="fieldsModel.fields[22].fieldStatus === fieldStatusEnum.Enabled">
+          {{customer.id}}
+        </td>
+        <td *ngIf="fieldsModel.fields[23].fieldStatus === fieldStatusEnum.Enabled">
+          {{customer.cadastralNumber}}
+        </td>
+        <td *ngIf="fieldsModel.fields[24].fieldStatus === fieldStatusEnum.Enabled">
+          {{customer.propertyNumber}}
+        </td>
+        <td *ngIf="fieldsModel.fields[25].fieldStatus === fieldStatusEnum.Enabled">
+          {{customer.apartmentNumber}}
+        </td>
+        <td *ngIf="fieldsModel.fields[26].fieldStatus === fieldStatusEnum.Enabled">
+          {{customer.completionYear}}
+        </td>
+        <td *ngIf="fieldsModel.fields[27].fieldStatus === fieldStatusEnum.Enabled">
+          {{customer.floorsWithLivingSpace}}
+        </td>
+        <td *ngIf="fieldsModel.fields[28].fieldStatus === fieldStatusEnum.Enabled">
+          {{customer.cadastralType}}
+        </td>
+<!--        <td *ngFor="let field of customer.fields" [id]="field.name +'_'+i">-->
+<!--          <ng-container [ngSwitch]="field.name">-->
+<!--            <ng-container *ngSwitchCase="fieldsEnum[fieldsEnum.Description]">-->
+<!--              <div class="max-lines" [innerHTML]="field.value"></div>-->
+<!--            </ng-container>-->
+<!--            <ng-container *ngSwitchCase="fieldsEnum[fieldsEnum.CreatedDate]">-->
+<!--              {{field.value}}-->
+<!--            </ng-container>-->
+<!--            <ng-container *ngSwitchDefault>-->
+<!--              {{field.value}}-->
+<!--            </ng-container>-->
+<!--          </ng-container>-->
+<!--        </td>-->
         <td>
           <div class="d-flex flex-row justify-content-center">
             <button mdbBtn class="btn-accent text-black-50 btn-icon mb-2"

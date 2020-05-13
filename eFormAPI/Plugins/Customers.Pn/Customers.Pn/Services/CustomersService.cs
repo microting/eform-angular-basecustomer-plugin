@@ -17,6 +17,7 @@ using Microsoft.Extensions.Logging;
 using Microting.eForm.Infrastructure.Constants;
 using Microting.eForm.Infrastructure.Models;
 using Microting.eFormApi.BasePn.Abstractions;
+using Microting.eFormApi.BasePn.Infrastructure.Extensions;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormBaseCustomerBase.Infrastructure.Data;
@@ -47,24 +48,26 @@ namespace Customers.Pn.Services
             _options = options;
         }
 
-
-        public async Task<OperationDataResult<CustomersModel>> Index(CustomersRequestModel pnRequestModel)
+        public async Task<OperationDataResult<CustomersModel>> Index (
+        CustomersRequestModel pnRequestModel)
         {
             try
             {
+    
                 CustomersModel customersPnModel = new CustomersModel();
+                // CustomerModel customerModel = new CustomerModel();
                 IQueryable<Customer> customersQuery = _dbContext.Customers.AsQueryable();
                 if (!string.IsNullOrEmpty(pnRequestModel.SortColumnName))
                 {
                     if (pnRequestModel.IsSortDsc)
                     {
                         customersQuery = customersQuery
-                            .OrderByDescending(pnRequestModel.SortColumnName);
+                            .CustomOrderByDescending(pnRequestModel.SortColumnName);
                     }
                     else
                     {
                         customersQuery = customersQuery
-                            .OrderBy(pnRequestModel.SortColumnName);
+                            .CustomOrderBy(pnRequestModel.SortColumnName);
                     }
                 }
                 else
@@ -72,108 +75,197 @@ namespace Customers.Pn.Services
                     customersQuery = _dbContext.Customers
                         .OrderBy(x => x.Id);
                 }
-
+    
                 if (!string.IsNullOrEmpty(pnRequestModel.Name))
                 {
-                    customersQuery = customersQuery.Where(x => x.CompanyName.Contains(pnRequestModel.Name));
+                    customersQuery = customersQuery.Where(x => 
+                        x.CompanyName.ToLower().Contains(pnRequestModel.Name.ToLower()) || 
+                        x.ContactPerson.ToLower().Contains(pnRequestModel.Name.ToLower()) ||
+                        x.Phone.Contains(pnRequestModel.Name) ||
+                        x.VatNumber.Contains(pnRequestModel.Name) ||
+                        x.Email.Contains(pnRequestModel.Name));
 				}
-
+                
+    
 				customersQuery =
 					customersQuery.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
                     .Skip(pnRequestModel.Offset)
                     .Take(pnRequestModel.PageSize);
-
-                List<Customer> customers = await customersQuery.ToListAsync().ConfigureAwait(false);
-                
-                customersPnModel.Total = _dbContext.Customers.Count(x => x.WorkflowState != Constants.WorkflowStates.Removed);
-                
-                List<FieldUpdateModel> fields = _dbContext.CustomerFields
-                    .Include("Field")
-                    .Select(x => new FieldUpdateModel()
-                    {
-                        FieldStatus = x.FieldStatus,
-                        Id = x.FieldId,
-                        Name = x.Field.Name,
-                    }).ToList();
-                
-//                fields.Reverse();
-
-                foreach (Customer customer in customers)
+    
+                List<CustomerModel> customers = await customersQuery.Select(x => new CustomerModel()
                 {
-                    CustomerModel customerModel = new CustomerModel()
-                    {
-                        Id = customer.Id,
-                    };
-                    
-                    foreach (FieldUpdateModel field in fields)
-                    {
-                        if (field.FieldStatus == 1)
-                        {
-                            FieldModel fieldModel = new FieldModel
-                            {
-                                Id = field.Id,
-                                Name = field.Name,
-                            };
-                            object val = customer.GetPropValue(field.Name);
-                            if (val != null)
-                            {
-                                if (val is DateTime date)
-                                {
-                                    string text = date.ToString("yyy/MM/dd HH:mm:ss",
-                                        CultureInfo.InvariantCulture);
-                                    fieldModel.Value = text;
-                                }
-                                else
-                                {
-                                    fieldModel.Value = val.ToString();
-                                }
-                            }
-                            customerModel.Fields.Add(fieldModel);
-                        }
-                    }
-
-                    if (customerModel.Fields.Any())
-                    {
-                        // Mode Id field to top
-                        customerModel.Fields = customerModel.Fields.OrderBy(x => x.Id).ToList();
-//                        customerModel.Fields.Reverse();
-
-                        int index = customerModel.Fields.FindIndex(x => x.Name == "Id");
-                        FieldModel idField = customerModel.Fields[index];
-                        FieldModel lastField = customerModel.Fields.Last();
-
-                        for (int i = customerModel.Fields.Count() - 2; i >= 0; i--)
-                        {
-                            customerModel.Fields[i + 1] = customerModel.Fields[i];
-                        }
-
-//                        customerModel.Fields[customerModel.Fields.Count() - 1] = lastField;
-
-                        customerModel.Fields[0] = idField;
-
-//                        for (int i = 0; i < 1; i++)
-//                        {
-//                            customerModel.Fields[i] = 
-//                        }
-
-//                        FieldModel item = customerModel.Fields[index];
-//                        customerModel.Fields[index] = customerModel.Fields[0];
-//                        customerModel.Fields[0] = item;
-                    }
-
-                    customersPnModel.Customers.Add(customerModel);
-                }
-
+                    Id = x.Id,
+                    Description = x.Description,
+                    Email = x.Email,
+                    ContactPerson = x.ContactPerson,
+                    CompanyName = x.CompanyName,
+                    Phone = x.Phone,
+                    CityName = x.CityName,
+                    CompanyAddress = x.CompanyAddress,
+                    CompanyAddress2 = x.CompanyAddress2,
+                    CountryCode = x.CountryCode,
+                    CreatedBy = x.CreatedBy,
+                    CreatedDate = x.CreatedDate,
+                    CustomerNo = x.CustomerNo,
+                    EanCode = x.EanCode,
+                    VatNumber = x.VatNumber,
+                    ZipCode = x.ZipCode,
+                    CrmId = x.CrmId,
+                    CadastralNumber = x.CadastralNumber,
+                    PropertyNumber = x.PropertyNumber,
+                    ApartmentNumber = x.ApartmentNumber,
+                    CompletionYear = x.CompletionYear,
+                    FloorsWithLivingSpace = x.FloorsWithLivingSpace,
+                    CreatedAt = x.CreatedAt,
+                    UpdateAt = x.UpdatedAt,
+                    RelatedEntityId = x.RelatedEntityId,
+                    CreatedByUserId = x.CreatedByUserId,
+                    UpdatedByUserId = x.UpdatedByUserId,
+                    WorkflowState = x.WorkflowState,
+                    Version = x.Version,
+                    CadastralType = x.CadastralType
+    
+                }).ToListAsync();
+                customersPnModel.Total = await _dbContext.Customers.CountAsync(x => x.WorkflowState != Constants.WorkflowStates.Removed);
+                customersPnModel.Customers = customers;
                 return new OperationDataResult<CustomersModel>(true, customersPnModel);
+    
             }
             catch (Exception e)
             {
                 Trace.TraceError(e.Message);
                 _logger.LogError(e.Message);
-                return new OperationDataResult<CustomersModel>(false,
-                    _customersLocalizationService.GetString("ErrorObtainingCustomersInfo"));
+                return new OperationDataResult<CustomersModel>(false, 
+                    _customersLocalizationService.GetString("ErrorObtainingCustomersInfo") + e.Message);
             }
         }
+
+//         public async Task<OperationDataResult<CustomersModel>> Index(CustomersRequestModel pnRequestModel)
+//         {
+//             try
+//             {
+//                 CustomersModel customersPnModel = new CustomersModel();
+//                 IQueryable<Customer> customersQuery = _dbContext.Customers.AsQueryable();
+//                 if (!string.IsNullOrEmpty(pnRequestModel.SortColumnName))
+//                 {
+//                     if (pnRequestModel.IsSortDsc)
+//                     {
+//                         customersQuery = customersQuery
+//                             .OrderByDescending(pnRequestModel.SortColumnName);
+//                     }
+//                     else
+//                     {
+//                         customersQuery = customersQuery
+//                             .OrderBy(pnRequestModel.SortColumnName);
+//                     }
+//                 }
+//                 else
+//                 {
+//                     customersQuery = _dbContext.Customers
+//                         .OrderBy(x => x.Id);
+//                 }
+//
+//                 if (!string.IsNullOrEmpty(pnRequestModel.Name))
+//                 {
+//                     customersQuery = customersQuery.Where(x => x.CompanyName.Contains(pnRequestModel.Name));
+// 				}
+//
+// 				customersQuery =
+// 					customersQuery.Where(x => x.WorkflowState != Constants.WorkflowStates.Removed)
+//                     .Skip(pnRequestModel.Offset)
+//                     .Take(pnRequestModel.PageSize);
+//
+//                 List<Customer> customers = await customersQuery.ToListAsync().ConfigureAwait(false);
+//                 
+//                 customersPnModel.Total = _dbContext.Customers.Count(x => x.WorkflowState != Constants.WorkflowStates.Removed);
+//                 
+//                 List<FieldUpdateModel> fields = _dbContext.CustomerFields
+//                     .Include("Field")
+//                     .Select(x => new FieldUpdateModel()
+//                     {
+//                         FieldStatus = x.FieldStatus,
+//                         Id = x.FieldId,
+//                         Name = x.Field.Name,
+//                     }).ToList();
+//                 
+// //                fields.Reverse();
+//
+//                 foreach (Customer customer in customers)
+//                 {
+//                     CustomerModel customerModel = new CustomerModel()
+//                     {
+//                         Id = customer.Id,
+//                     };
+//                     
+//                     foreach (FieldUpdateModel field in fields)
+//                     {
+//                         if (field.FieldStatus == 1)
+//                         {
+//                             FieldModel fieldModel = new FieldModel
+//                             {
+//                                 Id = field.Id,
+//                                 Name = field.Name,
+//                             };
+//                             object val = customer.GetPropValue(field.Name);
+//                             if (val != null)
+//                             {
+//                                 if (val is DateTime date)
+//                                 {
+//                                     string text = date.ToString("yyy/MM/dd HH:mm:ss",
+//                                         CultureInfo.InvariantCulture);
+//                                     fieldModel.Value = text;
+//                                 }
+//                                 else
+//                                 {
+//                                     fieldModel.Value = val.ToString();
+//                                 }
+//                             }
+//                             customerModel.Fields.Add(fieldModel);
+//                         }
+//                     }
+//
+//                     if (customerModel.Fields.Any())
+//                     {
+//                         // Mode Id field to top
+//                         customerModel.Fields = customerModel.Fields.OrderBy(x => x.Id).ToList();
+// //                        customerModel.Fields.Reverse();
+//
+//                         int index = customerModel.Fields.FindIndex(x => x.Name == "Id");
+//                         FieldModel idField = customerModel.Fields[index];
+//                         FieldModel lastField = customerModel.Fields.Last();
+//
+//                         for (int i = customerModel.Fields.Count() - 2; i >= 0; i--)
+//                         {
+//                             customerModel.Fields[i + 1] = customerModel.Fields[i];
+//                         }
+//
+// //                        customerModel.Fields[customerModel.Fields.Count() - 1] = lastField;
+//
+//                         customerModel.Fields[0] = idField;
+//
+// //                        for (int i = 0; i < 1; i++)
+// //                        {
+// //                            customerModel.Fields[i] = 
+// //                        }
+//
+// //                        FieldModel item = customerModel.Fields[index];
+// //                        customerModel.Fields[index] = customerModel.Fields[0];
+// //                        customerModel.Fields[0] = item;
+//                     }
+//
+//                     customersPnModel.Customers.Add(customerModel);
+//                 }
+//
+//                 return new OperationDataResult<CustomersModel>(true, customersPnModel);
+//             }
+//             catch (Exception e)
+//             {
+//                 Trace.TraceError(e.Message);
+//                 _logger.LogError(e.Message);
+//                 return new OperationDataResult<CustomersModel>(false,
+//                     _customersLocalizationService.GetString("ErrorObtainingCustomersInfo"));
+//             }
+//         }
 
         [HttpPost]
         [Route("api/customers-pn")]

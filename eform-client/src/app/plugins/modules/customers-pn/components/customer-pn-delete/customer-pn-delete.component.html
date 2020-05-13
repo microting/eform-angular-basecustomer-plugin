@@ -7,25 +7,25 @@
       <div class="modal-body">
         <table class="table table-sm table-striped text-center z-depth-1">
           <tbody id="tableBody">
-          <ng-container *ngFor="let field of selectedCustomer.fields">
-            <tr *ngIf="field.value">
-              <td>
-                {{field.name | translate}}
-              </td>
-              <td>
-                <strong>
-                  <ng-container [ngSwitch]="field.name">
-                    <ng-container *ngSwitchCase="fieldsEnum[fieldsEnum.Description]">
-                      <div class="max-lines" [innerHTML]="field.value"></div>
-                    </ng-container>
-                    <ng-container *ngSwitchDefault>
-                      {{field.value}}
-                    </ng-container>
-                  </ng-container>
-                  </strong>
-              </td>
-            </tr>
-          </ng-container>
+<!--          <ng-container *ngFor="let field of selectedCustomer.fields">-->
+<!--            <tr *ngIf="field.value">-->
+<!--              <td>-->
+<!--                {{field.name | translate}}-->
+<!--              </td>-->
+<!--              <td>-->
+<!--                <strong>-->
+<!--                  <ng-container [ngSwitch]="field.name">-->
+<!--                    <ng-container *ngSwitchCase="fieldsEnum[fieldsEnum.Description]">-->
+<!--                      <div class="max-lines" [innerHTML]="field.value"></div>-->
+<!--                    </ng-container>-->
+<!--                    <ng-container *ngSwitchDefault>-->
+<!--                      {{field.value}}-->
+<!--                    </ng-container>-->
+<!--                  </ng-container>-->
+<!--                  </strong>-->
+<!--              </td>-->
+<!--            </tr>-->
+<!--          </ng-container>-->
           </tbody>
         </table>
       </div>

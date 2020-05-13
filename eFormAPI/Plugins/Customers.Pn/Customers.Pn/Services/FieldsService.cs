@@ -43,7 +43,7 @@ namespace Customers.Pn.Services
                         Name = x.Field.Name,
                     }).ToListAsync().ConfigureAwait(false);
                 // Mode Id field to top
-                fields.Reverse();
+                //fields.Reverse();
                 int index = fields.FindIndex(x => x.Name == "Id");
                 FieldUpdateModel item = fields[index];
                 fields[index] = fields[0];
