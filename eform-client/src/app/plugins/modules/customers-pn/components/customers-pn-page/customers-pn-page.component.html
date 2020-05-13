@@ -326,7 +326,7 @@
       </thead>
       <tbody id="mainTableBody">
       <tr *ngFor="let customer of customersModel.customers; let i = index">
-        <td *ngIf="fieldsModel.fields[0].fieldStatus === fieldStatusEnum.Enabled">
+        <td *ngIf="fieldsModel.fields[0].fieldStatus === fieldStatusEnum.Enabled" [id]="'Id_' +i">
           {{customer.id}}
         </td>
         <td *ngIf="fieldsModel.fields[1].fieldStatus === fieldStatusEnum.Enabled">
