@@ -9,7 +9,7 @@ import {BaseService} from 'src/app/common/services/base.service';
 import {CustomersPnModel, CustomersPnRequestModel, CustomerPnFullModel, CustomersPnImportModel} from '../models';
 
 export let CustomerPnMethods = {
-  CustomerPn: 'api/customers-pn',
+  CustomerPn: 'api/customers-pn/customers',
 };
 
 @Injectable()
@@ -19,7 +19,7 @@ export class CustomersPnService extends BaseService{
   }
 
   getAllCustomers(model: CustomersPnRequestModel): Observable<OperationDataResult<CustomersPnModel>> {
-    return this.post(CustomerPnMethods.CustomerPn + '/get-all', model);
+    return this.get(CustomerPnMethods.CustomerPn, model);
   }
 
   getSingleCustomer(customerId: number): Observable<OperationDataResult<CustomerPnFullModel>> {
