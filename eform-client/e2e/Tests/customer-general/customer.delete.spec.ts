@@ -18,7 +18,7 @@ describe('Customer modal', function () {
     lastCustomer.deleteBtn.click();
     $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
     customersModalPage.deleteCustomer();
-    $('#tableBody').waitForDisplayed({timeout: 20000});
+    $('#mainTableBody').waitForDisplayed({timeout: 20000});
     const rowAfterDeletion = customersPage.rowNum();
     expect(rowBeforeDeletion, 'Number of rows hasn\'t changed after deleting customer').equal(rowAfterDeletion + 1);
   });
