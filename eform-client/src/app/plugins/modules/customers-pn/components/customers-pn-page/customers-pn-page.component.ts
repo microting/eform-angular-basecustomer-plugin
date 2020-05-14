@@ -117,15 +117,9 @@ export class CustomersPnPageComponent implements OnInit {
     }
   }
 
-  sortTable(sort: string) {
-    if (this.localPageSettings.sort === sort) {
-      this.localPageSettings.isSortDsc = !this.localPageSettings.isSortDsc;
-
-    } else {
-      this.localPageSettings.isSortDsc = false;
-      this.localPageSettings.sort = sort;
-
-    }
+  sortTable(sort: string, sortByDesc: boolean) {
+    this.localPageSettings.isSortDsc = sortByDesc;
+    this.localPageSettings.sort = sort;
     this.updateLocalPageSettings();
   }
 
