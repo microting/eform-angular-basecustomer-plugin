@@ -29,7 +29,7 @@
     <table mdbTable striped="true" hover="true" small="true" class="z-depth-1 text-center">
       <thead>
       <tr *ngIf="fieldsModel.fields.length > 0">
-        <th *ngIf="fieldsModel.fields[0].fieldStatus === fieldStatusEnum.Enabled" (click)="sortTable(fieldsModel.fields[0].name,customersRequestModel.isSortDsc = !customersRequestModel.isSortDsc)">
+        <th id="IdTableHeader" *ngIf="fieldsModel.fields[0].fieldStatus === fieldStatusEnum.Enabled" (click)="sortTable(fieldsModel.fields[0].name,customersRequestModel.isSortDsc = !customersRequestModel.isSortDsc)">
           <div class="d-flex align-items-center justify-content-center">
             {{ fieldsModel.fields[0].name | translate }}
             <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != fieldsModel.fields[0].name">unfold_more</i>
@@ -209,7 +209,7 @@
                *ngIf="localPageSettings.sort == fieldsModel.fields[17].name && customersRequestModel.isSortDsc">expand_more</i>
           </div>
         </th>
-        <th *ngIf="fieldsModel.fields[18].fieldStatus === fieldStatusEnum.Enabled" (click)="sortTable(fieldsModel.fields[18].name,customersRequestModel.isSortDsc = !customersRequestModel.isSortDsc)">
+        <th id="CompanyNameTableHeader" *ngIf="fieldsModel.fields[18].fieldStatus === fieldStatusEnum.Enabled" (click)="sortTable(fieldsModel.fields[18].name,customersRequestModel.isSortDsc = !customersRequestModel.isSortDsc)">
           <div class="d-flex align-items-center justify-content-center">
             {{ fieldsModel.fields[18].name | translate }}
             <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != fieldsModel.fields[18].name">unfold_more</i>
@@ -239,7 +239,7 @@
                *ngIf="localPageSettings.sort == fieldsModel.fields[20].name && customersRequestModel.isSortDsc">expand_more</i>
           </div>
         </th>
-        <th *ngIf="fieldsModel.fields[21].fieldStatus === fieldStatusEnum.Enabled" (click)="sortTable(fieldsModel.fields[21].name,customersRequestModel.isSortDsc = !customersRequestModel.isSortDsc)">
+        <th id="ContactPersonTableHeader" *ngIf="fieldsModel.fields[21].fieldStatus === fieldStatusEnum.Enabled" (click)="sortTable(fieldsModel.fields[21].name,customersRequestModel.isSortDsc = !customersRequestModel.isSortDsc)">
           <div class="d-flex align-items-center justify-content-center">
             {{ fieldsModel.fields[21].name | translate }}
             <i class="material-icons text-black-50" *ngIf="localPageSettings.sort != fieldsModel.fields[21].name">unfold_more</i>
