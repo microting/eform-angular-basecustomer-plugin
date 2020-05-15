@@ -14,14 +14,14 @@ describe('Customers sorting', function () {
     $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
     const firstRowId = Number($('#Id_0').getText());
     const secondRowId = Number($('#Id_1').getText());
-    expect(firstRowId, 'first id bigger than second').lessThan(secondRowId);
+    expect(firstRowId, 'first lesser than second').greaterThan(secondRowId);
   });
   it('sorts id\'s in reverse order', function () {
     customersPage.clickIdSort();
     $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
     const firstRowId = Number($('#Id_0').getText());
     const secondRowId = Number($('#Id_1').getText());
-    expect(firstRowId, 'first lesser than second').greaterThan(secondRowId);
+    expect(firstRowId, 'first id bigger than second').lessThan(secondRowId);
   });
   it('sorts customers by contact person', function () {
     // before sorting
