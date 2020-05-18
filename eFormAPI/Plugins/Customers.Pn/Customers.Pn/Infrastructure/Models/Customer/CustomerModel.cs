@@ -36,5 +36,6 @@ namespace Customers.Pn.Infrastructure.Models.Customer
         public string WorkflowState { get; set; }
         public int Version { get; set; }
         public int? CadastralType { get; set; }
+        public string FullName { get; set; }
     }
 }

@@ -127,7 +127,8 @@ namespace Customers.Pn.Services
                     UpdatedByUserId = x.UpdatedByUserId,
                     WorkflowState = x.WorkflowState,
                     Version = x.Version,
-                    CadastralType = x.CadastralType
+                    CadastralType = x.CadastralType,
+                    FullName = $"{x.CompanyName} - {x.ContactPerson} - {x.CompanyAddress} - {x.CityName} - {x.Phone}"
     
                 }).ToListAsync();
                 customersPnModel.Total = await _dbContext.Customers.CountAsync(x => x.WorkflowState != Constants.WorkflowStates.Removed);
