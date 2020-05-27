@@ -20,20 +20,22 @@ import {
   CustomerPnImportComponent
 } from './components';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {EformSharedModule} from 'src/app/common/modules/eform-shared/eform-shared.module';
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    SharedPnModule,
-    CustomersPnRouting,
-    TranslateModule,
-    MDBRootModule,
-    NgSelectModule,
-    FontAwesomeModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        SharedPnModule,
+        CustomersPnRouting,
+        TranslateModule,
+        MDBRootModule,
+        NgSelectModule,
+        FontAwesomeModule,
+        EformSharedModule
+    ],
   declarations: [
     CustomerPnLayoutComponent,
     CustomersPnPageComponent,
