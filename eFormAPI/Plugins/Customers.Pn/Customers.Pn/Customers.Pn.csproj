@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <OutputPath>../../../../../eFormAPI.Web/Plugins/Customers/netcoreapp2.2/</OutputPath>
+    <OutputPath>../../../../../eFormAPI.Web/Plugins/Customers/netcoreapp3.1</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,9 +23,11 @@
   
   <ItemGroup>
     <PackageReference Include="McMaster.NETCore.Plugins" Version="1.3.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.5" />
     <PackageReference Include="Microting.eForm" Version="4.0.2-beta" />
     <PackageReference Include="Microting.eFormApi.BasePn" Version="2.0.0-beta" />
-    <PackageReference Include="Microting.eFormBaseCustomerBase" Version="2.0.0-beta" />
+    <PackageReference Include="Microting.eFormBaseCustomerBase" Version="2.0.1-beta" />
     <PackageReference Include="OtpSharp.Core" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.5" />
