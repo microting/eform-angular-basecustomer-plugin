@@ -23,9 +23,9 @@
   
   <ItemGroup>
     <PackageReference Include="McMaster.NETCore.Plugins" Version="0.2.1" />
-    <PackageReference Include="Microting.eForm" Version="3.3.3" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="1.2.70" />
-    <PackageReference Include="Microting.eFormBaseCustomerBase" Version="1.2.66" />
+    <PackageReference Include="Microting.eForm" Version="3.3.4" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="1.2.71" />
+    <PackageReference Include="Microting.eFormBaseCustomerBase" Version="1.2.68" />
     <PackageReference Include="OtpSharp.Core" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
