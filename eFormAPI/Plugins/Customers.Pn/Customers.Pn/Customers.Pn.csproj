@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -20,8 +21,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\localization.json" />
   </ItemGroup>
-  
+
   <ItemGroup>
+<<<<<<< HEAD
 <<<<<<< HEAD
     <PackageReference Include="McMaster.NETCore.Plugins" Version="0.2.1" />
     <PackageReference Include="Microting.eForm" Version="3.3.14" />
@@ -35,10 +37,18 @@
     <PackageReference Include="Microting.eFormApi.BasePn" Version="2.0.0-beta" />
     <PackageReference Include="Microting.eFormBaseCustomerBase" Version="2.0.1-beta" />
 >>>>>>> cc545ff5148e9752751542c173da2ac1e2356d28
+=======
+    <PackageReference Include="McMaster.NETCore.Plugins" Version="1.3.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.6" />
+    <PackageReference Include="Microting.eForm" Version="4.0.5" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="2.0.3" />
+    <PackageReference Include="Microting.eFormBaseCustomerBase" Version="1.2.73" />
+>>>>>>> 7019f320dd663efc2c628154fa7dbd85e7fc10b9
     <PackageReference Include="OtpSharp.Core" Version="1.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.6" />
   </ItemGroup>
-  
+
 </Project>
