@@ -102,7 +102,7 @@ namespace Customers.Pn.Test
                     {
                         sqlCmd = string.Format("DELETE FROM [{0}]", modelName);
                     }
-                    DbContext.Database.ExecuteSqlCommand(sqlCmd);
+                    DbContext.Database.ExecuteSqlRaw(sqlCmd);
                 }
                 catch (Exception ex)
                 {
