@@ -60,16 +60,8 @@ namespace Customers.Pn
 
         public void ConfigureDbContext(IServiceCollection services, string connectionString)
         {
-            if (connectionString.ToLower().Contains("convert zero datetime"))
-            {
-                services.AddDbContext<CustomersPnDbAnySql>(o => o.UseMySql(connectionString,
-                    b => b.MigrationsAssembly(PluginAssembly().FullName)));
-            }
-            else
-            {
-                services.AddDbContext<CustomersPnDbAnySql>(o => o.UseSqlServer(connectionString,
-                    b => b.MigrationsAssembly(PluginAssembly().FullName)));
-            }
+            services.AddDbContext<CustomersPnDbAnySql>(o => o.UseMySql(connectionString,
+                b => b.MigrationsAssembly(PluginAssembly().FullName)));
 
             CustomersPnContextFactory contextFactory = new CustomersPnContextFactory();
             using (CustomersPnDbAnySql context = contextFactory.CreateDbContext(new[] {connectionString}))
