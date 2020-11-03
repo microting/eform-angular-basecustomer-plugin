@@ -16,10 +16,12 @@ using Microting.eForm.Infrastructure.Constants;
 using Microting.eForm.Infrastructure.Models;
 using Microting.eFormApi.BasePn;
 using Microting.eFormApi.BasePn.Abstractions;
+using Microting.eFormApi.BasePn.Infrastructure.Consts;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Extensions;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers;
 using Microting.eFormApi.BasePn.Infrastructure.Helpers.PluginDbOptions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application;
+using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
 using Microting.eFormApi.BasePn.Infrastructure.Settings;
 using Microting.eFormBaseCustomerBase.Infrastructure.Const;
 using Microting.eFormBaseCustomerBase.Infrastructure.Data;
@@ -75,6 +77,80 @@ namespace Customers.Pn
 
         public void Configure(IApplicationBuilder appBuilder)
         {
+        }
+
+        public List<PluginMenuItemModel> GetNavigationMenu(IServiceProvider serviceProvider)
+        {
+            var pluginMenu = new List<PluginMenuItemModel>()
+                {
+                    new PluginMenuItemModel
+                            {
+                                Name = "Customers",
+                                E2EId = "customers-pn",
+                                Link = "/plugins/customers-pn",
+                                Type = MenuItemTypeEnum.Link,
+                                Position = 0,
+                                MenuTemplate = new PluginMenuTemplateModel()
+                                {
+                                    Name = "Customers",
+                                    E2EId = "customers-pn",
+                                    DefaultLink = "/plugins/customers-pn",
+                                    Permissions = new List<PluginMenuTemplatePermissionModel>()
+                                    {
+                                        new PluginMenuTemplatePermissionModel
+                                        {
+                                            ClaimName = CustomersClaims.AccessCustomersPlugin,
+                                            PermissionName = "Obtain customers",
+                                            PermissionTypeName = "Customers",
+                                        },
+                                    },
+                                    Translations = new List<PluginMenuTranslationModel>
+                                    {
+                                        new PluginMenuTranslationModel
+                                        {
+                                            LocaleName = LocaleNames.English,
+                                            Name = "Customers",
+                                            Language = LanguageNames.English,
+                                        },
+                                        new PluginMenuTranslationModel
+                                        {
+                                            LocaleName = LocaleNames.German,
+                                            Name = "Customers",
+                                            Language = LanguageNames.German,
+                                        },
+                                        new PluginMenuTranslationModel
+                                        {
+                                            LocaleName = LocaleNames.Danish,
+                                            Name = "Kunder",
+                                            Language = LanguageNames.Danish,
+                                        },
+                                    }
+                                },
+                                Translations = new List<PluginMenuTranslationModel>
+                                {
+                                    new PluginMenuTranslationModel
+                                {
+                                    LocaleName = LocaleNames.English,
+                                    Name = "Customers",
+                                    Language = LanguageNames.English,
+                                },
+                                    new PluginMenuTranslationModel
+                                {
+                                    LocaleName = LocaleNames.German,
+                                    Name = "Customers",
+                                    Language = LanguageNames.German,
+                                },
+                                    new PluginMenuTranslationModel
+                                {
+                                    LocaleName = LocaleNames.Danish,
+                                    Name = "Kunder",
+                                    Language = LanguageNames.Danish,
+                                },
+                                }
+                            },
+                };
+
+            return pluginMenu;
         }
 
         public MenuModel HeaderMenu(IServiceProvider serviceProvider)
