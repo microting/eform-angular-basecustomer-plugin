@@ -194,7 +194,8 @@ namespace Customers.Pn
                 }
 
                 context.SaveChanges();
-                Field fieldForRemove = context.Fields.FirstOrDefault(x => x.Name == nameof(Customer.RelatedEntityId));
+                var nameOf = nameof(Customer.RelatedEntityId);
+                Field fieldForRemove = context.Fields.FirstOrDefault(x => x.Name == nameOf);
                 if (fieldForRemove != null)
                 {
                     context.Fields.Remove(fieldForRemove);
