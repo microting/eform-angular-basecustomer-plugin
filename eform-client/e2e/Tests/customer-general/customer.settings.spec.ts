@@ -10,7 +10,6 @@ const expect = require('chai').expect;
 describe('Customers plugin settings page', function () {
   before(function () {
     loginPage.open('/auth');
-    loginPage.login();
   });
   // it('should create searchable list', function () {
   //   customersPage.Navbar.advancedDropdown();
@@ -46,6 +45,7 @@ describe('Customers plugin settings page', function () {
   //   expect(fieldToCheck.getText(), 'Searchable list is not selected').equal('My testing list');
   // });
   it('should select only company name, id and customer no for show', function () {
+    loginPage.login();
     myEformsPage.Navbar.advancedDropdown();
     myEformsPage.Navbar.clickonSubMenuItem('Plugins');
     $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
