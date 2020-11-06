@@ -67,6 +67,7 @@ describe('Customers plugin settings page', function () {
     customersSettingsPage.saveSettings();
   });
   it ('checks out all the checkboxes', function () {
+    loginPage.open('/');
     myEformsPage.Navbar.advancedDropdown();
     myEformsPage.Navbar.clickonSubMenuItem('Plugins');
     $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
@@ -104,6 +105,7 @@ describe('Customers plugin settings page', function () {
     customersSettingsPage.saveSettings();
   });
   it('should deactivate unnecessary fields', function () {
+    loginPage.open('/');
     myEformsPage.Navbar.advancedDropdown();
     myEformsPage.Navbar.clickonSubMenuItem('Plugins');
     $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
