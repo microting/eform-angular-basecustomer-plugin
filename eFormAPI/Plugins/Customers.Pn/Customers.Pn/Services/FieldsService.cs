@@ -35,7 +35,7 @@ namespace Customers.Pn.Services
             try
             {
                 List<FieldUpdateModel> fields = await _dbContext.CustomerFields
-                    .Include("Field")
+                    .Include("Field").OrderBy(x => x.DisplayIndex)
                     .Select(x => new FieldUpdateModel()
                     {
                         FieldStatus = x.FieldStatus,
@@ -44,10 +44,10 @@ namespace Customers.Pn.Services
                     }).ToListAsync().ConfigureAwait(false);
                 // Mode Id field to top
                 //fields.Reverse();
-                int index = fields.FindIndex(x => x.Name == "Id");
-                FieldUpdateModel item = fields[index];
-                fields[index] = fields[0];
-                fields[0] = item;
+                // int index = fields.FindIndex(x => x.Name == "Id");
+                // FieldUpdateModel item = fields[index];
+                // fields[index] = fields[0];
+                // fields[0] = item;
                 FieldsUpdateModel result = new FieldsUpdateModel()
                 {
                     Fields = fields,
