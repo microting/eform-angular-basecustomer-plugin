@@ -229,6 +229,7 @@ export class CustomersModalPage extends Page {
   }
 
   public createCustomer(data: any) {
+    browser.pause(1000);
     this.createCreatedByInput.setValue(data.createdBy);
     this.createCustomerNo.setValue(data.customerNo);
     this.createContactPerson.setValue(data.contactPerson);
