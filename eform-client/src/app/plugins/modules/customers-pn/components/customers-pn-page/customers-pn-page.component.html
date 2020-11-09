@@ -367,7 +367,7 @@
         <td *ngIf="fieldsModel.fields[17].fieldStatus === fieldStatusEnum.Enabled">
           {{customer.cadastralNumber}}
         </td>
-        <td *ngIf="fieldsModel.fields[18].fieldStatus === fieldStatusEnum.Enabled" [id]="'CreatedBy_'+i">
+        <td *ngIf="fieldsModel.fields[18].fieldStatus === fieldStatusEnum.Enabled">
           {{customer.propertyNumber}}
         </td>
         <td *ngIf="fieldsModel.fields[19].fieldStatus === fieldStatusEnum.Enabled">
@@ -403,8 +403,8 @@
         <td *ngIf="fieldsModel.fields[29].fieldStatus === fieldStatusEnum.Enabled">
           {{customer.workflowState}}
         </td>
-        <td *ngIf="fieldsModel.fields[30].fieldStatus === fieldStatusEnum.Enabled">
-          {{customer.createdByUserId}}
+        <td *ngIf="fieldsModel.fields[30].fieldStatus === fieldStatusEnum.Enabled" [id]="'CreatedBy_'+i">
+          {{customer.createdBy}}
         </td>
         <td *ngIf="fieldsModel.fields[31].fieldStatus === fieldStatusEnum.Enabled">
           {{customer.updatedByUserId}}
