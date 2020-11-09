@@ -9,7 +9,6 @@ describe('Customers plugin page', function () {
   before(function () {
     loginPage.open('/');
     loginPage.login();
-    customersPage.goToCustomersPage();
   });
   // it('should add new customer with all empty fields', function () {
   //   $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
@@ -22,6 +21,7 @@ describe('Customers plugin page', function () {
   //   expect(rowCountAfterCreation, 'Number of rows hasn\'t changed after creating new customer').equal(rowCountBeforeCreation + 1);
   // });
   it('should add new customer with all fields', function () {
+    customersPage.goToCustomersPage();
     customersPage.newCustomerBtn.click();
     $('#createCustomerNo').waitForDisplayed({timeout: 20000});
     $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
