@@ -22,6 +22,7 @@ describe('Customers plugin page', function () {
   // });
   it('should add new customer with all fields', function () {
     customersPage.goToCustomersPage();
+    const rowCountBeforeCreation = customersPage.rowNum();
     customersPage.newCustomerBtn.click();
     $('#createCustomerNo').waitForDisplayed({timeout: 20000});
     $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
@@ -44,8 +45,6 @@ describe('Customers plugin page', function () {
       completionYear: 1960,
       floorsWithLivingSpace: 3
     };
-    const rowCountBeforeCreation = customersPage.rowNum();
-    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
     customersModalPage.createCustomer(customerObject);
     $('#Id_0').waitForDisplayed({timeout: 20000});
     $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});

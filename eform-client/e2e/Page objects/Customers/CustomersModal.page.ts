@@ -38,8 +38,8 @@ export class CustomersModalPage extends Page {
     return $('#customerDeleteCancelBtn');
   }
   public get createCreatedByInput() {
-    $('#createCreatedBy').waitForDisplayed({timeout: 20000});
     $('#createCreatedBy').waitForClickable({timeout: 20000});
+    $('#createCreatedBy').waitForDisplayed({timeout: 20000});
     return $('#createCreatedBy');
   }
   public get editCreatedByInput() {
