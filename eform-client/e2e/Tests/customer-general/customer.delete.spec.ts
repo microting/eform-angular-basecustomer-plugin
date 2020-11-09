@@ -9,9 +9,10 @@ describe('Customer modal', function () {
   before(function () {
     loginPage.open('/');
     loginPage.login();
-    customersPage.goToCustomersPage();
   });
   it('should delete customer', function () {
+    loginPage.open('/');
+    customersPage.goToCustomersPage();
     const rowBeforeDeletion = customersPage.rowNum();
     const lastCustomer: CustomersRowObject = customersPage.getCustomer(rowBeforeDeletion);
     lastCustomer.deleteBtn.waitForDisplayed({timeout: 3000});
@@ -23,6 +24,8 @@ describe('Customer modal', function () {
     expect(rowBeforeDeletion, 'Number of rows hasn\'t changed after deleting customer').equal(rowAfterDeletion + 1);
   });
   it('should not delete customer if cancel was clicked', function () {
+    loginPage.open('/');
+    customersPage.goToCustomersPage();
     const lastCustomer: CustomersRowObject = customersPage.getCustomer(customersPage.rowNum());
     $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
     lastCustomer.deleteBtn.click();

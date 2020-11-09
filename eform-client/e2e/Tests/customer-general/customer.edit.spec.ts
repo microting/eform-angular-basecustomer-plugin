@@ -10,9 +10,9 @@ describe('Customers plugin page', function () {
   before(function () {
     loginPage.open('/');
     loginPage.login();
-    customersPage.goToCustomersPage();
   });
   it('should update customer with all fields', function () {
+    customersPage.goToCustomersPage();
     const lastCustomerBeforeEdit = customersPage.getCustomer(customersPage.rowNum());
     lastCustomerBeforeEdit.editBtn.waitForDisplayed({timeout: 3000});
     lastCustomerBeforeEdit.editBtn.click();
@@ -49,6 +49,8 @@ describe('Customers plugin page', function () {
     expect(lastCustomerAfterEdit.email, 'Email of updated customer is incorrect').equal(customerObject.email);
   });
   it('should not update customer if cancel is clicked', function () {
+    loginPage.open('/');
+    customersPage.goToCustomersPage();
     const lastCustomerBeforeEdit = customersPage.getCustomer(customersPage.rowNum());
     lastCustomerBeforeEdit.editBtn.waitForDisplayed({timeout: 3000});
     lastCustomerBeforeEdit.editBtn.click();
