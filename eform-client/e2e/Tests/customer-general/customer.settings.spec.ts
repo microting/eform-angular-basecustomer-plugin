@@ -125,6 +125,7 @@ describe('Customers plugin settings page', function () {
 
     $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
     customersSettingsPage.saveSettings();
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
   });
   it('should cleanup fields', function () {
     loginPage.open('/');
@@ -156,5 +157,6 @@ describe('Customers plugin settings page', function () {
     customersSettingsPage.clickCheckboxById('CadastralType');
     $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
     customersSettingsPage.saveSettings();
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
   });
 });
