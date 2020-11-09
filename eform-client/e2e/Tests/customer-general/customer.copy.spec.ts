@@ -66,7 +66,9 @@ describe('Customers plugin page', function () {
   });
   it('should make a copy of the customer', function () {
     loginPage.open('/');
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
     customersPage.goToCustomersPage();
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
     const customer = customersPage.getCustomer(customersPage.rowNum());
     $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
     customer.copyBtn.click();
