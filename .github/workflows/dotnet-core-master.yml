@@ -59,12 +59,6 @@ jobs:
       run: dotnet build main/eFormAPI/Plugins/Customers.Pn/Customers.Pn.sln
     - name: Unit Tests
       run: dotnet test --no-restore -c Release -v n main/eFormAPI/Plugins/Customers.Pn/Customers.Pn.Test/Customers.Pn.Test.csproj
-    - name: Load DB dump
-      run: |
-        mysql -u root--password=secretpassword -e 'create database `420_eform-angular-work-orders-plugin`'
-        mysql -u root--password=secretpassword -e 'create database `420_SDK`'
-        mysql -u root--password=secretpassword 420_eform-angular-work-orders-plugin < main/420_eform-angular-work-orders-plugin.sql
-        mysql -u root--password=secretpassword 420_SDK < main/420_SDK.sql
     - name: Copy dependencies
       run: |
         cp -av main/eform-client/src/app/plugins/modules/customers-pn eform-angular-frontend/eform-client/src/app/plugins/modules/customers-pn
