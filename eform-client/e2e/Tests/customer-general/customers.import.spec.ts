@@ -15,7 +15,7 @@ describe('Customers plugin import page', function () {
     const customersBefore = customersPage.rowNum();
     customersPage.goToImportBtn();
     $('#files').addValue(localPath + '/e2e/Assets/Import-test.csv');
-    //browser.chooseFile('#files', localPath + '/e2e/Assets/Import-test.csv');
+    // browser.chooseFile('#files', localPath + '/e2e/Assets/Import-test.csv');
     $('#row_0').waitForDisplayed({timeout: 20000});
     $('#row_1').waitForDisplayed({timeout: 20000});
     $('#row_2').waitForDisplayed({timeout: 20000});

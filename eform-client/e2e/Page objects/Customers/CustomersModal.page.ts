@@ -38,8 +38,8 @@ export class CustomersModalPage extends Page {
     return $('#customerDeleteCancelBtn');
   }
   public get createCreatedByInput() {
-    $('#createCreatedBy').waitForDisplayed({timeout: 20000});
-    $('#createCreatedBy').waitForClickable({timeout: 20000});
+    // $('#createCreatedBy').waitForClickable({timeout: 20000});
+    // $('#createCreatedBy').waitForDisplayed({timeout: 20000});
     return $('#createCreatedBy');
   }
   public get editCreatedByInput() {
@@ -48,7 +48,7 @@ export class CustomersModalPage extends Page {
     return $('#editCreatedBy');
   }
   public get createCustomerNo() {
-    $('#createCustomerNo').waitForDisplayed({timeout: 20000});
+    // $('#createCustomerNo').waitForDisplayed({timeout: 20000});
     $('#createCustomerNo').waitForClickable({timeout: 20000});
     return $('#createCustomerNo');
   }
@@ -58,7 +58,7 @@ export class CustomersModalPage extends Page {
     return $('#editCustomerNo');
   }
   public get createContactPerson() {
-    $('#createContactPerson').waitForDisplayed({timeout: 20000});
+    // $('#createContactPerson').waitForDisplayed({timeout: 20000});
     $('#createContactPerson').waitForClickable({timeout: 20000});
     return $('#createContactPerson');
   }
@@ -68,7 +68,7 @@ export class CustomersModalPage extends Page {
     return $('#editContactPerson');
   }
   public get createCompanyName() {
-    $('#createCompanyName').waitForDisplayed({timeout: 20000});
+    // $('#createCompanyName').waitForDisplayed({timeout: 20000});
     $('#createCompanyName').waitForClickable({timeout: 20000});
     return $('#createCompanyName');
   }
@@ -78,8 +78,8 @@ export class CustomersModalPage extends Page {
     return $('#editCompanyName');
   }
   public get createCompanyAddress() {
-    $('#createCompanyAddress').waitForDisplayed({timeout: 20000});
-    //$('#createCompanyAddress').waitForClickable({timeout: 20000});
+    // $('#createCompanyAddress').waitForDisplayed({timeout: 20000});
+    // $('#createCompanyAddress').waitForClickable({timeout: 20000});
     return $('#createCompanyAddress');
   }
   public get editCompanyAddress() {
@@ -98,7 +98,7 @@ export class CustomersModalPage extends Page {
     return $('#editCompanyAddress2');
   }
   public get createZipCode() {
-    $('#createZipCode').waitForDisplayed({timeout: 20000});
+    // $('#createZipCode').waitForDisplayed({timeout: 20000});
     $('#createZipCode').waitForClickable({timeout: 20000});
     return $('#createZipCode');
   }
@@ -108,7 +108,7 @@ export class CustomersModalPage extends Page {
     return $('#editZipCode');
   }
   public get createCityName() {
-    $('#createCityName').waitForDisplayed({timeout: 20000});
+    // $('#createCityName').waitForDisplayed({timeout: 20000});
     $('#createCityName').waitForClickable({timeout: 20000});
     return $('#createCityName');
   }
@@ -118,7 +118,7 @@ export class CustomersModalPage extends Page {
     return $('#editCityName');
   }
   public get createPhone() {
-    $('#createPhone').waitForDisplayed({timeout: 20000});
+    // $('#createPhone').waitForDisplayed({timeout: 20000});
     $('#createPhone').waitForClickable({timeout: 20000});
     return $('#createPhone');
   }
@@ -128,7 +128,7 @@ export class CustomersModalPage extends Page {
     return $('#editPhone');
   }
   public get createEmail() {
-    $('#createEmail').waitForDisplayed({timeout: 20000});
+    // $('#createEmail').waitForDisplayed({timeout: 20000});
     $('#createEmail').waitForClickable({timeout: 20000});
     return $('#createEmail');
   }
@@ -138,7 +138,7 @@ export class CustomersModalPage extends Page {
     return $('#editEmail');
   }
   public get createEanCode() {
-    $('#createEanCode').waitForDisplayed({timeout: 20000});
+    // $('#createEanCode').waitForDisplayed({timeout: 20000});
     $('#createEanCode').waitForClickable({timeout: 20000});
     return $('#createEanCode');
   }
@@ -148,7 +148,7 @@ export class CustomersModalPage extends Page {
     return $('#editEanCode');
   }
   public get createVatNumber() {
-    $('#createVatNumber').waitForDisplayed({timeout: 20000});
+    // $('#createVatNumber').waitForDisplayed({timeout: 20000});
     $('#createVatNumber').waitForClickable({timeout: 20000});
     return $('#createVatNumber');
   }
@@ -158,7 +158,7 @@ export class CustomersModalPage extends Page {
     return $('#editVatNumber');
   }
   public get createCountryCode() {
-    $('#createCountryCode').waitForDisplayed({timeout: 20000});
+    // $('#createCountryCode').waitForDisplayed({timeout: 20000});
     $('#createCountryCode').waitForClickable({timeout: 20000});
     return $('#createCountryCode');
   }
@@ -168,7 +168,7 @@ export class CustomersModalPage extends Page {
     return $('#editCountryCode');
   }
   public get createCrmId() {
-    $('#createCrmId').waitForDisplayed({timeout: 20000});
+    // $('#createCrmId').waitForDisplayed({timeout: 20000});
     $('#createCrmId').waitForClickable({timeout: 20000});
     return $('#createCrmId');
   }
@@ -178,8 +178,8 @@ export class CustomersModalPage extends Page {
     return $('#editCrmId');
   }
   public get createCadastralNumber() {
-    $('#createCadastralNumber').waitForDisplayed({timeout: 20000});
-    //$('#createCadastralNumber').waitForClickable({timeout: 20000});
+    // $('#createCadastralNumber').waitForDisplayed({timeout: 20000});
+    // $('#createCadastralNumber').waitForClickable({timeout: 20000});
     return $('#createCadastralNumber');
   }
   public get editCadastralNumber() {
@@ -229,6 +229,7 @@ export class CustomersModalPage extends Page {
   }
 
   public createCustomer(data: any) {
+    browser.pause(1000);
     this.createCreatedByInput.setValue(data.createdBy);
     this.createCustomerNo.setValue(data.customerNo);
     this.createContactPerson.setValue(data.contactPerson);

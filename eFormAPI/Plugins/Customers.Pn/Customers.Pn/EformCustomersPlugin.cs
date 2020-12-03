@@ -194,25 +194,30 @@ namespace Customers.Pn
                 }
 
                 context.SaveChanges();
-                Field fieldForRemove = context.Fields.FirstOrDefault(x => x.Name == nameof(Customer.RelatedEntityId));
+                var nameOf = nameof(Customer.RelatedEntityId);
+                Field fieldForRemove = context.Fields.FirstOrDefault(x => x.Name == nameOf);
                 if (fieldForRemove != null)
                 {
                     context.Fields.Remove(fieldForRemove);
                     context.SaveChanges();
                 }
 
-                List<Field> fields = context.Fields.ToList();
+                List<Field> fields = context.Fields.OrderBy(x => x.Id).ToList();
+                int i = 1;
                 foreach (Field field in fields)
                 {
                     CustomerField customerField = new CustomerField
                     {
                         FieldId = field.Id,
-                        FieldStatus = 1
+                        FieldStatus = 1,
+                        DisplayIndex = field.Name == "Id" ? 0 : i
                     };
                     if (!context.CustomerFields.Any(x => x.FieldId == field.Id))
                     {
                         context.CustomerFields.Add(customerField);
                     }
+
+                    i += 1;
                 }
 
                 context.SaveChanges();

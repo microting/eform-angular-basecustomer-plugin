@@ -10,15 +10,21 @@ export class CustomersPage extends PageWithNavbarPage {
     return browser.$$('#mainTableBody > tr').length;
   }
   public clickIdSort() {
+    $('#IdTableHeader').waitForDisplayed({timeout: 20000});
+    $('#IdTableHeader').waitForClickable({timeout: 20000});
     browser.$('#IdTableHeader').click();
     $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
   }
   public clickContactSort() {
+    $('#ContactPersonTableHeader').waitForDisplayed({timeout: 20000});
+    $('#ContactPersonTableHeader').waitForClickable({timeout: 20000});
     browser.$('#ContactPersonTableHeader').click();
     $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
   }
 
   public clickCompanySort() {
+    $('#CompanyNameTableHeader').waitForDisplayed({timeout: 20000});
+    $('#CompanyNameTableHeader').waitForClickable({timeout: 20000});
     browser.$('#CompanyNameTableHeader').click();
     $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
   }

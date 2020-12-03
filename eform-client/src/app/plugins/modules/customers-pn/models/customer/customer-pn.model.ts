@@ -29,4 +29,8 @@ export class CustomerPnModel {
   workflowState: string;
   version: number;
   cadastralType: number;
+  paymentOverdue: boolean;
+  paymentStatu: string;
+  balance: number;
+  creditLimit: number;
 }

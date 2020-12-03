@@ -9,7 +9,6 @@ describe('Customers plugin page', function () {
   before(function () {
     loginPage.open('/');
     loginPage.login();
-    customersPage.goToCustomersPage();
   });
   // it('should add new customer with all empty fields', function () {
   //   $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
@@ -22,6 +21,8 @@ describe('Customers plugin page', function () {
   //   expect(rowCountAfterCreation, 'Number of rows hasn\'t changed after creating new customer').equal(rowCountBeforeCreation + 1);
   // });
   it('should add new customer with all fields', function () {
+    customersPage.goToCustomersPage();
+    const rowCountBeforeCreation = customersPage.rowNum();
     customersPage.newCustomerBtn.click();
     $('#createCustomerNo').waitForDisplayed({timeout: 20000});
     $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
@@ -44,8 +45,6 @@ describe('Customers plugin page', function () {
       completionYear: 1960,
       floorsWithLivingSpace: 3
     };
-    const rowCountBeforeCreation = customersPage.rowNum();
-    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
     customersModalPage.createCustomer(customerObject);
     $('#Id_0').waitForDisplayed({timeout: 20000});
     $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
@@ -65,6 +64,10 @@ describe('Customers plugin page', function () {
     $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
   });
   it('should make a copy of the customer', function () {
+    loginPage.open('/');
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
+    customersPage.goToCustomersPage();
+    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
     const customer = customersPage.getCustomer(customersPage.rowNum());
     $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
     customer.copyBtn.click();
