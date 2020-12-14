@@ -13,8 +13,8 @@ describe('Customers plugin settings page', function () {
   });
   it('should select only company name, id and customer no for show', function () {
     loginPage.login();
-    myEformsPage.Navbar.advancedDropdown();
-    myEformsPage.Navbar.clickonSubMenuItem('Plugins');
+    myEformsPage.Navbar.advancedDropdownClick();
+    myEformsPage.Navbar.clickOnSubMenuItem('Plugins');
     $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
 
     const plugin = pluginsPage.getFirstPluginRowObj();
@@ -55,8 +55,8 @@ describe('Customers plugin settings page', function () {
     $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
 
     loginPage.open('/');
-    myEformsPage.Navbar.advancedDropdown();
-    myEformsPage.Navbar.clickonSubMenuItem('Plugins');
+    myEformsPage.Navbar.advancedDropdownClick();
+    myEformsPage.Navbar.clickOnSubMenuItem('Plugins');
     $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
 
     plugin.settingsBtn.click();
@@ -68,8 +68,8 @@ describe('Customers plugin settings page', function () {
   });
   it ('checks out all the checkboxes', function () {
     loginPage.open('/');
-    myEformsPage.Navbar.advancedDropdown();
-    myEformsPage.Navbar.clickonSubMenuItem('Plugins');
+    myEformsPage.Navbar.advancedDropdownClick();
+    myEformsPage.Navbar.clickOnSubMenuItem('Plugins');
     $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
 
     const plugin = pluginsPage.getFirstPluginRowObj();
@@ -106,8 +106,8 @@ describe('Customers plugin settings page', function () {
   });
   it('should deactivate unnecessary fields', function () {
     loginPage.open('/');
-    myEformsPage.Navbar.advancedDropdown();
-    myEformsPage.Navbar.clickonSubMenuItem('Plugins');
+    myEformsPage.Navbar.advancedDropdownClick();
+    myEformsPage.Navbar.clickOnSubMenuItem('Plugins');
     $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
 
     const plugin = pluginsPage.getFirstPluginRowObj();
@@ -129,8 +129,8 @@ describe('Customers plugin settings page', function () {
   });
   it('should cleanup fields', function () {
     loginPage.open('/');
-    myEformsPage.Navbar.advancedDropdown();
-    myEformsPage.Navbar.clickonSubMenuItem('Plugins');
+    myEformsPage.Navbar.advancedDropdownClick();
+    myEformsPage.Navbar.clickOnSubMenuItem('Plugins');
     $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
 
     const plugin = pluginsPage.getFirstPluginRowObj();
