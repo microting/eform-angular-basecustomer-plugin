@@ -25,9 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microting.eForm" Version="4.1.25" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="2.0.73" />
-    <PackageReference Include="Microting.eFormBaseCustomerBase" Version="2.0.74" />
+    <PackageReference Include="Microting.eForm" Version="4.1.26" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="2.0.74" />
+    <PackageReference Include="Microting.eFormBaseCustomerBase" Version="2.0.75" />
   </ItemGroup>
 
 </Project>
