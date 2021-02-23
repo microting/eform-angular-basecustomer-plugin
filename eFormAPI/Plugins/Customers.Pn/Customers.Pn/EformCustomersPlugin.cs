@@ -259,18 +259,18 @@ namespace Customers.Pn
 
 
                 EntityGroupList model = await core.Advanced_EntityGroupAll(
-                    "id", 
+                    "id",
                     "eform-angular-basecustomer-plugin-Customers-hidden",
                     0, 1, Constants.FieldTypes.EntitySearch,
                     false,
                     Constants.WorkflowStates.NotRemoved);
 
                 EntityGroup group;
-                
+
                 if (!model.EntityGroups.Any())
                 {
-                    group = await core.EntityGroupCreate(Constants.FieldTypes.EntitySearch, 
-                        "eform-angular-basecustomer-plugin-Customers-hidden");
+                    group = await core.EntityGroupCreate(Constants.FieldTypes.EntitySearch,
+                        "eform-angular-basecustomer-plugin-Customers-hidden", "");
                 }
                 else
                 {
@@ -279,7 +279,7 @@ namespace Customers.Pn
 
                 await pluginDbOptions.UpdateDb(
                     settings => settings.RelatedEntityGroupId = int.Parse(group.MicrotingUUID),
-                    context, 
+                    context,
                     1);
             }
         }
