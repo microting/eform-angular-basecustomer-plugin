@@ -1,5 +1,9 @@
 # Changelog
 
+## [v1.0.138](https://github.com/microting/eform-angular-basecustomer-plugin/tree/v1.0.138) (2021-04-02)
+
+[Full Changelog](https://github.com/microting/eform-angular-basecustomer-plugin/compare/v1.0.137...v1.0.138)
+
 ## [v1.0.137](https://github.com/microting/eform-angular-basecustomer-plugin/tree/v1.0.137) (2021-03-29)
 
 [Full Changelog](https://github.com/microting/eform-angular-basecustomer-plugin/compare/v1.0.136...v1.0.137)
