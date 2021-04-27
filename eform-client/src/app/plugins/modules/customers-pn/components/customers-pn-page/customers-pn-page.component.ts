@@ -152,7 +152,7 @@ export class CustomersPnPageComponent implements OnInit {
       this.fieldsModel.fields[4].fieldStatus === this.fieldStatusEnum.Enabled
         ? {
             name: this.fieldsModel.fields[4].name,
-            elementId: 'CompanyNameTableHeader',
+            elementId: 'companyNameTableHeader',
             sortable: true,
           }
         : null,
@@ -201,7 +201,7 @@ export class CustomersPnPageComponent implements OnInit {
       this.fieldsModel.fields[11].fieldStatus === this.fieldStatusEnum.Enabled
         ? {
             name: this.fieldsModel.fields[11].name,
-            elementId: 'ContactPersonTableHeader',
+            elementId: 'contactPersonTableHeader',
             sortable: true,
           }
         : null,
