@@ -48,7 +48,7 @@ describe('Customers plugin page', function () {
       floorsWithLivingSpace: 3,
     };
     customersModalPage.createCustomer(customerObject);
-    $('#Id').waitForDisplayed({ timeout: 20000 });
+    $('#idCustomer').waitForDisplayed({ timeout: 20000 });
     $('#spinner-animation').waitForDisplayed({ timeout: 20000, reverse: true });
     const rowCountAfterCreation = customersPage.rowNum();
     $('#spinner-animation').waitForDisplayed({ timeout: 20000, reverse: true });
