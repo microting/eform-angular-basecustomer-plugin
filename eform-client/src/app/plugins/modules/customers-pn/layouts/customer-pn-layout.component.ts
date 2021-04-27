@@ -1,30 +1,23 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
-import {LocaleService} from 'src/app/common/services/auth';
-import {CustomersPnLocalSettings} from '../enums';
-import {SharedPnService} from '../../shared/services';
-declare var require: any;
+import { AfterContentInit, Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { AuthStateService } from 'src/app/common/store';
+import { translates } from './../i18n/translates';
 
 @Component({
   selector: 'app-customers-pn-layout',
-  template: `<router-outlet></router-outlet>`
+  template: `<router-outlet></router-outlet>`,
 })
-export class CustomerPnLayoutComponent implements AfterViewInit, OnInit {
-  constructor(private localeService: LocaleService,
-              private translateService: TranslateService,
-              private sharedPnService: SharedPnService
+export class CustomerPnLayoutComponent implements AfterContentInit, OnInit {
+  constructor(
+    private translateService: TranslateService,
+    private authStateService: AuthStateService
   ) {}
 
-  ngOnInit() {
-    this.sharedPnService.initLocalPageSettings('customersPnSettings', CustomersPnLocalSettings);
-  }
+  ngOnInit() {}
 
-  ngAfterViewInit() {
-    setTimeout(() => {
-      const lang = this.localeService.getCurrentUserLocale();
-      const i18n = require(`../i18n/${lang}.json`);
-      this.translateService.setTranslation(lang, i18n, true);
-    }, 1000);
-
+  ngAfterContentInit() {
+    const lang = this.authStateService.currentUserLocale;
+    const i18n = translates[lang];
+    this.translateService.setTranslation(lang, i18n, true);
   }
 }

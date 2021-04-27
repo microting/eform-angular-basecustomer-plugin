@@ -1,28 +1,28 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {ToastrService} from 'ngx-toastr';
-
-import {Observable} from 'rxjs';
-import {Router} from '@angular/router';
-import {OperationDataResult, OperationResult} from 'src/app/common/models/operation.models';
-import {BaseService} from 'src/app/common/services/base.service';
-import {FieldsPnUpdateModel} from '../models';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import {
+  OperationDataResult,
+  OperationResult,
+} from 'src/app/common/models/operation.models';
+import { FieldsPnUpdateModel } from '../models';
+import { ApiBaseService } from 'src/app/common/services';
 
 export let CustomerPnFieldsMethods = {
-  CustomerPnFields: 'api/fields-pn'
+  CustomerPnFields: 'api/fields-pn',
 };
 
 @Injectable()
-export class CustomersPnFieldsService extends BaseService {
-  constructor(private _http: HttpClient, router: Router, toastrService: ToastrService) {
-    super(_http, router, toastrService);
-  }
+export class CustomersPnFieldsService {
+  constructor(private apiBaseService: ApiBaseService) {}
 
   getAllFields(): Observable<OperationDataResult<FieldsPnUpdateModel>> {
-    return this.get(CustomerPnFieldsMethods.CustomerPnFields);
+    return this.apiBaseService.get(CustomerPnFieldsMethods.CustomerPnFields);
   }
 
   updateFields(model: FieldsPnUpdateModel): Observable<OperationResult> {
-    return this.put(CustomerPnFieldsMethods.CustomerPnFields, model);
+    return this.apiBaseService.put(
+      CustomerPnFieldsMethods.CustomerPnFields,
+      model
+    );
   }
 }
