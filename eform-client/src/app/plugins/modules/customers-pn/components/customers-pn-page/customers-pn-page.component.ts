@@ -42,6 +42,13 @@ export class CustomersPnPageComponent implements OnInit {
     public customersStateService: CustomersStateService
   ) {}
 
+  checkFieldStatus(numField: number) {
+    return (
+      this.fieldsModel.fields[numField].fieldStatus ===
+      CustomersPnFieldStatusEnum.Enabled
+    );
+  }
+
   ngOnInit() {
     this.getAllInitialData();
   }
@@ -115,6 +122,11 @@ export class CustomersPnPageComponent implements OnInit {
 
   onCustomerDeleted() {
     this.customersStateService.onDelete();
+    this.getAllCustomers();
+  }
+
+  onPageSizeChanged(pageSize: number) {
+    this.customersStateService.updatePageSize(pageSize);
     this.getAllCustomers();
   }
 
@@ -355,10 +367,5 @@ export class CustomersPnPageComponent implements OnInit {
         : null,
       { name: 'Actions', elementId: '', sortable: false },
     ];
-  }
-
-  onPageSizeChanged(pageSize: number) {
-    this.customersStateService.updatePageSize(pageSize);
-    this.getAllCustomers();
   }
 }

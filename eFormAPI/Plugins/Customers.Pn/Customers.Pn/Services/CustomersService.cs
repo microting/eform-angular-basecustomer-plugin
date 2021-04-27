@@ -28,11 +28,13 @@ namespace Customers.Pn.Services
         private readonly CustomersPnDbAnySql _dbContext;
         private readonly ICustomersLocalizationService _customersLocalizationService;
         private readonly IPluginDbOptions<CustomersSettings> _options;
+        private readonly IUserService _userService;
 
         public CustomersService(ILogger<CustomersService> logger,
             CustomersPnDbAnySql dbContext,
             IEFormCoreService coreHelper,
             ICustomersLocalizationService customersLocalizationService,
+            IUserService userService,
             IPluginDbOptions<CustomersSettings> options)
         {
             _logger = logger;
@@ -40,6 +42,7 @@ namespace Customers.Pn.Services
             _coreHelper = coreHelper;
             _customersLocalizationService = customersLocalizationService;
             _options = options;
+            _userService = userService;
         }
 
         public async Task<OperationDataResult<CustomersModel>> Index (
@@ -165,7 +168,9 @@ namespace Customers.Pn.Services
                             PropertyNumber = customerPnCreateModel.PropertyNumber,
                             ApartmentNumber = customerPnCreateModel.ApartmentNumber,
                             CompletionYear = customerPnCreateModel.CompletionYear,
-                            FloorsWithLivingSpace = customerPnCreateModel.FloorsWithLivingSpace
+                            FloorsWithLivingSpace = customerPnCreateModel.FloorsWithLivingSpace,
+                            CreatedByUserId = _userService.UserId,
+                            UpdatedByUserId = _userService.UserId,
                         };
 
                         await newCustomer.Create(_dbContext);
@@ -319,7 +324,8 @@ namespace Customers.Pn.Services
                     PropertyNumber = customerUpdateModel.PropertyNumber,
                     ApartmentNumber = customerUpdateModel.ApartmentNumber,
                     CompletionYear = customerUpdateModel.CompletionYear,
-                    FloorsWithLivingSpace = customerUpdateModel.FloorsWithLivingSpace
+                    FloorsWithLivingSpace = customerUpdateModel.FloorsWithLivingSpace,
+                    UpdatedByUserId = _userService.UserId,
                 };
                 await customerForUpdate.Update(_dbContext);
                 var core = await _coreHelper.GetCore();
@@ -588,6 +594,7 @@ namespace Customers.Pn.Services
                     _customersLocalizationService.GetString("ErrorWhileCreatingCustomer"));
             }
         }
+
         private Customer FindCustomer(bool customerNoExists, int customerNoColumn, bool companyNameExists, int companyNameColumn, bool contactPersonExists, int contactPersonColumn, JToken headers, JToken customerObj)
         {
             Customer customer;

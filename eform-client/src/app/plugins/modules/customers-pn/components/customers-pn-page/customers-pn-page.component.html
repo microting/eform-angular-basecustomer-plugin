@@ -54,224 +54,98 @@
         [isSortDsc]="customersStateService.getIsSortDsc() | async"
       ></thead>
       <tbody id="mainTableBody">
-        <tr *ngFor="let customer of customersModel.customers; let i = index">
-          <td
-            *ngIf="
-              fieldsModel.fields[0].fieldStatus === fieldStatusEnum.Enabled
-            "
-            [id]="'Id_' + i"
-          >
+        <tr *ngFor="let customer of customersModel.customers">
+          <td *ngIf="checkFieldStatus(0)" id="idCustomer">
             {{ customer.id }}
           </td>
-          <td
-            *ngIf="
-              fieldsModel.fields[3].fieldStatus === fieldStatusEnum.Enabled
-            "
-            [id]="'CustomerNo_' + i"
-          >
+          <td *ngIf="checkFieldStatus(3)" id="customerNo">
             {{ customer.customerNo }}
           </td>
-          <td
-            *ngIf="
-              fieldsModel.fields[4].fieldStatus === fieldStatusEnum.Enabled
-            "
-            [id]="'CompanyName_' + i"
-          >
+          <td *ngIf="checkFieldStatus(4)" id="companyName">
             {{ customer.companyName }}
           </td>
-          <td
-            *ngIf="
-              fieldsModel.fields[5].fieldStatus === fieldStatusEnum.Enabled
-            "
-            [id]="'CompanyAddress_' + i"
-          >
+          <td *ngIf="checkFieldStatus(5)" id="companyAddress">
             {{ customer.companyAddress }}
           </td>
-          <td
-            *ngIf="
-              fieldsModel.fields[6].fieldStatus === fieldStatusEnum.Enabled
-            "
-          >
+          <td *ngIf="checkFieldStatus(6)" id="companyAddress2">
             {{ customer.companyAddress2 }}
           </td>
-          <td
-            *ngIf="
-              fieldsModel.fields[7].fieldStatus === fieldStatusEnum.Enabled
-            "
-            [id]="'ZipCode_' + i"
-          >
+          <td *ngIf="checkFieldStatus(7)" id="zipCode">
             {{ customer.zipCode }}
           </td>
-          <td
-            *ngIf="
-              fieldsModel.fields[8].fieldStatus === fieldStatusEnum.Enabled
-            "
-            [id]="'CityName_' + i"
-          >
+          <td *ngIf="checkFieldStatus(8)" id="cityName">
             {{ customer.cityName }}
           </td>
-          <td
-            *ngIf="
-              fieldsModel.fields[9].fieldStatus === fieldStatusEnum.Enabled
-            "
-            [id]="'Phone_' + i"
-          >
+          <td *ngIf="checkFieldStatus(9)" id="phone">
             {{ customer.phone }}
           </td>
-          <td
-            *ngIf="
-              fieldsModel.fields[11].fieldStatus === fieldStatusEnum.Enabled
-            "
-            [id]="'ContactPerson_' + i"
-          >
+          <td *ngIf="checkFieldStatus(11)" id="contactPerson">
             {{ customer.contactPerson }}
           </td>
-          <td
-            *ngIf="
-              fieldsModel.fields[10].fieldStatus === fieldStatusEnum.Enabled
-            "
-            [id]="'Email_' + i"
-          >
+          <td *ngIf="checkFieldStatus(10)" id="email">
             {{ customer.email }}
           </td>
-          <td
-            *ngIf="
-              fieldsModel.fields[16].fieldStatus === fieldStatusEnum.Enabled
-            "
-          >
+          <td *ngIf="checkFieldStatus(16)" id="crmId">
             {{ customer.crmId }}
           </td>
-          <td
-            *ngIf="
-              fieldsModel.fields[15].fieldStatus === fieldStatusEnum.Enabled
-            "
-          >
+          <td *ngIf="checkFieldStatus(15)" id="countryCode">
             {{ customer.countryCode }}
           </td>
-          <td
-            *ngIf="
-              fieldsModel.fields[14].fieldStatus === fieldStatusEnum.Enabled
-            "
-          >
+          <td *ngIf="checkFieldStatus(14)" id="vatNumber">
             {{ customer.vatNumber }}
           </td>
-          <td
-            *ngIf="
-              fieldsModel.fields[17].fieldStatus === fieldStatusEnum.Enabled
-            "
-          >
+          <td *ngIf="checkFieldStatus(17)" id="cadastralNumber">
             {{ customer.cadastralNumber }}
           </td>
-          <td
-            *ngIf="
-              fieldsModel.fields[18].fieldStatus === fieldStatusEnum.Enabled
-            "
-          >
+          <td *ngIf="checkFieldStatus(18)" id="propertyNumber">
             {{ customer.propertyNumber }}
           </td>
-          <td
-            *ngIf="
-              fieldsModel.fields[19].fieldStatus === fieldStatusEnum.Enabled
-            "
-          >
+          <td *ngIf="checkFieldStatus(19)" id="apartmentNumber">
             {{ customer.apartmentNumber }}
           </td>
-          <td
-            *ngIf="
-              fieldsModel.fields[20].fieldStatus === fieldStatusEnum.Enabled
-            "
-          >
+          <td *ngIf="checkFieldStatus(20)" id="completionYear">
             {{ customer.completionYear }}
           </td>
-          <td
-            *ngIf="
-              fieldsModel.fields[21].fieldStatus === fieldStatusEnum.Enabled
-            "
-          >
+          <td *ngIf="checkFieldStatus(21)" id="floorsWithLivingSpace">
             {{ customer.floorsWithLivingSpace }}
           </td>
-          <td
-            *ngIf="
-              fieldsModel.fields[22].fieldStatus === fieldStatusEnum.Enabled
-            "
-          >
+          <td *ngIf="checkFieldStatus(22)" id="cadastralType">
             {{ customer.cadastralType }}
           </td>
-          <td
-            *ngIf="
-              fieldsModel.fields[23].fieldStatus === fieldStatusEnum.Enabled
-            "
-          >
+          <td *ngIf="checkFieldStatus(23)" id="paymentOverdue">
             {{ customer.paymentOverdue }}
           </td>
-          <td
-            *ngIf="
-              fieldsModel.fields[24].fieldStatus === fieldStatusEnum.Enabled
-            "
-          >
+          <td *ngIf="checkFieldStatus(24)" id="paymentStatu">
             {{ customer.paymentStatu }}
           </td>
-          <td
-            *ngIf="
-              fieldsModel.fields[25].fieldStatus === fieldStatusEnum.Enabled
-            "
-          >
+          <td *ngIf="checkFieldStatus(25)" id="balance">
             {{ customer.balance }}
           </td>
-          <td
-            *ngIf="
-              fieldsModel.fields[26].fieldStatus === fieldStatusEnum.Enabled
-            "
-          >
+          <td *ngIf="checkFieldStatus(26)" id="creditLimit">
             {{ customer.creditLimit }}
           </td>
-          <td
-            *ngIf="
-              fieldsModel.fields[27].fieldStatus === fieldStatusEnum.Enabled
-            "
-          >
+          <td *ngIf="checkFieldStatus(27)" id="createdAt">
             <date-formatter
               [date]="customer.createdAt"
               [Format]="'datetime'"
             ></date-formatter>
           </td>
-          <td
-            *ngIf="
-              fieldsModel.fields[28].fieldStatus === fieldStatusEnum.Enabled
-            "
-          >
+          <td *ngIf="checkFieldStatus(28)" id="updateAt">
             <date-formatter
               [date]="customer.updateAt"
               [Format]="'datetime'"
             ></date-formatter>
           </td>
-          <td
-            *ngIf="
-              fieldsModel.fields[29].fieldStatus === fieldStatusEnum.Enabled
-            "
-          >
+          <td *ngIf="checkFieldStatus(29)" id="workflowState">
             {{ customer.workflowState }}
           </td>
-          <td
-            *ngIf="
-              fieldsModel.fields[30].fieldStatus === fieldStatusEnum.Enabled
-            "
-            [id]="'CreatedBy_' + i"
-          >
+          <td *ngIf="checkFieldStatus(30)" id="createdBy">
             {{ customer.createdBy }}
           </td>
-          <td
-            *ngIf="
-              fieldsModel.fields[31].fieldStatus === fieldStatusEnum.Enabled
-            "
-          >
+          <td *ngIf="checkFieldStatus(31)" id="updatedByUserId">
             {{ customer.updatedByUserId }}
           </td>
-          <td
-            *ngIf="
-              fieldsModel.fields[32].fieldStatus === fieldStatusEnum.Enabled
-            "
-          >
+          <td *ngIf="checkFieldStatus(32)" id="version">
             {{ customer.version }}
           </td>
           <td>
@@ -280,7 +154,7 @@
                 mdbBtn
                 class="btn-accent text-black-50 btn-icon mb-2"
                 mdbTooltip="{{ 'Edit Customer' | translate }}"
-                id="editCustomerBtn_{{ i }}"
+                id="editCustomerBtn"
                 (click)="showEditCustomerModal(customer)"
               >
                 <fa-icon icon="pen" [fixedWidth]="true" size="lg"></fa-icon>
@@ -289,7 +163,7 @@
                 mdbBtn
                 class="btn-success btn-icon mb-2"
                 mdbTooltip="{{ 'Duplicate Customer' | translate }}"
-                id="copyCustomerBtn_{{ i }}"
+                id="copyCustomerBtn"
                 (click)="showCopyCustomerModal(customer)"
               >
                 <fa-icon icon="copy" [fixedWidth]="true" size="lg"></fa-icon>
@@ -298,7 +172,7 @@
                 mdbBtn
                 class="btn-danger btn-icon mb-2"
                 mdbTooltip="{{ 'Delete Customer' | translate }}"
-                id="deleteCustomerBtn_{{ i }}"
+                id="deleteCustomerBtn"
                 (click)="showDeleteCustomerModal(customer)"
               >
                 <fa-icon

@@ -5,26 +5,14 @@ export class CustomersImportPage extends Page {
     super();
   }
 
-  public get saveImportCustomersBtn() {
-    $('#saveCreateBtn').waitForDisplayed({timeout: 20000});
-    $('#saveCreateBtn').waitForClickable({timeout: 20000});
-    return $('#saveCreateBtn');
-  }
-
-  public get cancelImportCustomersBtn() {
-    $('#saveCreateBtn').waitForDisplayed({timeout: 20000});
-    $('#saveCreateBtn').waitForClickable({timeout: 20000});
-    return $('#saveCreateBtn');
-  }
-
   public continueImport() {
     $('#continueImportBtn').click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
   }
 
   public cancelImport() {
     $('#cancelImportBtn').click();
-    $('#spinner-animation').waitForDisplayed({timeout: 90000, reverse: true});
+    $('#spinner-animation').waitForDisplayed({ timeout: 90000, reverse: true });
   }
 
   public get numberOfCustomers(): number {
@@ -33,8 +21,8 @@ export class CustomersImportPage extends Page {
   }
 
   public chooseFileBtn() {
-    $('#files').waitForDisplayed({timeout: 20000});
-    $('#files').waitForClickable({timeout: 20000});
+    $('#files').waitForDisplayed({ timeout: 20000 });
+    $('#files').waitForClickable({ timeout: 20000 });
     return $('#files');
   }
   public getField(index: number) {

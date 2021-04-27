@@ -7,9 +7,10 @@ describe('Customers sorting', function () {
     loginPage.open('/');
     loginPage.login();
     customersPage.goToCustomersPage();
+    customersPage.createDummyCustomers(3);
   });
-  it('sorts customers by id', function () {
-    testSorting(customersPage.IdTableHeader, 'idCustomer', 'Id');
+  it('sorts customers by Id', function () {
+    testSorting(customersPage.idTableHeader, 'idCustomer', 'Id');
   });
   it('sorts customers by contact person', function () {
     testSorting(
@@ -24,5 +25,8 @@ describe('Customers sorting', function () {
       'companyName',
       'company name'
     );
+  });
+  after(function () {
+    customersPage.clearTable();
   });
 });
