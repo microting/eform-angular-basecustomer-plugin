@@ -1,7 +1,7 @@
 import loginPage from '../../Page objects/Login.page';
 import customersSettingsPage from '../../Page objects/Customers/CustomersSettings.page';
 import myEformsPage from '../../Page objects/MyEforms.page';
-import pluginsPage from '../customer-settings/application-settings.plugins.page';
+import pluginPage from '../../Page objects/Plugin.page';
 
 const expect = require('chai').expect;
 
@@ -12,11 +12,12 @@ describe('Customers plugin settings page', function () {
   it('should select only company name, id and customer no for show', function () {
     loginPage.login();
     myEformsPage.Navbar.goToPluginsPage();
-    $('#spinner-animation').waitForDisplayed({ timeout: 20000, reverse: true });
+    const spinnerAnimation = $('#spinner-animation');
+    spinnerAnimation.waitForDisplayed({ timeout: 20000, reverse: true });
 
-    const plugin = pluginsPage.getFirstPluginRowObj();
+    const plugin = pluginPage.getFirstPluginRowObj();
     plugin.settingsBtn.click();
-    $('#spinner-animation').waitForDisplayed({ timeout: 20000, reverse: true });
+    spinnerAnimation.waitForDisplayed({ timeout: 20000, reverse: true });
     const customerCheckbox = customersSettingsPage.getCheckboxById(
       'CustomerNo'
     );
@@ -25,141 +26,167 @@ describe('Customers plugin settings page', function () {
     );
     const idCheckbox = customersSettingsPage.getCheckboxById('Id');
 
-    customersSettingsPage.clickCheckboxById('VatNumber');
-    customersSettingsPage.clickCheckboxById('CreatedBy');
-    customersSettingsPage.clickCheckboxById('CompanyAddress');
-    customersSettingsPage.clickCheckboxById('CompanyAddress2');
-    customersSettingsPage.clickCheckboxById('ZipCode');
-    customersSettingsPage.clickCheckboxById('CityName');
-    customersSettingsPage.clickCheckboxById('Phone');
-    customersSettingsPage.clickCheckboxById('Email');
-    customersSettingsPage.clickCheckboxById('ContactPerson');
-    customersSettingsPage.clickCheckboxById('Description');
-    customersSettingsPage.clickCheckboxById('EanCode');
-    customersSettingsPage.clickCheckboxById('CountryCode');
-    customersSettingsPage.clickCheckboxById('UpdatedByUserId');
-    customersSettingsPage.clickCheckboxById('CrmId');
-    customersSettingsPage.clickCheckboxById('CadastralNumber');
-    customersSettingsPage.clickCheckboxById('PropertyNumber');
-    customersSettingsPage.clickCheckboxById('ApartmentNumber');
-    customersSettingsPage.clickCheckboxById('CompletionYear');
-    customersSettingsPage.clickCheckboxById('FloorsWithLivingSpace');
-    customersSettingsPage.clickCheckboxById('CadastralType');
-    customersSettingsPage.clickCheckboxById('Version');
-    customersSettingsPage.clickCheckboxById('CreatedAt');
-    customersSettingsPage.clickCheckboxById('UpdatedAt');
-    customersSettingsPage.clickCheckboxById('WorkflowState');
-    customersSettingsPage.clickCheckboxById('CreatedByUserId');
-    customersSettingsPage.clickCheckboxById('CreatedDate');
-    $('#spinner-animation').waitForDisplayed({ timeout: 20000, reverse: true });
+    const checkboxIds = [
+      'VatNumber',
+      'CreatedBy',
+      'CompanyAddress',
+      'CompanyAddress2',
+      'ZipCode',
+      'CityName',
+      'Phone',
+      'Email',
+      'ContactPerson',
+      'Description',
+      'EanCode',
+      'CountryCode',
+      'UpdatedByUserId',
+      'CrmId',
+      'CadastralNumber',
+      'PropertyNumber',
+      'ApartmentNumber',
+      'CompletionYear',
+      'FloorsWithLivingSpace',
+      'CadastralType',
+      'Version',
+      'CreatedAt',
+      'UpdatedAt',
+      'WorkflowState',
+      'CreatedByUserId',
+      'CreatedDate',
+    ];
+    for (let i = 0; i < checkboxIds.length; i++) {
+      customersSettingsPage.clickCheckboxById(checkboxIds[i]);
+    }
+
+    spinnerAnimation.waitForDisplayed({ timeout: 20000, reverse: true });
     customersSettingsPage.saveSettings();
-    $('#spinner-animation').waitForDisplayed({ timeout: 20000, reverse: true });
+    spinnerAnimation.waitForDisplayed({ timeout: 20000, reverse: true });
 
     loginPage.open('/');
     myEformsPage.Navbar.goToPluginsPage();
-    $('#spinner-animation').waitForDisplayed({ timeout: 20000, reverse: true });
+    spinnerAnimation.waitForDisplayed({ timeout: 20000, reverse: true });
 
     plugin.settingsBtn.click();
-    $('#spinner-animation').waitForDisplayed({ timeout: 20000, reverse: true });
+    spinnerAnimation.waitForDisplayed({ timeout: 20000, reverse: true });
     expect(
       customerCheckbox.getValue(),
-      'Customer number checkbox is\'t set'
+      `Customer number checkbox is't set`
     ).equal('true');
     expect(
       companyNameCheckbox.getValue(),
-      'Company name checkbox is\'t set'
+      `Company name checkbox is't set`
     ).equal('true');
-    expect(idCheckbox.getValue(), 'Id checkbox is\'t set').equals('true');
+    expect(idCheckbox.getValue(), `Id checkbox is't set`).equals('true');
     customersSettingsPage.saveSettings();
   });
   it('checks out all the checkboxes', function () {
     loginPage.open('/');
     myEformsPage.Navbar.goToPluginsPage();
-    $('#spinner-animation').waitForDisplayed({ timeout: 20000, reverse: true });
+    const spinnerAnimation = $('#spinner-animation');
+    spinnerAnimation.waitForDisplayed({ timeout: 20000, reverse: true });
 
-    const plugin = pluginsPage.getFirstPluginRowObj();
+    const plugin = pluginPage.getFirstPluginRowObj();
     plugin.settingsBtn.click();
-    $('#spinner-animation').waitForDisplayed({ timeout: 20000, reverse: true });
-    customersSettingsPage.clickCheckboxById('VatNumber');
-    customersSettingsPage.clickCheckboxById('CreatedBy');
-    customersSettingsPage.clickCheckboxById('CompanyAddress');
-    customersSettingsPage.clickCheckboxById('CompanyAddress2');
-    customersSettingsPage.clickCheckboxById('ZipCode');
-    customersSettingsPage.clickCheckboxById('CityName');
-    customersSettingsPage.clickCheckboxById('Phone');
-    customersSettingsPage.clickCheckboxById('Email');
-    customersSettingsPage.clickCheckboxById('ContactPerson');
-    customersSettingsPage.clickCheckboxById('Description');
-    customersSettingsPage.clickCheckboxById('EanCode');
-    customersSettingsPage.clickCheckboxById('CountryCode');
-    customersSettingsPage.clickCheckboxById('UpdatedByUserId');
-    customersSettingsPage.clickCheckboxById('CrmId');
-    customersSettingsPage.clickCheckboxById('CadastralNumber');
-    customersSettingsPage.clickCheckboxById('PropertyNumber');
-    customersSettingsPage.clickCheckboxById('ApartmentNumber');
-    customersSettingsPage.clickCheckboxById('CompletionYear');
-    customersSettingsPage.clickCheckboxById('FloorsWithLivingSpace');
-    customersSettingsPage.clickCheckboxById('CadastralType');
-    customersSettingsPage.clickCheckboxById('Version');
-    customersSettingsPage.clickCheckboxById('CreatedAt');
-    customersSettingsPage.clickCheckboxById('UpdatedAt');
-    customersSettingsPage.clickCheckboxById('WorkflowState');
-    customersSettingsPage.clickCheckboxById('CreatedByUserId');
-    customersSettingsPage.clickCheckboxById('CreatedDate');
-    $('#spinner-animation').waitForDisplayed({ timeout: 20000, reverse: true });
+    spinnerAnimation.waitForDisplayed({ timeout: 20000, reverse: true });
+
+    const checkboxIds = [
+      'VatNumber',
+      'CreatedBy',
+      'CompanyAddress',
+      'CompanyAddress2',
+      'ZipCode',
+      'CityName',
+      'Phone',
+      'Email',
+      'ContactPerson',
+      'Description',
+      'EanCode',
+      'CountryCode',
+      'UpdatedByUserId',
+      'CrmId',
+      'CadastralNumber',
+      'PropertyNumber',
+      'ApartmentNumber',
+      'CompletionYear',
+      'FloorsWithLivingSpace',
+      'CadastralType',
+      'Version',
+      'CreatedAt',
+      'UpdatedAt',
+      'WorkflowState',
+      'CreatedByUserId',
+      'CreatedDate',
+    ];
+    for (let i = 0; i < checkboxIds.length; i++) {
+      customersSettingsPage.clickCheckboxById(checkboxIds[i]);
+    }
+    spinnerAnimation.waitForDisplayed({ timeout: 20000, reverse: true });
     customersSettingsPage.saveSettings();
   });
   it('should deactivate unnecessary fields', function () {
     loginPage.open('/');
     myEformsPage.Navbar.goToPluginsPage();
-    $('#spinner-animation').waitForDisplayed({ timeout: 20000, reverse: true });
+    const spinnerAnimation = $('#spinner-animation');
+    spinnerAnimation.waitForDisplayed({ timeout: 20000, reverse: true });
 
-    const plugin = pluginsPage.getFirstPluginRowObj();
+    const plugin = pluginPage.getFirstPluginRowObj();
     plugin.settingsBtn.click();
-    $('#spinner-animation').waitForDisplayed({ timeout: 20000, reverse: true });
+    spinnerAnimation.waitForDisplayed({ timeout: 20000, reverse: true });
+    const checkboxIds = [
+      'Version',
+      'CreatedAt',
+      'UpdatedAt',
+      'UpdatedByUserId',
+      'WorkflowState',
+      'CreatedByUserId',
+      'CreatedDate',
+    ];
+    for (let i = 0; i < checkboxIds.length; i++) {
+      customersSettingsPage.clickCheckboxById(checkboxIds[i]);
+    }
     // customersSettingsPage.clickCheckboxById('VatNumber');
     // customersSettingsPage.clickCheckboxById('CreatedBy');
-    customersSettingsPage.clickCheckboxById('Version');
-    customersSettingsPage.clickCheckboxById('CreatedAt');
-    customersSettingsPage.clickCheckboxById('UpdatedAt');
-    customersSettingsPage.clickCheckboxById('UpdatedByUserId');
-    customersSettingsPage.clickCheckboxById('WorkflowState');
-    customersSettingsPage.clickCheckboxById('CreatedByUserId');
-    customersSettingsPage.clickCheckboxById('CreatedDate');
 
-    $('#spinner-animation').waitForDisplayed({ timeout: 20000, reverse: true });
+    spinnerAnimation.waitForDisplayed({ timeout: 20000, reverse: true });
     customersSettingsPage.saveSettings();
-    $('#spinner-animation').waitForDisplayed({ timeout: 20000, reverse: true });
+    spinnerAnimation.waitForDisplayed({ timeout: 20000, reverse: true });
   });
   it('should cleanup fields', function () {
     loginPage.open('/');
     myEformsPage.Navbar.goToPluginsPage();
-    $('#spinner-animation').waitForDisplayed({ timeout: 20000, reverse: true });
+    const spinnerAnimation = $('#spinner-animation');
+    spinnerAnimation.waitForDisplayed({ timeout: 20000, reverse: true });
 
-    const plugin = pluginsPage.getFirstPluginRowObj();
+    const plugin = pluginPage.getFirstPluginRowObj();
     plugin.settingsBtn.click();
-    $('#spinner-animation').waitForDisplayed({ timeout: 20000, reverse: true });
-    customersSettingsPage.clickCheckboxById('VatNumber');
-    customersSettingsPage.clickCheckboxById('CreatedBy');
-    customersSettingsPage.clickCheckboxById('CompanyAddress');
-    customersSettingsPage.clickCheckboxById('CompanyAddress2');
-    customersSettingsPage.clickCheckboxById('ZipCode');
-    customersSettingsPage.clickCheckboxById('CityName');
-    customersSettingsPage.clickCheckboxById('Phone');
-    customersSettingsPage.clickCheckboxById('Email');
-    customersSettingsPage.clickCheckboxById('ContactPerson');
-    customersSettingsPage.clickCheckboxById('Description');
-    customersSettingsPage.clickCheckboxById('EanCode');
-    customersSettingsPage.clickCheckboxById('CountryCode');
-    customersSettingsPage.clickCheckboxById('CrmId');
-    customersSettingsPage.clickCheckboxById('CadastralNumber');
-    customersSettingsPage.clickCheckboxById('PropertyNumber');
-    customersSettingsPage.clickCheckboxById('ApartmentNumber');
-    customersSettingsPage.clickCheckboxById('CompletionYear');
-    customersSettingsPage.clickCheckboxById('FloorsWithLivingSpace');
-    customersSettingsPage.clickCheckboxById('CadastralType');
-    $('#spinner-animation').waitForDisplayed({ timeout: 20000, reverse: true });
+    spinnerAnimation.waitForDisplayed({ timeout: 20000, reverse: true });
+
+    const checkboxIds = [
+      'VatNumber',
+      'CreatedBy',
+      'CompanyAddress',
+      'CompanyAddress2',
+      'ZipCode',
+      'CityName',
+      'Phone',
+      'Email',
+      'ContactPerson',
+      'Description',
+      'EanCode',
+      'CountryCode',
+      'CrmId',
+      'CadastralNumber',
+      'PropertyNumber',
+      'ApartmentNumber',
+      'CompletionYear',
+      'FloorsWithLivingSpace',
+      'CadastralType',
+    ];
+    for (let i = 0; i < checkboxIds.length; i++) {
+      customersSettingsPage.clickCheckboxById(checkboxIds[i]);
+    }
+    spinnerAnimation.waitForDisplayed({ timeout: 20000, reverse: true });
     customersSettingsPage.saveSettings();
-    $('#spinner-animation').waitForDisplayed({ timeout: 20000, reverse: true });
+    spinnerAnimation.waitForDisplayed({ timeout: 20000, reverse: true });
   });
 });

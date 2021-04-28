@@ -1,43 +1,57 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {ToastrService} from 'ngx-toastr';
-
-import {Observable} from 'rxjs';
-import {Router} from '@angular/router';
-import {OperationDataResult, OperationResult} from 'src/app/common/models/operation.models';
-import {BaseService} from 'src/app/common/services/base.service';
-import {CustomersPnModel, CustomersPnRequestModel, CustomerPnFullModel, CustomersPnImportModel} from '../models';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import {
+  OperationDataResult,
+  OperationResult,
+} from 'src/app/common/models/operation.models';
+import {
+  CustomerPnFullModel,
+  CustomersPnImportModel,
+  CustomersPnModel,
+  CustomersPnRequestModel,
+} from '../models';
+import { ApiBaseService } from 'src/app/common/services';
 
 export let CustomerPnMethods = {
   CustomerPn: 'api/customers-pn/customers',
 };
 
 @Injectable()
-export class CustomersPnService extends BaseService{
-  constructor(private _http: HttpClient, router: Router, toastrService: ToastrService) {
-    super(_http, router, toastrService);
+export class CustomersPnService {
+  constructor(private apiBaseService: ApiBaseService) {}
+
+  getAllCustomers(
+    model: CustomersPnRequestModel
+  ): Observable<OperationDataResult<CustomersPnModel>> {
+    return this.apiBaseService.get(CustomerPnMethods.CustomerPn, model);
   }
 
-  getAllCustomers(model: CustomersPnRequestModel): Observable<OperationDataResult<CustomersPnModel>> {
-    return this.get(CustomerPnMethods.CustomerPn, model);
-  }
-
-  getSingleCustomer(customerId: number): Observable<OperationDataResult<CustomerPnFullModel>> {
-    return this.get(CustomerPnMethods.CustomerPn + '/' + customerId);
+  getSingleCustomer(
+    customerId: number
+  ): Observable<OperationDataResult<CustomerPnFullModel>> {
+    return this.apiBaseService.get(
+      CustomerPnMethods.CustomerPn + '/' + customerId
+    );
   }
 
   updateCustomer(model: CustomerPnFullModel): Observable<OperationResult> {
-    return this.put(CustomerPnMethods.CustomerPn, model);
+    return this.apiBaseService.put(CustomerPnMethods.CustomerPn, model);
   }
 
   createCustomer(model: CustomerPnFullModel): Observable<OperationResult> {
-    return this.post(CustomerPnMethods.CustomerPn, model);
+    return this.apiBaseService.post(CustomerPnMethods.CustomerPn, model);
   }
 
   deleteCustomer(customerId: number): Observable<OperationResult> {
-    return this.delete(CustomerPnMethods.CustomerPn + '/' + customerId);
+    return this.apiBaseService.delete(
+      CustomerPnMethods.CustomerPn + '/' + customerId
+    );
   }
 
   importCustomer(model: CustomersPnImportModel): Observable<OperationResult> {
-    return this.post(CustomerPnMethods.CustomerPn + '/import', model);
-  }}
+    return this.apiBaseService.post(
+      CustomerPnMethods.CustomerPn + '/import',
+      model
+    );
+  }
+}

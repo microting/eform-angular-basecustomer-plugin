@@ -1,7 +1,7 @@
 import loginPage from '../../Page objects/Login.page';
-import {generateRandmString} from '../../Helpers/helper-functions';
-import customersPage, {CustomersRowObject} from '../../Page objects/Customers/Customers.page';
-import customersModalPage from '../../Page objects/Customers/CustomersModal.page';
+import customersPage, {
+  CustomersRowObject,
+} from '../../Page objects/Customers/Customers.page';
 
 const expect = require('chai').expect;
 
@@ -9,27 +9,32 @@ describe('Customer modal', function () {
   before(function () {
     loginPage.open('/');
     loginPage.login();
-  });
-  it('should delete customer', function () {
-    loginPage.open('/');
     customersPage.goToCustomersPage();
-    const rowBeforeDeletion = customersPage.rowNum();
-    const lastCustomer: CustomersRowObject = customersPage.getCustomer(rowBeforeDeletion);
-    lastCustomer.deleteBtn.waitForDisplayed({timeout: 3000});
-    lastCustomer.deleteBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
-    customersModalPage.deleteCustomer();
-    $('#mainTableBody').waitForDisplayed({timeout: 20000});
-    const rowAfterDeletion = customersPage.rowNum();
-    expect(rowBeforeDeletion, 'Number of rows hasn\'t changed after deleting customer').equal(rowAfterDeletion + 1);
+    customersPage.create();
   });
   it('should not delete customer if cancel was clicked', function () {
-    loginPage.open('/');
-    customersPage.goToCustomersPage();
-    const lastCustomer: CustomersRowObject = customersPage.getCustomer(customersPage.rowNum());
-    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
-    lastCustomer.deleteBtn.click();
-    $('#spinner-animation').waitForDisplayed({timeout: 20000, reverse: true});
-    customersModalPage.cancelDeleteBtn.click();
+    const rowBeforeDeletion = customersPage.rowNum;
+    const lastCustomer: CustomersRowObject = customersPage.getCustomer(
+      rowBeforeDeletion
+    );
+    lastCustomer.delete(true);
+    expect(
+      rowBeforeDeletion,
+      `Number of rows has changed after click cancel on deleting customer`
+    ).equal(customersPage.rowNum);
+  });
+  it('should delete customer', function () {
+    const rowBeforeDeletion = customersPage.rowNum;
+    const lastCustomer: CustomersRowObject = customersPage.getCustomer(
+      rowBeforeDeletion
+    );
+    lastCustomer.delete();
+    expect(
+      rowBeforeDeletion - 1,
+      `Number of rows hasn't changed after deleting customer`
+    ).equal(customersPage.rowNum);
+  });
+  after(function () {
+    customersPage.clearTable();
   });
 });

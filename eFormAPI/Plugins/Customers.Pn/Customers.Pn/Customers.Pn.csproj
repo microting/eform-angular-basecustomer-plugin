@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -25,9 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microting.eForm" Version="4.5.0" />
-    <PackageReference Include="Microting.eFormApi.BasePn" Version="2.1.0" />
-    <PackageReference Include="Microting.eFormBaseCustomerBase" Version="2.1.0" />
+    <PackageReference Include="Microting.eForm" Version="4.5.2" />
+    <PackageReference Include="Microting.eFormApi.BasePn" Version="2.1.2" />
+    <PackageReference Include="Microting.eFormBaseCustomerBase" Version="2.1.1" />
   </ItemGroup>
 
 </Project>

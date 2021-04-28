@@ -1,11 +1,13 @@
 ﻿namespace Customers.Pn.Infrastructure.Models.Customer
 {
-    public class CustomersRequestModel
+    using Microting.eFormApi.BasePn.Infrastructure.Models.Common;
+
+    public class CustomersRequestModel : PaginationModel
     {
         public string Name { get; set; }
+
         public string SortColumnName { get; set; }
-        public int Offset { get; set; }
-        public int PageSize { get; set; }
+
         public bool IsSortDsc { get; set; }
     }
 }
