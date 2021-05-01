@@ -334,7 +334,7 @@ eFormAPI/Plugins/Customers\.Pn/Customers/
 eFormAPI/eFormAPI/Plugins/Customers/
 eFormAPI/Plugins/Customers.Pn/Customers.Pn/JasperExporter.jar
 eFormAPI/eFormAPI.Web/Plugins/Customers/netcoreapp2.1/*
-eFormAPI/eFormAPI.Web/Plugins/Customers/netcoreapp3.1/*
+eFormAPI/eFormAPI.Web/Plugins/Customers/net5.0/*
 
 eFormAPI/eFormAPI\.Web/Plugins/Customers/netcoreapp2\.2/
 eFormAPI/eFormAPI\.Web/Plugins/Customers/netcoreapp3\.1/
