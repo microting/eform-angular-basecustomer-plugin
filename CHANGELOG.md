@@ -1,5 +1,14 @@
 # Changelog
 
+## [v1.0.144](https://github.com/microting/eform-angular-basecustomer-plugin/tree/v1.0.144) (2021-05-02)
+
+[Full Changelog](https://github.com/microting/eform-angular-basecustomer-plugin/compare/v1.0.143...v1.0.144)
+
+**Implemented enhancements:**
+
+- Bump Microting.eFormBaseCustomerBase from 3.0.0 to 3.0.1 [\#155](https://github.com/microting/eform-angular-basecustomer-plugin/issues/155)
+- Bump Microting.eFormApi.BasePn from 3.0.0 to 3.0.1 [\#154](https://github.com/microting/eform-angular-basecustomer-plugin/issues/154)
+
 ## [v1.0.143](https://github.com/microting/eform-angular-basecustomer-plugin/tree/v1.0.143) (2021-05-01)
 
 [Full Changelog](https://github.com/microting/eform-angular-basecustomer-plugin/compare/v1.0.142...v1.0.143)
@@ -709,7 +718,6 @@
 - Added support for pagesize & sorting save [\#15](https://github.com/microting/eform-angular-basecustomer-plugin/pull/15) ([Gid733](https://github.com/Gid733))
 - Added sorting and pagesize save [\#14](https://github.com/microting/eform-angular-basecustomer-plugin/pull/14) ([Gid733](https://github.com/Gid733))
 - Added max lines 3 for description field [\#12](https://github.com/microting/eform-angular-basecustomer-plugin/pull/12) ([Gid733](https://github.com/Gid733))
-- Added menu in security enhancements [\#7](https://github.com/microting/eform-angular-basecustomer-plugin/pull/7) ([Gid733](https://github.com/Gid733))
 
 
 
