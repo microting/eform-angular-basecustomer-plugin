@@ -49,9 +49,8 @@
         *ngIf="fieldsModel.fields.length > 0"
         table-headers
         [tableHeaders]="tableHeaders"
-        [currentSortName]="customersStateService.getSort() | async"
+        [sort]="customersStateService.getSort() | async"
         (sortChanged)="sortTable($event)"
-        [isSortDsc]="customersStateService.getIsSortDsc() | async"
       ></thead>
       <tbody id="mainTableBody">
         <tr *ngFor="let customer of customersModel.customers">
@@ -197,9 +196,7 @@
     </div>
     <div class="col-md-4 ml-auto d-flex justify-content-end p-2">
       <eform-pagination
-        [limit]="customersStateService.getPageSize() | async"
-        [size]="customersModel.total"
-        [offset]="customersStateService.getOffset() | async"
+        [pagination]="customersStateService.getPagination() | async"
         (onPageChanged)="changePage($event)"
       ></eform-pagination>
     </div>
@@ -210,8 +207,7 @@
   #createCustomerModal
   [fieldsModel]="fieldsModel"
   (onCustomerCreated)="getAllCustomers()"
->
-</app-customer-pn-add>
+></app-customer-pn-add>
 <app-customer-pn-edit
   #editCustomerModal
   [fieldsModel]="fieldsModel"

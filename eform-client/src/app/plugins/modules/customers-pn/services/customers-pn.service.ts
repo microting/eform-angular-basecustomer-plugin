@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {
-  OperationDataResult,
-  OperationResult,
-} from 'src/app/common/models/operation.models';
+import { OperationDataResult, OperationResult } from 'src/app/common/models';
 import {
   CustomerPnFullModel,
   CustomersPnImportModel,
@@ -16,7 +13,7 @@ export let CustomerPnMethods = {
   CustomerPn: 'api/customers-pn/customers',
 };
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CustomersPnService {
   constructor(private apiBaseService: ApiBaseService) {}
 

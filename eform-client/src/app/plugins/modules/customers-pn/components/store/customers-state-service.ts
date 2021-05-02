@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-import { CustomersStore } from './customers-store';
 import { Observable } from 'rxjs';
-import { OperationDataResult } from 'src/app/common/models';
-import { updateTableSort } from 'src/app/common/helpers';
-import { getOffset } from 'src/app/common/helpers/pagination.helper';
+import {
+  OperationDataResult,
+  PaginationModel,
+  SortModel,
+} from 'src/app/common/models';
+import { updateTableSort, getOffset } from 'src/app/common/helpers';
 import { map } from 'rxjs/operators';
-import { CustomersQuery } from './customers-query';
+import { CustomersQuery, CustomersStore } from './';
 import { CustomersPnService } from '../../services';
 import { CustomersPnModel } from '../../models';
 
@@ -17,22 +19,20 @@ export class CustomersStateService {
     private query: CustomersQuery
   ) {}
 
-  private total: number;
-
   getAllCustomers(): Observable<OperationDataResult<CustomersPnModel>> {
     return this.service
       .getAllCustomers({
-        isSortDsc: this.query.pageSetting.pagination.isSortDsc,
-        offset: this.query.pageSetting.pagination.offset,
-        pageSize: this.query.pageSetting.pagination.pageSize,
+        ...this.query.pageSetting.pagination,
+        ...this.query.pageSetting.filters,
         sortColumnName: this.query.pageSetting.pagination.sort,
-        name: this.query.pageSetting.pagination.nameFilter,
-        pageIndex: 0,
+        name: this.query.pageSetting.filters.nameFilter,
       })
       .pipe(
         map((response) => {
           if (response && response.success && response.model) {
-            this.total = response.model.total;
+            this.store.update(() => ({
+              total: response.model.total,
+            }));
           }
           return response;
         })
@@ -41,9 +41,12 @@ export class CustomersStateService {
 
   updateNameFilter(nameFilter: string) {
     this.store.update((state) => ({
+      filters: {
+        ...state.filters,
+        nameFilter: nameFilter,
+      },
       pagination: {
         ...state.pagination,
-        nameFilter: nameFilter,
         offset: 0,
       },
     }));
@@ -59,20 +62,12 @@ export class CustomersStateService {
     this.checkOffset();
   }
 
-  getOffset(): Observable<number> {
-    return this.query.selectOffset$;
-  }
-
   getPageSize(): Observable<number> {
     return this.query.selectPageSize$;
   }
 
-  getSort(): Observable<string> {
+  getSort(): Observable<SortModel> {
     return this.query.selectSort$;
-  }
-
-  getIsSortDsc(): Observable<boolean> {
-    return this.query.selectIsSortDsc$;
   }
 
   getNameFilter(): Observable<string> {
@@ -89,7 +84,9 @@ export class CustomersStateService {
   }
 
   onDelete() {
-    this.total -= 1;
+    this.store.update((state) => ({
+      total: state.total - 1,
+    }));
     this.checkOffset();
   }
 
@@ -112,7 +109,7 @@ export class CustomersStateService {
     const newOffset = getOffset(
       this.query.pageSetting.pagination.pageSize,
       this.query.pageSetting.pagination.offset,
-      this.total
+      this.query.pageSetting.total
     );
     if (newOffset !== this.query.pageSetting.pagination.offset) {
       this.store.update((state) => ({
@@ -122,5 +119,9 @@ export class CustomersStateService {
         },
       }));
     }
+  }
+
+  getPagination(): Observable<PaginationModel> {
+    return this.query.selectPagination$;
   }
 }

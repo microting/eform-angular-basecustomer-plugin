@@ -1,9 +1,14 @@
 import { Injectable } from '@angular/core';
 import { persistState, Store, StoreConfig } from '@datorama/akita';
-import { CommonPaginationState } from 'src/app/common/models/common-pagination-state';
+import {
+  FiltrationStateModel,
+  CommonPaginationState,
+} from 'src/app/common/models';
 
 export interface CustomersState {
   pagination: CommonPaginationState;
+  filters: FiltrationStateModel;
+  total: number;
 }
 
 export function createInitialState(): CustomersState {
@@ -12,19 +17,28 @@ export function createInitialState(): CustomersState {
       pageSize: 10,
       sort: 'Id',
       isSortDsc: false,
-      nameFilter: '',
       offset: 0,
     },
+    filters: {
+      nameFilter: '',
+    },
+    total: 0,
   };
 }
 
 const customersPersistStorage = persistState({
-  include: ['customersPnСustomers'],
-  key: 'pluginsStore',
+  include: ['customers'],
+  key: 'customersPn',
+  preStorageUpdate(storeName, state) {
+    return {
+      pagination: state.pagination,
+      filters: state.filters,
+    };
+  },
 });
 
 @Injectable({ providedIn: 'root' })
-@StoreConfig({ name: 'customersPnСustomers', resettable: true })
+@StoreConfig({ name: 'customers', resettable: true })
 export class CustomersStore extends Store<CustomersState> {
   constructor() {
     super(createInitialState());
