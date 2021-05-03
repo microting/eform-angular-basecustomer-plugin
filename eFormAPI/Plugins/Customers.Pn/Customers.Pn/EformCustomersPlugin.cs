@@ -62,8 +62,12 @@ namespace Customers.Pn
 
         public void ConfigureDbContext(IServiceCollection services, string connectionString)
         {
-            services.AddDbContext<CustomersPnDbAnySql>(o => o.UseMySql(connectionString,
-                b => b.MigrationsAssembly(PluginAssembly().FullName)));
+            services.AddDbContext<CustomersPnDbAnySql>(o => o.UseMySql(connectionString, new MariaDbServerVersion(
+                new Version(10, 4, 0)), mySqlOptionsAction: builder =>
+            {
+                builder.EnableRetryOnFailure();
+                builder.MigrationsAssembly(PluginAssembly().FullName);
+            }));
 
             CustomersPnContextFactory contextFactory = new CustomersPnContextFactory();
             using (CustomersPnDbAnySql context = contextFactory.CreateDbContext(new[] {connectionString}))
