@@ -14,7 +14,7 @@ import {
   FieldsPnUpdateModel,
 } from '../../models';
 import { CustomersPnFieldsService, CustomersPnService } from '../../services';
-import { CustomersStateService } from '../store/customers-state-service';
+import { CustomersStateService } from '../store';
 
 @Component({
   selector: 'app-customers-pn-page',
