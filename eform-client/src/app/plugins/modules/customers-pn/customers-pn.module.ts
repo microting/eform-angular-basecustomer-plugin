@@ -22,8 +22,7 @@ import {
 } from './components';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
-import { customersPersistProvider } from './components/store/customers-store';
-import { CustomersStateService } from './components/store/customers-state-service';
+import { customersPersistProvider, CustomersStateService} from './components/store';
 
 @NgModule({
   imports: [
