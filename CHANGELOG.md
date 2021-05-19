@@ -1,5 +1,15 @@
 # Changelog
 
+## [v1.0.152](https://github.com/microting/eform-angular-basecustomer-plugin/tree/v1.0.152) (2021-05-19)
+
+[Full Changelog](https://github.com/microting/eform-angular-basecustomer-plugin/compare/v1.0.151...v1.0.152)
+
+**Implemented enhancements:**
+
+- Bump Microting.eFormBaseCustomerBase from 3.0.8 to 3.0.11 [\#188](https://github.com/microting/eform-angular-basecustomer-plugin/issues/188)
+- Bump Microting.eFormApi.BasePn from 3.0.9 to 3.0.12 [\#187](https://github.com/microting/eform-angular-basecustomer-plugin/issues/187)
+- Bump Microting.eForm from 5.1.5 to 5.2.2 [\#186](https://github.com/microting/eform-angular-basecustomer-plugin/issues/186)
+
 ## [v1.0.151](https://github.com/microting/eform-angular-basecustomer-plugin/tree/v1.0.151) (2021-05-11)
 
 [Full Changelog](https://github.com/microting/eform-angular-basecustomer-plugin/compare/v1.0.150...v1.0.151)
@@ -202,6 +212,7 @@
 **Merged pull requests:**
 
 - Fix build [\#57](https://github.com/microting/eform-angular-basecustomer-plugin/pull/57) ([Gid733](https://github.com/Gid733))
+- Added menu [\#33](https://github.com/microting/eform-angular-basecustomer-plugin/pull/33) ([Gid733](https://github.com/Gid733))
 
 ## [v1.0.132](https://github.com/microting/eform-angular-basecustomer-plugin/tree/v1.0.132) (2021-02-24)
 
@@ -382,10 +393,6 @@
 ## [v1.0.92](https://github.com/microting/eform-angular-basecustomer-plugin/tree/v1.0.92) (2020-11-16)
 
 [Full Changelog](https://github.com/microting/eform-angular-basecustomer-plugin/compare/v1.0.91...v1.0.92)
-
-**Merged pull requests:**
-
-- Added menu [\#33](https://github.com/microting/eform-angular-basecustomer-plugin/pull/33) ([Gid733](https://github.com/Gid733))
 
 ## [v1.0.91](https://github.com/microting/eform-angular-basecustomer-plugin/tree/v1.0.91) (2020-11-03)
 
@@ -791,7 +798,6 @@
 - Added config file [\#19](https://github.com/microting/eform-angular-basecustomer-plugin/pull/19) ([Gid733](https://github.com/Gid733))
 - Added CRUD tests [\#18](https://github.com/microting/eform-angular-basecustomer-plugin/pull/18) ([Gid733](https://github.com/Gid733))
 - Minor enhancements [\#17](https://github.com/microting/eform-angular-basecustomer-plugin/pull/17) ([Gid733](https://github.com/Gid733))
-- Added localization to plugin [\#16](https://github.com/microting/eform-angular-basecustomer-plugin/pull/16) ([Gid733](https://github.com/Gid733))
 - Added support for pagesize & sorting save [\#15](https://github.com/microting/eform-angular-basecustomer-plugin/pull/15) ([Gid733](https://github.com/Gid733))
 - Added sorting and pagesize save [\#14](https://github.com/microting/eform-angular-basecustomer-plugin/pull/14) ([Gid733](https://github.com/Gid733))
 - Added max lines 3 for description field [\#12](https://github.com/microting/eform-angular-basecustomer-plugin/pull/12) ([Gid733](https://github.com/Gid733))
