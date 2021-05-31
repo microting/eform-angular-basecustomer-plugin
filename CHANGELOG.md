@@ -1,5 +1,15 @@
 # Changelog
 
+## [v1.0.155](https://github.com/microting/eform-angular-basecustomer-plugin/tree/v1.0.155) (2021-05-31)
+
+[Full Changelog](https://github.com/microting/eform-angular-basecustomer-plugin/compare/v1.0.154...v1.0.155)
+
+**Implemented enhancements:**
+
+- Bump Microting.eFormBaseCustomerBase from 3.0.14 to 3.0.15 [\#199](https://github.com/microting/eform-angular-basecustomer-plugin/issues/199)
+- Bump Microting.eFormApi.BasePn from 3.0.14 to 3.0.15 [\#198](https://github.com/microting/eform-angular-basecustomer-plugin/issues/198)
+- Bump Microting.eForm from 5.2.4 to 5.2.5 [\#197](https://github.com/microting/eform-angular-basecustomer-plugin/issues/197)
+
 ## [v1.0.154](https://github.com/microting/eform-angular-basecustomer-plugin/tree/v1.0.154) (2021-05-31)
 
 [Full Changelog](https://github.com/microting/eform-angular-basecustomer-plugin/compare/v1.0.153...v1.0.154)
@@ -228,6 +238,7 @@
 - Bump Microting.eFormBaseCustomerBase from 2.0.97 to 2.0.98 [\#64](https://github.com/microting/eform-angular-basecustomer-plugin/issues/64)
 - Bump Microting.eFormApi.BasePn from 2.0.98 to 2.0.99 [\#63](https://github.com/microting/eform-angular-basecustomer-plugin/issues/63)
 - Bump Microting.eForm from 4.4.2 to 4.4.3 [\#62](https://github.com/microting/eform-angular-basecustomer-plugin/issues/62)
+- Bump Microting.eFormBaseCustomerBase from 2.0.96 to 2.0.97 [\#60](https://github.com/microting/eform-angular-basecustomer-plugin/issues/60)
 
 **Merged pull requests:**
 
@@ -239,7 +250,6 @@
 
 **Implemented enhancements:**
 
-- Bump Microting.eFormBaseCustomerBase from 2.0.96 to 2.0.97 [\#60](https://github.com/microting/eform-angular-basecustomer-plugin/issues/60)
 - Bump Microting.eFormApi.BasePn from 2.0.97 to 2.0.98 [\#59](https://github.com/microting/eform-angular-basecustomer-plugin/issues/59)
 - Bump Microting.eForm from 4.4.1 to 4.4.2 [\#58](https://github.com/microting/eform-angular-basecustomer-plugin/issues/58)
 
