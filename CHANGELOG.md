@@ -1,5 +1,15 @@
 # Changelog
 
+## [v1.0.169](https://github.com/microting/eform-angular-basecustomer-plugin/tree/v1.0.169) (2021-08-05)
+
+[Full Changelog](https://github.com/microting/eform-angular-basecustomer-plugin/compare/v1.0.168...v1.0.169)
+
+**Implemented enhancements:**
+
+- Bump Microting.eFormBaseCustomerBase from 3.0.31 to 3.0.32 [\#250](https://github.com/microting/eform-angular-basecustomer-plugin/issues/250)
+- Bump Microting.eFormApi.BasePn from 3.0.33 to 3.0.34 [\#249](https://github.com/microting/eform-angular-basecustomer-plugin/issues/249)
+- Bump Microting.eForm from 5.2.21 to 5.2.22 [\#248](https://github.com/microting/eform-angular-basecustomer-plugin/issues/248)
+
 ## [v1.0.168](https://github.com/microting/eform-angular-basecustomer-plugin/tree/v1.0.168) (2021-08-01)
 
 [Full Changelog](https://github.com/microting/eform-angular-basecustomer-plugin/compare/v1.0.167...v1.0.168)
@@ -159,6 +169,7 @@
 
 **Implemented enhancements:**
 
+- Bump Microting.eFormBaseCustomerBase from 3.0.11 to 3.0.12 [\#193](https://github.com/microting/eform-angular-basecustomer-plugin/issues/193)
 - Bump Microting.eFormApi.BasePn from 3.0.12 to 3.0.13 [\#192](https://github.com/microting/eform-angular-basecustomer-plugin/issues/192)
 - Bump Microting.eForm from 5.2.2 to 5.2.3 [\#191](https://github.com/microting/eform-angular-basecustomer-plugin/issues/191)
 
@@ -178,7 +189,6 @@
 
 **Implemented enhancements:**
 
-- Bump Microting.eFormBaseCustomerBase from 3.0.11 to 3.0.12 [\#193](https://github.com/microting/eform-angular-basecustomer-plugin/issues/193)
 - Bump Microting.eFormBaseCustomerBase from 3.0.7 to 3.0.8 [\#181](https://github.com/microting/eform-angular-basecustomer-plugin/issues/181)
 - Bump Microting.eFormApi.BasePn from 3.0.8 to 3.0.9 [\#180](https://github.com/microting/eform-angular-basecustomer-plugin/issues/180)
 - Bump Microting.eForm from 5.1.4 to 5.1.5 [\#179](https://github.com/microting/eform-angular-basecustomer-plugin/issues/179)
@@ -266,7 +276,6 @@
 **Implemented enhancements:**
 
 - Bump Microting.eFormBaseCustomerBase from 2.1.2 to 3.0.0 [\#153](https://github.com/microting/eform-angular-basecustomer-plugin/issues/153)
-- Bump Microting.eFormApi.BasePn from 2.1.3 to 3.0.0 [\#152](https://github.com/microting/eform-angular-basecustomer-plugin/issues/152)
 
 **Merged pull requests:**
 
@@ -278,6 +287,7 @@
 
 **Implemented enhancements:**
 
+- Bump Microting.eFormApi.BasePn from 2.1.3 to 3.0.0 [\#152](https://github.com/microting/eform-angular-basecustomer-plugin/issues/152)
 - Bump Microting.eFormBaseCustomerBase from 2.0.105 to 2.1.2 [\#144](https://github.com/microting/eform-angular-basecustomer-plugin/issues/144)
 - Bump Microting.eFormApi.BasePn from 2.0.110 to 2.1.3 [\#143](https://github.com/microting/eform-angular-basecustomer-plugin/issues/143)
 - Bump Microting.eForm from 4.4.17 to 4.5.3 [\#142](https://github.com/microting/eform-angular-basecustomer-plugin/issues/142)
@@ -395,6 +405,7 @@
 - Bump Microting.eFormBaseCustomerBase from  to  [\#56](https://github.com/microting/eform-angular-basecustomer-plugin/issues/56)
 - Bump Microting.eFormApi.BasePn from  to  [\#55](https://github.com/microting/eform-angular-basecustomer-plugin/issues/55)
 - Bump Microting.eForm from  to  [\#54](https://github.com/microting/eform-angular-basecustomer-plugin/issues/54)
+- Add enabled fields to delete customer dialog [\#8](https://github.com/microting/eform-angular-basecustomer-plugin/issues/8)
 
 ## [v1.0.130](https://github.com/microting/eform-angular-basecustomer-plugin/tree/v1.0.130) (2021-02-18)
 
@@ -523,10 +534,6 @@
 ## [v1.0.99](https://github.com/microting/eform-angular-basecustomer-plugin/tree/v1.0.99) (2020-12-26)
 
 [Full Changelog](https://github.com/microting/eform-angular-basecustomer-plugin/compare/v1.0.98...v1.0.99)
-
-**Merged pull requests:**
-
-- Updates for menu [\#34](https://github.com/microting/eform-angular-basecustomer-plugin/pull/34) ([Gid733](https://github.com/Gid733))
 
 ## [v1.0.98](https://github.com/microting/eform-angular-basecustomer-plugin/tree/v1.0.98) (2020-12-02)
 
@@ -930,6 +937,7 @@
 
 **Merged pull requests:**
 
+- Updates for menu [\#34](https://github.com/microting/eform-angular-basecustomer-plugin/pull/34) ([Gid733](https://github.com/Gid733))
 - Permission updates [\#29](https://github.com/microting/eform-angular-basecustomer-plugin/pull/29) ([Gid733](https://github.com/Gid733))
 
 ## [v1.0.1](https://github.com/microting/eform-angular-basecustomer-plugin/tree/v1.0.1) (2019-10-17)
@@ -943,7 +951,6 @@
 **Implemented enhancements:**
 
 - Index should only show first 3 lines of description for a given customer [\#10](https://github.com/microting/eform-angular-basecustomer-plugin/issues/10)
-- Add enabled fields to delete customer dialog [\#8](https://github.com/microting/eform-angular-basecustomer-plugin/issues/8)
 
 **Fixed bugs:**
 
