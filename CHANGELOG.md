@@ -1,5 +1,15 @@
 # Changelog
 
+## [v1.0.175](https://github.com/microting/eform-angular-basecustomer-plugin/tree/v1.0.175) (2021-08-18)
+
+[Full Changelog](https://github.com/microting/eform-angular-basecustomer-plugin/compare/v1.0.174...v1.0.175)
+
+**Implemented enhancements:**
+
+- Bump Microting.eFormBaseCustomerBase from 3.0.38 to 3.0.39 [\#275](https://github.com/microting/eform-angular-basecustomer-plugin/issues/275)
+- Bump Microting.eFormApi.BasePn from 3.0.42 to 3.0.43 [\#274](https://github.com/microting/eform-angular-basecustomer-plugin/issues/274)
+- Bump Microting.eForm from 5.2.32 to 5.2.33 [\#273](https://github.com/microting/eform-angular-basecustomer-plugin/issues/273)
+
 ## [v1.0.174](https://github.com/microting/eform-angular-basecustomer-plugin/tree/v1.0.174) (2021-08-12)
 
 [Full Changelog](https://github.com/microting/eform-angular-basecustomer-plugin/compare/v1.0.173...v1.0.174)
@@ -113,7 +123,9 @@
 **Implemented enhancements:**
 
 - Bump Microting.eFormBaseCustomerBase from 3.0.23 to 3.0.25 [\#228](https://github.com/microting/eform-angular-basecustomer-plugin/issues/228)
+- Bump Microting.eFormApi.BasePn from 3.0.23 to 3.0.25 [\#227](https://github.com/microting/eform-angular-basecustomer-plugin/issues/227)
 - Bump Microting.eForm from 5.2.12 to 5.2.13 [\#226](https://github.com/microting/eform-angular-basecustomer-plugin/issues/226)
+- Bump Microting.eFormApi.BasePn from 3.0.22 to 3.0.23 [\#224](https://github.com/microting/eform-angular-basecustomer-plugin/issues/224)
 
 ## [v1.0.163](https://github.com/microting/eform-angular-basecustomer-plugin/tree/v1.0.163) (2021-06-24)
 
@@ -122,7 +134,7 @@
 **Implemented enhancements:**
 
 - Bump Microting.eFormBaseCustomerBase from 3.0.22 to 3.0.23 [\#225](https://github.com/microting/eform-angular-basecustomer-plugin/issues/225)
-- Bump Microting.eFormApi.BasePn from 3.0.22 to 3.0.23 [\#224](https://github.com/microting/eform-angular-basecustomer-plugin/issues/224)
+- Bump Microting.eForm from 5.2.11 to 5.2.12 [\#223](https://github.com/microting/eform-angular-basecustomer-plugin/issues/223)
 
 ## [v1.0.162](https://github.com/microting/eform-angular-basecustomer-plugin/tree/v1.0.162) (2021-06-16)
 
@@ -130,7 +142,6 @@
 
 **Implemented enhancements:**
 
-- Bump Microting.eFormApi.BasePn from 3.0.23 to 3.0.25 [\#227](https://github.com/microting/eform-angular-basecustomer-plugin/issues/227)
 - Bump Microting.eFormBaseCustomerBase from 3.0.21 to 3.0.22 [\#222](https://github.com/microting/eform-angular-basecustomer-plugin/issues/222)
 - Bump Microting.eFormApi.BasePn from 3.0.21 to 3.0.22 [\#221](https://github.com/microting/eform-angular-basecustomer-plugin/issues/221)
 
@@ -140,7 +151,6 @@
 
 **Implemented enhancements:**
 
-- Bump Microting.eForm from 5.2.11 to 5.2.12 [\#223](https://github.com/microting/eform-angular-basecustomer-plugin/issues/223)
 - Bump Microting.eFormBaseCustomerBase from 3.0.20 to 3.0.21 [\#219](https://github.com/microting/eform-angular-basecustomer-plugin/issues/219)
 - Bump Microting.eFormApi.BasePn from 3.0.20 to 3.0.21 [\#218](https://github.com/microting/eform-angular-basecustomer-plugin/issues/218)
 - Bump Microting.eForm from 5.2.9 to 5.2.11 [\#217](https://github.com/microting/eform-angular-basecustomer-plugin/issues/217)
@@ -268,7 +278,6 @@
 - Separately pagination and filtration in store [\#170](https://github.com/microting/eform-angular-basecustomer-plugin/pull/170) ([sanioooook](https://github.com/sanioooook))
 - Upgrade to GitHub-native Dependabot [\#149](https://github.com/microting/eform-angular-basecustomer-plugin/pull/149) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Bump NUnit from 3.12.0 to 3.13.2 in /eFormAPI/Plugins/Customers.Pn [\#145](https://github.com/microting/eform-angular-basecustomer-plugin/pull/145) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
-- Bump Microsoft.NET.Test.Sdk from 16.7.1 to 16.9.4 in /eFormAPI/Plugins/Customers.Pn [\#91](https://github.com/microting/eform-angular-basecustomer-plugin/pull/91) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 
 ## [v1.0.148](https://github.com/microting/eform-angular-basecustomer-plugin/tree/v1.0.148) (2021-05-05)
 
@@ -618,6 +627,7 @@
 
 **Merged pull requests:**
 
+- Bump Microsoft.NET.Test.Sdk from 16.7.1 to 16.9.4 in /eFormAPI/Plugins/Customers.Pn [\#91](https://github.com/microting/eform-angular-basecustomer-plugin/pull/91) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Added menu [\#33](https://github.com/microting/eform-angular-basecustomer-plugin/pull/33) ([Gid733](https://github.com/Gid733))
 
 ## [v1.0.91](https://github.com/microting/eform-angular-basecustomer-plugin/tree/v1.0.91) (2020-11-03)
