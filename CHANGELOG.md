@@ -1,5 +1,15 @@
 # Changelog
 
+## [v1.0.197](https://github.com/microting/eform-angular-basecustomer-plugin/tree/v1.0.197) (2021-11-17)
+
+[Full Changelog](https://github.com/microting/eform-angular-basecustomer-plugin/compare/v1.0.196...v1.0.197)
+
+**Implemented enhancements:**
+
+- Bump Microting.eFormBaseCustomerBase from 3.0.62 to 3.0.63 [\#327](https://github.com/microting/eform-angular-basecustomer-plugin/issues/327)
+- Bump Microting.eFormApi.BasePn from 3.1.1 to 3.1.2 [\#326](https://github.com/microting/eform-angular-basecustomer-plugin/issues/326)
+- Bump Microting.eForm from 5.3.2 to 5.3.4 [\#325](https://github.com/microting/eform-angular-basecustomer-plugin/issues/325)
+
 ## [v1.0.196](https://github.com/microting/eform-angular-basecustomer-plugin/tree/v1.0.196) (2021-11-16)
 
 [Full Changelog](https://github.com/microting/eform-angular-basecustomer-plugin/compare/v1.0.195...v1.0.196)
@@ -270,6 +280,7 @@
 - Bump Microting.eFormBaseCustomerBase from 3.0.27 to 3.0.28 [\#235](https://github.com/microting/eform-angular-basecustomer-plugin/issues/235)
 - Bump Microting.eFormApi.BasePn from 3.0.27 to 3.0.28 [\#234](https://github.com/microting/eform-angular-basecustomer-plugin/issues/234)
 - Bump Microting.eForm from 5.2.14 to 5.2.15 [\#233](https://github.com/microting/eform-angular-basecustomer-plugin/issues/233)
+- Bump Microting.eFormApi.BasePn from 3.0.26 to 3.0.27 [\#231](https://github.com/microting/eform-angular-basecustomer-plugin/issues/231)
 
 ## [v1.0.165](https://github.com/microting/eform-angular-basecustomer-plugin/tree/v1.0.165) (2021-07-05)
 
@@ -278,7 +289,6 @@
 **Implemented enhancements:**
 
 - Bump Microting.eFormBaseCustomerBase from 3.0.25 to 3.0.27 [\#232](https://github.com/microting/eform-angular-basecustomer-plugin/issues/232)
-- Bump Microting.eFormApi.BasePn from 3.0.26 to 3.0.27 [\#231](https://github.com/microting/eform-angular-basecustomer-plugin/issues/231)
 - Bump Microting.eForm from 5.2.13 to 5.2.14 [\#230](https://github.com/microting/eform-angular-basecustomer-plugin/issues/230)
 
 **Merged pull requests:**
