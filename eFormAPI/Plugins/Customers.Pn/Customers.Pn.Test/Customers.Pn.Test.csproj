@@ -15,10 +15,4 @@
     <ProjectReference Include="..\Customers.Pn\Customers.Pn.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="Microting.eFormApi.BasePn">
-      <HintPath>..\..\..\..\..\eFormApi.BasePn\eFormApi.BasePn\bin\Debug\netcoreapp2.2\Microting.eFormApi.BasePn.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>
