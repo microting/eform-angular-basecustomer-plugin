@@ -25,8 +25,8 @@ jobs:
     - name: Copy dependencies
       run: |
         cp -av eform-angular-basecustomer-plugin/eform-client/src/app/plugins/modules/customers-pn eform-angular-frontend/eform-client/src/app/plugins/modules/customers-pn
-        cp -av eform-angular-basecustomer-plugin/eform-client/e2e/Tests/basecustomer-settings eform-angular-frontend/eform-client/e2e/Tests/basecustomer-settings
-        cp -av eform-angular-basecustomer-plugin/eform-client/e2e/Tests/basecustomer-general eform-angular-frontend/eform-client/e2e/Tests/basecustomer-general
+        cp -av eform-angular-basecustomer-plugin/eform-client/e2e/Tests/customer-settings eform-angular-frontend/eform-client/e2e/Tests/customer-settings
+        cp -av eform-angular-basecustomer-plugin/eform-client/e2e/Tests/customer-general eform-angular-frontend/eform-client/e2e/Tests/customer-general
         cp -av eform-angular-basecustomer-plugin/eform-client/e2e/Page\ objects/Customers eform-angular-frontend/eform-client/e2e/Page\ objects/Customers
         cp -av eform-angular-basecustomer-plugin/eform-client/wdio-headless-plugin-step2a.conf.ts eform-angular-frontend/eform-client/wdio-headless-plugin-step2a.conf.ts
         cp -av eform-angular-basecustomer-plugin/eform-client/wdio-plugin-step2.conf.ts eform-angular-frontend/eform-client/wdio-plugin-step2.conf.ts
@@ -85,8 +85,8 @@ jobs:
     - name: Copy dependencies
       run: |
         cp -av eform-angular-basecustomer-plugin/eform-client/src/app/plugins/modules/customers-pn eform-angular-frontend/eform-client/src/app/plugins/modules/customers-pn
-        cp -av eform-angular-basecustomer-plugin/eform-client/e2e/Tests/basecustomer-settings eform-angular-frontend/eform-client/e2e/Tests/basecustomer-settings
-        cp -av eform-angular-basecustomer-plugin/eform-client/e2e/Tests/basecustomer-general eform-angular-frontend/eform-client/e2e/Tests/basecustomer-general
+        cp -av eform-angular-basecustomer-plugin/eform-client/e2e/Tests/customer-settings eform-angular-frontend/eform-client/e2e/Tests/customer-settings
+        cp -av eform-angular-basecustomer-plugin/eform-client/e2e/Tests/customer-general eform-angular-frontend/eform-client/e2e/Tests/customer-general
         cp -av eform-angular-basecustomer-plugin/eform-client/e2e/Page\ objects/Customers eform-angular-frontend/eform-client/e2e/Page\ objects/Customers
         cp -av eform-angular-basecustomer-plugin/eform-client/wdio-headless-plugin-step2a.conf.ts eform-angular-frontend/eform-client/wdio-headless-plugin-step2a.conf.ts
         cp -av eform-angular-basecustomer-plugin/eform-client/wdio-plugin-step2.conf.ts eform-angular-frontend/eform-client/wdio-plugin-step2.conf.ts
