@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Customers.Pn.Abstractions;
 using Customers.Pn.Infrastructure.Data.Seed;
 using Customers.Pn.Infrastructure.Data.Seed.Data;
@@ -251,7 +252,7 @@ namespace Customers.Pn
             return new PluginPermissionsManager(context);
         }
 
-        private async void SeedCustomersEntityGroup(IServiceCollection serviceCollection)
+        private async Task SeedCustomersEntityGroup(IServiceCollection serviceCollection)
         {
             var serviceProvider = serviceCollection.BuildServiceProvider();
             var pluginDbOptions = serviceProvider.GetRequiredService<IPluginDbOptions<CustomersSettings>>();
@@ -261,7 +262,6 @@ namespace Customers.Pn
                 var core = await serviceProvider.GetRequiredService<IEFormCoreService>().GetCore();
                 var context = serviceProvider.GetRequiredService<CustomersPnDbAnySql>();
 
-
                 EntityGroupList model = await core.Advanced_EntityGroupAll(
                     "id",
                     "eform-angular-basecustomer-plugin-Customers-hidden",
@@ -269,22 +269,25 @@ namespace Customers.Pn
                     false,
                     Constants.WorkflowStates.NotRemoved);
 
-                EntityGroup group;
-
                 if (!model.EntityGroups.Any())
                 {
-                    group = await core.EntityGroupCreate(Constants.FieldTypes.EntitySearch,
-                        "eform-angular-basecustomer-plugin-Customers-hidden", "", true, false);
+                    var group = await core.EntityGroupCreate(Constants.FieldTypes.EntitySearch,
+                        "eform-angular-basecustomer-plugin-Customers-hidden", "", true, true);
+
+                    await pluginDbOptions.UpdateDb(
+                        settings => settings.RelatedEntityGroupId = int.Parse(group.MicrotingUid),
+                        context,
+                        1);
                 }
                 else
                 {
-                    group = model.EntityGroups.First();
-                }
+                    var group = model.EntityGroups.First();
 
-                await pluginDbOptions.UpdateDb(
-                    settings => settings.RelatedEntityGroupId = int.Parse(group.MicrotingUUID),
-                    context,
-                    1);
+                    await pluginDbOptions.UpdateDb(
+                        settings => settings.RelatedEntityGroupId = int.Parse(group.MicrotingUUID),
+                        context,
+                        1);
+                }
             }
         }
     }
