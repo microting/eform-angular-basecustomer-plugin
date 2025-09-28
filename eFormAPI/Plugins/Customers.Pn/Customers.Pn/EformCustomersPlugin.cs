@@ -274,7 +274,7 @@ namespace Customers.Pn
                 if (!model.EntityGroups.Any())
                 {
                     group = await core.EntityGroupCreate(Constants.FieldTypes.EntitySearch,
-                        "eform-angular-basecustomer-plugin-Customers-hidden", "");
+                        "eform-angular-basecustomer-plugin-Customers-hidden", "", true);
                 }
                 else
                 {
