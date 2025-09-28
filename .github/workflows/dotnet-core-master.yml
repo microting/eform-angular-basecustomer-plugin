@@ -28,7 +28,7 @@ jobs:
         cp -av eform-angular-basecustomer-plugin/eform-client/e2e/Tests/customer-settings eform-angular-frontend/eform-client/e2e/Tests/customer-settings
         cp -av eform-angular-basecustomer-plugin/eform-client/e2e/Tests/customer-general eform-angular-frontend/eform-client/e2e/Tests/customer-general
         cp -av eform-angular-basecustomer-plugin/eform-client/e2e/Page\ objects/Customers eform-angular-frontend/eform-client/e2e/Page\ objects/Customers
-        cp -av eform-angular-basecustomer-plugin/eform-client/wdio-headless-plugin-step2a.conf.ts eform-angular-frontend/eform-client/wdio-headless-plugin-step2a.conf.ts
+        cp -av eform-angular-basecustomer-plugin/eform-client/wdio-headless-plugin-step2.conf.ts eform-angular-frontend/eform-client/wdio-headless-plugin-step2.conf.ts
         cp -av eform-angular-basecustomer-plugin/eform-client/wdio-plugin-step2.conf.ts eform-angular-frontend/eform-client/wdio-plugin-step2.conf.ts
         cd eform-angular-frontend/eform-client && ../../eform-angular-basecustomer-plugin/testinginstallpn.sh
     - name: Copy Dockerfile
@@ -88,7 +88,7 @@ jobs:
         cp -av eform-angular-basecustomer-plugin/eform-client/e2e/Tests/customer-settings eform-angular-frontend/eform-client/e2e/Tests/customer-settings
         cp -av eform-angular-basecustomer-plugin/eform-client/e2e/Tests/customer-general eform-angular-frontend/eform-client/e2e/Tests/customer-general
         cp -av eform-angular-basecustomer-plugin/eform-client/e2e/Page\ objects/Customers eform-angular-frontend/eform-client/e2e/Page\ objects/Customers
-        cp -av eform-angular-basecustomer-plugin/eform-client/wdio-headless-plugin-step2a.conf.ts eform-angular-frontend/eform-client/wdio-headless-plugin-step2a.conf.ts
+        cp -av eform-angular-basecustomer-plugin/eform-client/wdio-headless-plugin-step2.conf.ts eform-angular-frontend/eform-client/wdio-headless-plugin-step2.conf.ts
         cp -av eform-angular-basecustomer-plugin/eform-client/wdio-plugin-step2.conf.ts eform-angular-frontend/eform-client/wdio-plugin-step2.conf.ts
         mkdir -p eform-angular-frontend/eFormAPI/eFormAPI.Web/Plugins
         mkdir -p eform-angular-frontend/eform-client/cypress/e2e/plugins/
