@@ -3,92 +3,169 @@ name: .NET Master
 on:
   push:
     branches: [ master, stable, angular19 ]
-    paths-ignore:
-    - '**.md'
-    - '.github/**'
+
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
-        path: main
-    - uses: getong/mariadb-action@v1.1
-      with:
-        host port: 3306 # Optional, default value is 3306. The port of host
-        container port: 3306 # Optional, default value is 3306. The port of container
-        character set server: 'utf8' # Optional, default value is 'utf8mb4'. The '--character-set-server' option for mysqld
-        collation server: 'utf8_general_ci' # Optional, default value is 'utf8mb4_general_ci'. The '--collation-server' option for mysqld
-        mariadb version: '10.4.10' # Optional, default value is "latest". The version of the MariaDB
-        mysql database: 'some_test' # Optional, default value is "test". The specified database which will be create
-        mysql root password: 'secretpassword' # Required if "mysql user" is empty, default is empty. The root superuser password
-        mysql user: 'developer' # Required if "mysql root password" is empty, default is empty. The superuser for the specified database. Can use secrets, too
-        mysql password: 'passwordtoo' # Required if "mysql user" exists. The password for the "mysql user"
-    - name: Sleep 15 seconds
-      run: sleep 15
-    - uses: getong/rabbitmq-action@v1.2
-      with:
-        rabbitmq version: '3.8.2-management-alpine'
-        host port: 5672
-        rabbitmq user: 'admin'
-        rabbitmq password: 'password'
-        rabbitmq vhost: 'vhost_name'
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 9.0.x
-    - name: Use Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: '12.16.2'
+        path: eform-angular-basecustomer-plugin
     - name: Extract branch name
       id: extract_branch
       run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
     - name: 'Preparing Frontend checkout'
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        repository: microting/eform-angular-frontend
+        ref: ${{ steps.extract_branch.outputs.branch }}
+        path: eform-angular-frontend
+    - name: Copy dependencies
+      run: |
+        cp -av eform-angular-basecustomer-plugin/eform-client/src/app/plugins/modules/customers-pn eform-angular-frontend/eform-client/src/app/plugins/modules/customers-pn
+        cp -av eform-angular-basecustomer-plugin/eform-client/e2e/Tests/basecustomer-settings eform-angular-frontend/eform-client/e2e/Tests/basecustomer-settings
+        cp -av eform-angular-basecustomer-plugin/eform-client/e2e/Tests/basecustomer-general eform-angular-frontend/eform-client/e2e/Tests/basecustomer-general
+        cp -av eform-angular-basecustomer-plugin/eform-client/e2e/Page\ objects/Customers eform-angular-frontend/eform-client/e2e/Page\ objects/Customers
+        cp -av eform-angular-basecustomer-plugin/eform-client/wdio-headless-plugin-step2a.conf.ts eform-angular-frontend/eform-client/wdio-headless-plugin-step2a.conf.ts
+        cp -av eform-angular-basecustomer-plugin/eform-client/wdio-plugin-step2.conf.ts eform-angular-frontend/eform-client/wdio-plugin-step2.conf.ts
+        cd eform-angular-frontend/eform-client && ../../eform-angular-basecustomer-plugin/testinginstallpn.sh
+    - name: Copy Dockerfile
+      run: cp eform-angular-basecustomer-plugin/Dockerfile .
+    - name: Build the tagged Docker image
+      run: docker build . -t microtingas/basecustomer-container:latest -t microtingas/basecustomer-container:1.0.0 --build-arg GITVERSION=1.0.0 --build-arg PLUGINVERSION=1.0.0
+    - name: Tag builds
+      run: |-
+        docker tag microtingas/basecustomer-container:latest microtingas/basecustomer-container:latest
+    - run: docker save microtingas/basecustomer-container:latest -o basecustomer-container.tar
+    - uses: actions/upload-artifact@v4
+      with:
+        name: basecustomer-container
+        path: basecustomer-container.tar
+  pn-test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        path: eform-angular-basecustomer-plugin
+    - name: Extract branch name
+      id: extract_branch
+      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+    - uses: actions/download-artifact@v4
+      with:
+        name: basecustomer-container
+    - run: docker load -i basecustomer-container.tar
+    - name: Create docker network
+      run: docker network create --driver bridge --attachable data
+    - name: Start MariaDB
+      run: |
+        docker pull mariadb:10.8
+        docker run --name mariadbtest --network data -e MYSQL_ROOT_PASSWORD=secretpassword -p 3306:3306 -d mariadb:10.8
+    - name: Start rabbitmq
+      run: |
+        docker pull rabbitmq:latest
+        docker run -d --hostname my-rabbit --name some-rabbit --network data -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=password rabbitmq:latest
+    - name: Sleep 15
+      run: sleep 15
+    - name: Start the newly build Docker container
+      id: docker-run
+      run: docker run --name my-container -p 4200:5000 --network data microtingas/basecustomer-container:latest "/ConnectionString=host=mariadbtest;Database=420_Angular;user=root;password=secretpassword;port=3306;Convert Zero Datetime = true;SslMode=none;" > docker_run_log 2>&1 &
+    - name: Use Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20
+    - name: 'Preparing Frontend checkout'
+      uses: actions/checkout@v3
       with:
         repository: microting/eform-angular-frontend
         ref: ${{ steps.extract_branch.outputs.branch }}
         path: eform-angular-frontend
-    - name: Install dependencies
-      run: dotnet restore main/eFormAPI/Plugins/Customers.Pn/Customers.Pn.sln
-    - name: Get the version
-      id: get_version
-      run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3 | cut -d "v" -f 2)
-    - name: Build
-      run: dotnet build main/eFormAPI/Plugins/Customers.Pn/Customers.Pn.sln
-    - name: Unit Tests
-      run: dotnet test --no-restore -c Release -v n main/eFormAPI/Plugins/Customers.Pn/Customers.Pn.Test/Customers.Pn.Test.csproj
     - name: Copy dependencies
       run: |
-        cp -av main/eform-client/src/app/plugins/modules/customers-pn eform-angular-frontend/eform-client/src/app/plugins/modules/customers-pn
-        cp -av main/eform-client/e2e/Tests/customer-settings eform-angular-frontend/eform-client/e2e/Tests/customer-settings
-        cp -av main/eform-client/e2e/Tests/customer-general eform-angular-frontend/eform-client/e2e/Tests/customer-general
-        cp -av main/eform-client/e2e/Assets/ eform-angular-frontend/eform-client/e2e/Assets
-        cp -av main/eform-client/e2e/Page\ objects/Customers eform-angular-frontend/eform-client/e2e/Page\ objects/Customers
-        cp -av main/eform-client/wdio-headless-plugin-step2.conf.js eform-angular-frontend/eform-client/wdio-headless-plugin-step2.conf.js
+        cp -av eform-angular-basecustomer-plugin/eform-client/src/app/plugins/modules/customers-pn eform-angular-frontend/eform-client/src/app/plugins/modules/customers-pn
+        cp -av eform-angular-basecustomer-plugin/eform-client/e2e/Tests/basecustomer-settings eform-angular-frontend/eform-client/e2e/Tests/basecustomer-settings
+        cp -av eform-angular-basecustomer-plugin/eform-client/e2e/Tests/basecustomer-general eform-angular-frontend/eform-client/e2e/Tests/basecustomer-general
+        cp -av eform-angular-basecustomer-plugin/eform-client/e2e/Page\ objects/Customers eform-angular-frontend/eform-client/e2e/Page\ objects/Customers
+        cp -av eform-angular-basecustomer-plugin/eform-client/wdio-headless-plugin-step2a.conf.ts eform-angular-frontend/eform-client/wdio-headless-plugin-step2a.conf.ts
+        cp -av eform-angular-basecustomer-plugin/eform-client/wdio-plugin-step2.conf.ts eform-angular-frontend/eform-client/wdio-plugin-step2.conf.ts
         mkdir -p eform-angular-frontend/eFormAPI/eFormAPI.Web/Plugins
-        cp -av main/eFormAPI/eFormAPI.Web/Plugins/Customers eform-angular-frontend/eFormAPI/eFormAPI.Web/Plugins/Customers
-        cd eform-angular-frontend/eform-client && ../../main/testinginstallpn.sh
-    - name: Build frontend
-      run: dotnet build eform-angular-frontend/eFormAPI/eFormAPI.sln > dotnet_log 2>&1 &
-    - name: NPM install
-      run: cd eform-angular-frontend/eform-client && npm install
-    - name: NPM start
-      run: cd eform-angular-frontend/eform-client && npm start > npm_log 2>&1 &
-    - name: Sleep 75 seconds
-      run: sleep 75
-    - name: Dotnet run
-      run: dotnet run --project eform-angular-frontend/eFormAPI/eFormAPI.Web/eFormAPI.Web.csproj > dotnet_log 2>&1 &
-    - name: Sleep 75 seconds
-      run: sleep 75
-    - name: Configuration testing
-      run: cd eform-angular-frontend/eform-client && npm run testheadless
+        mkdir -p eform-angular-frontend/eform-client/cypress/e2e/plugins/
+        mkdir -p eform-angular-frontend/eform-client/cypress/fixtures/
+        cp -av eform-angular-basecustomer-plugin/eform-client/cypress/fixtures eform-angular-frontend/eform-client/cypress
+        cp -av eform-angular-basecustomer-plugin/eform-client/cypress/e2e/plugins/customers-pn eform-angular-frontend/eform-client/cypress/e2e/plugins/customers-pn
+        cd eform-angular-frontend/eform-client && ../../eform-angular-basecustomer-plugin/testinginstallpn.sh
+    - name: yarn install
+      run: cd eform-angular-frontend/eform-client && yarn install
+    - name: Create errorShots directory
+      run: mkdir eform-angular-frontend/eform-client/errorShots
+    - name: Pretest changes to work with Docker container
+      run: sed -i 's/localhost/mariadbtest/g' eform-angular-frontend/eform-client/e2e/Constants/DatabaseConfigurationConstants.ts
+    - name: Get standard output
+      run: |
+        cat docker_run_log
+    - name: DB Configuration
+      uses: cypress-io/github-action@v4
+      with:
+        start: echo 'hi'
+        wait-on: "http://localhost:4200"
+        wait-on-timeout: 120
+        browser: chrome
+        record: false
+        spec: cypress/e2e/db/*
+        config-file: cypress.config.ts
+        working-directory: eform-angular-frontend/eform-client
+        command-prefix: "--"
     - name: Plugin testing
       run: cd eform-angular-frontend/eform-client && npm run testheadlessplugin
-    - name: The job has failed
-      if: ${{ failure() }}
+    - name: Stop the newly build Docker container
+      run: docker stop my-container
+    - name: Get standard output
       run: |
-        cat dotnet_log
-        cat eform-angular-frontend/eform-client/npm_log
+        cat docker_run_log
+        result=`cat docker_run_log | grep "Now listening on: http://0.0.0.0:5000" -m 1 | wc -l`
+        if [ $result -ne 1 ];then exit 1; fi
+    - name: The job has failed
+      if: always()
+      run: |
+        cat docker_run_log
+    - name: Archive mp4 artifacts
+      if: ${{ failure() }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: error Screenshots
+        path: |
+          /home/runner/work/eform-angular-basecustomer-plugin/eform-angular-basecustomer-plugin/eform-angular-frontend/eform-client/cypress/videos/*.cy.ts.mp4
+        retention-days: 2
+    - name: Archive screenshot artifacts
+      if: ${{ failure() }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: error Screenshots ${{matrix.test}}
+        path: |
+          /home/runner/work/eform-angular-frontend/eform-angular-frontend/eform-client/errorShots/*.png
+  test-dotnet:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Create docker network
+      run: docker network create --driver bridge --attachable data
+    - name: Start MariaDB
+      run: |
+        docker pull mariadb:10.8
+        docker run --name mariadbtest --network data -e MYSQL_ROOT_PASSWORD=secretpassword -p 3306:3306 -d mariadb:10.8
+    - name: Start rabbitmq
+      run: |
+        docker pull rabbitmq:latest
+        docker run -d --hostname my-rabbit --name some-rabbit --network data -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=password -p 5672:5672 rabbitmq:latest
+    - name: Sleep 15
+      run: sleep 15
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 9.0.x
+    - name: Build
+      run: dotnet build eFormAPI/Plugins/Customers.Pn/Customers.Pn.sln
+    - name: Unit Tests
+      run: dotnet test --no-restore -c Release -v n eFormAPI/Plugins/Customers.Pn/Customers.Pn.Test/Customers.Pn.Test.csproj
