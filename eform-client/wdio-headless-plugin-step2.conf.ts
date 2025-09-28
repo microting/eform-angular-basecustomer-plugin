@@ -1,5 +1,9 @@
-exports.config = {
+import type { Options } from '@wdio/types'
+import { $ } from '@wdio/globals';
 
+export const config: Options.Testrunner = {
+  runner: 'local',
+  path: '/',
     //
     // ==================
     // Specify Test Files
@@ -49,15 +53,23 @@ exports.config = {
     // https://docs.saucelabs.com/reference/platforms-configurator
     //
     capabilities: [{
-        // maxInstances can get overwritten per capability. So if you have an in-house Selenium
-        // grid with only 5 firefox instances available you can make sure that not more than
-        // 5 instances get started at a time.
-        maxInstances: 1,
-        //
-        browserName: 'chrome',
-        chromeOptions: {
-            args: ['--window-size=1920,1080']
-        }
+
+      // maxInstances can get overwritten per capability. So if you have an in-house Selenium
+      // grid with only 5 firefox instances available you can make sure that not more than
+      // 5 instances get started at a time.
+      maxInstances: 5,
+      //
+      browserName: 'chrome',
+      'goog:chromeOptions': {
+        args: [
+          'headless',
+          'window-size=1920,1080',
+          'disable-gpu'],
+      },
+      // If outputDir is provided WebdriverIO can capture driver session logs
+      // it is possible to configure which logTypes to include/exclude.
+      // excludeDriverLogs: ['*'], // pass '*' to exclude all driver session logs
+      // excludeDriverLogs: ['bugreport', 'server'],
     }],
     //
     // ===================
@@ -68,23 +80,23 @@ exports.config = {
     // By default WebdriverIO commands are executed in a synchronous way using
     // the wdio-sync package. If you still want to run your Tests in an async way
     // e.g. using promises you can set the sync option to false.
-    sync: true,
+    // sync: true,
     //
     // Level of logging verbosity: silent | verbose | command | data | result | error
     logLevel: 'silent',
     //
     // Enables colors for log output.
-    coloredLogs: true,
+    // coloredLogs: true,
     //
     // Warns when a deprecated command is used
-    deprecationWarnings: true,
+    // deprecationWarnings: true,
     //
     // If you only want to run your Tests until a specific amount of Tests have failed use
     // bail (default is 0 - don't bail, run all Tests).
     bail: 1,
     //
     // Saves a screenshot to a given path if a command fails.
-    screenshotPath: './errorShots/',
+    // screenshotPath: './errorShots/',
     //
     // Set a base URL in order to shorten url command calls. If your `url` parameter starts
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
@@ -124,7 +136,7 @@ exports.config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    services: ['selenium-standalone', 'chromedriver'],
+    services: ['chromedriver'],
     //
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
@@ -144,9 +156,9 @@ exports.config = {
     // See the full list at http://mochajs.org/
     mochaOpts: {
         ui: 'bdd',
-        compilers: ['ts:ts-node/register'],
-        timeout: 600000
-        // requires: ['./test/helpers/common.js']
+        // require: 'ts-node/register',
+        //compilers: ['tsconfig-paths/register'],
+        timeout: 6000000
     },
     //
     // =====
@@ -179,8 +191,8 @@ exports.config = {
      * @param {Array.<String>} specs List of spec file paths that are to be run
      */
     before: function () {
-        require('ts-node/register');
-        browser.timeouts('implicit', 5000);
+        // require('ts-node/register');
+        // browser.timeouts('implicit', 5000);
     },
     /**
      * Runs before a WebdriverIO command gets executed.
@@ -218,8 +230,40 @@ exports.config = {
      * Function to be executed after a test (in Mocha/Jasmine) or a step (in Cucumber) ends.
      * @param {Object} test test details
      */
-    // afterTest: function (test) {
-    // },
+
+    afterTest(test, context, { error, result, duration, passed, retries }) {
+        const path = require('path');
+
+        // if test passed, ignore, else take and save screenshot.
+        if (passed) {
+        return;
+        }
+
+        /*
+        * get the current date and clean it
+        * const date = (new Date()).toString().replace(/\s/g, '-').replace(/-\(\w+\)/, '');
+        */
+        //const { browserName } = browser.desiredCapabilities;
+        const timestamp = new Date().toLocaleString('iso', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+        }).replace(/[ ]/g, '--').replace(':', '-');
+
+        // get current test title and clean it, to use it as file name
+        const filename = encodeURIComponent(
+        `chrome-${timestamp}`.replace(/[/]/g, '__')
+        ).replace(/%../, '.');
+
+        const filePath = path.resolve(this.screenshotPath, `${filename}.png`);
+
+        console.log('Saving screenshot to:', filePath);
+        browser.saveScreenshot(filePath);
+        console.log('Saved screenshot to:', filePath);
+    },
     /**
      * Hook that gets executed after the suite has ended
      * @param {Object} suite suite details
