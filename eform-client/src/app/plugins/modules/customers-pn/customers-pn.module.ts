@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TranslateModule } from '@ngx-translate/core';
-import { MDBRootModule } from 'angular-bootstrap-md';
+import { RouterModule } from '@angular/router';
 import { CustomerPnLayoutComponent } from './layouts';
 import {
   CustomersPnFieldsService,
@@ -20,9 +20,8 @@ import {
   CustomersPnFieldsComponent,
   CustomersPnPageComponent,
 } from './components';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
-import { customersPersistProvider, CustomersStateService} from './components/store';
+import { CustomersStateService } from './components/store';
 
 @NgModule({
   imports: [
@@ -32,10 +31,9 @@ import { customersPersistProvider, CustomersStateService} from './components/sto
     SharedPnModule,
     CustomersPnRouting,
     TranslateModule,
-    MDBRootModule,
     NgSelectModule,
-    FontAwesomeModule,
     EformSharedModule,
+    RouterModule,
   ],
   declarations: [
     CustomerPnLayoutComponent,
@@ -51,7 +49,6 @@ import { customersPersistProvider, CustomersStateService} from './components/sto
     CustomersPnFieldsService,
     CustomersPnSettingsService,
     CustomersStateService,
-    customersPersistProvider,
   ],
 })
 export class CustomersPnModule {}
