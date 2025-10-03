@@ -202,19 +202,3 @@
     </div>
   </div>
 </div>
-
-<app-customer-pn-add
-  #createCustomerModal
-  [fieldsModel]="fieldsModel"
-  (onCustomerCreated)="getAllCustomers()"
-></app-customer-pn-add>
-<app-customer-pn-edit
-  #editCustomerModal
-  [fieldsModel]="fieldsModel"
-  (onCustomerUpdated)="getAllCustomers()"
-></app-customer-pn-edit>
-<app-customer-pn-delete
-  #deleteCustomerModal
-  [fields]="fieldsModel"
-  (onCustomerDeleted)="onCustomerDeleted()"
-></app-customer-pn-delete>

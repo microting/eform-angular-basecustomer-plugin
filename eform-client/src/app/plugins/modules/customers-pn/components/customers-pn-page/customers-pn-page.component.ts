@@ -3,8 +3,8 @@ import {
   EventEmitter,
   OnInit,
   Output,
-  ViewChild,
 } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { TableHeaderElementModel } from 'src/app/common/models';
 import { CustomersPnFieldStatusEnum } from '../../enums';
 import {
@@ -15,6 +15,11 @@ import {
 } from '../../models';
 import { CustomersPnFieldsService, CustomersPnService } from '../../services';
 import { CustomersStateService } from '../store';
+import { CustomerPnAddComponent } from '../customer-pn-add/customer-pn-add.component';
+import { CustomerPnEditComponent } from '../customer-pn-edit/customer-pn-edit.component';
+import { CustomerPnDeleteComponent } from '../customer-pn-delete/customer-pn-delete.component';
+import { dialogConfigHelper } from 'src/app/common/helpers';
+import { Overlay } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-customers-pn-page',
@@ -23,9 +28,6 @@ import { CustomersStateService } from '../store';
   standalone: false
 })
 export class CustomersPnPageComponent implements OnInit {
-  @ViewChild('createCustomerModal', { static: false }) createCustomerModal;
-  @ViewChild('editCustomerModal', { static: false }) editCustomerModal;
-  @ViewChild('deleteCustomerModal', { static: false }) deleteCustomerModal;
   @Output() onCustomerDuplicated: EventEmitter<void> = new EventEmitter<void>();
   get fieldStatusEnum() {
     return CustomersPnFieldStatusEnum;
@@ -40,7 +42,9 @@ export class CustomersPnPageComponent implements OnInit {
   constructor(
     private customersService: CustomersPnService,
     private customersFieldsService: CustomersPnFieldsService,
-    public customersStateService: CustomersStateService
+    public customersStateService: CustomersStateService,
+    private dialog: MatDialog,
+    private overlay: Overlay
   ) {}
 
   checkFieldStatus(numField: number) {
@@ -101,19 +105,42 @@ export class CustomersPnPageComponent implements OnInit {
   }
 
   showCreateCustomerModal() {
-    this.createCustomerModal.show();
+    const modal = this.dialog.open(CustomerPnAddComponent, {
+      ...dialogConfigHelper(this.overlay, { fields: this.fieldsModel }),
+      minWidth: 600
+    });
+    modal.componentInstance.customerCreated.subscribe(() => {
+      this.getAllCustomers();
+    });
   }
 
   showCopyCustomerModal(model: CustomerPnModel) {
-    this.createCustomerModal.showCopy(model.id);
+    const modal = this.dialog.open(CustomerPnAddComponent, {
+      ...dialogConfigHelper(this.overlay, { customerId: model.id, fields: this.fieldsModel }),
+      minWidth: 600
+    });
+    modal.componentInstance.customerCreated.subscribe(() => {
+      this.getAllCustomers();
+    });
   }
 
   showEditCustomerModal(model: CustomerPnModel) {
-    this.editCustomerModal.show(model.id);
+    const modal = this.dialog.open(CustomerPnEditComponent, {
+      ...dialogConfigHelper(this.overlay, { customerId: model.id, fields: this.fieldsModel }),
+      minWidth: 600
+    });
+    modal.componentInstance.customerUpdate.subscribe(() => {
+      this.getAllCustomers();
+    });
   }
 
   showDeleteCustomerModal(model: CustomerPnModel) {
-    this.deleteCustomerModal.show(model);
+    const modal = this.dialog.open(CustomerPnDeleteComponent, {
+      ...dialogConfigHelper(this.overlay, { customer: model, fields: this.fieldsModel })
+    });
+    modal.componentInstance.customerDeleted.subscribe(() => {
+      this.onCustomerDeleted();
+    });
   }
 
   onSearchInputChanged(value: string) {
