@@ -258,7 +258,8 @@ export const config: Options.Testrunner = {
         `chrome-${timestamp}`.replace(/[/]/g, '__')
         ).replace(/%../, '.');
 
-        const filePath = path.resolve(this.screenshotPath, `${filename}.png`);
+        const screenshotPath = './errorShots/';
+        const filePath = path.resolve(screenshotPath, `${filename}.png`);
 
         console.log('Saving screenshot to:', filePath);
         browser.saveScreenshot(filePath);
