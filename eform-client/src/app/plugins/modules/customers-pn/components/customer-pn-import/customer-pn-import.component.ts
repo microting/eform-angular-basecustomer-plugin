@@ -12,6 +12,7 @@ const URL = '';
   selector: 'app-customer-pn-import',
   templateUrl: './customer-pn-import.component.html',
   styleUrls: ['./customer-pn-import.component.scss'],
+  standalone: false
 })
 export class CustomerPnImportComponent implements OnInit {
   public data: any = [];

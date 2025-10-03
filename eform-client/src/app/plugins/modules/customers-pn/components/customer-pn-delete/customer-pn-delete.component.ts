@@ -7,7 +7,8 @@ import {CustomersPnService} from '../../services';
 @Component({
   selector: 'app-customer-pn-delete',
   templateUrl: './customer-pn-delete.component.html',
-  styleUrls: ['./customer-pn-delete.component.scss']
+  styleUrls: ['./customer-pn-delete.component.scss'],
+  standalone: false
 })
 export class CustomerPnDeleteComponent implements OnInit {
   @ViewChild('frame', {static: false}) frame;

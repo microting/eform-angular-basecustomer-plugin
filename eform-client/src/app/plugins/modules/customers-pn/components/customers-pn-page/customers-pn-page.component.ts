@@ -20,6 +20,7 @@ import { CustomersStateService } from '../store';
   selector: 'app-customers-pn-page',
   templateUrl: './customers-pn-page.component.html',
   styleUrls: ['./customers-pn-page.component.scss'],
+  standalone: false
 })
 export class CustomersPnPageComponent implements OnInit {
   @ViewChild('createCustomerModal', { static: false }) createCustomerModal;

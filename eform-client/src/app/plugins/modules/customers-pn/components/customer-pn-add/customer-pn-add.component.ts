@@ -6,7 +6,8 @@ import {CustomersPnService} from '../../services';
 @Component({
   selector: 'app-customer-pn-add',
   templateUrl: './customer-pn-add.component.html',
-  styleUrls: ['./customer-pn-add.component.scss']
+  styleUrls: ['./customer-pn-add.component.scss'],
+  standalone: false
 })
 export class CustomerPnAddComponent implements OnInit {
   @ViewChild('frame', {static: false}) frame;
