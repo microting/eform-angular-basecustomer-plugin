@@ -1,236 +1,206 @@
-<div mdbModal class="modal fade" #frame="mdbModal">
-  <div class="modal-dialog modal-lg modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>{{ 'New Customer' | translate }}</h3>
-        <button class="close" data-dismiss="modal" (click)="frame.hide()">
-          <span>×</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="container-fluid">
-          <form #createForm="ngForm">
-            <div class="row">
-              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CreatedBy)">
-                <div class="md-form">
-                  <input mdbInput
-
-                         [(ngModel)]="newCustomerModel.createdBy"
-                         type="text" id="createCreatedBy"
-                         name="createCreatedBy" class="form-control">
-                  <label for="createCreatedBy">{{'CreatedBy' | translate}}</label>
-                </div>
-              </div>
-              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CustomerNo)">
-                <div class="md-form">
-                  <input mdbInput
-
-                         [(ngModel)]="newCustomerModel.customerNo"
-                         type="text" id="createCustomerNo"
-                         name="createCustomerNo" class="form-control">
-                  <label for="createCustomerNo">{{'CustomerNo' | translate}}</label>
-                </div>
-              </div>
-              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.ContactPerson)">
-                <div class="md-form">
-                  <input mdbInput
-                          [(ngModel)]="newCustomerModel.contactPerson"
-                         class="form-control"
-                         type="text" id="createContactPerson"
-                         name="createContactPerson">
-                  <label for="createContactPerson">{{'ContactPerson' | translate}}</label>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CompanyName)">
-                <div class="md-form">
-                  <input mdbInput
-                          [(ngModel)]="newCustomerModel.companyName"
-                         class="form-control"
-                         type="text" id="createCompanyName"
-                         name="createCompanyName">
-                  <label for="createCompanyName">{{'CompanyName' | translate}}</label>
-                </div>
-              </div>
-              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CompanyAddress)">
-                <div class="md-form">
-                  <input mdbInput
-                          [(ngModel)]="newCustomerModel.companyAddress"
-                         class="form-control"
-                         type="text" id="createCompanyAddress"
-                         name="createCompanyAddress">
-                  <label for="createCompanyAddress">{{'CompanyAddress' | translate}}</label>
-                </div>
-              </div>
-              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CompanyAddress2)">
-                <div class="md-form">
-                  <input mdbInput
-                          [(ngModel)]="newCustomerModel.companyAddress2"
-                         class="form-control"
-                         type="text" id="createCompanyAddress2"
-                         name="createCompanyAddress2">
-                  <label for="createCompanyAddress2">{{'CompanyAddress2' | translate}}</label>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.ZipCode)">
-                <div class="md-form">
-                  <input mdbInput
-                          [(ngModel)]="newCustomerModel.zipCode"
-                         class="form-control"
-                         type="text" id="createZipCode"
-                         name="createZipCode">
-                  <label for="createZipCode">{{'ZipCode' | translate}}</label>
-                </div>
-              </div>
-              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CityName)">
-                <div class="md-form">
-                  <input mdbInput
-                          [(ngModel)]="newCustomerModel.cityName"
-                         class="form-control"
-                         type="text" id="createCityName"
-                         name="createCityName">
-                  <label for="createCityName">{{'CityName' | translate}}</label>
-                </div>
-              </div>
-              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.Phone)">
-                <div class="md-form">
-                  <input mdbInput
-                          [(ngModel)]="newCustomerModel.phone"
-                         class="form-control"
-                         type="text" id="createPhone"
-                         name="createPhone">
-                  <label for="createPhone">{{'Phone' | translate}}</label>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.Email)">
-                <div class="md-form">
-                  <input mdbInput
-                          [(ngModel)]="newCustomerModel.email"
-                         class="form-control"
-                         type="text" id="createEmail"
-                         name="createEmail">
-                  <label for="createEmail">{{'Email' | translate}}</label>
-                </div>
-              </div>
-              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.EanCode)">
-                <div class="md-form">
-                  <input mdbInput
-                          [(ngModel)]="newCustomerModel.eanCode"
-                         class="form-control"
-                         type="text" id="createEanCode"
-                         name="createEanCode">
-                  <label for="createEanCode">{{'EanCode' | translate}}</label>
-                </div>
-              </div>
-              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.VatNumber)">
-                <div class="md-form">
-                  <input mdbInput
-                          [(ngModel)]="newCustomerModel.vatNumber"
-                         class="form-control"
-                         type="text" id="createVatNumber"
-                         name="createVatNumber">
-                  <label for="createVatNumber">{{'VatNumber' | translate}}</label>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CountryCode)">
-                <div class="md-form">
-                  <input mdbInput
-                          [(ngModel)]="newCustomerModel.countryCode"
-                         class="form-control"
-                         type="text" id="createCountryCode"
-                         name="createCountryCode">
-                  <label for="createCountryCode">{{'CountryCode' | translate}}</label>
-                </div>
-              </div>
-              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CadastralNumber)">
-                <div class="md-form">
-                  <input mdbInput
-                          [(ngModel)]="newCustomerModel.cadastralNumber"
-                         class="form-control"
-                         type="text" id="createCadastralNumber"
-                         name="createCadastralNumber">
-                  <label for="createCadastralNumber">{{'CadastralNumber' | translate}}</label>
-                </div>
-              </div>
-              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CrmId)">
-                <div class="md-form">
-                  <input mdbInput
-                          [(ngModel)]="newCustomerModel.crmId"
-                         class="form-control"
-                         type="text" id="createCrmId"
-                         name="createCrmId">
-                  <label for="createCrmId">{{'CrmId' | translate}}</label>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.PropertyNumber)">
-                <div class="md-form">
-                  <input mdbInput
-                          [(ngModel)]="newCustomerModel.propertyNumber"
-                         class="form-control"
-                         type="text" id="createPropertyNumber"
-                         name="createPropertyNumber">
-                  <label for="createPropertyNumber">{{'PropertyNumber' | translate}}</label>
-                </div>
-              </div>
-              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.ApartmentNumber)">
-                <div class="md-form">
-                  <input mdbInput
-                          [(ngModel)]="newCustomerModel.apartmentNumber"
-                         class="form-control"
-                         type="text" id="createApartmentNumber"
-                         name="createApartmentNumber">
-                  <label for="createApartmentNumber">{{'ApartmentNumber' | translate}}</label>
-                </div>
-              </div>
-              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.CompletionYear)">
-                <div class="md-form">
-                  <input mdbInput
-                          [(ngModel)]="newCustomerModel.completionYear"
-                         class="form-control"
-                         type="text" id="createCompletionYear"
-                         name="createCompletionYear">
-                  <label for="createCompletionYear">{{'CompletionYear' | translate}}</label>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-4 " *ngIf="isFieldAvailable(fieldsEnum.FloorsWithLivingSpace)">
-                <div class="md-form">
-                  <input mdbInput
-                          [(ngModel)]="newCustomerModel.floorsWithLivingSpace"
-                         class="form-control"
-                         type="text" id="createFloorsWithLivingSpace"
-                         name="createFloorsWithLivingSpace">
-                  <label for="createFloorsWithLivingSpace">{{'FloorsWithLivingSpace' | translate}}</label>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-            <div class="col col-xs-12" *ngIf="isFieldAvailable(fieldsEnum.Description)">
-              <label class="text-black-60">{{'Description' | translate}}</label>
-              <div class="md-form p-0 m-0">
-                <pell-pn-editor [(value)]="newCustomerModel.description" name="createComment" id="createComment"></pell-pn-editor>
-              </div>
-            </div>
+<h3 mat-dialog-title>{{ 'New Customer' | translate }}</h3>
+<div mat-dialog-content>
+  <div class="d-flex flex-column">
+    <form #createForm="ngForm">
+      <div class="row">
+        <div class="col-md-4" *ngIf="isFieldAvailable(fieldsEnum.CreatedBy)">
+          <mat-form-field>
+            <mat-label>{{'CreatedBy' | translate}}</mat-label>
+            <input matInput
+                   [(ngModel)]="newCustomerModel.createdBy"
+                   type="text" id="createCreatedBy"
+                   name="createCreatedBy">
+          </mat-form-field>
         </div>
-        </form>
+        <div class="col-md-4" *ngIf="isFieldAvailable(fieldsEnum.CustomerNo)">
+          <mat-form-field>
+            <mat-label>{{'CustomerNo' | translate}}</mat-label>
+            <input matInput
+                   [(ngModel)]="newCustomerModel.customerNo"
+                   type="text" id="createCustomerNo"
+                   name="createCustomerNo">
+          </mat-form-field>
+        </div>
+        <div class="col-md-4" *ngIf="isFieldAvailable(fieldsEnum.ContactPerson)">
+          <mat-form-field>
+            <mat-label>{{'ContactPerson' | translate}}</mat-label>
+            <input matInput
+                   [(ngModel)]="newCustomerModel.contactPerson"
+                   type="text" id="createContactPerson"
+                   name="createContactPerson">
+          </mat-form-field>
+        </div>
       </div>
-    </div>
-    <div class="modal-footer">
-      <button mdbBtn class="btn-success btn-small-height" id="createCustomerBtn" (click)="createCustomer()">
-        {{ 'Create' | translate }}
-      </button>
-      <button mdbBtn class="btn-accent text-black-50 btn-small-height" (click)="frame.hide()" id="cancelCreateCustomerBtn">{{'Cancel' | translate}}</button>
-    </div>
+      <div class="row">
+        <div class="col-md-4" *ngIf="isFieldAvailable(fieldsEnum.CompanyName)">
+          <mat-form-field>
+            <mat-label>{{'CompanyName' | translate}}</mat-label>
+            <input matInput
+                   [(ngModel)]="newCustomerModel.companyName"
+                   type="text" id="createCompanyName"
+                   name="createCompanyName">
+          </mat-form-field>
+        </div>
+        <div class="col-md-4" *ngIf="isFieldAvailable(fieldsEnum.CompanyAddress)">
+          <mat-form-field>
+            <mat-label>{{'CompanyAddress' | translate}}</mat-label>
+            <input matInput
+                   [(ngModel)]="newCustomerModel.companyAddress"
+                   type="text" id="createCompanyAddress"
+                   name="createCompanyAddress">
+          </mat-form-field>
+        </div>
+        <div class="col-md-4" *ngIf="isFieldAvailable(fieldsEnum.CompanyAddress)">
+          <mat-form-field>
+            <mat-label>{{'CompanyAddress2' | translate}}</mat-label>
+            <input matInput
+                   [(ngModel)]="newCustomerModel.companyAddress2"
+                   type="text" id="createCompanyAddress2"
+                   name="createCompanyAddress2">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4" *ngIf="isFieldAvailable(fieldsEnum.ZipCode)">
+          <mat-form-field>
+            <mat-label>{{'ZipCode' | translate}}</mat-label>
+            <input matInput
+                   [(ngModel)]="newCustomerModel.zipCode"
+                   type="text" id="createZipCode"
+                   name="createZipCode">
+          </mat-form-field>
+        </div>
+        <div class="col-md-4" *ngIf="isFieldAvailable(fieldsEnum.CityName)">
+          <mat-form-field>
+            <mat-label>{{'CityName' | translate}}</mat-label>
+            <input matInput
+                   [(ngModel)]="newCustomerModel.cityName"
+                   type="text" id="createCityName"
+                   name="createCityName">
+          </mat-form-field>
+        </div>
+        <div class="col-md-4" *ngIf="isFieldAvailable(fieldsEnum.Phone)">
+          <mat-form-field>
+            <mat-label>{{'Phone' | translate}}</mat-label>
+            <input matInput
+                   [(ngModel)]="newCustomerModel.phone"
+                   type="text" id="createPhone"
+                   name="createPhone">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4" *ngIf="isFieldAvailable(fieldsEnum.Email)">
+          <mat-form-field>
+            <mat-label>{{'Email' | translate}}</mat-label>
+            <input matInput
+                   [(ngModel)]="newCustomerModel.email"
+                   type="text" id="createEmail"
+                   name="createEmail">
+          </mat-form-field>
+        </div>
+        <div class="col-md-4" *ngIf="isFieldAvailable(fieldsEnum.Email)">
+          <mat-form-field>
+            <mat-label>{{'EanCode' | translate}}</mat-label>
+            <input matInput
+                   [(ngModel)]="newCustomerModel.eanCode"
+                   type="text" id="createEanCode"
+                   name="createEanCode">
+          </mat-form-field>
+        </div>
+        <div class="col-md-4" *ngIf="isFieldAvailable(fieldsEnum.Email)">
+          <mat-form-field>
+            <mat-label>{{'VatNumber' | translate}}</mat-label>
+            <input matInput
+                   [(ngModel)]="newCustomerModel.vatNumber"
+                   type="text" id="createVatNumber"
+                   name="createVatNumber">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4" *ngIf="isFieldAvailable(fieldsEnum.CountryCode)">
+          <mat-form-field>
+            <mat-label>{{'CountryCode' | translate}}</mat-label>
+            <input matInput
+                   [(ngModel)]="newCustomerModel.countryCode"
+                   type="text" id="createCountryCode"
+                   name="createCountryCode">
+          </mat-form-field>
+        </div>
+        <div class="col-md-4" *ngIf="isFieldAvailable(fieldsEnum.CadastralNumber)">
+          <mat-form-field>
+            <mat-label>{{'CadastralNumber' | translate}}</mat-label>
+            <input matInput
+                   [(ngModel)]="newCustomerModel.cadastralNumber"
+                   type="text" id="createCadastralNumber"
+                   name="createCadastralNumber">
+          </mat-form-field>
+        </div>
+        <div class="col-md-4" *ngIf="isFieldAvailable(fieldsEnum.CrmId)">
+          <mat-form-field>
+            <mat-label>{{'CrmId' | translate}}</mat-label>
+            <input matInput
+                   [(ngModel)]="newCustomerModel.crmId"
+                   type="text" id="createCrmId"
+                   name="createCrmId">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4" *ngIf="isFieldAvailable(fieldsEnum.PropertyNumber)">
+          <mat-form-field>
+            <mat-label>{{'PropertyNumber' | translate}}</mat-label>
+            <input matInput
+                   [(ngModel)]="newCustomerModel.propertyNumber"
+                   type="text" id="createPropertyNumber"
+                   name="createPropertyNumber">
+          </mat-form-field>
+        </div>
+        <div class="col-md-4" *ngIf="isFieldAvailable(fieldsEnum.ApartmentNumber)">
+          <mat-form-field>
+            <mat-label>{{'ApartmentNumber' | translate}}</mat-label>
+            <input matInput
+                   [(ngModel)]="newCustomerModel.apartmentNumber"
+                   type="text" id="createApartmentNumber"
+                   name="createApartmentNumber">
+          </mat-form-field>
+        </div>
+        <div class="col-md-4" *ngIf="isFieldAvailable(fieldsEnum.CompletionYear)">
+          <mat-form-field>
+            <mat-label>{{'CompletionYear' | translate}}</mat-label>
+            <input matInput
+                   [(ngModel)]="newCustomerModel.completionYear"
+                   type="text" id="createCompletionYear"
+                   name="createCompletionYear">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4" *ngIf="isFieldAvailable(fieldsEnum.FloorsWithLivingSpace)">
+          <mat-form-field>
+            <mat-label>{{'FloorsWithLivingSpace' | translate}}</mat-label>
+            <input matInput
+                   [(ngModel)]="newCustomerModel.floorsWithLivingSpace"
+                   type="text" id="createFloorsWithLivingSpace"
+                   name="createFloorsWithLivingSpace">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-xs-12" *ngIf="isFieldAvailable(fieldsEnum.Description)">
+          <label class="text-black-60">{{'Description' | translate}}</label>
+          <div class="p-0 m-0">
+            <pell-pn-createor [(value)]="newCustomerModel.description" name="createComment"></pell-pn-createor>
+          </div>
+        </div>
+      </div>
+    </form>
   </div>
 </div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+  <button mat-raised-button color="accent" [disabled]="!createForm.form.valid" (click)="createCustomer()" id="saveEditBtn">
+    {{ 'Create' | translate }}
+  </button>
+  <button mat-raised-button (click)="hide()" id="cancelEditBtn">{{'Cancel' | translate}}</button>
 </div>
