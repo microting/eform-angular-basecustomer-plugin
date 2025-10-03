@@ -3,7 +3,7 @@
     <button
       mdbBtn
       class="btn-success btn-small-height mb-2"
-      mdbTooltip="{{ 'Create Customer' | translate }}"
+      matTooltip="{{ 'Create Customer' | translate }}"
       id="newCustomerBtn"
       (click)="showCreateCustomerModal()"
     >
@@ -13,7 +13,7 @@
       id="importCustomer"
       mdbBtn
       class="btn-success btn-small-height mb-2"
-      mdbTooltip="{{ 'Import Customer' | translate }}"
+      matTooltip="{{ 'Import Customer' | translate }}"
       routerLink="import"
     >
       {{ 'Import Customer' | translate }}
@@ -152,7 +152,7 @@
               <button
                 mdbBtn
                 class="btn-accent text-black-50 btn-icon mb-2"
-                mdbTooltip="{{ 'Edit Customer' | translate }}"
+                matTooltip="{{ 'Edit Customer' | translate }}"
                 id="editCustomerBtn"
                 (click)="showEditCustomerModal(customer)"
               >
@@ -161,7 +161,7 @@
               <button
                 mdbBtn
                 class="btn-success btn-icon mb-2"
-                mdbTooltip="{{ 'Duplicate Customer' | translate }}"
+                matTooltip="{{ 'Duplicate Customer' | translate }}"
                 id="copyCustomerBtn"
                 (click)="showCopyCustomerModal(customer)"
               >
@@ -170,7 +170,7 @@
               <button
                 mdbBtn
                 class="btn-danger btn-icon mb-2"
-                mdbTooltip="{{ 'Delete Customer' | translate }}"
+                matTooltip="{{ 'Delete Customer' | translate }}"
                 id="deleteCustomerBtn"
                 (click)="showDeleteCustomerModal(customer)"
               >
@@ -202,19 +202,3 @@
     </div>
   </div>
 </div>
-
-<app-customer-pn-add
-  #createCustomerModal
-  [fieldsModel]="fieldsModel"
-  (onCustomerCreated)="getAllCustomers()"
-></app-customer-pn-add>
-<app-customer-pn-edit
-  #editCustomerModal
-  [fieldsModel]="fieldsModel"
-  (onCustomerUpdated)="getAllCustomers()"
-></app-customer-pn-edit>
-<app-customer-pn-delete
-  #deleteCustomerModal
-  [fields]="fieldsModel"
-  (onCustomerDeleted)="onCustomerDeleted()"
-></app-customer-pn-delete>

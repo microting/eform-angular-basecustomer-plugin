@@ -1,127 +1,122 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {Observable, tap} from 'rxjs';
 import {
+  CommonPaginationState,
   OperationDataResult,
   PaginationModel,
   SortModel,
 } from 'src/app/common/models';
-import { updateTableSort, getOffset } from 'src/app/common/helpers';
-import { map } from 'rxjs/operators';
-import { CustomersQuery, CustomersStore } from './';
-import { CustomersPnService } from '../../services';
-import { CustomersPnModel } from '../../models';
+import {updateTableSort, getOffset} from 'src/app/common/helpers';
+import {CustomersPnService} from '../../services';
+import {Store} from '@ngrx/store';
+import {
+  selectCustomersFilters,
+  selectCustomersPagination,
+  customersUpdateTotalCustomers,
+  customersUpdateFilters,
+  customersUpdatePagination,
+  CustomersFiltrationModel,
+  selectCustomersPaginationPageSize,
+  selectCustomersNameFilters,
+  selectCustomersTotal,
+} from '../../state';
+import {CustomersPnModel} from '../../models';
+import {map} from 'rxjs/operators';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class CustomersStateService {
+  private selectCustomersFilters$ = this.store.select(selectCustomersFilters);
+  private selectCustomersPagination$ = this.store.select(selectCustomersPagination);
+  currentPagination: CommonPaginationState;
+  currentFilters: CustomersFiltrationModel;
+
   constructor(
-    private store: CustomersStore,
+    private store: Store,
     private service: CustomersPnService,
-    private query: CustomersQuery
-  ) {}
+  ) {
+    this.selectCustomersPagination$.subscribe(x => this.currentPagination = x);
+    this.selectCustomersFilters$.subscribe(x => this.currentFilters = x);
+  }
 
   getAllCustomers(): Observable<OperationDataResult<CustomersPnModel>> {
     return this.service
       .getAllCustomers({
-        ...this.query.pageSetting.pagination,
-        ...this.query.pageSetting.filters,
-        sortColumnName: this.query.pageSetting.pagination.sort,
-        name: this.query.pageSetting.filters.nameFilter,
+        ...this.currentFilters,
+        ...this.currentPagination,
+        sortColumnName: this.currentPagination.sort,
+        name: this.currentFilters.nameFilter,
       })
       .pipe(
-        map((response) => {
+        tap((response) => {
           if (response && response.success && response.model) {
-            this.store.update(() => ({
-              total: response.model.total,
-            }));
+            this.store.dispatch(customersUpdateTotalCustomers(response.model.total));
           }
-          return response;
         })
       );
   }
 
   updateNameFilter(nameFilter: string) {
-    this.store.update((state) => ({
-      filters: {
-        ...state.filters,
-        nameFilter: nameFilter,
-      },
-      pagination: {
-        ...state.pagination,
-        offset: 0,
-      },
-    }));
+    this.store.dispatch(customersUpdateFilters({nameFilter: nameFilter}));
+    this.store.dispatch(customersUpdatePagination({...this.currentPagination, offset: 0}));
   }
 
   updatePageSize(pageSize: number) {
-    this.store.update((state) => ({
-      pagination: {
-        ...state.pagination,
-        pageSize: pageSize,
-      },
-    }));
+    this.store.dispatch(customersUpdatePagination({...this.currentPagination, pageSize: pageSize}));
     this.checkOffset();
   }
 
   getPageSize(): Observable<number> {
-    return this.query.selectPageSize$;
+    return this.store.select(selectCustomersPaginationPageSize);
   }
 
   getSort(): Observable<SortModel> {
-    return this.query.selectSort$;
+    return this.selectCustomersPagination$.pipe(
+      map(pagination => new SortModel(pagination.sort, pagination.isSortDsc))
+    );
   }
 
   getNameFilter(): Observable<string> {
-    return this.query.selectNameFilter$;
+    return this.store.select(selectCustomersNameFilters);
   }
 
   changePage(offset: number) {
-    this.store.update((state) => ({
-      pagination: {
-        ...state.pagination,
-        offset: offset,
-      },
-    }));
+    this.store.dispatch(customersUpdatePagination({...this.currentPagination, offset: offset}));
   }
 
   onDelete() {
-    this.store.update((state) => ({
-      total: state.total - 1,
-    }));
+    const currentTotal = this.currentPagination.total || 0;
+    this.store.dispatch(customersUpdateTotalCustomers(currentTotal - 1));
     this.checkOffset();
   }
 
   onSortTable(sort: string) {
     const localPageSettings = updateTableSort(
       sort,
-      this.query.pageSetting.pagination.sort,
-      this.query.pageSetting.pagination.isSortDsc
+      this.currentPagination.sort,
+      this.currentPagination.isSortDsc
     );
-    this.store.update((state) => ({
-      pagination: {
-        ...state.pagination,
-        isSortDsc: localPageSettings.isSortDsc,
-        sort: localPageSettings.sort,
-      },
-    }));
+    this.store.dispatch(customersUpdatePagination({...this.currentPagination, ...localPageSettings}));
   }
 
   checkOffset() {
+    const currentTotal = this.currentPagination.total || 0;
     const newOffset = getOffset(
-      this.query.pageSetting.pagination.pageSize,
-      this.query.pageSetting.pagination.offset,
-      this.query.pageSetting.total
+      this.currentPagination.pageSize,
+      this.currentPagination.offset,
+      currentTotal
     );
-    if (newOffset !== this.query.pageSetting.pagination.offset) {
-      this.store.update((state) => ({
-        pagination: {
-          ...state.pagination,
-          offset: newOffset,
-        },
-      }));
+    if (newOffset !== this.currentPagination.offset) {
+      this.store.dispatch(customersUpdatePagination({...this.currentPagination, offset: newOffset}));
     }
   }
 
   getPagination(): Observable<PaginationModel> {
-    return this.query.selectPagination$;
+    return this.store.select(selectCustomersTotal).pipe(
+      map(total => new PaginationModel(
+        total,
+        this.currentPagination.pageSize,
+        this.currentPagination.offset
+      ))
+    );
   }
 }

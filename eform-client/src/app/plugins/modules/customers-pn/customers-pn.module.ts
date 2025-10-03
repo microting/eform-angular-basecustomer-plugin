@@ -3,7 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TranslateModule } from '@ngx-translate/core';
-import { MDBRootModule } from 'angular-bootstrap-md';
+import { RouterModule } from '@angular/router';
+import { StoreModule } from '@ngrx/store';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { CustomerPnLayoutComponent } from './layouts';
 import {
   CustomersPnFieldsService,
@@ -20,9 +26,9 @@ import {
   CustomersPnFieldsComponent,
   CustomersPnPageComponent,
 } from './components';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
-import { customersPersistProvider, CustomersStateService} from './components/store';
+import { CustomersStateService } from './components/store';
+import { customersReducer } from './state';
 
 @NgModule({
   imports: [
@@ -32,10 +38,17 @@ import { customersPersistProvider, CustomersStateService} from './components/sto
     SharedPnModule,
     CustomersPnRouting,
     TranslateModule,
-    MDBRootModule,
     NgSelectModule,
-    FontAwesomeModule,
     EformSharedModule,
+    RouterModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatTooltipModule,
+    StoreModule.forFeature('customersPn', {
+      customersState: customersReducer,
+    }),
   ],
   declarations: [
     CustomerPnLayoutComponent,
@@ -51,7 +64,6 @@ import { customersPersistProvider, CustomersStateService} from './components/sto
     CustomersPnFieldsService,
     CustomersPnSettingsService,
     CustomersStateService,
-    customersPersistProvider,
   ],
 })
 export class CustomersPnModule {}

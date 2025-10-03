@@ -16,6 +16,7 @@ import {
   selector: 'app-customers-pn-fields',
   templateUrl: './customers-pn-fields.component.html',
   styleUrls: ['./customers-pn-fields.component.scss'],
+  standalone: false
 })
 export class CustomersPnFieldsComponent implements OnInit {
   isChecked = false;

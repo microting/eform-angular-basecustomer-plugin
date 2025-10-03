@@ -1,37 +1,47 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Inject, OnInit} from '@angular/core';
 import {CustomerPnFieldsEnum} from 'src/app/plugins/modules/customers-pn/enums';
 import {CustomerPnModel} from 'src/app/plugins/modules/customers-pn/models/customer';
 import {FieldsPnUpdateModel} from 'src/app/plugins/modules/customers-pn/models/field';
 import {CustomersPnService} from '../../services';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-customer-pn-delete',
   templateUrl: './customer-pn-delete.component.html',
-  styleUrls: ['./customer-pn-delete.component.scss']
+  styleUrls: ['./customer-pn-delete.component.scss'],
+  standalone: false
 })
 export class CustomerPnDeleteComponent implements OnInit {
-  @ViewChild('frame', {static: false}) frame;
-  @Output() onCustomerDeleted: EventEmitter<void> = new EventEmitter<void>();
+  customerDeleted: EventEmitter<void> = new EventEmitter<void>();
   selectedCustomer: CustomerPnModel = new CustomerPnModel();
-  @Input() fields: FieldsPnUpdateModel = new FieldsPnUpdateModel();
+  fields: FieldsPnUpdateModel = new FieldsPnUpdateModel();
   get fieldsEnum() { return CustomerPnFieldsEnum; }
 
-
-  constructor(private customersService: CustomersPnService) { }
+  constructor(
+    private customersService: CustomersPnService,
+    public dialogRef: MatDialogRef<CustomerPnDeleteComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: {customer: CustomerPnModel, fields: FieldsPnUpdateModel}
+  ) {
+    if (data) {
+      this.selectedCustomer = data.customer;
+      if (data.fields) {
+        this.fields = data.fields;
+      }
+    }
+  }
 
   ngOnInit() {
   }
 
-  show(customer: CustomerPnModel) {
-    this.selectedCustomer = customer;
-    this.frame.show();
+  hide() {
+    this.dialogRef.close();
   }
 
   deleteCustomer() {
     this.customersService.deleteCustomer(this.selectedCustomer.id).subscribe(((data) => {
       if (data && data.success) {
-        this.onCustomerDeleted.emit();
-        this.frame.hide();
+        this.customerDeleted.emit();
+        this.dialogRef.close(true);
       }
     }));
   }
