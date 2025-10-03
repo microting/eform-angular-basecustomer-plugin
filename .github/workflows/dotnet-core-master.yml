@@ -93,7 +93,6 @@ jobs:
         mkdir -p eform-angular-frontend/eFormAPI/eFormAPI.Web/Plugins
         mkdir -p eform-angular-frontend/eform-client/cypress/e2e/plugins/
         mkdir -p eform-angular-frontend/eform-client/cypress/fixtures/
-        cp -av eform-angular-basecustomer-plugin/eform-client/cypress/fixtures eform-angular-frontend/eform-client/cypress
         cp -av eform-angular-basecustomer-plugin/eform-client/cypress/e2e/plugins/customers-pn eform-angular-frontend/eform-client/cypress/e2e/plugins/customers-pn
         cd eform-angular-frontend/eform-client && ../../eform-angular-basecustomer-plugin/testinginstallpn.sh
     - name: yarn install
