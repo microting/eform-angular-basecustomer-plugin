@@ -9,6 +9,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { CustomerPnLayoutComponent } from './layouts';
 import {
   CustomersPnFieldsService,
@@ -44,6 +45,7 @@ import { customersReducer } from './state';
     MatButtonModule,
     MatInputModule,
     MatFormFieldModule,
+    MatTooltipModule,
     StoreModule.forFeature('customersPn', {
       customersState: customersReducer,
     }),
