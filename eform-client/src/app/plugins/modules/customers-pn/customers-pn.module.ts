@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
+import { StoreModule } from '@ngrx/store';
 import { CustomerPnLayoutComponent } from './layouts';
 import {
   CustomersPnFieldsService,
@@ -22,6 +23,7 @@ import {
 } from './components';
 import { EformSharedModule } from 'src/app/common/modules/eform-shared/eform-shared.module';
 import { CustomersStateService } from './components/store';
+import { customersReducer } from './state';
 
 @NgModule({
   imports: [
@@ -34,6 +36,9 @@ import { CustomersStateService } from './components/store';
     NgSelectModule,
     EformSharedModule,
     RouterModule,
+    StoreModule.forFeature('customersPn', {
+      customersState: customersReducer,
+    }),
   ],
   declarations: [
     CustomerPnLayoutComponent,

@@ -1,160 +1,121 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {Observable, tap} from 'rxjs';
 import {
+  CommonPaginationState,
   OperationDataResult,
   PaginationModel,
   SortModel,
-  FiltrationStateModel,
-  CommonPaginationState,
 } from 'src/app/common/models';
-import { updateTableSort, getOffset } from 'src/app/common/helpers';
-import { map } from 'rxjs/operators';
-import { CustomersPnService } from '../../services';
-import { CustomersPnModel } from '../../models';
+import {updateTableSort, getOffset} from 'src/app/common/helpers';
+import {CustomersPnService} from '../../services';
+import {Store} from '@ngrx/store';
+import {
+  selectCustomersFilters,
+  selectCustomersPagination,
+  customersUpdateTotalCustomers,
+  customersUpdateFilters,
+  customersUpdatePagination,
+  CustomersFiltrationModel,
+  selectCustomersPaginationPageSize,
+  selectCustomersNameFilters,
+  selectCustomersTotal,
+} from '../../state';
+import {CustomersPnModel} from '../../models';
+import {map} from 'rxjs/operators';
 
-export interface CustomersState {
-  pagination: CommonPaginationState;
-  filters: FiltrationStateModel;
-  total: number;
-}
-
-function createInitialState(): CustomersState {
-  return <CustomersState>{
-    pagination: {
-      pageSize: 10,
-      sort: 'Id',
-      isSortDsc: false,
-      offset: 0,
-    },
-    filters: {
-      nameFilter: '',
-    },
-    total: 0,
-  };
-}
-
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class CustomersStateService {
-  private state$ = new BehaviorSubject<CustomersState>(createInitialState());
+  private selectCustomersFilters$ = this.store.select(selectCustomersFilters);
+  private selectCustomersPagination$ = this.store.select(selectCustomersPagination);
+  currentPagination: CommonPaginationState;
+  currentFilters: CustomersFiltrationModel;
 
   constructor(
-    private service: CustomersPnService
-  ) {}
-
-  private get state(): CustomersState {
-    return this.state$.value;
-  }
-
-  private updateState(update: Partial<CustomersState>) {
-    this.state$.next({ ...this.state, ...update });
+    private store: Store,
+    private service: CustomersPnService,
+  ) {
+    this.selectCustomersPagination$.subscribe(x => this.currentPagination = x);
+    this.selectCustomersFilters$.subscribe(x => this.currentFilters = x);
   }
 
   getAllCustomers(): Observable<OperationDataResult<CustomersPnModel>> {
     return this.service
       .getAllCustomers({
-        ...this.state.pagination,
-        ...this.state.filters,
-        sortColumnName: this.state.pagination.sort,
-        name: this.state.filters.nameFilter,
+        ...this.currentFilters,
+        ...this.currentPagination,
+        sortColumnName: this.currentPagination.sort,
+        name: this.currentFilters.nameFilter,
       })
       .pipe(
-        map((response) => {
+        tap((response) => {
           if (response && response.success && response.model) {
-            this.updateState({ total: response.model.total });
+            this.store.dispatch(customersUpdateTotalCustomers(response.model.total));
           }
-          return response;
         })
       );
   }
 
   updateNameFilter(nameFilter: string) {
-    this.updateState({
-      filters: {
-        ...this.state.filters,
-        nameFilter: nameFilter,
-      },
-      pagination: {
-        ...this.state.pagination,
-        offset: 0,
-      },
-    });
+    this.store.dispatch(customersUpdateFilters({nameFilter: nameFilter}));
+    this.store.dispatch(customersUpdatePagination({...this.currentPagination, offset: 0}));
   }
 
   updatePageSize(pageSize: number) {
-    this.updateState({
-      pagination: {
-        ...this.state.pagination,
-        pageSize: pageSize,
-      },
-    });
+    this.store.dispatch(customersUpdatePagination({...this.currentPagination, pageSize: pageSize}));
     this.checkOffset();
   }
 
   getPageSize(): Observable<number> {
-    return this.state$.pipe(map(state => state.pagination.pageSize));
+    return this.store.select(selectCustomersPaginationPageSize);
   }
 
   getSort(): Observable<SortModel> {
-    return this.state$.pipe(
-      map(state => new SortModel(state.pagination.sort, state.pagination.isSortDsc))
+    return this.selectCustomersPagination$.pipe(
+      map(pagination => new SortModel(pagination.sort, pagination.isSortDsc))
     );
   }
 
   getNameFilter(): Observable<string> {
-    return this.state$.pipe(map(state => state.filters.nameFilter));
+    return this.store.select(selectCustomersNameFilters);
   }
 
   changePage(offset: number) {
-    this.updateState({
-      pagination: {
-        ...this.state.pagination,
-        offset: offset,
-      },
-    });
+    this.store.dispatch(customersUpdatePagination({...this.currentPagination, offset: offset}));
   }
 
   onDelete() {
-    this.updateState({ total: this.state.total - 1 });
+    const currentTotal = this.currentPagination.total || 0;
+    this.store.dispatch(customersUpdateTotalCustomers(currentTotal - 1));
     this.checkOffset();
   }
 
   onSortTable(sort: string) {
     const localPageSettings = updateTableSort(
       sort,
-      this.state.pagination.sort,
-      this.state.pagination.isSortDsc
+      this.currentPagination.sort,
+      this.currentPagination.isSortDsc
     );
-    this.updateState({
-      pagination: {
-        ...this.state.pagination,
-        isSortDsc: localPageSettings.isSortDsc,
-        sort: localPageSettings.sort,
-      },
-    });
+    this.store.dispatch(customersUpdatePagination({...this.currentPagination, ...localPageSettings}));
   }
 
   checkOffset() {
+    const currentTotal = this.currentPagination.total || 0;
     const newOffset = getOffset(
-      this.state.pagination.pageSize,
-      this.state.pagination.offset,
-      this.state.total
+      this.currentPagination.pageSize,
+      this.currentPagination.offset,
+      currentTotal
     );
-    if (newOffset !== this.state.pagination.offset) {
-      this.updateState({
-        pagination: {
-          ...this.state.pagination,
-          offset: newOffset,
-        },
-      });
+    if (newOffset !== this.currentPagination.offset) {
+      this.store.dispatch(customersUpdatePagination({...this.currentPagination, offset: newOffset}));
     }
   }
 
   getPagination(): Observable<PaginationModel> {
-    return this.state$.pipe(
-      map(state => new PaginationModel(
-        state.total,
-        state.pagination.pageSize,
-        state.pagination.offset
+    return this.store.select(selectCustomersTotal).pipe(
+      map(total => new PaginationModel(
+        total,
+        this.currentPagination.pageSize,
+        this.currentPagination.offset
       ))
     );
   }
