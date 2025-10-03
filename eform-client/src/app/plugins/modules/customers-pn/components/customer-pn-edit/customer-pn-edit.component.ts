@@ -1,7 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Inject, OnInit} from '@angular/core';
 import {CustomerPnFieldsEnum, CustomersPnFieldStatusEnum} from '../../enums';
 import {FieldsPnUpdateModel, CustomerPnFullModel} from '../../models';
 import {CustomersPnService} from '../../services';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-customer-pn-edit',
@@ -10,24 +11,32 @@ import {CustomersPnService} from '../../services';
   standalone: false
 })
 export class CustomerPnEditComponent implements OnInit {
-  @ViewChild('frame', {static: false}) frame;
-  @Input() fieldsModel = new FieldsPnUpdateModel();
-  @Output() onCustomerUpdated: EventEmitter<void> = new EventEmitter<void>();
+  fieldsModel = new FieldsPnUpdateModel();
+  customerUpdate: EventEmitter<void> = new EventEmitter<void>();
 
   get fieldsEnum() { return CustomerPnFieldsEnum; }
 
   selectedCustomerModel = new CustomerPnFullModel();
 
-  constructor(private customersService: CustomersPnService) {
+  constructor(
+    private customersService: CustomersPnService,
+    public dialogRef: MatDialogRef<CustomerPnEditComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: {customerId: number, fields: FieldsPnUpdateModel}
+  ) {
+    if (data && data.fields) {
+      this.fieldsModel = data.fields;
+    }
   }
 
   ngOnInit() {
+    if (this.data && this.data.customerId) {
+      this.getSingleCustomer(this.data.customerId);
+    }
   }
 
-  show(customerId: number) {
+  hide() {
+    this.dialogRef.close();
     this.selectedCustomerModel = new CustomerPnFullModel();
-    this.getSingleCustomer(customerId);
-    this.frame.show();
   }
 
   getSingleCustomer(customerId: number) {
@@ -43,8 +52,8 @@ export class CustomerPnEditComponent implements OnInit {
     this.customersService.updateCustomer(this.selectedCustomerModel).subscribe(((data) => {
       if (data && data.success) {
         this.selectedCustomerModel = new CustomerPnFullModel();
-        this.onCustomerUpdated.emit();
-        this.frame.hide();
+        this.customerUpdate.emit();
+        this.dialogRef.close(true);
       }
 
     }));
