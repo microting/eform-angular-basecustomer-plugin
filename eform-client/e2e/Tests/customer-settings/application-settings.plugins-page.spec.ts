@@ -5,32 +5,31 @@ import pluginPage from '../../Page objects/Plugin.page';
 import { expect } from 'chai';
 
 describe('Application settings page - site header section', function () {
-  before(function () {
-    loginPage.open('/auth');
-    loginPage.login();
+  before(async () => {
+    await loginPage.open('/auth');
   });
-  it('should go to plugin settings page', function () {
-    myEformsPage.Navbar.goToPluginsPage();
-    $('#plugin-name').waitForDisplayed({ timeout: 50000 });
+  it('should go to plugin settings page', async () => {
+    await loginPage.login();
+    await myEformsPage.Navbar.goToPluginsPage();
 
-    const plugin = pluginPage.getFirstPluginRowObj();
-    expect(plugin.id, 'id is not equal').equal(1);
-    expect(plugin.name, 'name is not equal').equal(
-      'Microting Customers Plugin'
-    );
-    expect(plugin.version, 'version is not equal').equal('1.0.0.0');
-    expect(plugin.status, 'status is not equal').eq(false);
+    const backendPlugin = await pluginPage.getFirstPluginRowObj();
+    expect(backendPlugin.id).equal(1);
+    expect(backendPlugin.name).equal('Microting Customers Plugin');
+    expect(backendPlugin.version).equal('1.0.0.0');
+    expect(backendPlugin.status, 'status is not equal').eq('toggle_off');
   });
-  it('should activate the plugin', function () {
-    let plugin = pluginPage.getFirstPluginRowObj();
-    plugin.enableOrDisablePlugin();
 
-    plugin = pluginPage.getFirstPluginRowObj();
-    expect(plugin.id, 'id is not equal').equal(1);
-    expect(plugin.name, 'name is not equal').equal(
-      'Microting Customers Plugin'
-    );
-    expect(plugin.version, 'version is not equal').equal('1.0.0.0');
-    expect(plugin.status, 'status is not equal').eq(true);
+  it('should activate the plugin', async () => {
+    let backendPlugin = await pluginPage.getFirstPluginRowObj();
+    await backendPlugin.enableOrDisablePlugin();
+
+    backendPlugin = await pluginPage.getFirstPluginRowObj();
+    expect(backendPlugin.id).equal(1);
+    expect(backendPlugin.name).equal('Microting Customers Plugin');
+    expect(backendPlugin.version).equal('1.0.0.0');
+    expect(
+      backendPlugin.status,
+      'customers plugin is not enabled'
+    ).eq('toggle_on');
   });
 });
