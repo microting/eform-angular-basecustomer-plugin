@@ -16,7 +16,10 @@ describe('Customers plugin settings page', function () {
     spinnerAnimation.waitForDisplayed({ timeout: 20000, reverse: true });
 
     const plugin = pluginPage.getFirstPluginRowObj();
-    plugin.settingsBtn.click();
+    const settingsBtn = plugin.settingsBtn;
+    settingsBtn.waitForDisplayed({ timeout: 20000 });
+    settingsBtn.waitForClickable({ timeout: 20000 });
+    settingsBtn.click();
     spinnerAnimation.waitForDisplayed({ timeout: 20000, reverse: true });
     const customerCheckbox = customersSettingsPage.getCheckboxById(
       'CustomerNo'
@@ -66,7 +69,10 @@ describe('Customers plugin settings page', function () {
     myEformsPage.Navbar.goToPluginsPage();
     spinnerAnimation.waitForDisplayed({ timeout: 20000, reverse: true });
 
-    plugin.settingsBtn.click();
+    const settingsBtn2 = plugin.settingsBtn;
+    settingsBtn2.waitForDisplayed({ timeout: 20000 });
+    settingsBtn2.waitForClickable({ timeout: 20000 });
+    settingsBtn2.click();
     spinnerAnimation.waitForDisplayed({ timeout: 20000, reverse: true });
     expect(
       customerCheckbox.getValue(),
@@ -86,7 +92,10 @@ describe('Customers plugin settings page', function () {
     spinnerAnimation.waitForDisplayed({ timeout: 20000, reverse: true });
 
     const plugin = pluginPage.getFirstPluginRowObj();
-    plugin.settingsBtn.click();
+    const settingsBtn = plugin.settingsBtn;
+    settingsBtn.waitForDisplayed({ timeout: 20000 });
+    settingsBtn.waitForClickable({ timeout: 20000 });
+    settingsBtn.click();
     spinnerAnimation.waitForDisplayed({ timeout: 20000, reverse: true });
 
     const checkboxIds = [
@@ -130,7 +139,10 @@ describe('Customers plugin settings page', function () {
     spinnerAnimation.waitForDisplayed({ timeout: 20000, reverse: true });
 
     const plugin = pluginPage.getFirstPluginRowObj();
-    plugin.settingsBtn.click();
+    const settingsBtn = plugin.settingsBtn;
+    settingsBtn.waitForDisplayed({ timeout: 20000 });
+    settingsBtn.waitForClickable({ timeout: 20000 });
+    settingsBtn.click();
     spinnerAnimation.waitForDisplayed({ timeout: 20000, reverse: true });
     const checkboxIds = [
       'Version',
@@ -158,7 +170,10 @@ describe('Customers plugin settings page', function () {
     spinnerAnimation.waitForDisplayed({ timeout: 20000, reverse: true });
 
     const plugin = pluginPage.getFirstPluginRowObj();
-    plugin.settingsBtn.click();
+    const settingsBtn = plugin.settingsBtn;
+    settingsBtn.waitForDisplayed({ timeout: 20000 });
+    settingsBtn.waitForClickable({ timeout: 20000 });
+    settingsBtn.click();
     spinnerAnimation.waitForDisplayed({ timeout: 20000, reverse: true });
 
     const checkboxIds = [

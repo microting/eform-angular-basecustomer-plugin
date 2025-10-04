@@ -6,47 +6,57 @@ export class CustomersSettingsPage extends Page {
   }
 
   public get deleteCustomerBtn() {
-    $('#cancelCreateBtn').waitForDisplayed({timeout: 20000});
-    $('#cancelCreateBtn').waitForClickable({timeout: 20000});
-    return $('#cancelCreateBtn');
+    const ele = $('#cancelCreateBtn');
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({timeout: 20000});
+    return ele;
   }
 
   public get saveEditBtn() {
-    $('#saveEditBtn').waitForDisplayed({timeout: 20000});
-    $('#saveEditBtn').waitForClickable({timeout: 20000});
-    return $('#saveEditBtn');
+    const ele = $('#saveEditBtn');
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({timeout: 20000});
+    return ele;
   }
 
   public get cancelEditBtn() {
-    $('#cancelEditBtn').waitForDisplayed({timeout: 20000});
-    $('#cancelEditBtn').waitForClickable({timeout: 20000});
-    return $('#cancelEditBtn');
+    const ele = $('#cancelEditBtn');
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({timeout: 20000});
+    return ele;
   }
 
   public get saveDeleteBtn() {
-    $('#saveDeleteBtn').waitForDisplayed({timeout: 20000});
-    $('#saveDeleteBtn').waitForClickable({timeout: 20000});
-    return $('#saveDeleteBtn');
+    const ele = $('#saveDeleteBtn');
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({timeout: 20000});
+    return ele;
   }
 
   public get cancelDeleteBtn() {
-    $('#cancelDeleteBtn').waitForDisplayed({timeout: 20000});
-    $('#cancelDeleteBtn').waitForClickable({timeout: 20000});
-    return $('#cancelDeleteBtn');
+    const ele = $('#cancelDeleteBtn');
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({timeout: 20000});
+    return ele;
   }
   public getCheckboxById(id: string) {
-    return $('#checkbox' + id);
+    const ele = $('#checkbox' + id);
+    ele.waitForDisplayed({ timeout: 20000 });
+    return ele;
   }
 
   public clickCheckboxById(id: string) {
-    const el = $('#mat-checkbox' + id);
-    el.click();
+    const ele = $('#mat-checkbox' + id);
+    ele.waitForDisplayed({ timeout: 20000 });
+    ele.waitForClickable({ timeout: 20000 });
+    ele.click();
     // browser.pause(1000);
   }
   public  getSearchField() {
-    $('.ng-input > input').waitForDisplayed({timeout: 20000});
-    $('.ng-input > input').waitForClickable({timeout: 20000});
-    return $('.ng-input > input');
+    const ele = $('.ng-input > input');
+    ele.waitForDisplayed({timeout: 20000});
+    ele.waitForClickable({timeout: 20000});
+    return ele;
   }
   public getListOfChoices() {
     return browser.$$('.ng-option');
@@ -57,6 +67,8 @@ export class CustomersSettingsPage extends Page {
 
   public saveSettings() {
     const saveSettingsBtn = $('#saveSettingsBtn');
+    saveSettingsBtn.waitForDisplayed({ timeout: 20000 });
+    saveSettingsBtn.waitForClickable({ timeout: 20000 });
     saveSettingsBtn.click();
     //$('.ng-input > input').waitForDisplayed({timeout: 20000});
     //$('.ng-input > input').waitForClickable({timeout: 20000});
