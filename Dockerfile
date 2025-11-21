@@ -5,7 +5,7 @@ COPY eform-angular-frontend/eform-client ./
 RUN yarn install
 RUN yarn build
 
-FROM mcr.microsoft.com/dotnet/sdk:9.0-noble AS build-env
+FROM mcr.microsoft.com/dotnet/sdk:10.0-noble AS build-env
 WORKDIR /app
 ARG GITVERSION
 ARG PLUGINVERSION
@@ -17,7 +17,7 @@ RUN dotnet publish eFormAPI.Web -o eFormAPI.Web/out /p:Version=$GITVERSION --run
 RUN dotnet publish Customers.Pn -o Customers.Pn/out /p:Version=$PLUGINVERSION --runtime linux-x64 --configuration Release
 
 # Build runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:9.0-noble
+FROM mcr.microsoft.com/dotnet/aspnet:10.0-noble
 WORKDIR /app
 COPY --from=build-env /app/eFormAPI.Web/out .
 RUN mkdir -p ./Plugins/Customers.Pn
