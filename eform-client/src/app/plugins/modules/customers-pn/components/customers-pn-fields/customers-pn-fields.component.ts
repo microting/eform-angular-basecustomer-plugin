@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,
+  inject
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { AdvEntitySearchableGroupListRequestModel } from 'src/app/common/models';
 import { CustomersPnFieldStatusEnum } from '../../enums';
@@ -19,6 +21,10 @@ import {
   standalone: false
 })
 export class CustomersPnFieldsComponent implements OnInit {
+  private customersFieldsService = inject(CustomersPnFieldsService);
+  private customersSettingsService = inject(CustomersPnSettingsService);
+  private router = inject(Router);
+
   isChecked = false;
   fieldsUpdateModel: FieldsPnUpdateModel = new FieldsPnUpdateModel();
   customersPnSettingsModel: CustomersPnSettingsModel = new CustomersPnSettingsModel();
@@ -27,11 +33,7 @@ export class CustomersPnFieldsComponent implements OnInit {
     return CustomersPnFieldStatusEnum;
   }
 
-  constructor(
-    private customersFieldsService: CustomersPnFieldsService,
-    private customersSettingsService: CustomersPnSettingsService,
-    private router: Router
-  ) {}
+  
 
   ngOnInit() {
     this.advEntitySearchableGroupListRequestModel.pageSize = 15;

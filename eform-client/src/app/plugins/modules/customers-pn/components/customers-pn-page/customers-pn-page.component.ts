@@ -3,6 +3,7 @@ import {
   EventEmitter,
   OnInit,
   Output,
+  inject
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TableHeaderElementModel } from 'src/app/common/models';
@@ -28,6 +29,12 @@ import { Overlay } from '@angular/cdk/overlay';
   standalone: false
 })
 export class CustomersPnPageComponent implements OnInit {
+  private customersService = inject(CustomersPnService);
+  private customersFieldsService = inject(CustomersPnFieldsService);
+  public customersStateService = inject(CustomersStateService);
+  private dialog = inject(MatDialog);
+  private overlay = inject(Overlay);
+
   @Output() onCustomerDuplicated: EventEmitter<void> = new EventEmitter<void>();
   get fieldStatusEnum() {
     return CustomersPnFieldStatusEnum;
@@ -38,14 +45,6 @@ export class CustomersPnPageComponent implements OnInit {
   customerModel: CustomerPnFullModel = new CustomerPnFullModel();
 
   tableHeaders: TableHeaderElementModel[];
-
-  constructor(
-    private customersService: CustomersPnService,
-    private customersFieldsService: CustomersPnFieldsService,
-    public customersStateService: CustomersStateService,
-    private dialog: MatDialog,
-    private overlay: Overlay
-  ) {}
 
   checkFieldStatus(numField: number) {
     return (

@@ -1,4 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable,
+  inject
+} from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   OperationDataResult,
@@ -13,7 +15,7 @@ export let CustomerPnFieldsMethods = {
 
 @Injectable()
 export class CustomersPnFieldsService {
-  constructor(private apiBaseService: ApiBaseService) {}
+  private apiBaseService = inject(ApiBaseService);
 
   getAllFields(): Observable<OperationDataResult<FieldsPnUpdateModel>> {
     return this.apiBaseService.get(CustomerPnFieldsMethods.CustomerPnFields);

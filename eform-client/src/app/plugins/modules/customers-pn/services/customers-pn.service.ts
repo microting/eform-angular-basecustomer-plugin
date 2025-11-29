@@ -1,4 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable,
+  inject
+} from '@angular/core';
 import { Observable } from 'rxjs';
 import { OperationDataResult, OperationResult } from 'src/app/common/models';
 import {
@@ -15,7 +17,7 @@ export let CustomerPnMethods = {
 
 @Injectable({ providedIn: 'root' })
 export class CustomersPnService {
-  constructor(private apiBaseService: ApiBaseService) {}
+  private apiBaseService = inject(ApiBaseService);
 
   getAllCustomers(
     model: CustomersPnRequestModel
