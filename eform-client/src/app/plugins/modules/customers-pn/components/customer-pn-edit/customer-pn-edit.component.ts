@@ -1,4 +1,6 @@
-import {Component, EventEmitter, Inject, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit,
+  inject
+} from '@angular/core';
 import {CustomerPnFieldsEnum, CustomersPnFieldStatusEnum} from '../../enums';
 import {FieldsPnUpdateModel, CustomerPnFullModel} from '../../models';
 import {CustomersPnService} from '../../services';
@@ -11,6 +13,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
   standalone: false
 })
 export class CustomerPnEditComponent implements OnInit {
+  private customersService = inject(CustomersPnService);
+  public dialogRef = inject(MatDialogRef<CustomerPnEditComponent>);
+  private data = inject<{customerId: number, fields: FieldsPnUpdateModel}>(MAT_DIALOG_DATA);
+
   fieldsModel = new FieldsPnUpdateModel();
   customerUpdate: EventEmitter<void> = new EventEmitter<void>();
 
@@ -18,17 +24,12 @@ export class CustomerPnEditComponent implements OnInit {
 
   selectedCustomerModel = new CustomerPnFullModel();
 
-  constructor(
-    private customersService: CustomersPnService,
-    public dialogRef: MatDialogRef<CustomerPnEditComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {customerId: number, fields: FieldsPnUpdateModel}
-  ) {
-    if (data && data.fields) {
-      this.fieldsModel = data.fields;
-    }
-  }
+  
 
   ngOnInit() {
+    if (this.data && this.data.fields) {
+      this.fieldsModel = this.data.fields;
+    }
     if (this.data && this.data.customerId) {
       this.getSingleCustomer(this.data.customerId);
     }

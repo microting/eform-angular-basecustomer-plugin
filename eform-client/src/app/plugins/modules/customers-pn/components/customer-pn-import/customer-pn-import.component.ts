@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,
+  inject
+} from '@angular/core';
 import { FileUploader } from 'ng2-file-upload';
 import { Papa } from 'ngx-papaparse';
 import { CustomersPnService } from '../../services';
@@ -15,6 +17,8 @@ const URL = '';
   standalone: false
 })
 export class CustomerPnImportComponent implements OnInit {
+  private customerService = inject(CustomersPnService);
+
   public data: any = [];
   uploader: FileUploader;
   customerImportModel: CustomersPnImportModel;
@@ -52,7 +56,8 @@ export class CustomerPnImportComponent implements OnInit {
     { value: 18, label: 'FloorsWithLivingSpace' },
     { value: 19, label: 'Ignore' },
   ];
-  constructor(private customerService: CustomersPnService) {
+  
+  constructor() {
     this.customerImportModel = new CustomersPnImportModel();
     // forEach(Option in this.options) {
     //   this.customerHeaderModel = new CustomerPnHeadersModel();
