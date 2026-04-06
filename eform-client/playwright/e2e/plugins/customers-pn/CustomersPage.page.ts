@@ -166,12 +166,8 @@ export class CustomersPage {
         ),
         this.saveCreateBtn().click(),
       ]);
-      // Wait for the list refresh GET after dialog closes
-      await this.page.waitForResponse(
-        r => r.url().includes('/api/customers-pn/customers') && r.request().method() === 'GET'
-      );
     }
-    await this.page.waitForTimeout(500);
+    await this.page.waitForTimeout(1000);
   }
 
   async clearTable(): Promise<void> {
@@ -222,8 +218,13 @@ export class CustomerRowObject {
 
   async openCopyModal(): Promise<void> {
     await this.openActionMenu();
+    const getSingleResponse = this.page.waitForResponse(
+      r => r.url().includes('/api/customers-pn/customers/') && r.request().method() === 'GET'
+    );
     await this.page.locator('[id^="copyCustomerBtn"]').first().click();
     await this.parentPage.cancelCreateBtn().waitFor({ state: 'visible' });
+    await getSingleResponse;
+    await this.page.waitForTimeout(300);
   }
 
   async delete(clickCancel = false): Promise<void> {
@@ -237,9 +238,6 @@ export class CustomerRowObject {
         ),
         this.parentPage.confirmDeleteBtn().click(),
       ]);
-      await this.page.waitForResponse(
-        r => r.url().includes('/api/customers-pn/customers') && r.request().method() === 'GET'
-      );
     }
     await this.page.waitForTimeout(500);
   }
@@ -267,9 +265,6 @@ export class CustomerRowObject {
         ),
         this.parentPage.saveEditBtn().click(),
       ]);
-      await this.page.waitForResponse(
-        r => r.url().includes('/api/customers-pn/customers') && r.request().method() === 'GET'
-      );
     }
     await this.page.waitForTimeout(500);
   }
