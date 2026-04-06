@@ -3,12 +3,6 @@ import { LoginPage } from '../../Page objects/Login.page';
 import { CustomersPage, CustomerCreateUpdate, CustomerRowObject } from './CustomersPage.page';
 import { generateRandmString } from '../../helper-functions';
 
-const customer: CustomerCreateUpdate = {
-  companyName: generateRandmString(8),
-  companyAddress: generateRandmString(10),
-  phone: '99887766',
-};
-
 test.describe('Customers - Delete', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/");
@@ -20,6 +14,11 @@ test.describe('Customers - Delete', () => {
     const customersPage = new CustomersPage(page);
     await customersPage.goToCustomers();
 
+    const customer: CustomerCreateUpdate = {
+      companyName: generateRandmString(8),
+      companyAddress: generateRandmString(10),
+      phone: '99887766',
+    };
     await customersPage.createCustomer(customer);
     const countAfterCreate = await customersPage.getRowCount();
 
@@ -35,6 +34,11 @@ test.describe('Customers - Delete', () => {
     const customersPage = new CustomersPage(page);
     await customersPage.goToCustomers();
 
+    const customer: CustomerCreateUpdate = {
+      companyName: generateRandmString(8),
+      companyAddress: generateRandmString(10),
+      phone: '99887711',
+    };
     await customersPage.createCustomer(customer);
     const countAfterCreate = await customersPage.getRowCount();
 

@@ -24,8 +24,13 @@ test.describe('Customers - Copy', () => {
     await customersPage.createCustomer(customer);
     const countAfterCreate = await customersPage.getRowCount();
 
+    // Open copy modal, modify company name to avoid duplicate detection, then save
     const row = new CustomerRowObject(page, customersPage, countAfterCreate);
-    await row.copy();
+    await row.openCopyModal();
+    const companyNameInput = page.locator('#createCompanyName');
+    await companyNameInput.clear();
+    await companyNameInput.fill(customer.companyName + '_copy');
+    await customersPage.closeCreateModal(false);
 
     // Reload the page to ensure we see the latest data
     await page.reload();
