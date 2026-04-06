@@ -21,6 +21,7 @@ const updatedCustomer: CustomerCreateUpdate = {
 
 test.describe('Customers - Edit', () => {
   test.beforeEach(async ({ page }) => {
+    await page.goto("/");
     await new LoginPage(page).login();
   });
 
@@ -56,6 +57,7 @@ test.describe('Customers - Edit', () => {
 
   test.afterAll(async ({ browser }) => {
     const page = await browser.newPage();
+    await page.goto("/");
     await new LoginPage(page).login();
     const customersPage = new CustomersPage(page);
     await customersPage.goToCustomers();

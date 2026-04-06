@@ -4,6 +4,7 @@ import { CustomersPage } from './CustomersPage.page';
 
 test.describe('Customers - Settings', () => {
   test.beforeEach(async ({ page }) => {
+    await page.goto("/");
     await new LoginPage(page).login();
   });
 
