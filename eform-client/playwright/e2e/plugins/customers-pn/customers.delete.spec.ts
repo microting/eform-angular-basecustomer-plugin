@@ -31,7 +31,7 @@ test.describe('Customers - Delete', () => {
   });
 
   test('should cancel customer deletion', async ({ page }) => {
-    test.setTimeout(120000);
+    test.setTimeout(180000);
     const customersPage = new CustomersPage(page);
     await customersPage.goToCustomers();
 

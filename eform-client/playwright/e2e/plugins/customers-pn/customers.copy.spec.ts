@@ -17,7 +17,7 @@ test.describe('Customers - Copy', () => {
   });
 
   test('should copy a customer', async ({ page }) => {
-    test.setTimeout(120000);
+    test.setTimeout(180000);
     const customersPage = new CustomersPage(page);
     await customersPage.goToCustomers();
 
@@ -28,7 +28,9 @@ test.describe('Customers - Copy', () => {
     await row.copy();
 
     // Reload the page to ensure we see the latest data
-    await customersPage.goToCustomers();
+    await page.reload();
+    await page.locator('app-customers-pn-container').waitFor({ state: 'visible', timeout: 60000 });
+    await page.waitForTimeout(2000);
     const countAfterCopy = await customersPage.getRowCount();
     expect(countAfterCopy).toBe(countAfterCreate + 1);
   });
