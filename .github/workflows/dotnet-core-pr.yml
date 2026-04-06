@@ -118,6 +118,9 @@ jobs:
         if [ $result -ne 1 ];then exit 1; fi
     - name: Wait for app
       run: npx wait-on http://localhost:4200 --timeout 120000
+    - name: Enable all customer fields
+      run: |
+        docker exec -i mariadbtest mariadb -u root --password=secretpassword -e 'update `420_eform-angular-basecustomer-plugin`.CustomerFields set FieldStatus = 1' || true
     - name: Playwright test
       run: cd eform-angular-frontend/eform-client && npx playwright test playwright/e2e/plugins/customers-pn/
     - name: Stop the newly build Docker container
