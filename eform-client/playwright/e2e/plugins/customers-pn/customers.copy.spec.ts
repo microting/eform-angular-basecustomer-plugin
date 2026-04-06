@@ -24,10 +24,22 @@ test.describe('Customers - Copy', () => {
     await customersPage.createCustomer(customer);
     const countAfterCreate = await customersPage.getRowCount();
 
+    // Log network requests during copy
+    const requests: string[] = [];
+    page.on('response', response => {
+      if (response.url().includes('/api/customers-pn')) {
+        requests.push(`${response.request().method()} ${response.url()} ${response.status()}`);
+      }
+    });
+
     const row = new CustomerRowObject(page, customersPage, countAfterCreate);
     await row.copy();
 
+    // Wait for the list to refresh
+    await page.waitForTimeout(2000);
     const countAfterCopy = await customersPage.getRowCount();
+    console.log('Network requests during copy:', requests);
+    console.log('Count after create:', countAfterCreate, 'Count after copy:', countAfterCopy);
     expect(countAfterCopy).toBe(countAfterCreate + 1);
   });
 
