@@ -126,6 +126,13 @@ jobs:
         if [ $result -ne 1 ];then exit 1; fi
     - name: Wait for app
       run: npx wait-on http://localhost:4200 --timeout 120000
+    - name: List databases and find customer fields table
+      run: |
+        docker exec -i mariadbtest mariadb -u root --password=secretpassword -e 'show databases'
+        for db in $(docker exec -i mariadbtest mariadb -u root --password=secretpassword -N -e 'show databases' | grep 420); do
+          echo "=== Tables in $db ==="
+          docker exec -i mariadbtest mariadb -u root --password=secretpassword -e "show tables from \`$db\`" || true
+        done
     - name: Enable all customer fields
       run: |
         docker exec -i mariadbtest mariadb -u root --password=secretpassword -e 'update `420_eform-angular-basecustomer-plugin`.CustomerFields set FieldStatus = 1' || true
