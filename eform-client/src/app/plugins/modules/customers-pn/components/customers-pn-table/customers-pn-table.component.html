@@ -1,0 +1,45 @@
+<mtx-grid
+  [data]="customersModel.customers"
+  [columns]="tableHeaders"
+  [cellTemplate]="{actions: actionsTpl}"
+  [showPaginator]="false"
+  [pageOnFront]="false"
+  [rowStriped]="true"
+  [showToolbar]="false"
+  [showColumnMenuButton]="false"
+  [sortActive]="selectCustomersPaginationSort$ | async"
+  [sortDirection]="selectCustomersPaginationIsSortDsc$ | async"
+  (sortChange)="sortTable($event)">
+</mtx-grid>
+
+<ng-template #actionsTpl let-row let-i="index">
+  <div class="customer-actions" id="action-items-{{i}}">
+    <button id="actionMenu-{{i}}" mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button
+        mat-menu-item
+        id="editCustomerBtn-{{i}}"
+        (click)="onShowEditCustomerModal(row)">
+        <mat-icon fontSet="material-symbols-outlined">edit_square</mat-icon>
+        <span>{{ 'Edit Customer' | translate }}</span>
+      </button>
+      <button
+        mat-menu-item
+        id="copyCustomerBtn-{{i}}"
+        (click)="onShowCopyCustomerModal(row)">
+        <mat-icon>content_copy</mat-icon>
+        <span>{{ 'Copy Customer' | translate }}</span>
+      </button>
+      <button
+        mat-menu-item
+        class="btn-delete-menu"
+        id="deleteCustomerBtn-{{i}}"
+        (click)="onShowDeleteCustomerModal(row)">
+        <mat-icon color="warn" fontSet="material-symbols-outlined">delete</mat-icon>
+        <span>{{ 'Delete Customer' | translate }}</span>
+      </button>
+    </mat-menu>
+  </div>
+</ng-template>

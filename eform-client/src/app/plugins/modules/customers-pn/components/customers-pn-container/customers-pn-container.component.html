@@ -1,0 +1,53 @@
+<eform-new-subheader>
+  <div class="d-flex flex-row align-items-center gap-12">
+    <div class="text-field--rounded mt-4">
+      <mat-form-field>
+        <mat-label>{{ 'Search' | translate }}</mat-label>
+        <input
+          matInput
+          type="text"
+          (ngModelChange)="onSearchInputChanged($event)"
+          [ngModel]="selectCustomersNameFilters$ | async"
+          id="searchInput"
+        />
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+    <div class="line-vert"></div>
+    <button
+      class="btn-primary btn-primary--icon-left"
+      id="newCustomerBtn"
+      matTooltip="{{ 'Create Customer' | translate }}"
+      (click)="showCreateCustomerModal()"
+      [matTooltipPosition]="'left'"
+    >
+      <mat-icon>add</mat-icon>
+      <span>{{ 'New Customer' | translate }}</span>
+    </button>
+    <button
+      class="btn-primary btn-primary--icon-left"
+      id="importCustomer"
+      matTooltip="{{ 'Import Customer' | translate }}"
+      routerLink="import"
+      [matTooltipPosition]="'left'"
+    >
+      <mat-icon>upload</mat-icon>
+      <span>{{ 'Import Customer' | translate }}</span>
+    </button>
+  </div>
+</eform-new-subheader>
+
+<app-customers-pn-table
+  [customersModel]="customersModel"
+  [tableHeaders]="tableHeaders"
+  (showEditCustomerModal)="showEditCustomerModal($event)"
+  (showDeleteCustomerModal)="showDeleteCustomerModal($event)"
+  (showCopyCustomerModal)="showCopyCustomerModal($event)"
+  (sortUpdated)="getAllCustomers()"
+></app-customers-pn-table>
+
+<eform-pagination
+  [pagination]="customersStateService.getPagination() | async"
+  (pageChanged)="changePage($event)"
+  (pageSizeChanged)="onPageSizeChanged($event)"
+></eform-pagination>

@@ -1,0 +1,15 @@
+.col-header {
+  min-width: 100px;
+  font-weight: 500;
+}
+
+.preview-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  td {
+    border: 1px solid #ddd;
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+}

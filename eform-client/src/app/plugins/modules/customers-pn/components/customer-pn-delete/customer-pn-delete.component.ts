@@ -1,19 +1,21 @@
-import {Component, EventEmitter, OnInit,
-  inject
-} from '@angular/core';
-import {CustomerPnFieldsEnum} from 'src/app/plugins/modules/customers-pn/enums';
-import {CustomerPnModel} from 'src/app/plugins/modules/customers-pn/models/customer';
-import {FieldsPnUpdateModel} from 'src/app/plugins/modules/customers-pn/models/field';
+import {Component, EventEmitter, OnDestroy, OnInit, inject} from '@angular/core';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
+import {Subscription} from 'rxjs';
+
+import {CustomerPnFieldsEnum} from '../../enums';
+import {CustomerPnModel} from '../../models/customer';
+import {FieldsPnUpdateModel} from '../../models/field';
 import {CustomersPnService} from '../../services';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
+@AutoUnsubscribe()
 @Component({
   selector: 'app-customer-pn-delete',
   templateUrl: './customer-pn-delete.component.html',
   styleUrls: ['./customer-pn-delete.component.scss'],
   standalone: false
 })
-export class CustomerPnDeleteComponent implements OnInit {
+export class CustomerPnDeleteComponent implements OnInit, OnDestroy {
   private customersService = inject(CustomersPnService);
   public dialogRef = inject(MatDialogRef<CustomerPnDeleteComponent>);
   private data = inject<{customer: CustomerPnModel, fields: FieldsPnUpdateModel}>(MAT_DIALOG_DATA);
@@ -23,7 +25,7 @@ export class CustomerPnDeleteComponent implements OnInit {
   fields: FieldsPnUpdateModel = new FieldsPnUpdateModel();
   get fieldsEnum() { return CustomerPnFieldsEnum; }
 
-  
+  deleteSub$: Subscription;
 
   ngOnInit() {
     if (this.data) {
@@ -34,17 +36,18 @@ export class CustomerPnDeleteComponent implements OnInit {
     }
   }
 
+  ngOnDestroy(): void {}
+
   hide() {
     this.dialogRef.close();
   }
 
   deleteCustomer() {
-    this.customersService.deleteCustomer(this.selectedCustomer.id).subscribe(((data) => {
-      if (data && data.success) {
+    this.deleteSub$ = this.customersService.deleteCustomer(this.selectedCustomer.id).subscribe((data) => {
+      if (data?.success) {
         this.customerDeleted.emit();
         this.dialogRef.close(true);
       }
-    }));
+    });
   }
-
 }

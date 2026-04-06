@@ -1,0 +1,69 @@
+<eform-new-subheader>
+  <div class="d-flex flex-row align-items-center gap-12">
+    <span>{{ 'Import Customer' | translate }}</span>
+  </div>
+</eform-new-subheader>
+
+<div class="container-fluid p-3">
+  <div class="mb-3">
+    <mat-form-field class="w-100">
+      <mat-label>{{ 'Select CSV file' | translate }}</mat-label>
+      <input matInput disabled [value]="fileName || ''">
+      <button mat-icon-button matSuffix (click)="fileInput.click()">
+        <mat-icon>attach_file</mat-icon>
+      </button>
+    </mat-form-field>
+    <input
+      hidden
+      #fileInput
+      type="file"
+      accept=".csv"
+      (change)="csv2Array($event)"
+      id="csvFileInput"
+    />
+  </div>
+
+  <div *ngIf="tableData" class="mb-3">
+    <h4>{{ 'Column Mapping' | translate }}</h4>
+    <div class="d-flex flex-column gap-12">
+      <div *ngFor="let col of tableData[0]; let colIdx = index" class="d-flex flex-row align-items-center gap-12">
+        <span class="col-header">Column {{ colIdx + 1 }}</span>
+        <mat-form-field>
+          <mat-label>{{ 'Map to field' | translate }}</mat-label>
+          <mat-select (selectionChange)="onSelectedChanged($event.value, colIdx)" id="columnMapping-{{colIdx}}">
+            <mat-option *ngFor="let opt of options" [value]="opt.value">
+              {{ opt.label | translate }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="tableData" class="mb-3 table-responsive">
+    <h4>{{ 'Preview' | translate }}</h4>
+    <table class="preview-table">
+      <tbody>
+        <tr *ngFor="let row of tableData | slice:0:5">
+          <td *ngFor="let cell of row">{{ cell }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="d-flex flex-row justify-content-end mt-3">
+    <button
+      class="btn-cancel"
+      routerLink="../"
+      id="cancelImportBtn">
+      {{ 'Cancel' | translate }}
+    </button>
+    <button
+      class="btn-primary btn-primary--icon-left"
+      [disabled]="!tableData"
+      (click)="importCustomer()"
+      id="importBtn">
+      {{ 'Import' | translate }}
+    </button>
+  </div>
+</div>

@@ -1,0 +1,119 @@
+<h3 mat-dialog-title>{{ 'Edit Customer' | translate }}</h3>
+<div mat-dialog-content>
+  <div class="d-flex flex-column" [formGroup]="customerForm">
+    <mat-form-field *ngIf="isFieldAvailable(fieldsEnum.CreatedBy)">
+      <mat-label>{{ 'CreatedBy' | translate }}</mat-label>
+      <input matInput formControlName="createdBy" id="editCreatedBy">
+    </mat-form-field>
+
+    <mat-form-field *ngIf="isFieldAvailable(fieldsEnum.CustomerNo)">
+      <mat-label>{{ 'CustomerNo' | translate }}</mat-label>
+      <input matInput formControlName="customerNo" id="editCustomerNo">
+    </mat-form-field>
+
+    <mat-form-field *ngIf="isFieldAvailable(fieldsEnum.CompanyName)">
+      <mat-label>{{ 'CompanyName' | translate }}</mat-label>
+      <input matInput formControlName="companyName" id="editCompanyName">
+    </mat-form-field>
+
+    <mat-form-field *ngIf="isFieldAvailable(fieldsEnum.CompanyAddress)">
+      <mat-label>{{ 'CompanyAddress' | translate }}</mat-label>
+      <input matInput formControlName="companyAddress" id="editCompanyAddress">
+    </mat-form-field>
+
+    <mat-form-field *ngIf="isFieldAvailable(fieldsEnum.CompanyAddress2)">
+      <mat-label>{{ 'CompanyAddress2' | translate }}</mat-label>
+      <input matInput formControlName="companyAddress2" id="editCompanyAddress2">
+    </mat-form-field>
+
+    <mat-form-field *ngIf="isFieldAvailable(fieldsEnum.ZipCode)">
+      <mat-label>{{ 'ZipCode' | translate }}</mat-label>
+      <input matInput formControlName="zipCode" id="editZipCode">
+    </mat-form-field>
+
+    <mat-form-field *ngIf="isFieldAvailable(fieldsEnum.CityName)">
+      <mat-label>{{ 'CityName' | translate }}</mat-label>
+      <input matInput formControlName="cityName" id="editCityName">
+    </mat-form-field>
+
+    <mat-form-field *ngIf="isFieldAvailable(fieldsEnum.Phone)">
+      <mat-label>{{ 'Phone' | translate }}</mat-label>
+      <input matInput formControlName="phone" id="editPhone">
+    </mat-form-field>
+
+    <mat-form-field *ngIf="isFieldAvailable(fieldsEnum.Email)">
+      <mat-label>{{ 'Email' | translate }}</mat-label>
+      <input matInput formControlName="email" id="editEmail">
+    </mat-form-field>
+
+    <mat-form-field *ngIf="isFieldAvailable(fieldsEnum.ContactPerson)">
+      <mat-label>{{ 'ContactPerson' | translate }}</mat-label>
+      <input matInput formControlName="contactPerson" id="editContactPerson">
+    </mat-form-field>
+
+    <mat-form-field *ngIf="isFieldAvailable(fieldsEnum.EanCode)">
+      <mat-label>{{ 'EanCode' | translate }}</mat-label>
+      <input matInput formControlName="eanCode" id="editEanCode">
+    </mat-form-field>
+
+    <mat-form-field *ngIf="isFieldAvailable(fieldsEnum.VatNumber)">
+      <mat-label>{{ 'VatNumber' | translate }}</mat-label>
+      <input matInput formControlName="vatNumber" id="editVatNumber">
+    </mat-form-field>
+
+    <mat-form-field *ngIf="isFieldAvailable(fieldsEnum.CountryCode)">
+      <mat-label>{{ 'CountryCode' | translate }}</mat-label>
+      <input matInput formControlName="countryCode" id="editCountryCode">
+    </mat-form-field>
+
+    <mat-form-field *ngIf="isFieldAvailable(fieldsEnum.CrmId)">
+      <mat-label>{{ 'CrmId' | translate }}</mat-label>
+      <input matInput type="number" formControlName="crmId" id="editCrmId">
+    </mat-form-field>
+
+    <mat-form-field *ngIf="isFieldAvailable(fieldsEnum.CadastralNumber)">
+      <mat-label>{{ 'CadastralNumber' | translate }}</mat-label>
+      <input matInput formControlName="cadastralNumber" id="editCadastralNumber">
+    </mat-form-field>
+
+    <mat-form-field *ngIf="isFieldAvailable(fieldsEnum.PropertyNumber)">
+      <mat-label>{{ 'PropertyNumber' | translate }}</mat-label>
+      <input matInput type="number" formControlName="propertyNumber" id="editPropertyNumber">
+    </mat-form-field>
+
+    <mat-form-field *ngIf="isFieldAvailable(fieldsEnum.ApartmentNumber)">
+      <mat-label>{{ 'ApartmentNumber' | translate }}</mat-label>
+      <input matInput type="number" formControlName="apartmentNumber" id="editApartmentNumber">
+    </mat-form-field>
+
+    <mat-form-field *ngIf="isFieldAvailable(fieldsEnum.CompletionYear)">
+      <mat-label>{{ 'CompletionYear' | translate }}</mat-label>
+      <input matInput type="number" formControlName="completionYear" id="editCompletionYear">
+    </mat-form-field>
+
+    <mat-form-field *ngIf="isFieldAvailable(fieldsEnum.FloorsWithLivingSpace)">
+      <mat-label>{{ 'FloorsWithLivingSpace' | translate }}</mat-label>
+      <input matInput type="number" formControlName="floorsWithLivingSpace" id="editFloorsWithLivingSpace">
+    </mat-form-field>
+
+    <mat-form-field *ngIf="isFieldAvailable(fieldsEnum.Description)">
+      <mat-label>{{ 'Description' | translate }}</mat-label>
+      <textarea matInput formControlName="description" id="editDescription" rows="3"></textarea>
+    </mat-form-field>
+  </div>
+</div>
+
+<div mat-dialog-actions class="d-flex flex-row justify-content-end">
+  <button
+    class="btn-cancel"
+    (click)="hide()"
+    id="cancelEditBtn">
+    {{ 'Cancel' | translate }}
+  </button>
+  <button
+    class="btn-primary btn-primary--icon-left"
+    (click)="updateCustomer()"
+    id="saveEditBtn">
+    {{ 'Update' | translate }}
+  </button>
+</div>
