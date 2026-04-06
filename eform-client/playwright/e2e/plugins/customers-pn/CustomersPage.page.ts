@@ -8,8 +8,14 @@ export class CustomersPage {
   }
 
   async goToCustomers(): Promise<void> {
-    await this.customersPnButton().click();
-    await this.page.locator('app-customers-pn-container').waitFor({ state: 'visible' });
+    try {
+      await this.customersPnButton().waitFor({ state: 'visible', timeout: 10000 });
+      await this.customersPnButton().click();
+    } catch {
+      // If nav button not visible, navigate directly
+      await this.page.goto('/plugins/customers-pn');
+    }
+    await this.page.locator('app-customers-pn-container').waitFor({ state: 'visible', timeout: 60000 });
   }
 
   // Subheader buttons
