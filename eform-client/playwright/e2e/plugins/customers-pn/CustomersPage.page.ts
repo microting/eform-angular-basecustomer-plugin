@@ -218,13 +218,10 @@ export class CustomerRowObject {
 
   async openCopyModal(): Promise<void> {
     await this.openActionMenu();
-    const getSingleResponse = this.page.waitForResponse(
-      r => r.url().includes('/api/customers-pn/customers/') && r.request().method() === 'GET'
-    );
     await this.page.locator('[id^="copyCustomerBtn"]').first().click();
     await this.parentPage.cancelCreateBtn().waitFor({ state: 'visible' });
-    await getSingleResponse;
-    await this.page.waitForTimeout(300);
+    // Wait for single customer data to load into the form
+    await this.page.waitForTimeout(1000);
   }
 
   async delete(clickCancel = false): Promise<void> {
