@@ -141,11 +141,12 @@ export class CustomersPnContainerComponent implements OnInit, OnDestroy {
 
   private buildTableHeaders(): MtxGridColumn[] {
     const fieldIndices = [0, 3, 4, 5, 6, 7, 8, 9, 11, 10, 16, 15, 14, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32];
+    const toCamelCase = (s: string) => s.charAt(0).toLowerCase() + s.slice(1);
     const headers: MtxGridColumn[] = fieldIndices
       .filter(i => this.fieldsModel.fields[i]?.fieldStatus === CustomersPnFieldStatusEnum.Enabled)
       .map(i => ({
         header: this.fieldsModel.fields[i].name,
-        field: this.fieldsModel.fields[i].name,
+        field: toCamelCase(this.fieldsModel.fields[i].name),
         sortable: true,
       }));
     headers.push({header: 'Actions', field: 'actions', pinned: 'right', sortable: false});

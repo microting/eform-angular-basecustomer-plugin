@@ -160,12 +160,16 @@ export class CustomersPage {
     if (clickCancel) {
       await this.cancelCreateBtn().click();
     } else {
-      const [_response] = await Promise.all([
+      await Promise.all([
         this.page.waitForResponse(
           r => r.url().includes('/api/customers-pn/customers') && r.request().method() === 'POST'
         ),
         this.saveCreateBtn().click(),
       ]);
+      // Wait for the list refresh GET after dialog closes
+      await this.page.waitForResponse(
+        r => r.url().includes('/api/customers-pn/customers') && r.request().method() === 'GET'
+      );
     }
     await this.page.waitForTimeout(500);
   }
@@ -227,12 +231,15 @@ export class CustomerRowObject {
     if (clickCancel) {
       await this.parentPage.cancelDeleteBtn().click();
     } else {
-      const [_response] = await Promise.all([
+      await Promise.all([
         this.page.waitForResponse(
           r => r.url().includes('/api/customers-pn/customers') && r.request().method() === 'DELETE'
         ),
         this.parentPage.confirmDeleteBtn().click(),
       ]);
+      await this.page.waitForResponse(
+        r => r.url().includes('/api/customers-pn/customers') && r.request().method() === 'GET'
+      );
     }
     await this.page.waitForTimeout(500);
   }
@@ -254,12 +261,15 @@ export class CustomerRowObject {
     if (clickCancel) {
       await this.parentPage.cancelEditBtn().click();
     } else {
-      const [_response] = await Promise.all([
+      await Promise.all([
         this.page.waitForResponse(
           r => r.url().includes('/api/customers-pn/customers') && r.request().method() === 'PUT'
         ),
         this.parentPage.saveEditBtn().click(),
       ]);
+      await this.page.waitForResponse(
+        r => r.url().includes('/api/customers-pn/customers') && r.request().method() === 'GET'
+      );
     }
     await this.page.waitForTimeout(500);
   }
