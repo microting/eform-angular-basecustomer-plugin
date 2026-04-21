@@ -341,3 +341,4 @@ eFormAPI/eFormAPI\.Web/Plugins/Customers/netcoreapp3\.1/
 
 # E2E Test screenshots
 errorShots/
+.claude
