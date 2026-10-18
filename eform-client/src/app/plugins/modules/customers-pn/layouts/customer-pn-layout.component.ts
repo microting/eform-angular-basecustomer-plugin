@@ -1,6 +1,7 @@
 import { AfterContentInit, Component, OnInit,
   inject
 } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Store } from '@ngrx/store';
 import { addPluginToVisited, selectPluginsVisitedPlugins } from 'src/app/state';
@@ -10,7 +11,7 @@ import { translates } from './../i18n/translates';
 @Component({
   selector: 'app-customers-pn-layout',
   template: `<router-outlet></router-outlet>`,
-  standalone: false
+  imports: [RouterOutlet]
 })
 export class CustomerPnLayoutComponent implements AfterContentInit, OnInit {
   private translateService = inject(TranslateService);

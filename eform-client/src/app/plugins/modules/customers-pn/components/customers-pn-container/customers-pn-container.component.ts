@@ -4,7 +4,17 @@ import {
   OnInit,
   inject
 } from '@angular/core';
+import {AsyncPipe} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {RouterLink} from '@angular/router';
+import {TranslatePipe} from '@ngx-translate/core';
 import {MatDialog} from '@angular/material/dialog';
+import {MatFormField, MatLabel, MatSuffix} from '@angular/material/form-field';
+import {MatInput} from '@angular/material/input';
+import {MatIcon} from '@angular/material/icon';
+import {MatTooltip} from '@angular/material/tooltip';
+import {EformNewSubheaderComponent, EformPaginationComponent} from 'src/app/common/modules/eform-shared/components';
+import {CustomersPnTableComponent} from '../customers-pn-table/customers-pn-table.component';
 import {Overlay} from '@angular/cdk/overlay';
 import {Store} from '@ngrx/store';
 import {Subscription, Subject} from 'rxjs';
@@ -31,7 +41,21 @@ import {dialogConfigHelper} from 'src/app/common/helpers';
   selector: 'app-customers-pn-container',
   templateUrl: './customers-pn-container.component.html',
   styleUrls: ['./customers-pn-container.component.scss'],
-  standalone: false
+  imports: [
+    AsyncPipe,
+    FormsModule,
+    RouterLink,
+    TranslatePipe,
+    MatFormField,
+    MatLabel,
+    MatSuffix,
+    MatInput,
+    MatIcon,
+    MatTooltip,
+    EformNewSubheaderComponent,
+    EformPaginationComponent,
+    CustomersPnTableComponent
+  ]
 })
 export class CustomersPnContainerComponent implements OnInit, OnDestroy {
   private customersFieldsService = inject(CustomersPnFieldsService);

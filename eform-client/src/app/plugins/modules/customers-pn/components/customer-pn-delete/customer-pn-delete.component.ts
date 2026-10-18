@@ -6,14 +6,20 @@ import {CustomerPnFieldsEnum} from '../../enums';
 import {CustomerPnModel} from '../../models/customer';
 import {FieldsPnUpdateModel} from '../../models/field';
 import {CustomersPnService} from '../../services';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle} from '@angular/material/dialog';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @AutoUnsubscribe()
 @Component({
   selector: 'app-customer-pn-delete',
   templateUrl: './customer-pn-delete.component.html',
   styleUrls: ['./customer-pn-delete.component.scss'],
-  standalone: false
+  imports: [
+    TranslatePipe,
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions
+  ]
 })
 export class CustomerPnDeleteComponent implements OnInit, OnDestroy {
   private customersService = inject(CustomersPnService);

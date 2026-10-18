@@ -6,9 +6,14 @@ import {
   Output,
   inject
 } from '@angular/core';
+import {AsyncPipe} from '@angular/common';
 import {Store} from '@ngrx/store';
+import {TranslatePipe} from '@ngx-translate/core';
+import {MatIconButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
+import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 import {Sort} from '@angular/material/sort';
-import {MtxGridColumn} from '@ng-matero/extensions/grid';
+import {MtxGrid, MtxGridColumn} from '@ng-matero/extensions/grid';
 import {AuthStateService} from 'src/app/common/store';
 
 import {CustomerPnModel, CustomersPnModel} from '../../models';
@@ -23,7 +28,16 @@ import {CustomersStateService} from '../store';
   templateUrl: './customers-pn-table.component.html',
   styleUrls: ['./customers-pn-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: false
+  imports: [
+    AsyncPipe,
+    TranslatePipe,
+    MtxGrid,
+    MatIconButton,
+    MatIcon,
+    MatMenu,
+    MatMenuItem,
+    MatMenuTrigger
+  ]
 })
 export class CustomersPnTableComponent {
   private store = inject(Store);

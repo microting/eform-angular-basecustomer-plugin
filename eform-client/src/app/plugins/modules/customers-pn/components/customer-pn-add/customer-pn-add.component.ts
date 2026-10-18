@@ -1,19 +1,33 @@
 import {Component, EventEmitter, OnDestroy, OnInit, inject} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Subscription} from 'rxjs';
 
 import {CustomerPnFieldsEnum, CustomersPnFieldStatusEnum} from '../../enums';
 import {FieldsPnUpdateModel, CustomerPnFullModel} from '../../models';
 import {CustomersPnService} from '../../services';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle} from '@angular/material/dialog';
+import {NgIf} from '@angular/common';
+import {TranslatePipe} from '@ngx-translate/core';
+import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatInput} from '@angular/material/input';
 
 @AutoUnsubscribe()
 @Component({
   selector: 'app-customer-pn-add',
   templateUrl: './customer-pn-add.component.html',
   styleUrls: ['./customer-pn-add.component.scss'],
-  standalone: false
+  imports: [
+    NgIf,
+    ReactiveFormsModule,
+    TranslatePipe,
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatFormField,
+    MatLabel,
+    MatInput
+  ]
 })
 export class CustomerPnAddComponent implements OnInit, OnDestroy {
   private customersService = inject(CustomersPnService);
