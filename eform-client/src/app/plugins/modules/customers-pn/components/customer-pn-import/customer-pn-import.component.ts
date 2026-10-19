@@ -1,6 +1,16 @@
 import { Component, OnInit,
   inject
 } from '@angular/core';
+import { NgFor, NgIf, SlicePipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/core';
+import { EformNewSubheaderComponent } from 'src/app/common/modules/eform-shared/components';
 import { FileUploader } from 'ng2-file-upload';
 import { Papa } from 'ngx-papaparse';
 import { CustomersPnService } from '../../services';
@@ -14,7 +24,22 @@ const URL = '';
   selector: 'app-customer-pn-import',
   templateUrl: './customer-pn-import.component.html',
   styleUrls: ['./customer-pn-import.component.scss'],
-  standalone: false
+  imports: [
+    NgFor,
+    NgIf,
+    SlicePipe,
+    RouterLink,
+    TranslatePipe,
+    MatFormField,
+    MatLabel,
+    MatSuffix,
+    MatInput,
+    MatIconButton,
+    MatIcon,
+    MatSelect,
+    MatOption,
+    EformNewSubheaderComponent
+  ]
 })
 export class CustomerPnImportComponent implements OnInit {
   private customerService = inject(CustomersPnService);

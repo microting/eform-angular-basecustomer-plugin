@@ -1,7 +1,10 @@
 import {Component, OnDestroy, OnInit, inject} from '@angular/core';
-import {Router} from '@angular/router';
+import {NgFor} from '@angular/common';
+import {Router, RouterLink} from '@angular/router';
+import {TranslatePipe} from '@ngx-translate/core';
+import {EformNewSubheaderComponent} from 'src/app/common/modules/eform-shared/components';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
-import {MatSlideToggleChange} from '@angular/material/slide-toggle';
+import {MatSlideToggle, MatSlideToggleChange} from '@angular/material/slide-toggle';
 import {Subscription} from 'rxjs';
 
 import {CustomersPnFieldStatusEnum} from '../../enums';
@@ -20,7 +23,13 @@ import {
   selector: 'app-customers-pn-fields',
   templateUrl: './customers-pn-fields.component.html',
   styleUrls: ['./customers-pn-fields.component.scss'],
-  standalone: false
+  imports: [
+    NgFor,
+    RouterLink,
+    TranslatePipe,
+    MatSlideToggle,
+    EformNewSubheaderComponent
+  ]
 })
 export class CustomersPnFieldsComponent implements OnInit, OnDestroy {
   private customersFieldsService = inject(CustomersPnFieldsService);

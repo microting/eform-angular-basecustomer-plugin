@@ -89,6 +89,8 @@ jobs:
         mkdir -p eform-angular-frontend/eform-client/cypress/e2e/plugins/
         mkdir -p eform-angular-frontend/eform-client/cypress/fixtures/
         cd eform-angular-frontend/eform-client && ../../eform-angular-basecustomer-plugin/testinginstallpn.sh
+    - name: Enable Corepack
+      run: corepack enable
     - name: yarn install
       run: cd eform-angular-frontend/eform-client && yarn install
     - name: Install Playwright browsers
