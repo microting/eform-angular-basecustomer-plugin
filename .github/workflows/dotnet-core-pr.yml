@@ -8,11 +8,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         path: eform-angular-basecustomer-plugin
     - name: 'Preparing Frontend checkout'
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         fetch-depth: 0
         repository: microting/eform-angular-frontend
@@ -40,7 +40,7 @@ jobs:
     needs: build
     runs-on: ubuntu-24.04 # Playwright cannot install chromium on ubuntu-latest (26.04) yet, see microting/eform-angular-frontend#8222
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         path: eform-angular-basecustomer-plugin
     - uses: actions/download-artifact@v4
@@ -67,7 +67,7 @@ jobs:
       with:
         node-version: 22
     - name: 'Preparing Frontend checkout'
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository: microting/eform-angular-frontend
         ref: ${{ github.base_ref }}
@@ -144,7 +144,7 @@ jobs:
   test-dotnet:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Create docker network
       run: docker network create --driver bridge --attachable data
     - name: Start MariaDB
@@ -158,9 +158,9 @@ jobs:
     - name: Sleep 15
       run: sleep 15
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 10.0.x
+        dotnet-version: 11.0.x
     - name: Build
       run: dotnet build eFormAPI/Plugins/Customers.Pn/Customers.Pn.sln
     - name: Unit Tests
